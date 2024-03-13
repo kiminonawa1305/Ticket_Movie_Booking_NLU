@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingHorizontal="20dp"
+    android:paddingVertical="50dp"
+    tools:context=".View.Fragments.SignInFragment">
+
+    <EditText
+        android:id="@+id/edit_text_sign_up_user_name"
+        style="@style/edt_input_info_sign"
+        android:hint="@string/hint_user_name"
+        android:autofillHints="name"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/edit_text_sign_up_password"
+        style="@style/edt_input_info_sign"
+        android:hint="@string/hint_password"
+        android:inputType="textPassword"
+        android:autofillHints="password" />
+
+
+    <EditText
+        android:id="@+id/edit_text_sign_up_re_password"
+        style="@style/edt_input_info_sign"
+        android:hint="@string/hint_re_password"
+        android:inputType="textPassword"
+        android:autofillHints="password" />
+
+    <android.widget.Button
+        android:id="@+id/button"
+        style="@style/btn_sign"
+        android:text="@string/sign_up"
+        android:textColor="@color/white" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/notify_other_option_sign"
+            android:text="@string/have_account" />
+
+        <TextView
+            android:id="@+id/text_view_change_fragment_sign_in"
+            style="@style/change_page_sign"
+            android:text="@string/sign_in_now" />
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="width_movie_ticket">300dp</dimen>
+    <dimen name="height_image_movie_ticket">400dp</dimen>
+    <dimen name="text_size_button_sign">20sp</dimen>
+    <dimen name="text_size_default">16sp</dimen>
+</resources>

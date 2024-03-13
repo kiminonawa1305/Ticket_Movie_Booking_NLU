@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="black_secondary">#191925</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="red">#fa3465</color>
+    <color name="gray">#6b6e7f</color>
+    <color name="gray_secondary">#1d1d29</color>
+    <color name="bg_input_info_sign">#262632</color>
+    <color name="text_color_hint">#6f7074</color>
+    <color name="purple">#7738ce</color>
+</resources>
