@@ -2,7 +2,7 @@
     <string name="app_name">Ticket Movie Booking NLU</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="hint_user_name">Tài khoản</string>
+    <string name="hint_email">Email</string>
     <string name="hint_password">Mật khẩu</string>
     <string name="hint_re_password">Nhập lại mật khẩu</string>
     <string name="sign_up">Đăng kí</string>
@@ -11,4 +11,19 @@
     <string name="sign_in_now">Đăng nhập ngay</string>
     <string name="do_not_have_any_account">Bạn chưa có tài khoản?</string>
     <string name="have_account">Bạn đã có tài khoản?</string>
+
+    <!---->
+    <string name="default_web_client_id">1004651181310-71of7o1j24o2thvl7okk06tp129fn7lq.apps.googleusercontent.com</string>
+
+    <!--Sign string-->
+    <string name="request_email">Vui lòng nhập Email của bạn!</string>
+    <string name="request_password">Vui lòng nhập mật khẩu của bạn!</string>
+    <string name="request_re_password">Vui lòng nhập lại mật khẩu của bạn!</string>
+    <string name="request_verify_account">Vui lòng kiểm tra email và xác thực tài khoản!</string>
+    <string name="verify_is_account">Tài khoản đã được xác nhận!</string>
+    <string name="login_success">Đăng nhập thành công!</string>
+    <string name="login_fail">Sai email hoặc mật khẩu!</string>
+    <string name="email_is_exist">Email đã được đăng ký!</string>
+    <string name="not_match_password">Mật khẩu không trùng nhau!</string>
+    <string name="send_mail_verify_fail">Gửi mail xác nhận thất bại. Vui lòng nhấn gửi lại!</string>
 </resources>

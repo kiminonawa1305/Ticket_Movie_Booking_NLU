@@ -1,5 +1,6 @@
 plugins {
     id("com.android.application")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -29,7 +30,9 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+
 }
+
 
 dependencies {
 
@@ -37,6 +40,9 @@ dependencies {
     implementation("com.google.android.material:material:1.11.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("org.projectlombok:lombok:1.18.26")
+    implementation("com.google.firebase:firebase-auth:22.3.1")
+    implementation("com.google.firebase:firebase-database:20.3.1")
+    implementation("com.google.android.gms:play-services-auth:21.0.0")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
@@ -45,4 +51,12 @@ dependencies {
     implementation("com.google.code.gson:gson:2.7")
     implementation("com.android.volley:volley:1.2.1")
 
+    implementation(platform("com.google.firebase:firebase-bom:32.7.4"))
+
+    // Add the dependency for the Firebase Authentication library
+    // When using the BoM, you don't specify versions in Firebase library dependencies
+    implementation("com.google.firebase:firebase-analytics")
+
+    implementation("com.etebarian:meow-bottom-navigation-java:1.2.0")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.61")
 }

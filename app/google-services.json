@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "174583519442",
+    "project_id": "ticket-movie-booking-nlu-efd84",
+    "storage_bucket": "ticket-movie-booking-nlu-efd84.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:174583519442:android:d7794b9f5f9204437df50b",
+        "android_client_info": {
+          "package_name": "com.lamnguyen.ticket_movie_nlu"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB1dORb62uH-IVmdl_ohQRr414E3w6HO44"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

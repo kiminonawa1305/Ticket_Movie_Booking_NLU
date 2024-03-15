@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:scaleType = "centerCrop"
     android:background="@drawable/background_sign"
+    android:scaleType="centerCrop"
     tools:context=".View.Activities.SignActivity">
 
     <androidx.fragment.app.FragmentContainerView
@@ -18,4 +18,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

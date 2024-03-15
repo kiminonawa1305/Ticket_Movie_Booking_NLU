@@ -9,11 +9,11 @@
     tools:context=".View.Fragments.SignInFragment">
 
     <EditText
-        android:id="@+id/edit_text_sign_in_user_name"
+        android:id="@+id/edit_text_sign_in_email"
         style="@style/edt_input_info_sign"
-        android:hint="@string/hint_user_name"
+        android:hint="@string/hint_email"
         android:autofillHints="name"
-        android:inputType="text" />
+        android:inputType="textEmailAddress" />
 
     <EditText
         android:id="@+id/edit_text_sign_in_password"
