@@ -2,6 +2,17 @@
     <string name="app_name">Ticket Movie Booking NLU</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!---->
+    <string name="default_web_client_id">174583519442-gdc1obloscbduiojb82m2ctaacnp3mp1.apps.googleusercontent.com</string>
+
+    <!--Greeting activity string-->
+    <string name="do_not_connect_to_network">Không có kết nối internet!</string>
+    <string name="request_connect_to_network">Vui lòng kết nối internet!</string>
+    <string name="re_try_check_password">Kết nối lại</string>
+    <string name="cancel">Thoát</string>
+
+    <!--Sign activity string-->
     <string name="hint_email">Email</string>
     <string name="hint_password">Mật khẩu</string>
     <string name="hint_re_password">Nhập lại mật khẩu</string>
@@ -11,18 +22,9 @@
     <string name="sign_in_now">Đăng nhập ngay</string>
     <string name="do_not_have_any_account">Bạn chưa có tài khoản?</string>
     <string name="have_account">Bạn đã có tài khoản?</string>
-
-    <!---->
-    <string name="default_web_client_id">1004651181310-71of7o1j24o2thvl7okk06tp129fn7lq.apps.googleusercontent.com</string>
-
-    <!--Greeting activity string-->
-    <string name="do_not_connect_to_network">Không có kết nối internet!</string>
-    <string name="request_connect_to_network">Vui lòng kết nối internet!</string>
-    <string name="re_try_check_password">Kết nối lại</string>
-    <string name="cancel">Thoát</string>
-
-    <!--Sign activity string-->
+    <string name="forget_password">Quên mật khẩu</string>
     <string name="request_email">Vui lòng nhập Email của bạn!</string>
+    <string name="error_validate_email">Email không hợp lệ!</string>
     <string name="request_password">Vui lòng nhập mật khẩu của bạn!</string>
     <string name="request_re_password">Vui lòng nhập lại mật khẩu của bạn!</string>
     <string name="request_verify_account">Vui lòng kiểm tra email và xác thực tài khoản!</string>
@@ -32,4 +34,5 @@
     <string name="email_is_exist">Email đã được đăng ký!</string>
     <string name="not_match_password">Mật khẩu không trùng nhau!</string>
     <string name="send_mail_verify_fail">Gửi mail xác nhận thất bại. Vui lòng nhấn gửi lại!</string>
+    <string name="login_with_password">Đăng nhập bằng mật khẩu</string>
 </resources>

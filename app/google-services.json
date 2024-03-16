@@ -12,7 +12,20 @@
           "package_name": "com.lamnguyen.ticket_movie_nlu"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "174583519442-gdc1obloscbduiojb82m2ctaacnp3mp1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.lamnguyen.ticket_movie_nlu",
+            "certificate_hash": "da1b65476afede04b7790493045b06c73d118e3f"
+          }
+        },
+        {
+          "client_id": "174583519442-bj4pvvv43mskeu2hq1vop0kb1vktlagk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyB1dORb62uH-IVmdl_ohQRr414E3w6HO44"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "174583519442-bj4pvvv43mskeu2hq1vop0kb1vktlagk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

@@ -1,4 +1,4 @@
-package com.lamnguyen.ticket_movie_nlu.Model.Utils;
+package com.lamnguyen.ticket_movie_nlu.model.utils;
 
 public abstract class ThreadCallBackSign {
     public abstract void isSuccess();

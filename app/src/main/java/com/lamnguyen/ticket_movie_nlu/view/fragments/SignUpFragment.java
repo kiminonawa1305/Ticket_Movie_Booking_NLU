@@ -1,4 +1,4 @@
-package com.lamnguyen.ticket_movie_nlu.View.Fragments;
+package com.lamnguyen.ticket_movie_nlu.view.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,13 +13,15 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.lamnguyen.ticket_movie_nlu.Service.Auth.SignUp.impl.SignUpServiceImpl;
-import com.lamnguyen.ticket_movie_nlu.Service.UserService.UserService;
-import com.lamnguyen.ticket_movie_nlu.Service.UserService.impl.UserServiceImpl;
-import com.lamnguyen.ticket_movie_nlu.Model.Bean.User;
-import com.lamnguyen.ticket_movie_nlu.Model.Utils.ThreadCallBackSign;
+import com.lamnguyen.ticket_movie_nlu.service.auth.sign_up.impl.SignUpServiceImpl;
+import com.lamnguyen.ticket_movie_nlu.service.UserService.UserService;
+import com.lamnguyen.ticket_movie_nlu.service.UserService.impl.UserServiceImpl;
+import com.lamnguyen.ticket_movie_nlu.model.bean.User;
+import com.lamnguyen.ticket_movie_nlu.model.utils.ThreadCallBackSign;
 import com.lamnguyen.ticket_movie_nlu.R;
-import com.lamnguyen.ticket_movie_nlu.View.Activities.SignActivity;
+import com.lamnguyen.ticket_movie_nlu.view.activities.SignActivity;
+
+import java.util.regex.Pattern;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -45,7 +47,7 @@ public class SignUpFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_sign_up, container, false);
-        fragmentManager = getFragmentManager();
+        fragmentManager = getParentFragmentManager();
         init(view);
         event();
         activity = (SignActivity) getActivity();
@@ -91,6 +93,11 @@ public class SignUpFragment extends Fragment {
         String rePassword = edtRePassword.getText().toString();
         if (edtEmail.getText().toString().isEmpty()) {
             edtEmail.setError(getString(R.string.request_email));
+            return;
+        }
+
+        if (!Pattern.matches(SignActivity.EMAIL_PATTERN, edtEmail.getText().toString())) {
+            edtEmail.setError(getString(R.string.error_validate_email));
             return;
         }
 

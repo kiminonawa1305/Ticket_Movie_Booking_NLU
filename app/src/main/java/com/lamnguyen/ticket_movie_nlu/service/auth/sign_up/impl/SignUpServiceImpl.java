@@ -1,18 +1,19 @@
-package com.lamnguyen.ticket_movie_nlu.Service.Auth.SignUp.impl;
+package com.lamnguyen.ticket_movie_nlu.service.auth.sign_up.impl;
 
 import androidx.annotation.NonNull;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.lamnguyen.ticket_movie_nlu.Service.Auth.SignUp.SignUpService;
-import com.lamnguyen.ticket_movie_nlu.Service.Auth.SignUp.SignUpVerify;
-import com.lamnguyen.ticket_movie_nlu.Model.Bean.User;
-import com.lamnguyen.ticket_movie_nlu.Model.Utils.ThreadCallBackSign;
-
-import java.util.Properties;
+import com.lamnguyen.ticket_movie_nlu.service.auth.sign_up.SignUpService;
+import com.lamnguyen.ticket_movie_nlu.service.auth.sign_up.SignUpVerify;
+import com.lamnguyen.ticket_movie_nlu.model.bean.User;
+import com.lamnguyen.ticket_movie_nlu.model.utils.ThreadCallBackSign;
 
 public class SignUpServiceImpl implements SignUpService, SignUpVerify {
     private static SignUpServiceImpl instance;
-    private static Properties properties;
+
+
+    private SignUpServiceImpl() {
+    }
 
     public static SignUpServiceImpl getInstance() {
         if (instance == null) instance = new SignUpServiceImpl();
