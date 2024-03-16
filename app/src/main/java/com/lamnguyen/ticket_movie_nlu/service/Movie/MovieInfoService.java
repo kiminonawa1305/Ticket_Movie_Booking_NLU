@@ -1,9 +1,9 @@
-package com.lamnguyen.ticket_movie_nlu.Controller.Service;
+package com.lamnguyen.ticket_movie_nlu.service.Movie;
 
 import android.content.Context;
 
-import com.lamnguyen.ticket_movie_nlu.Controller.Dao.MovieInfoDao;
-import com.lamnguyen.ticket_movie_nlu.Model.Bean.Movie;
+import com.lamnguyen.ticket_movie_nlu.dao.MovieInfoDao;
+import com.lamnguyen.ticket_movie_nlu.model.bean.Movie;
 
 import java.util.List;
 
@@ -23,6 +23,7 @@ public class MovieInfoService {
 
     public List<Movie> getMovie(Context context, String title, int page) {
         movieInfoDao.getMovie(context, title, page);
+
         return null;
     }
 }

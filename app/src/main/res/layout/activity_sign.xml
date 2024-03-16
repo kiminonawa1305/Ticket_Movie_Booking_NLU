@@ -6,11 +6,11 @@
     android:layout_height="match_parent"
     android:background="@drawable/bg_activity_sign"
     android:scaleType="centerCrop"
-    tools:context=".View.Activities.SignActivity">
+    tools:context=".view.activities.SignActivity">
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragment_sign"
-        android:name="com.lamnguyen.ticket_movie_nlu.View.Fragments.SignInFragment"
+        android:name="com.lamnguyen.ticket_movie_nlu.view.fragments.SignInFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"

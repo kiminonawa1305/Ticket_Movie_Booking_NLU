@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".View.Activities.GreetingActivity">
+    tools:context=".view.activities.GreetingActivity">
 
     <ImageView
         android:id="@+id/image_view_greeting_logo"

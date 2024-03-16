@@ -1,63 +1,91 @@
-package com.lamnguyen.ticket_movie_nlu.View.Activities;
+package com.lamnguyen.ticket_movie_nlu.view.activities;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.viewpager2.widget.ViewPager2;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 import android.view.MenuItem;
 
-import com.google.android.material.tabs.TabLayout;
-import com.google.android.material.tabs.TabLayoutMediator;
-import com.lamnguyen.ticket_movie_nlu.Controller.Service.MovieInfoService;
-import com.lamnguyen.ticket_movie_nlu.View.Adapters.DisplayPageTicketMovieAdapter;
+import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
 import com.lamnguyen.ticket_movie_nlu.R;
+import com.lamnguyen.ticket_movie_nlu.view.fragments.CinemaFragment;
+import com.lamnguyen.ticket_movie_nlu.view.fragments.MovieFragment;
+import com.lamnguyen.ticket_movie_nlu.view.fragments.ProfileFragment;
+import com.lamnguyen.ticket_movie_nlu.view.fragments.TicketFragment;
+
 
 public class MainActivity extends AppCompatActivity {
-    private TabLayout tlDisplayTicketMovie;
-    private ViewPager2 vpgDisplayTicketMovie;
+
+    private MeowBottomNavigation bottomNavigation;
+    private FragmentManager fragmentManager;
+    private Fragment frmDisplayMain;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar = findViewById(R.id.tool_bar_back);
-        setSupportActionBar(toolbar);
-
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);  // Hiển thị nút back
-        }
-
         this.init();
-        setupTabLayoutDisplayTicketMovie(tlDisplayTicketMovie, vpgDisplayTicketMovie);
-
+        this.eventNavigation();
     }
 
-    private void init(){
-        tlDisplayTicketMovie = findViewById(R.id.tab_layout_display_ticket_movie);
-        vpgDisplayTicketMovie = findViewById(R.id.view_pager_display_ticket_movie);
-        vpgDisplayTicketMovie.setAdapter(new DisplayPageTicketMovieAdapter(this));
+    private void init() {
+        bottomNavigation = findViewById(R.id.meow_bottom_navigation);
+        bottomNavigation.add(new MeowBottomNavigation.Model(1, R.drawable.ic_movie));
+        bottomNavigation.add(new MeowBottomNavigation.Model(2, R.drawable.ic_ticket));
+        bottomNavigation.add(new MeowBottomNavigation.Model(3, R.drawable.ic_cinema));
+        bottomNavigation.add(new MeowBottomNavigation.Model(4, R.drawable.ic_profile));
+        fragmentManager = getSupportFragmentManager();
     }
 
-    private void setupTabLayoutDisplayTicketMovie(TabLayout tlDisplayTicketMovie, ViewPager2 vpgDisplayTicketMovie){
-        new TabLayoutMediator(tlDisplayTicketMovie, vpgDisplayTicketMovie,
-                (tab, position) -> {
-                    switch (position) {
-                        case 0:
-                            tab.setText("Đang chiếu");
-                            break;
-                        case 1:
-                            tab.setText("Sắp chiếu");
-                            break;
-                        case 2:
-                            tab.setText("Nổi bật");
-                            break;
+    private void eventNavigation() {
+        bottomNavigation.setOnClickMenuListener(new MeowBottomNavigation.ClickListener() {
+            @Override
+            public void onClickItem(MeowBottomNavigation.Model item) {
+                changeFragment(item.getId());
+            }
+        });
+
+        bottomNavigation.setOnShowListener(new MeowBottomNavigation.ShowListener() {
+            @Override
+            public void onShowItem(MeowBottomNavigation.Model item) {
+                switch (item.getId()) {
+                    case 1:
+                    case 2:
+                    case 3:
+                    case 4: {
+                        break;
                     }
                 }
-        ).attach();
+            }
+        });
+
+        bottomNavigation.show(1, true);
+    }
+
+    private void changeFragment(int id) {
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        switch (id) {
+            case 1: {
+                transaction.replace(R.id.fragment_display_main, MovieFragment.class, null);
+                break;
+            }
+            case 2: {
+                transaction.replace(R.id.fragment_display_main, TicketFragment.class, null);
+                break;
+            }
+            case 3: {
+                transaction.replace(R.id.fragment_display_main, CinemaFragment.class, null);
+                break;
+            }
+            case 4: {
+                transaction.replace(R.id.fragment_display_main, ProfileFragment.class, null);
+                break;
+            }
+        }
+        transaction.commit();
     }
 
     @Override
@@ -73,6 +101,5 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        MovieInfoService.getInstance().getMovie(this, "Hello", 1);
     }
 }

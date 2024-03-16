@@ -1,4 +1,4 @@
-package com.lamnguyen.ticket_movie_nlu.View.Fragments;
+package com.lamnguyen.ticket_movie_nlu.view.fragments;
 
 
 import android.os.Bundle;
@@ -11,9 +11,9 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.lamnguyen.ticket_movie_nlu.Model.Bean.Movie;
+import com.lamnguyen.ticket_movie_nlu.model.bean.Movie;
 import com.lamnguyen.ticket_movie_nlu.R;
-import com.lamnguyen.ticket_movie_nlu.View.Adapters.DisplayTicketMovieAdapter;
+import com.lamnguyen.ticket_movie_nlu.model.utils.adapters.DisplayTicketMovieAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

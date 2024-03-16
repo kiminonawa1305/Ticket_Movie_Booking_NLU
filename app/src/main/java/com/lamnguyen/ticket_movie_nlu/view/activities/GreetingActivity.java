@@ -1,4 +1,4 @@
-package com.lamnguyen.ticket_movie_nlu.View.Activities;
+package com.lamnguyen.ticket_movie_nlu.view.activities;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -6,19 +6,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.LinearGradient;
 import android.graphics.Shader;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.os.Handler;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.AbsoluteSizeSpan;
-import android.util.Log;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.lamnguyen.ticket_movie_nlu.R;
 

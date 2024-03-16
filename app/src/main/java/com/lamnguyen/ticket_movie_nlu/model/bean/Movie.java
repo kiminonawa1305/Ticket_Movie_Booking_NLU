@@ -1,6 +1,4 @@
-package com.lamnguyen.ticket_movie_nlu.Model.Bean;
-
-import lombok.Data;
+package com.lamnguyen.ticket_movie_nlu.model.bean;
 
 public class Movie {
     private String genre, title, poster, runTime;

@@ -1,4 +1,4 @@
-package com.lamnguyen.ticket_movie_nlu.View.Adapters;
+package com.lamnguyen.ticket_movie_nlu.model.utils.adapters;
 
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.lamnguyen.ticket_movie_nlu.Model.Bean.Movie;
+import com.lamnguyen.ticket_movie_nlu.model.bean.Movie;
 import com.lamnguyen.ticket_movie_nlu.R;
 
 import java.util.List;

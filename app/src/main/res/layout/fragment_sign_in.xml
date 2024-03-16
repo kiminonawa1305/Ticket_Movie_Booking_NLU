@@ -6,21 +6,21 @@
     android:orientation="vertical"
     android:paddingHorizontal="20dp"
     android:paddingVertical="50dp"
-    tools:context=".View.Fragments.SignInFragment">
+    tools:context=".view.fragments.SignInFragment">
 
     <EditText
         android:id="@+id/edit_text_sign_in_email"
         style="@style/edt_input_info_sign"
-        android:hint="@string/hint_email"
         android:autofillHints="name"
+        android:hint="@string/hint_email"
         android:inputType="textEmailAddress" />
 
     <EditText
         android:id="@+id/edit_text_sign_in_password"
         style="@style/edt_input_info_sign"
+        android:autofillHints="password"
         android:hint="@string/hint_password"
-        android:inputType="textPassword"
-        android:autofillHints="password" />
+        android:inputType="textPassword" />
 
     <android.widget.Button
         android:id="@+id/button_sign_in"
@@ -29,19 +29,22 @@
         android:textColor="@color/white" />
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
         android:orientation="horizontal">
 
         <TextView
-            style="@style/notify_other_option_sign"
-            android:text="@string/do_not_have_any_account" />
-
-        <TextView
             android:id="@+id/text_view_change_fragment_sign_up"
             style="@style/change_page_sign"
-            android:text="@string/sign_up_now" />
+            android:text="@string/sign_up_now"
+            android:textAlignment="center" />
+
+        <TextView
+            android:id="@+id/text_view_change_fragment_forget_password"
+            style="@style/change_page_sign"
+            android:text="@string/forget_password"
+            android:textAlignment="center" />
     </LinearLayout>
 </LinearLayout>

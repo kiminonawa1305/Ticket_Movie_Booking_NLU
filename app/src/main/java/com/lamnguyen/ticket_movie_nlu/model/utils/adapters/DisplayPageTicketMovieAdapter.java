@@ -1,4 +1,4 @@
-package com.lamnguyen.ticket_movie_nlu.View.Adapters;
+package com.lamnguyen.ticket_movie_nlu.model.utils.adapters;
 
 import android.os.Bundle;
 
@@ -7,7 +7,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.lamnguyen.ticket_movie_nlu.View.Fragments.TicketMovieFragment;
+import com.lamnguyen.ticket_movie_nlu.view.fragments.TicketMovieFragment;
 
 public class DisplayPageTicketMovieAdapter extends FragmentStateAdapter {
     public DisplayPageTicketMovieAdapter(@NonNull FragmentActivity fragmentActivity) {
@@ -30,5 +30,4 @@ public class DisplayPageTicketMovieAdapter extends FragmentStateAdapter {
     public int getItemCount() {
         return 3;
     }
-
 }
