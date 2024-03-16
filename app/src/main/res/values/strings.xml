@@ -35,4 +35,10 @@
     <string name="not_match_password">Mật khẩu không trùng nhau!</string>
     <string name="send_mail_verify_fail">Gửi mail xác nhận thất bại. Vui lòng nhấn gửi lại!</string>
     <string name="login_with_password">Đăng nhập bằng mật khẩu</string>
+
+    <!--profile fragment string-->
+    <string name="sign_out">Đăng xuất</string>
+    <string name="information">Giới thiệu</string>
+    <string name="setting">Cài đặt</string>
+    <string name="change_password_user">Đổi mật khẩu</string>
 </resources>

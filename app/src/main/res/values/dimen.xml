@@ -5,4 +5,15 @@
     <dimen name="text_size_button_sign">20sp</dimen>
     <dimen name="text_size_default">16sp</dimen>
     <dimen name="size_process_bar_loading">150dp</dimen>
+
+    <!--profile-->
+    <dimen name="text_size_profile_menu_item">20sp</dimen>
+    <dimen name="padding_profile_menu_item">20dp</dimen>
+    <dimen name="layout_margin_vertical_profile_menu_item">5dp</dimen>
+    <dimen name="drawable_padding_profile_menu_item">20dp</dimen>
+    <dimen name="size_avatar_user">150dp</dimen>
+    <dimen name="corner_size_avatar_user">75dp</dimen>
+    <dimen name="height_background_user">200dp</dimen>
+    <dimen name="layout_margin_top_avatar_user">75dp</dimen>
+    <dimen name="text_size_display_name_user_in_profile">22dp</dimen>
 </resources>

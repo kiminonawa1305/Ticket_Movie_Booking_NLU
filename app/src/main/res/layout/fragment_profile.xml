@@ -1,14 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.fragments.ProfileFragment">
+    tools:context=".view.fragments.ProfileFragment"
+    tools:ignore="SpeakableTextPresentCheck">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="match_parent">
 
-</FrameLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraint_layout_background_profile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/image_view_background_user"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_background_user"
+                android:background="@drawable/bg_activity_sign"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/shapeable_image_view_avatar_user"
+                android:layout_width="@dimen/size_avatar_user"
+                android:layout_height="@dimen/size_avatar_user"
+                android:layout_marginTop="@dimen/layout_margin_top_avatar_user"
+                android:scaleType="centerCrop"
+                android:src="@drawable/bg_activity_sign"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:shapeAppearanceOverlay="@style/image_avatar_user" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintLeft_toLeftOf="@+id/shapeable_image_view_avatar_user"
+                app:layout_constraintRight_toRightOf="@+id/shapeable_image_view_avatar_user"
+                app:layout_constraintTop_toBottomOf="@+id/shapeable_image_view_avatar_user">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Nguyễn Đình Lam"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_display_name_user_in_profile"
+                    android:textStyle="bold"
+                    tools:ignore="SpUsage" />
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/constraint_layout_background_profile"
+            android:orientation="vertical">
+
+            <android.widget.Button
+                style="@style/profile_menu_item"
+                android:background="@null"
+                android:drawableStart="@drawable/ic_change_password"
+                android:drawableEnd="@drawable/ic_arrow_next"
+                android:text="@string/change_password_user" />
+
+            <android.widget.Button
+                style="@style/profile_menu_item"
+                android:background="@null"
+                android:drawableStart="@drawable/ic_setting"
+                android:drawableEnd="@drawable/ic_arrow_next"
+                android:text="@string/setting" />
+
+            <android.widget.Button
+                style="@style/profile_menu_item"
+                android:background="@null"
+                android:drawableStart="@drawable/ic_information"
+                android:drawableEnd="@drawable/ic_arrow_next"
+                android:text="@string/information" />
+
+            <android.widget.Button
+                style="@style/profile_menu_item"
+                android:background="@null"
+                android:drawableStart="@drawable/ic_sign_out"
+                android:text="@string/sign_out" />
+        </LinearLayout>
+    </RelativeLayout>
+</ScrollView>
