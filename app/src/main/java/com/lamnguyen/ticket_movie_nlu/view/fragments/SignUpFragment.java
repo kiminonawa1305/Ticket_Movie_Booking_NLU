@@ -101,7 +101,7 @@ public class SignUpFragment extends Fragment {
             return;
         }
 
-        int resultMatchPassword = userService.matchPassword(getUser(), rePassword);
+        int resultMatchPassword = userService.matchPassword(getUser().getPassword(), rePassword);
         switch (resultMatchPassword) {
             case UserService.EMPTY_PASSWORD: {
                 edtPassword.setError(getString(R.string.request_password));

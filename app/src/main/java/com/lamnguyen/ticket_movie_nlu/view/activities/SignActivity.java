@@ -22,7 +22,7 @@ public class SignActivity extends AppCompatActivity {
     private void initDialogLoading() {
         if (dialog == null) {
             dialog = new Dialog(this);
-            dialog.setContentView(R.layout.item_loading);
+            dialog.setContentView(R.layout.dialog_loading);
             dialog.setCancelable(false);
         }
     }
