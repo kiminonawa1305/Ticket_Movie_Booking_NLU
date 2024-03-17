@@ -6,12 +6,13 @@ import android.widget.TextView;
 
 import com.lamnguyen.ticket_movie_nlu.R;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class DialogLoading {
     private Dialog dialog;
 
-    private static Map<String, DialogLoading> mapDialogLoading;
+    private final static Map<String, DialogLoading> mapDialogLoading = new HashMap<>();
 
     public static DialogLoading getInstance(Activity activity) {
         DialogLoading dialogLoading = mapDialogLoading.get(activity.getClass().getName());
