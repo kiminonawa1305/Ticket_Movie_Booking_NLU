@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.lamnguyen.ticket_movie_nlu.model.utils.DialogLoading;
 import com.lamnguyen.ticket_movie_nlu.service.auth.sign_up.impl.SignUpServiceImpl;
 import com.lamnguyen.ticket_movie_nlu.service.UserService.UserService;
 import com.lamnguyen.ticket_movie_nlu.service.UserService.impl.UserServiceImpl;
@@ -33,7 +34,7 @@ public class SignUpFragment extends Fragment {
     private EditText edtEmail, edtPassword, edtRePassword;
     private Button btnSignUp;
     private User user;
-    private SignActivity activity;
+    private DialogLoading dialogLoading;
     private ThreadCallBackSign callBack;
 
 
@@ -50,7 +51,7 @@ public class SignUpFragment extends Fragment {
         fragmentManager = getParentFragmentManager();
         init(view);
         event();
-        activity = (SignActivity) getActivity();
+        dialogLoading = DialogLoading.getInstance(this.getActivity());
         return view;
     }
 
@@ -64,13 +65,13 @@ public class SignUpFragment extends Fragment {
         callBack = new ThreadCallBackSign() {
             @Override
             public void isSuccess() {
-                activity.dismissDialogLoading();
+                dialogLoading.dismissDialogLoading();
                 Toast.makeText(SignUpFragment.this.getContext(), getString(R.string.request_verify_account), Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void isFail() {
-                activity.dismissDialogLoading();
+                dialogLoading.dismissDialogLoading();
                 Toast.makeText(SignUpFragment.this.getContext(), getString(R.string.send_mail_verify_fail), Toast.LENGTH_SHORT).show();
             }
         };
@@ -117,18 +118,18 @@ public class SignUpFragment extends Fragment {
                 break;
             }
             case UserService.MATCH: {
-                activity.showDialogLoading(getString(R.string.sign_up));
+                dialogLoading.showDialogLoading(getString(R.string.sign_up));
                 SignUpServiceImpl signUpService = SignUpServiceImpl.getInstance();
                 signUpService.signUp(getUser(), new ThreadCallBackSign() {
                     @Override
                     public void isSuccess() {
-                        activity.dismissDialogLoading();
+                        dialogLoading.dismissDialogLoading();
                         verifyHandle();
                     }
 
                     @Override
                     public void isFail() {
-                        activity.dismissDialogLoading();
+                        dialogLoading.dismissDialogLoading();
                         Toast.makeText(SignUpFragment.this.getContext(), getString(R.string.email_is_exist), Toast.LENGTH_SHORT).show();
                     }
                 });

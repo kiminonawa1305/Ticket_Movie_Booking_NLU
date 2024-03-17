@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.lamnguyen.ticket_movie_nlu.model.utils.DialogLoading;
 import com.lamnguyen.ticket_movie_nlu.service.auth.sign_in.SignInService;
 import com.lamnguyen.ticket_movie_nlu.service.auth.sign_in.impl.SignInServiceImpl;
 import com.lamnguyen.ticket_movie_nlu.model.utils.ThreadCallBackSign;
@@ -34,7 +35,7 @@ public class SignInFragment extends Fragment {
     private FragmentManager fragmentManager;
     private EditText edtEmail, edtPassword;
     private Button btnSignIn;
-    private SignActivity activity;
+    private DialogLoading dialogLoading;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -53,7 +54,7 @@ public class SignInFragment extends Fragment {
         tvChangeFragmentSignUp = view.findViewById(R.id.text_view_change_fragment_sign_up);
         this.tvChangeFragmentForgetPassword = view.findViewById(R.id.text_view_change_fragment_forget_password);
         event();
-        activity = (SignActivity) getActivity();
+        dialogLoading = DialogLoading.getInstance(this.getActivity());
         return view;
     }
 
@@ -106,30 +107,30 @@ public class SignInFragment extends Fragment {
     private void SignInHandler(String email, String password) {
         if (!isValidate(email, password)) return;
 
-        activity.showDialogLoading(activity.getString(R.string.sign_in));
+        dialogLoading.showDialogLoading(getString(R.string.sign_in));
         SignInService signInService = SignInServiceImpl.getInstance();
         signInService.signIn(email, password, new ThreadCallBackSign() {
             @Override
             public void isSuccess() {
-                activity.dismissDialogLoading();
+                dialogLoading.dismissDialogLoading();
                 signInSuccess();
             }
 
             @Override
             public void isFail() {
-                activity.dismissDialogLoading();
+                dialogLoading.dismissDialogLoading();
                 Toast.makeText(SignInFragment.this.getContext(), getString(R.string.login_fail), Toast.LENGTH_SHORT).show();
             }
         }, new ThreadCallBackSign() {
             @Override
             public void isSuccess() {
-                activity.dismissDialogLoading();
+                dialogLoading.dismissDialogLoading();
                 Toast.makeText(SignInFragment.this.getContext(), getString(R.string.verify_is_account), Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void isFail() {
-                activity.dismissDialogLoading();
+                dialogLoading.dismissDialogLoading();
                 Toast.makeText(SignInFragment.this.getContext(), getString(R.string.request_verify_account), Toast.LENGTH_SHORT).show();
             }
         });
