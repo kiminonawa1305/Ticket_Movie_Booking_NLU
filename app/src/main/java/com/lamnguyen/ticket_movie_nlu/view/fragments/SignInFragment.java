@@ -47,15 +47,19 @@ public class SignInFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_sign_in, container, false);
+        init(view);
+        event();
+        return view;
+    }
+
+    private void init(View view) {
         fragmentManager = getParentFragmentManager();
         this.edtEmail = view.findViewById(R.id.edit_text_sign_in_email);
         this.edtPassword = view.findViewById(R.id.edit_text_sign_in_password);
         this.btnSignIn = view.findViewById(R.id.button_sign_in);
         tvChangeFragmentSignUp = view.findViewById(R.id.text_view_change_fragment_sign_up);
         this.tvChangeFragmentForgetPassword = view.findViewById(R.id.text_view_change_fragment_forget_password);
-        dialogLoading = DialogLoading.getInstance(this.getActivity());
-        event();
-        return view;
+        dialogLoading = DialogLoading.getInstance(getContext());
     }
 
     private void event() {
@@ -66,7 +70,11 @@ public class SignInFragment extends Fragment {
         tvChangeFragmentForgetPassword.setOnClickListener(v -> {
             changeFragmentForgetPassword();
         });
-        loginEvent();
+        this.btnSignIn.setOnClickListener(v -> {
+            String email = this.edtEmail.getText().toString();
+            String password = this.edtPassword.getText().toString();
+            signInHandler(email, password);
+        });
     }
 
 
@@ -90,25 +98,9 @@ public class SignInFragment extends Fragment {
         fragmentTransaction.commit();
     }
 
-    private void loginEvent() {
-        this.btnSignIn.setOnClickListener(v -> {
-            String email = this.edtEmail.getText().toString();
-            String password = this.edtPassword.getText().toString();
-            SignInHandler(email, password);
-        });
 
-        this.btnSignIn.setOnClickListener(v -> {
-            String email = this.edtEmail.getText().toString();
-            String password = this.edtPassword.getText().toString();
-            SignInHandler(email, password);
-        });
-    }
-
-
-
-    private void SignInHandler(String email, String password) {
+    private void signInHandler(String email, String password) {
         if (!isValidate(email, password)) return;
-
         dialogLoading.showDialogLoading(getString(R.string.sign_in));
         SignInService signInService = SignInServiceImpl.getInstance();
         signInService.signIn(email, password, new ThreadCallBackSign() {
@@ -142,6 +134,7 @@ public class SignInFragment extends Fragment {
         Toast.makeText(this.getContext(), getString(R.string.login_success), Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this.getContext(), MainActivity.class);
         this.getActivity().startActivity(intent);
+        dialogLoading.destroy(getContext());
         this.getActivity().finish();
     }
 

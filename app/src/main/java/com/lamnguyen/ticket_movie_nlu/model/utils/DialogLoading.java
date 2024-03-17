@@ -2,6 +2,7 @@ package com.lamnguyen.ticket_movie_nlu.model.utils;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.widget.TextView;
 
 import com.lamnguyen.ticket_movie_nlu.R;
@@ -11,23 +12,30 @@ import java.util.Map;
 
 public class DialogLoading {
     private Dialog dialog;
+    private Context context;
 
     private final static Map<String, DialogLoading> mapDialogLoading = new HashMap<>();
 
-    public static DialogLoading getInstance(Activity activity) {
-        DialogLoading dialogLoading = mapDialogLoading.get(activity.getClass().getName());
+    public static DialogLoading getInstance(Context context) {
+        DialogLoading dialogLoading = mapDialogLoading.get(context.getClass().getName());
         if (dialogLoading == null) {
-            dialogLoading = new DialogLoading(activity);
-            mapDialogLoading.put(activity.getClass().getName(), dialogLoading);
+            dialogLoading = new DialogLoading(context);
+            mapDialogLoading.put(context.getClass().getName(), dialogLoading);
         }
 
         return dialogLoading;
     }
 
-    private DialogLoading(Activity activity) {
-        dialog = new Dialog(activity);
+    private DialogLoading(Context context) {
+        this.context = context;
+        initDialog();
+    }
+
+    private Dialog initDialog() {
+        dialog = new Dialog(context);
         dialog.setContentView(R.layout.dialog_loading);
         dialog.setCancelable(false);
+        return dialog;
     }
 
     public void showDialogLoading(String title) {
@@ -38,5 +46,9 @@ public class DialogLoading {
 
     public void dismissDialogLoading() {
         dialog.cancel();
+    }
+
+    public void destroy(Context context) {
+        mapDialogLoading.remove(context.getClass().getName());
     }
 }

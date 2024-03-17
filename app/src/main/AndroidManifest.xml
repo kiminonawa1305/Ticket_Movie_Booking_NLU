@@ -50,12 +50,12 @@
             android:label="SignActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.activities.GreetingActivity"
+            android:name=".view.activities.MainActivity"
             android:exported="false"
             android:label="GreetingActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.activities.MainActivity"
+            android:name=".view.activities.GreetingActivity"
             android:exported="true"
             android:label="MainActivity"
             android:screenOrientation="portrait">

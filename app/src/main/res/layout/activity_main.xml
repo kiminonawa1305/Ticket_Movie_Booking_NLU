@@ -25,5 +25,5 @@
         app:mbn_defaultIconColor="@color/gray"
         app:mbn_rippleColor="#2f424242"
         app:mbn_selectedIconColor="@color/red"
-        app:mbn_shadowColor="#1f212121" />
+        app:mbn_shadowColor="@color/red" />
 </RelativeLayout>

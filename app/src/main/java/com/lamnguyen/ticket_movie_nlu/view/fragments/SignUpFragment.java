@@ -75,7 +75,7 @@ public class SignUpFragment extends Fragment {
             }
         };
 
-        dialogLoading = DialogLoading.getInstance(getActivity());
+        dialogLoading = DialogLoading.getInstance(getContext());
     }
 
 

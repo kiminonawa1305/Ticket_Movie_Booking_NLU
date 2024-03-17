@@ -46,4 +46,6 @@
     <string name="input_re_new_password">Nhập lại mật khẩu mới!</string>
     <string name="submit">Xác nhập</string>
     <string name="title_activity_maps">MapsActivity</string>
+    <string name="change_password_success">Đổi mật khẩu thành công!</string>
+    <string name="change_password_fail">Đổi mật khẩu không thành công!</string>
 </resources>
