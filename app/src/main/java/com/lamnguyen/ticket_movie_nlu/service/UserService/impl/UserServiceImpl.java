@@ -12,9 +12,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int matchPassword(User user, String rePassword) {
-        if (user.getPassword().isEmpty()) return UserService.EMPTY_PASSWORD;
+    public int matchPassword(String password, String rePassword) {
+        if (password.isEmpty()) return UserService.EMPTY_PASSWORD;
         if (rePassword.isEmpty()) return UserService.EMPTY_RE_PASSWORD;
-        return user.getPassword().equals(rePassword) ? UserService.MATCH : UserService.NOT_MATCH;
+        return password.equals(rePassword) ? UserService.MATCH : UserService.NOT_MATCH;
     }
 }
