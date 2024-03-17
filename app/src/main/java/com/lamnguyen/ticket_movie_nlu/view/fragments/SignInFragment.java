@@ -53,8 +53,8 @@ public class SignInFragment extends Fragment {
         this.btnSignIn = view.findViewById(R.id.button_sign_in);
         tvChangeFragmentSignUp = view.findViewById(R.id.text_view_change_fragment_sign_up);
         this.tvChangeFragmentForgetPassword = view.findViewById(R.id.text_view_change_fragment_forget_password);
-        event();
         dialogLoading = DialogLoading.getInstance(this.getActivity());
+        event();
         return view;
     }
 
@@ -103,6 +103,8 @@ public class SignInFragment extends Fragment {
             SignInHandler(email, password);
         });
     }
+
+
 
     private void SignInHandler(String email, String password) {
         if (!isValidate(email, password)) return;

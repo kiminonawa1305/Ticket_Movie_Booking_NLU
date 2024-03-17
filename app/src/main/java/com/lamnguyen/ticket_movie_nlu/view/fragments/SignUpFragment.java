@@ -51,7 +51,6 @@ public class SignUpFragment extends Fragment {
         fragmentManager = getParentFragmentManager();
         init(view);
         event();
-        dialogLoading = DialogLoading.getInstance(this.getActivity());
         return view;
     }
 
@@ -75,6 +74,8 @@ public class SignUpFragment extends Fragment {
                 Toast.makeText(SignUpFragment.this.getContext(), getString(R.string.send_mail_verify_fail), Toast.LENGTH_SHORT).show();
             }
         };
+
+        dialogLoading = DialogLoading.getInstance(getActivity());
     }
 
 
