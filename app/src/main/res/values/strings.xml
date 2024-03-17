@@ -41,4 +41,9 @@
     <string name="information">Giới thiệu</string>
     <string name="setting">Cài đặt</string>
     <string name="change_password_user">Đổi mật khẩu</string>
+    <string name="input_old_password">Nhập mật khẩu cũ!</string>
+    <string name="input_new_password">Nhập mật khẩu mới!</string>
+    <string name="input_re_new_password">Nhập lại mật khẩu mới!</string>
+    <string name="submit">Xác nhập</string>
+    <string name="title_activity_maps">MapsActivity</string>
 </resources>
