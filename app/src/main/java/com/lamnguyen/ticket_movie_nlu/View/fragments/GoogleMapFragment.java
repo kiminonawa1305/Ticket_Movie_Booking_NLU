@@ -22,13 +22,11 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.lamnguyen.ticket_movie_nlu.R;
-import com.lamnguyen.ticket_movie_nlu.databinding.ActivityMapsBinding;
 
 public class GoogleMapFragment extends Fragment {
     private static final String TAG = "GoogleMapFragment";
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
     private GoogleMap mMap;
-    private ActivityMapsBinding binding;
     private ValueAnimator valueAnimatorZoom;
 
     private static final LatLng LAT_LNG_CINESTAR = new LatLng(10.875169012879635, 106.80071966748321);
@@ -75,7 +73,7 @@ public class GoogleMapFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_maps, container, false);
+        return inflater.inflate(R.layout.fragment_google_map, container, false);
     }
 
     @Override
