@@ -10,7 +10,8 @@ import android.view.MenuItem;
 
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
 import com.lamnguyen.ticket_movie_nlu.R;
-import com.lamnguyen.ticket_movie_nlu.view.fragments.CinemaFragment;
+import com.lamnguyen.ticket_movie_nlu.view.fragments.FavouriteMovieFragment;
+import com.lamnguyen.ticket_movie_nlu.view.fragments.GoogleMapFragment;
 import com.lamnguyen.ticket_movie_nlu.view.fragments.MovieFragment;
 import com.lamnguyen.ticket_movie_nlu.view.fragments.ProfileFragment;
 import com.lamnguyen.ticket_movie_nlu.view.fragments.TicketFragment;
@@ -35,8 +36,9 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigation = findViewById(R.id.meow_bottom_navigation);
         bottomNavigation.add(new MeowBottomNavigation.Model(1, R.drawable.ic_movie));
         bottomNavigation.add(new MeowBottomNavigation.Model(2, R.drawable.ic_ticket));
-        bottomNavigation.add(new MeowBottomNavigation.Model(3, R.drawable.ic_cinema));
-        bottomNavigation.add(new MeowBottomNavigation.Model(4, R.drawable.ic_profile));
+        bottomNavigation.add(new MeowBottomNavigation.Model(3, R.drawable.ic_love));
+        bottomNavigation.add(new MeowBottomNavigation.Model(4, R.drawable.ic_map_pin));
+        bottomNavigation.add(new MeowBottomNavigation.Model(5, R.drawable.ic_profile));
         fragmentManager = getSupportFragmentManager();
     }
 
@@ -55,7 +57,8 @@ public class MainActivity extends AppCompatActivity {
                     case 1:
                     case 2:
                     case 3:
-                    case 4: {
+                    case 4:
+                    case 5: {
                         break;
                     }
                 }
@@ -77,10 +80,14 @@ public class MainActivity extends AppCompatActivity {
                 break;
             }
             case 3: {
-                transaction.replace(R.id.fragment_display_main, CinemaFragment.class, null);
+                transaction.replace(R.id.fragment_display_main, FavouriteMovieFragment.class, null);
                 break;
             }
             case 4: {
+                transaction.replace(R.id.fragment_display_main, GoogleMapFragment.class, null);
+                break;
+            }
+            case 5: {
                 transaction.replace(R.id.fragment_display_main, ProfileFragment.class, null);
                 break;
             }

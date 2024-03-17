@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.fragments.CinemaFragment">
+    tools:context=".view.fragments.FavouriteMovieFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
