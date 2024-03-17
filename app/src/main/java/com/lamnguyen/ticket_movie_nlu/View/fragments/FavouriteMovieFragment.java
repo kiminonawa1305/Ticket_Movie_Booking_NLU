@@ -1,4 +1,4 @@
-cpackage com.lamnguyen.ticket_movie_nlu.view.fragments;
+package com.lamnguyen.ticket_movie_nlu.view.fragments;
 
 import android.os.Bundle;
 
