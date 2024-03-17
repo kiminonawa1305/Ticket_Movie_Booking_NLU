@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.lamnguyen.ticket_movie_nlu.R;
+import com.lamnguyen.ticket_movie_nlu.model.utils.DialogLoading;
 import com.lamnguyen.ticket_movie_nlu.model.utils.ThreadCallBackSign;
 import com.lamnguyen.ticket_movie_nlu.service.auth.forget_password.impl.ForgetPasswordServiceImpl;
 import com.lamnguyen.ticket_movie_nlu.view.activities.SignActivity;
@@ -26,7 +27,7 @@ public class ForgetPasswordFragment extends Fragment {
     private FragmentManager fragmentManager;
     private EditText edtEmail;
     private Button btnForgetPassword;
-    private SignActivity activity;
+    private DialogLoading dialogLoading;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -41,7 +42,7 @@ public class ForgetPasswordFragment extends Fragment {
         tvChangeFragmentSignIn = view.findViewById(R.id.text_view_change_fragment_sign_in_form_fragment_forget_password);
         btnForgetPassword = view.findViewById(R.id.button_forget_password);
         edtEmail = view.findViewById(R.id.edit_text_forget_password_email);
-        activity = (SignActivity) getActivity();
+        dialogLoading = DialogLoading.getInstance(getActivity());
         event();
         return view;
     }
@@ -64,7 +65,7 @@ public class ForgetPasswordFragment extends Fragment {
                 return;
             }
 
-            activity.showDialogLoading("Gửi mail xác thật!");
+            dialogLoading.showDialogLoading("Gửi mail xác thật!");
             ForgetPasswordServiceImpl.getInstance().sendForgetPassword(email,
                     new ThreadCallBackSign() {
                         @Override
@@ -74,7 +75,7 @@ public class ForgetPasswordFragment extends Fragment {
                         @Override
                         public void isFail() {
                             Toast.makeText(ForgetPasswordFragment.this.getContext(), "Email không tồn tại...", Toast.LENGTH_LONG).show();
-                            activity.dismissDialogLoading();
+                            dialogLoading.dismissDialogLoading();
                         }
                     },
 
@@ -82,13 +83,13 @@ public class ForgetPasswordFragment extends Fragment {
                         @Override
                         public void isSuccess() {
                             Toast.makeText(ForgetPasswordFragment.this.getContext(), "Vui lòng kiểm tra mail...", Toast.LENGTH_LONG).show();
-                            activity.dismissDialogLoading();
+                            dialogLoading.dismissDialogLoading();
                         }
 
                         @Override
                         public void isFail() {
                             Toast.makeText(ForgetPasswordFragment.this.getContext(), "Lỗi...", Toast.LENGTH_LONG).show();
-                            activity.dismissDialogLoading();
+                            dialogLoading.dismissDialogLoading();
                         }
                     });
         });
