@@ -38,13 +38,17 @@ public class ForgetPasswordFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_forget_password, container, false);
+        init(view);
+        event();
+        return view;
+    }
+
+    private void init(View view) {
         fragmentManager = getParentFragmentManager();
         tvChangeFragmentSignIn = view.findViewById(R.id.text_view_change_fragment_sign_in_form_fragment_forget_password);
         btnForgetPassword = view.findViewById(R.id.button_forget_password);
         edtEmail = view.findViewById(R.id.edit_text_forget_password_email);
-        dialogLoading = DialogLoading.getInstance(getActivity());
-        event();
-        return view;
+        dialogLoading = DialogLoading.getInstance(getContext());
     }
 
     private void event() {

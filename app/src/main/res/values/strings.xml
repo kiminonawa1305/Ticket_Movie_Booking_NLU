@@ -29,8 +29,9 @@
     <string name="request_re_password">Vui lòng nhập lại mật khẩu của bạn!</string>
     <string name="request_verify_account">Vui lòng kiểm tra email và xác thực tài khoản!</string>
     <string name="verify_is_account">Tài khoản đã được xác nhận!</string>
-    <string name="login_success">Đăng nhập thành công!</string>
-    <string name="login_fail">Sai email hoặc mật khẩu!</string>
+    <string name="sign_in_success">Đăng nhập thành công!</string>
+    <string name="sign_up_success">Đăng ký thành công!</string>
+    <string name="sign_in_fail">Sai email hoặc mật khẩu!</string>
     <string name="email_is_exist">Email đã được đăng ký!</string>
     <string name="not_match_password">Mật khẩu không trùng nhau!</string>
     <string name="send_mail_verify_fail">Gửi mail xác nhận thất bại. Vui lòng nhấn gửi lại!</string>
@@ -48,4 +49,5 @@
     <string name="title_activity_maps">MapsActivity</string>
     <string name="change_password_success">Đổi mật khẩu thành công!</string>
     <string name="change_password_fail">Đổi mật khẩu không thành công!</string>
+    <string name="email_not_register">Email chưa được đăng ký. Vui lòng đăng ký</string>
 </resources>

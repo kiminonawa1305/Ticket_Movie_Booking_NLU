@@ -1,10 +1,17 @@
 package com.lamnguyen.ticket_movie_nlu.service.auth.sign_in.impl;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidUserException;
+import com.google.firebase.auth.SignInMethodQueryResult;
+import com.lamnguyen.ticket_movie_nlu.service.auth.check_mail.CheckEmailService;
 import com.lamnguyen.ticket_movie_nlu.service.auth.sign_in.SignInService;
 import com.lamnguyen.ticket_movie_nlu.model.utils.ThreadCallBackSign;
+
+import java.util.List;
 
 public class SignInServiceImpl implements SignInService {
     private FirebaseAuth auth;
@@ -37,14 +44,12 @@ public class SignInServiceImpl implements SignInService {
      * checkCallBack(callBack): kiểm tra 2 callBack chính cho phương thức không
      * */
     private void signInHandler(String email, String password, @NonNull ThreadCallBackSign... callBack) {
-        checkCallBack(callBack);
-
         ThreadCallBackSign callBackSignIn = callBack[0];
-        ThreadCallBackSign callBackVerify = callBack[1];
         auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
-                if (isVerify()) callBackSignIn.isSuccess();
-                else callBackVerify.isFail();
+//                if (isVerify()) callBackSignIn.isSuccess();
+//                else callBackVerify.isFail();
+                callBackSignIn.isSuccess();
                 return;
             }
 
@@ -56,35 +61,6 @@ public class SignInServiceImpl implements SignInService {
         });
     }
 
-    private void checkCallBack(ThreadCallBackSign... callBack) {
-        if (callBack[0] == null) {
-            callBack[0] = new ThreadCallBackSign() {
-                @Override
-                public void isSuccess() {
-
-                }
-
-                @Override
-                public void isFail() {
-
-                }
-            };
-        }
-
-        if (callBack[1] == null) {
-            callBack[1] = new ThreadCallBackSign() {
-                @Override
-                public void isSuccess() {
-
-                }
-
-                @Override
-                public void isFail() {
-
-                }
-            };
-        }
-    }
 
     private boolean isVerify() {
         if (auth.getCurrentUser() == null) return false;

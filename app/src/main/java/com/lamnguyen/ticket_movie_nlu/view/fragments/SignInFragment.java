@@ -15,11 +15,15 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.lamnguyen.ticket_movie_nlu.model.bean.User;
 import com.lamnguyen.ticket_movie_nlu.model.utils.DialogLoading;
+import com.lamnguyen.ticket_movie_nlu.service.auth.check_mail.CheckEmailService;
+import com.lamnguyen.ticket_movie_nlu.service.auth.check_mail.impl.CheckEmailServiceImpl;
 import com.lamnguyen.ticket_movie_nlu.service.auth.sign_in.SignInService;
 import com.lamnguyen.ticket_movie_nlu.service.auth.sign_in.impl.SignInServiceImpl;
 import com.lamnguyen.ticket_movie_nlu.model.utils.ThreadCallBackSign;
 import com.lamnguyen.ticket_movie_nlu.R;
+import com.lamnguyen.ticket_movie_nlu.service.auth.sign_up.impl.SignUpServiceImpl;
 import com.lamnguyen.ticket_movie_nlu.view.activities.MainActivity;
 import com.lamnguyen.ticket_movie_nlu.view.activities.SignActivity;
 
@@ -71,9 +75,7 @@ public class SignInFragment extends Fragment {
             changeFragmentForgetPassword();
         });
         this.btnSignIn.setOnClickListener(v -> {
-            String email = this.edtEmail.getText().toString();
-            String password = this.edtPassword.getText().toString();
-            signInHandler(email, password);
+            checkEmailHandler();
         });
     }
 
@@ -99,7 +101,10 @@ public class SignInFragment extends Fragment {
     }
 
 
-    private void signInHandler(String email, String password) {
+    private void signInHandler() {
+        String email = this.edtEmail.getText().toString();
+        String password = this.edtPassword.getText().toString();
+
         if (!isValidate(email, password)) return;
         dialogLoading.showDialogLoading(getString(R.string.sign_in));
         SignInService signInService = SignInServiceImpl.getInstance();
@@ -113,25 +118,49 @@ public class SignInFragment extends Fragment {
             @Override
             public void isFail() {
                 dialogLoading.dismissDialogLoading();
-                Toast.makeText(SignInFragment.this.getContext(), getString(R.string.login_fail), Toast.LENGTH_SHORT).show();
+                Toast.makeText(SignInFragment.this.getContext(), getString(R.string.sign_in_fail), Toast.LENGTH_SHORT).show();
             }
-        }, new ThreadCallBackSign() {
+        });
+    }
+
+    private void checkEmailHandler() {
+        String email = this.edtEmail.getText().toString();
+        CheckEmailService checkEmailService = CheckEmailServiceImpl.getInstance();
+        checkEmailService.checkEmail(email, new ThreadCallBackSign() {
+            @Override
+            public void isSuccess() {
+                signInHandler();
+            }
+
+            @Override
+            public void isFail() {
+                Toast.makeText(SignInFragment.this.getContext(), getString(R.string.email_not_register), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void reSendVerify(String email, String password) {
+        User user = new User();
+        user.setEmail(email);
+        user.setPassword(password);
+
+        SignUpServiceImpl.getInstance().verify(user, new ThreadCallBackSign() {
             @Override
             public void isSuccess() {
                 dialogLoading.dismissDialogLoading();
-                Toast.makeText(SignInFragment.this.getContext(), getString(R.string.verify_is_account), Toast.LENGTH_SHORT).show();
+                Toast.makeText(SignInFragment.this.getContext(), getString(R.string.request_verify_account), Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void isFail() {
                 dialogLoading.dismissDialogLoading();
-                Toast.makeText(SignInFragment.this.getContext(), getString(R.string.request_verify_account), Toast.LENGTH_SHORT).show();
+                Toast.makeText(SignInFragment.this.getContext(), getString(R.string.send_mail_verify_fail), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     private void signInSuccess() {
-        Toast.makeText(this.getContext(), getString(R.string.login_success), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this.getContext(), getString(R.string.sign_in_success), Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this.getContext(), MainActivity.class);
         this.getActivity().startActivity(intent);
         dialogLoading.destroy(getContext());

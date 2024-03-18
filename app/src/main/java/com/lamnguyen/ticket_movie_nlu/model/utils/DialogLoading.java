@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class DialogLoading {
-    private Dialog dialog;
+    private static Dialog dialog;
     private Context context;
 
     private final static Map<String, DialogLoading> mapDialogLoading = new HashMap<>();
@@ -27,11 +27,10 @@ public class DialogLoading {
     }
 
     private DialogLoading(Context context) {
-        this.context = context;
-        initDialog();
+        initDialog(context);
     }
 
-    private Dialog initDialog() {
+    private Dialog initDialog(Context context) {
         dialog = new Dialog(context);
         dialog.setContentView(R.layout.dialog_loading);
         dialog.setCancelable(false);

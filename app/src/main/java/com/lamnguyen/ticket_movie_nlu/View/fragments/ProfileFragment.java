@@ -50,8 +50,7 @@ public class ProfileFragment extends Fragment {
         btnSetting = view.findViewById(R.id.button_setting);
         btnSignOut = view.findViewById(R.id.button_sign_out);
 
-
-        dialogLoading = DialogLoading.getInstance(getActivity());
+        dialogLoading = DialogLoading.getInstance(getContext());
     }
 
     private Dialog getInstanceDialogChangePassword() {
@@ -81,6 +80,7 @@ public class ProfileFragment extends Fragment {
         FirebaseAuth.getInstance().signOut();
         Intent intent = new Intent(getActivity(), SignActivity.class);
         this.startActivity(intent);
+        dialogLoading.destroy(getContext());
         getActivity().finish();
     }
 
@@ -105,19 +105,21 @@ public class ProfileFragment extends Fragment {
                 break;
             }
             case UserService.MATCH: {
-                dialogLoading.showDialogLoading(getString(R.string.sign_up));
+                dialogLoading.showDialogLoading(getString(R.string.change_password_user));
                 ChangePasswordService changePasswordService = ChangePasswordServiceImpl.getInstance();
 
                 changePasswordService.changePassword(password, new ThreadCallBackSign() {
                     @Override
                     public void isSuccess() {
                         dialogLoading.dismissDialogLoading();
+                        dlgChangePassword.dismiss();
                         Toast.makeText(getContext(), getString(R.string.change_password_success), Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void isFail() {
                         dialogLoading.dismissDialogLoading();
+                        dlgChangePassword.dismiss();
                         Toast.makeText(getContext(), getString(R.string.change_password_fail), Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -128,6 +130,6 @@ public class ProfileFragment extends Fragment {
     private void initViewInDialogChangePassword() {
         edtNewPassword = dlgChangePassword.findViewById(R.id.edit_text_new_password);
         edtReNewPassword = dlgChangePassword.findViewById(R.id.edit_text_re_new_password);
-        btnChangePassword = dlgChangePassword.findViewById(R.id.button_submit_change_pasword);
+        btnSubmitChangePassword = dlgChangePassword.findViewById(R.id.button_submit_change_pasword);
     }
 }

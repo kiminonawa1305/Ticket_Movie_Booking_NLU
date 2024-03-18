@@ -6,9 +6,15 @@ import com.lamnguyen.ticket_movie_nlu.service.auth.change_password.ChangePasswor
 
 public class ChangePasswordServiceImpl implements ChangePasswordService {
     FirebaseAuth auth;
+    private static ChangePasswordServiceImpl instance;
 
     private ChangePasswordServiceImpl() {
         auth = FirebaseAuth.getInstance();
+    }
+
+    public static ChangePasswordServiceImpl getInstance() {
+        if (instance == null) instance = new ChangePasswordServiceImpl();
+        return instance;
     }
 
     @Override

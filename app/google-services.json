@@ -1,44 +1,26 @@
 {
   "project_info": {
-    "project_number": "174583519442",
-    "project_id": "ticket-movie-booking-nlu-efd84",
-    "storage_bucket": "ticket-movie-booking-nlu-efd84.appspot.com"
+    "project_number": "953041789072",
+    "project_id": "ticket-movie-booking-nlu-2196d",
+    "storage_bucket": "ticket-movie-booking-nlu-2196d.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:174583519442:android:d7794b9f5f9204437df50b",
+        "mobilesdk_app_id": "1:953041789072:android:8afab255e1ec57d2ff3815",
         "android_client_info": {
           "package_name": "com.lamnguyen.ticket_movie_nlu"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "174583519442-gdc1obloscbduiojb82m2ctaacnp3mp1.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.lamnguyen.ticket_movie_nlu",
-            "certificate_hash": "da1b65476afede04b7790493045b06c73d118e3f"
-          }
-        },
-        {
-          "client_id": "174583519442-bj4pvvv43mskeu2hq1vop0kb1vktlagk.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyB1dORb62uH-IVmdl_ohQRr414E3w6HO44"
+          "current_key": "AIzaSyD4Y4NgldsQdiJo7I1qHEyIqx11UOeBUz4"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "174583519442-bj4pvvv43mskeu2hq1vop0kb1vktlagk.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }

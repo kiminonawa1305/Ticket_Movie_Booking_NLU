@@ -125,7 +125,8 @@ public class SignUpFragment extends Fragment {
                     @Override
                     public void isSuccess() {
                         dialogLoading.dismissDialogLoading();
-                        verifyHandle();
+//                        verifyHandle();
+                        Toast.makeText(SignUpFragment.this.getContext(), getString(R.string.sign_up_success), Toast.LENGTH_SHORT).show();
                     }
 
                     @Override

@@ -31,7 +31,7 @@ public class SignActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+        if (FirebaseAuth.getInstance().getCurrentUser() != null && FirebaseAuth.getInstance().getCurrentUser().isEmailVerified()) {
             Intent intent = new Intent(this, MainActivity.class);
             this.startActivity(intent);
             this.finish();
