@@ -1,5 +1,6 @@
 package com.lamnguyen.ticket_movie_nlu.view.fragments;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,7 +35,7 @@ public class SignUpFragment extends Fragment {
     private EditText edtEmail, edtPassword, edtRePassword;
     private Button btnSignUp;
     private User user;
-    private DialogLoading dialogLoading;
+    private Dialog dialog;
     private ThreadCallBackSign callBack;
 
 
@@ -64,18 +65,20 @@ public class SignUpFragment extends Fragment {
         callBack = new ThreadCallBackSign() {
             @Override
             public void isSuccess() {
-                dialogLoading.dismissDialogLoading();
+                dialog.dismiss();
                 Toast.makeText(SignUpFragment.this.getContext(), getString(R.string.request_verify_account), Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void isFail() {
-                dialogLoading.dismissDialogLoading();
+                dialog.dismiss();
                 Toast.makeText(SignUpFragment.this.getContext(), getString(R.string.send_mail_verify_fail), Toast.LENGTH_SHORT).show();
             }
         };
 
-        dialogLoading = DialogLoading.getInstance(getContext());
+        dialog = new Dialog(getContext());
+        dialog.setContentView(R.layout.dialog_loading);
+        dialog.setCancelable(false);
     }
 
 
@@ -119,19 +122,19 @@ public class SignUpFragment extends Fragment {
                 break;
             }
             case UserService.MATCH: {
-                dialogLoading.showDialogLoading(getString(R.string.sign_up));
+                DialogLoading.showDialogLoading(dialog, getString(R.string.sign_up));
                 SignUpServiceImpl signUpService = SignUpServiceImpl.getInstance();
                 signUpService.signUp(getUser(), new ThreadCallBackSign() {
                     @Override
                     public void isSuccess() {
-                        dialogLoading.dismissDialogLoading();
+                        dialog.dismiss();
 //                        verifyHandle();
                         Toast.makeText(SignUpFragment.this.getContext(), getString(R.string.sign_up_success), Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void isFail() {
-                        dialogLoading.dismissDialogLoading();
+                        dialog.dismiss();
                         Toast.makeText(SignUpFragment.this.getContext(), getString(R.string.email_is_exist), Toast.LENGTH_SHORT).show();
                     }
                 });

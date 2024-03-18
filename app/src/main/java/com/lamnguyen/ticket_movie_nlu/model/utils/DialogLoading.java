@@ -11,43 +11,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class DialogLoading {
-    private static Dialog dialog;
-    private Context context;
-
-    private final static Map<String, DialogLoading> mapDialogLoading = new HashMap<>();
-
-    public static DialogLoading getInstance(Context context) {
-        DialogLoading dialogLoading = mapDialogLoading.get(context.getClass().getName());
-        if (dialogLoading == null) {
-            dialogLoading = new DialogLoading(context);
-            mapDialogLoading.put(context.getClass().getName(), dialogLoading);
-        }
-
-        return dialogLoading;
-    }
-
-    private DialogLoading(Context context) {
-        initDialog(context);
-    }
-
-    private Dialog initDialog(Context context) {
-        dialog = new Dialog(context);
-        dialog.setContentView(R.layout.dialog_loading);
-        dialog.setCancelable(false);
-        return dialog;
-    }
-
-    public void showDialogLoading(String title) {
+    public static void showDialogLoading(Dialog dialog, String title) {
         TextView tvTitleDialogLoading = dialog.findViewById(R.id.text_view_title_progress_loading);
         tvTitleDialogLoading.setText(title);
         dialog.show();
-    }
-
-    public void dismissDialogLoading() {
-        dialog.cancel();
-    }
-
-    public void destroy(Context context) {
-        mapDialogLoading.remove(context.getClass().getName());
     }
 }
