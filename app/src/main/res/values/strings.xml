@@ -2,6 +2,7 @@
     <string name="app_name">Ticket Movie Booking NLU</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="url_firebase_storage">gs://ticket-movie-booking-nlu-2196d.appspot.com/</string>
 
     <!---->
     <string name="default_web_client_id">174583519442-gdc1obloscbduiojb82m2ctaacnp3mp1.apps.googleusercontent.com</string>
@@ -50,4 +51,7 @@
     <string name="change_password_success">Đổi mật khẩu thành công!</string>
     <string name="change_password_fail">Đổi mật khẩu không thành công!</string>
     <string name="email_not_register">Email chưa được đăng ký. Vui lòng đăng ký</string>
+    <string name="success">Thành công!</string>
+    <string name="failed">Thất bại!</string>
+    <string name="loading">Đang tải...</string>
 </resources>
