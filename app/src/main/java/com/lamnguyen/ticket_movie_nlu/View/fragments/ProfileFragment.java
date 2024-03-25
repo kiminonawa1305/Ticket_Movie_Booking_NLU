@@ -4,8 +4,6 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -19,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,11 +35,7 @@ import com.lamnguyen.ticket_movie_nlu.service.auth.change_password.ChangePasswor
 import com.lamnguyen.ticket_movie_nlu.service.auth.change_password.impl.ChangePasswordServiceImpl;
 import com.lamnguyen.ticket_movie_nlu.view.activities.SignActivity;
 
-import java.io.BufferedInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-import java.net.URLConnection;
 
 public class ProfileFragment extends Fragment {
     private static final int PICK_IMAGE_REQUEST = 1;
@@ -48,6 +43,10 @@ public class ProfileFragment extends Fragment {
     private TextView edtNewPassword, edtReNewPassword;
     private Dialog dlgChangePassword, dialogLoading;
     private ShapeableImageView sivAvatarUser;
+    private ImageView imgvBackgroundUser;
+
+    private ActivityResultLauncher<Intent> chooseAvatar, chooseBackground;
+    private Intent intent_pick_image;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -61,7 +60,8 @@ public class ProfileFragment extends Fragment {
         // Inflate the layout for this fragment
         this.init(view);
         this.event();
-        this.setUpAvatarUser();
+        this.setUpAvatarAndBackgroundUser();
+        this.registerImageChooser();
         return view;
     }
 
@@ -71,6 +71,7 @@ public class ProfileFragment extends Fragment {
         btnSetting = view.findViewById(R.id.button_setting);
         btnSignOut = view.findViewById(R.id.button_sign_out);
         sivAvatarUser = view.findViewById(R.id.shapeable_image_view_avatar_user);
+        imgvBackgroundUser = view.findViewById(R.id.image_view_background_user);
 
         dialogLoading = new Dialog(getContext());
         dialogLoading.setContentView(R.layout.dialog_loading);
@@ -100,7 +101,11 @@ public class ProfileFragment extends Fragment {
         });
 
         sivAvatarUser.setOnClickListener(view -> {
-            openImageChooser();
+            chooseAvatar.launch(intent_pick_image);
+        });
+
+        imgvBackgroundUser.setOnClickListener(view -> {
+            chooseBackground.launch(intent_pick_image);
         });
     }
 
@@ -162,10 +167,10 @@ public class ProfileFragment extends Fragment {
 
     // Phương thức để mở bộ chọn hình ảnh
     @SuppressLint("IntentReset")
-    private void openImageChooser() {
+    private void registerImageChooser() {
         ActivityResultRegistry register = this.getActivity().getActivityResultRegistry();
 
-        ActivityResultLauncher<Intent> launcher = register.register("CHOOSE_AVATAR", new ActivityResultContracts.StartActivityForResult(), result -> {
+        chooseAvatar = register.register("CHOOSE_AVATAR", new ActivityResultContracts.StartActivityForResult(), result -> {
             if (result.getResultCode() == Activity.RESULT_OK) {
                 Intent data = result.getData();
                 Uri selectedImageUri = data.getData();
@@ -181,9 +186,24 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        intent.setType("image/*");
-        launcher.launch(intent);
+        chooseBackground = register.register("CHOOSE_BACKGROUND", new ActivityResultContracts.StartActivityForResult(), result -> {
+            if (result.getResultCode() == Activity.RESULT_OK) {
+                Intent data = result.getData();
+                Uri selectedImageUri = data.getData();
+                if (selectedImageUri != null) {
+                    DialogLoading.showDialogLoading(dialogLoading, getString(R.string.loading));
+                    try {
+                        handleSelectBackgroundUser(selectedImageUri);
+                    } catch (IOException e) {
+                        Toast.makeText(this.getContext(), "Error", Toast.LENGTH_SHORT).show();
+                    }
+                } else
+                    Toast.makeText(this.getContext(), "Error", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        intent_pick_image = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        intent_pick_image.setType("image/*");
     }
 
     private void handleSelectAvatarUser(Uri imageUri) throws IOException {
@@ -202,16 +222,44 @@ public class ProfileFragment extends Fragment {
         });
     }
 
-    private void setUpAvatarUser() {
+    private void handleSelectBackgroundUser(Uri imageUri) throws IOException {
+        FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
+        StorageReference storageReference = firebaseStorage.getReference().child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        storageReference.child("background").putFile(imageUri).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                dialogLoading.dismiss();
+                imgvBackgroundUser.setImageURI(imageUri);
+                Toast.makeText(ProfileFragment.this.getContext(), getString(R.string.success), Toast.LENGTH_SHORT).show();
+            } else {
+                dialogLoading.dismiss();
+                Toast.makeText(ProfileFragment.this.getContext(), getString(R.string.failed), Toast.LENGTH_SHORT).show();
+                Log.e(ProfileFragment.class.getName(), "Errro", task.getException());
+            }
+        });
+    }
+
+    private void setUpAvatarAndBackgroundUser() {
         DialogLoading.showDialogLoading(dialogLoading, getString(R.string.loading));
         FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
 //        Toast.makeText(ProfileFragment.this.getContext(), getString(R.string.url_firebase_storage) + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/avatar", Toast.LENGTH_SHORT).show();
-        StorageReference gsReference = firebaseStorage.getReferenceFromUrl(getString(R.string.url_firebase_storage) + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/avatar");
-        gsReference.getDownloadUrl().addOnCompleteListener(task -> {
+        StorageReference avatarStrRef = firebaseStorage.getReferenceFromUrl(getString(R.string.url_firebase_storage) + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/avatar");
+        StorageReference backgroundStrRef = firebaseStorage.getReferenceFromUrl(getString(R.string.url_firebase_storage) + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/background");
+        avatarStrRef.getDownloadUrl().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
-                Toast.makeText(ProfileFragment.this.getContext(), task.getResult().toString(), Toast.LENGTH_SHORT).show();
                 Uri uri = task.getResult();
                 Glide.with(sivAvatarUser).load(uri).into(sivAvatarUser);
+                dialogLoading.dismiss();
+                Toast.makeText(ProfileFragment.this.getContext(), getString(R.string.success), Toast.LENGTH_SHORT).show();
+            } else {
+                dialogLoading.dismiss();
+                Toast.makeText(ProfileFragment.this.getContext(), getString(R.string.failed), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        backgroundStrRef.getDownloadUrl().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                Uri uri = task.getResult();
+                Glide.with(imgvBackgroundUser).load(uri).into(imgvBackgroundUser);
                 dialogLoading.dismiss();
                 Toast.makeText(ProfileFragment.this.getContext(), getString(R.string.success), Toast.LENGTH_SHORT).show();
             } else {
