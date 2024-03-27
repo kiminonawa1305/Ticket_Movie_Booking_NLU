@@ -1,7 +1,7 @@
 package com.lamnguyen.ticket_movie_nlu.service.auth.change_password.impl;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.lamnguyen.ticket_movie_nlu.model.utils.ThreadCallBackSign;
+import com.lamnguyen.ticket_movie_nlu.service.auth.ThreadCallBackSign;
 import com.lamnguyen.ticket_movie_nlu.service.auth.change_password.ChangePasswordService;
 
 public class ChangePasswordServiceImpl implements ChangePasswordService {

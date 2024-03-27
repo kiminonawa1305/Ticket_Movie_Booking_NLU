@@ -29,6 +29,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.0" />
 
+
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/shapeable_image_view_avatar_user"
                 android:layout_width="@dimen/size_avatar_user"

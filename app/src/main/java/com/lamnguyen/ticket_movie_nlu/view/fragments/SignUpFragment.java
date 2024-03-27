@@ -2,6 +2,7 @@ package com.lamnguyen.ticket_movie_nlu.view.fragments;
 
 import android.app.Dialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,12 +15,12 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.lamnguyen.ticket_movie_nlu.model.utils.DialogLoading;
+import com.lamnguyen.ticket_movie_nlu.utils.DialogLoading;
 import com.lamnguyen.ticket_movie_nlu.service.auth.sign_up.impl.SignUpServiceImpl;
 import com.lamnguyen.ticket_movie_nlu.service.UserService.UserService;
 import com.lamnguyen.ticket_movie_nlu.service.UserService.impl.UserServiceImpl;
-import com.lamnguyen.ticket_movie_nlu.model.bean.User;
-import com.lamnguyen.ticket_movie_nlu.model.utils.ThreadCallBackSign;
+import com.lamnguyen.ticket_movie_nlu.bean.User;
+import com.lamnguyen.ticket_movie_nlu.service.auth.ThreadCallBackSign;
 import com.lamnguyen.ticket_movie_nlu.R;
 import com.lamnguyen.ticket_movie_nlu.view.activities.SignActivity;
 
@@ -38,11 +39,16 @@ public class SignUpFragment extends Fragment {
     private Dialog dialog;
     private ThreadCallBackSign callBack;
 
+    private final static String EMAIL_ARG = "email",
+            PASSWORD_ARG = "password";
+    private String email, password, rePassword;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -53,6 +59,22 @@ public class SignUpFragment extends Fragment {
         init(view);
         event();
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Bundle bundle = this.getArguments();
+        Log.d(SignUpFragment.class.getName(), "onStart: " + bundle);
+        if (bundle == null) return;
+
+        email = bundle.getString(EMAIL_ARG);
+        password = bundle.getString(PASSWORD_ARG);
+        rePassword = bundle.getString(PASSWORD_ARG);
+
+        edtEmail.setText(email);
+        edtPassword.setText(password);
+        edtRePassword.setText(rePassword);
     }
 
     private void init(View view) {
@@ -95,13 +117,14 @@ public class SignUpFragment extends Fragment {
 
     private void signUp() {
         UserService userService = UserServiceImpl.getInstance();
-        String rePassword = edtRePassword.getText().toString();
-        if (edtEmail.getText().toString().isEmpty()) {
+        User user = getUser();
+        rePassword = edtRePassword.getText().toString();
+        if (user.getEmail().isEmpty()) {
             edtEmail.setError(getString(R.string.request_email));
             return;
         }
 
-        if (!Pattern.matches(SignActivity.EMAIL_PATTERN, edtEmail.getText().toString())) {
+        if (!Pattern.matches(SignActivity.EMAIL_PATTERN, user.getEmail())) {
             edtEmail.setError(getString(R.string.error_validate_email));
             return;
         }
@@ -165,9 +188,11 @@ public class SignUpFragment extends Fragment {
 
     private User initUser() {
         if (user != null) return user;
+        email = edtEmail.getText().toString();
+        password = edtPassword.getText().toString();
         user = new User();
-        user.setEmail(edtEmail.getText().toString());
-        user.setPassword(edtPassword.getText().toString());
+        user.setEmail(email);
+        user.setPassword(password);
         return user;
     }
 }

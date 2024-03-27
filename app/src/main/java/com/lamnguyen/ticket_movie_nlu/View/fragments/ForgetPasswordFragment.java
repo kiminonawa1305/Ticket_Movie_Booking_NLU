@@ -16,8 +16,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.lamnguyen.ticket_movie_nlu.R;
-import com.lamnguyen.ticket_movie_nlu.model.utils.DialogLoading;
-import com.lamnguyen.ticket_movie_nlu.model.utils.ThreadCallBackSign;
+import com.lamnguyen.ticket_movie_nlu.utils.DialogLoading;
+import com.lamnguyen.ticket_movie_nlu.service.auth.ThreadCallBackSign;
 import com.lamnguyen.ticket_movie_nlu.service.auth.forget_password.impl.ForgetPasswordServiceImpl;
 import com.lamnguyen.ticket_movie_nlu.view.activities.SignActivity;
 

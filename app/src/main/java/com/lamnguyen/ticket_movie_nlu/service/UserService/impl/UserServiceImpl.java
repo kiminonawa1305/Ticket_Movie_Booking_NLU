@@ -1,7 +1,6 @@
 package com.lamnguyen.ticket_movie_nlu.service.UserService.impl;
 
 import com.lamnguyen.ticket_movie_nlu.service.UserService.UserService;
-import com.lamnguyen.ticket_movie_nlu.model.bean.User;
 
 public class UserServiceImpl implements UserService {
     private static UserServiceImpl instance;

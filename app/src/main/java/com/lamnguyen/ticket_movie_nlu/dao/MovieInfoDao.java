@@ -9,7 +9,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.lamnguyen.ticket_movie_nlu.model.bean.Movie;
+import com.lamnguyen.ticket_movie_nlu.bean.Movie;
 
 import java.util.List;
 

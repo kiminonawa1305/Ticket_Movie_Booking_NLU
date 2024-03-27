@@ -45,6 +45,9 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigation.add(new MeowBottomNavigation.Model(4, R.drawable.ic_map_pin));
         bottomNavigation.add(new MeowBottomNavigation.Model(5, R.drawable.ic_profile));
         fragmentManager = getSupportFragmentManager();
+
+        getIntent().getBundleExtra("key");
+        frmDisplayMain = fragmentManager.findFragmentById(R.id.fragment_display_main);
     }
 
     private void eventNavigation() {

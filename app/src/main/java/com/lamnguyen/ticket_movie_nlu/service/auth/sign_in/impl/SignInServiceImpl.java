@@ -1,17 +1,10 @@
 package com.lamnguyen.ticket_movie_nlu.service.auth.sign_in.impl;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthInvalidUserException;
-import com.google.firebase.auth.SignInMethodQueryResult;
-import com.lamnguyen.ticket_movie_nlu.service.auth.check_mail.CheckEmailService;
 import com.lamnguyen.ticket_movie_nlu.service.auth.sign_in.SignInService;
-import com.lamnguyen.ticket_movie_nlu.model.utils.ThreadCallBackSign;
-
-import java.util.List;
+import com.lamnguyen.ticket_movie_nlu.service.auth.ThreadCallBackSign;
 
 public class SignInServiceImpl implements SignInService {
     private FirebaseAuth auth;

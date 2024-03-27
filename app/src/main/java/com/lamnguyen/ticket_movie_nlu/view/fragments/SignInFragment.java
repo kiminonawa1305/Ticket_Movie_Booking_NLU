@@ -16,13 +16,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.lamnguyen.ticket_movie_nlu.model.bean.User;
-import com.lamnguyen.ticket_movie_nlu.model.utils.DialogLoading;
+import com.lamnguyen.ticket_movie_nlu.bean.User;
+import com.lamnguyen.ticket_movie_nlu.utils.DialogLoading;
 import com.lamnguyen.ticket_movie_nlu.service.auth.check_mail.CheckEmailService;
 import com.lamnguyen.ticket_movie_nlu.service.auth.check_mail.impl.CheckEmailServiceImpl;
 import com.lamnguyen.ticket_movie_nlu.service.auth.sign_in.SignInService;
 import com.lamnguyen.ticket_movie_nlu.service.auth.sign_in.impl.SignInServiceImpl;
-import com.lamnguyen.ticket_movie_nlu.model.utils.ThreadCallBackSign;
+import com.lamnguyen.ticket_movie_nlu.service.auth.ThreadCallBackSign;
 import com.lamnguyen.ticket_movie_nlu.R;
 import com.lamnguyen.ticket_movie_nlu.service.auth.sign_up.impl.SignUpServiceImpl;
 import com.lamnguyen.ticket_movie_nlu.view.activities.MainActivity;
@@ -88,7 +88,7 @@ public class SignInFragment extends Fragment {
         fragmentTransaction.setReorderingAllowed(true);
 
         // Replace whatever is in the fragment_container view with this fragment
-        fragmentTransaction.replace(R.id.fragment_sign, SignUpFragment.class, null);
+        fragmentTransaction.replace(R.id.fragment_sign, SignUpFragment.class, getBundleData());
         fragmentTransaction.addToBackStack(this.getClass().getName());
         fragmentTransaction.commit();
     }
@@ -98,9 +98,19 @@ public class SignInFragment extends Fragment {
         fragmentTransaction.setReorderingAllowed(true);
 
         // Replace whatever is in the fragment_container view with this fragment
-        fragmentTransaction.replace(R.id.fragment_sign, ForgetPasswordFragment.class, null);
+        fragmentTransaction.replace(R.id.fragment_sign, ForgetPasswordFragment.class, getBundleData());
         fragmentTransaction.addToBackStack(this.getClass().getName());
         fragmentTransaction.commit();
+    }
+
+    private Bundle getBundleData() {
+        String email = this.edtEmail.getText().toString();
+        String password = this.edtPassword.getText().toString();
+        Bundle bundle = new Bundle();
+        bundle.putString("email", email);
+        bundle.putString("password", password);
+
+        return bundle;
     }
 
 

@@ -1,10 +1,8 @@
 package com.lamnguyen.ticket_movie_nlu.service.auth.check_mail.impl;
 
-import androidx.annotation.NonNull;
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.SignInMethodQueryResult;
-import com.lamnguyen.ticket_movie_nlu.model.utils.ThreadCallBackSign;
+import com.lamnguyen.ticket_movie_nlu.service.auth.ThreadCallBackSign;
 import com.lamnguyen.ticket_movie_nlu.service.auth.check_mail.CheckEmailService;
 
 import java.util.List;

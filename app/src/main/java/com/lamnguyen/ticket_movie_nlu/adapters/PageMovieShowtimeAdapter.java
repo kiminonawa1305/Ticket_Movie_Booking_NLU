@@ -1,4 +1,4 @@
-package com.lamnguyen.ticket_movie_nlu.model.utils.adapters;
+package com.lamnguyen.ticket_movie_nlu.adapters;
 
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,15 +10,15 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.lamnguyen.ticket_movie_nlu.model.bean.Movie;
 import com.lamnguyen.ticket_movie_nlu.R;
+import com.lamnguyen.ticket_movie_nlu.dto.MovieDTO;
 
 import java.util.List;
 
-public class DisplayTicketMovieAdapter extends RecyclerView.Adapter<DisplayTicketMovieAdapter.MovieTicketViewHolder> {
-    private List<Movie> movies;
+public class PageMovieShowtimeAdapter extends RecyclerView.Adapter<PageMovieShowtimeAdapter.MovieTicketViewHolder> {
+    private List<MovieDTO> movies;
 
-    public DisplayTicketMovieAdapter(@NonNull List<Movie> movies) {
+    public PageMovieShowtimeAdapter(@NonNull List<MovieDTO> movies) {
         this.movies = movies;
     }
 
@@ -32,12 +32,12 @@ public class DisplayTicketMovieAdapter extends RecyclerView.Adapter<DisplayTicke
 
     @Override
     public void onBindViewHolder(@NonNull MovieTicketViewHolder holder, int position) {
-        Movie movie = movies.get(position);
+        MovieDTO movie = movies.get(position);
         holder.setImage(movie.getPoster());
         holder.setGenre(movie.getGenre());
-        holder.setRating(movie.getImdbRating());
-        holder.setVote(String.valueOf(movie.getImdbVotes()));
-        holder.setTitle(movie.getTitle());
+        holder.setRating(movie.getRate());
+        holder.setVote(movie.getVote());
+        holder.setTitle(movie.getName());
         holder.setTime(movie.getRunTime());
     }
 
@@ -70,10 +70,10 @@ public class DisplayTicketMovieAdapter extends RecyclerView.Adapter<DisplayTicke
         }
 
         public void setRating(double rating) {
-            rtbMovieRate.setRating((float) rating/2);
+            rtbMovieRate.setRating((float) rating / 2);
         }
 
-        public void setVote(String vote) {
+        public void setVote(Integer vote) {
             tvMovieVote.setText(vote + " Reviews");
         }
 
@@ -81,8 +81,8 @@ public class DisplayTicketMovieAdapter extends RecyclerView.Adapter<DisplayTicke
             tvMovieTitle.setText(title);
         }
 
-        public void setTime(String time) {
-            tvMovieTime.setText(time);
+        public void setTime(Integer time) {
+            tvMovieTime.setText(time + "muns");
         }
     }
 }

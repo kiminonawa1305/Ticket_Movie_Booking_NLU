@@ -1,4 +1,4 @@
-package com.lamnguyen.ticket_movie_nlu.model.bean;
+package com.lamnguyen.ticket_movie_nlu.bean;
 
 public class User {
     private String email, password;

@@ -1,9 +1,7 @@
 package com.lamnguyen.ticket_movie_nlu.service.auth.forget_password.impl;
 
-import android.util.Log;
-
 import com.google.firebase.auth.FirebaseAuth;
-import com.lamnguyen.ticket_movie_nlu.model.utils.ThreadCallBackSign;
+import com.lamnguyen.ticket_movie_nlu.service.auth.ThreadCallBackSign;
 import com.lamnguyen.ticket_movie_nlu.service.auth.forget_password.ForgetPasswordService;
 
 public class ForgetPasswordServiceImpl implements ForgetPasswordService {

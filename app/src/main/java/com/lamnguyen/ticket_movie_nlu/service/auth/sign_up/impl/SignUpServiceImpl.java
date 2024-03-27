@@ -5,8 +5,8 @@ import androidx.annotation.NonNull;
 import com.google.firebase.auth.FirebaseAuth;
 import com.lamnguyen.ticket_movie_nlu.service.auth.sign_up.SignUpService;
 import com.lamnguyen.ticket_movie_nlu.service.auth.sign_up.SignUpVerify;
-import com.lamnguyen.ticket_movie_nlu.model.bean.User;
-import com.lamnguyen.ticket_movie_nlu.model.utils.ThreadCallBackSign;
+import com.lamnguyen.ticket_movie_nlu.bean.User;
+import com.lamnguyen.ticket_movie_nlu.service.auth.ThreadCallBackSign;
 
 public class SignUpServiceImpl implements SignUpService, SignUpVerify {
     private static SignUpServiceImpl instance;

@@ -1,4 +1,4 @@
-package com.lamnguyen.ticket_movie_nlu.model.utils;
+package com.lamnguyen.ticket_movie_nlu.utils;
 
 import android.app.Activity;
 import android.app.Dialog;
