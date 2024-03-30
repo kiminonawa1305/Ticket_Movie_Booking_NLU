@@ -6,20 +6,43 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Header;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.JsonRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.lamnguyen.ticket_movie_nlu.R;
+import com.lamnguyen.ticket_movie_nlu.dto.Routes;
+import com.lamnguyen.ticket_movie_nlu.utils.PolylineEncodingUtil;
 import com.lamnguyen.ticket_movie_nlu.view.fragments.FavouriteMovieFragment;
 import com.lamnguyen.ticket_movie_nlu.view.fragments.GoogleMapFragment;
 import com.lamnguyen.ticket_movie_nlu.view.fragments.MovieFragment;
 import com.lamnguyen.ticket_movie_nlu.view.fragments.ProfileFragment;
 import com.lamnguyen.ticket_movie_nlu.view.fragments.TicketFragment;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -131,8 +154,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
-
         if (FirebaseAuth.getInstance().getCurrentUser() == null) {
             Intent intent = new Intent(this, GreetingActivity.class);
             this.startActivity(intent);

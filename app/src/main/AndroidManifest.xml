@@ -77,6 +77,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-    </application>
 
+        <meta-data
+            android:name="com.google.android.geo.API KEY"
+            android:value="@string/MAPS_API_KEY"
+            />
+    </application>
 </manifest>
