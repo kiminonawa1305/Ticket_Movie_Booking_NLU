@@ -31,6 +31,11 @@ android {
         viewBinding = true
         buildConfig = true
     }
+    compileOptions {
+        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_17
+    }
+    buildToolsVersion = "34.0.0"
 
 }
 
@@ -39,7 +44,7 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.11.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-    implementation("org.projectlombok:lombok:1.18.26")
+    implementation("org.projectlombok:lombok:1.18.32")
     implementation("com.google.firebase:firebase-auth:22.3.1")
     implementation("com.google.firebase:firebase-database:20.3.1")
     implementation("com.google.android.gms:play-services-auth:21.0.0")
@@ -64,5 +69,5 @@ dependencies {
     implementation("com.google.android.gms:play-services-maps:18.2.0")
 
     implementation("com.etebarian:meow-bottom-navigation-java:1.2.0")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.9.0")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.9.23")
 }

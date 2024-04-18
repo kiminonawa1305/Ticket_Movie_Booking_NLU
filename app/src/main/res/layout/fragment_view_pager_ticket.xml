@@ -4,7 +4,7 @@
     android:layout_height="wrap_content">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view_display_ticket_movie"
+        android:id="@+id/recycler_view_display_ticket"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 </ScrollView>
