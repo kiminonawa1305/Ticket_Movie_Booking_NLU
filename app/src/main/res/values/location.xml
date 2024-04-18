@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="CINESTAR">
+        <item>10.875169012879635</item>
+        <item>106.80071966748321</item>
+    </string-array>
+    <string-array name="GIGALMALL">
+        <item>10.827842707980409</item>
+        <item>106.72151361124503</item>
+    </string-array>
+
+    <string-array name="GALAXY">
+        <item>10.868013035269518</item>
+        <item>106.77668136615202</item>
+    </string-array>
+
+    <string-array name="COOP_MART">
+        <item>10.868373049683854</item>
+        <item>106.77662320959017</item>
+    </string-array>
+</resources>

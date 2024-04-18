@@ -1,7 +1,5 @@
 package com.lamnguyen.ticket_movie_nlu.view.fragments;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
@@ -9,7 +7,6 @@ import androidx.fragment.app.Fragment;
 
 import android.Manifest;
 import android.animation.ValueAnimator;
-import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
@@ -27,6 +24,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -35,12 +34,14 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.lamnguyen.ticket_movie_nlu.R;
 import com.lamnguyen.ticket_movie_nlu.utils.PolylineEncodingUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -53,6 +54,8 @@ public class GoogleMapFragment extends Fragment {
     private ValueAnimator valueAnimatorZoom;
     private Location currentLocation;
     private SupportMapFragment mapFragment;
+    private List<LatLng> locations;
+    private FusedLocationProviderClient fusedLocationClient;
 
     private static final LatLng LAT_LNG_CINESTAR = new LatLng(10.875169012879635, 106.80071966748321);
 
@@ -81,10 +84,8 @@ public class GoogleMapFragment extends Fragment {
 
             mMap.setMyLocationEnabled(true);
 
-            mMap.setOnMyLocationChangeListener(location -> {
-                if (location == null) return;
+            mMap.setOnMyLocationClickListener(location -> {
                 if (currentLocation == null) currentLocation = location;
-                direct(googleMap, new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), LAT_LNG_CINESTAR);
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), 18));
             });
 
@@ -98,6 +99,27 @@ public class GoogleMapFragment extends Fragment {
         }
     };
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this.getActivity());
+        if (ActivityCompat.checkSelfPermission(this.getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this.getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+            return;
+        fusedLocationClient.getLastLocation()
+                .addOnSuccessListener(this.getActivity(), new OnSuccessListener<Location>() {
+                    @Override
+                    public void onSuccess(Location location) {
+                        // Got last known location. In some rare situations this can be null.
+                        if (location != null) {
+                            currentLocation = location;
+                        }
+                    }
+                });
+
+        valueAnimatorZoom = ValueAnimator.ofFloat(0, 18);
+        valueAnimatorZoom.setDuration(2000);
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -109,14 +131,12 @@ public class GoogleMapFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mapFragment =
-                (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
-        if (mapFragment != null) {
+        mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
+        if (mapFragment != null)
             mapFragment.getMapAsync(callback);
-        }
 
-        valueAnimatorZoom = ValueAnimator.ofFloat(0, 18);
-        valueAnimatorZoom.setDuration(2000);
+        if (currentLocation != null)
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), 18));
     }
 
     public void setListMarker(List<LatLng> latLngList, List<String> titles) {
@@ -145,9 +165,6 @@ public class GoogleMapFragment extends Fragment {
                     String distanceMeters = object.getString("distanceMeters");
                     String duration = object.getString("duration");
                     String encodedPolyline = object.getJSONObject("polyline").getString("encodedPolyline");
-//                    Log.i("MainActivity", "distanceMeters: " + distanceMeters);
-//                    Log.i("MainActivity", "duration: " + duration);
-//                    Log.i("MainActivity", "encodedPolyline: " + encodedPolyline);
                     PolylineOptions polylineOptions = new PolylineOptions();
                     for (LatLng latLng : PolylineEncodingUtil.decode(encodedPolyline))
                         polylineOptions.add(latLng);
@@ -216,5 +233,21 @@ public class GoogleMapFragment extends Fragment {
 
 
         queue.add(request);
+    }
+
+    private void createListLocation() {
+        locations = new ArrayList<>();
+        String[] locationCineStar = getResources().getStringArray(R.array.CINESTAR);
+        String[] locationGalaxy = getResources().getStringArray(R.array.GALAXY);
+        String[] locationGigaMall = getResources().getStringArray(R.array.GIGALMALL);
+        String[] locationCoopMart = getResources().getStringArray(R.array.COOP_MART);
+        locations.add(createLatLng(locationCineStar));
+        locations.add(createLatLng(locationGalaxy));
+        locations.add(createLatLng(locationGigaMall));
+        locations.add(createLatLng(locationCoopMart));
+    }
+
+    private LatLng createLatLng(String[] location) {
+        return new LatLng(Double.parseDouble(location[0]), Double.parseDouble(location[1]));
     }
 }
