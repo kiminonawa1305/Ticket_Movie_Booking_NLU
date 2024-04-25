@@ -55,4 +55,7 @@
     <string name="failed">Thất bại!</string>
     <string name="loading">Đang tải...</string>
     <string name="MAPS_API_KEY">AIzaSyAkJ-NbtMqrX05P5LzHQr86aAZeJ6iEmuA</string>
+
+    <!--Google Map API-->
+  
 </resources>

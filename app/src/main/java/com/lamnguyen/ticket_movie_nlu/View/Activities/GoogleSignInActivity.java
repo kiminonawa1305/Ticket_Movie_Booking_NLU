@@ -137,6 +137,5 @@ public class GoogleSignInActivity extends Activity {
     // [END signin]
 
     private void updateUI(FirebaseUser user) {
-
     }
 }

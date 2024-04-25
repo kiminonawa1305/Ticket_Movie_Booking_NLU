@@ -1,123 +1,97 @@
 package com.lamnguyen.ticket_movie_nlu.view.fragments;
 
+import android.Manifest;
+import android.animation.ValueAnimator;
+import android.content.pm.PackageManager;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.PopupMenu;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
-import android.Manifest;
-import android.animation.ValueAnimator;
-import android.content.pm.PackageManager;
-import android.graphics.Color;
-import android.location.Location;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toast;
-
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.PolylineOptions;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.lamnguyen.ticket_movie_nlu.R;
-import com.lamnguyen.ticket_movie_nlu.utils.PolylineEncodingUtil;
+import com.lamnguyen.ticket_movie_nlu.enums.DriverType;
+import com.lamnguyen.ticket_movie_nlu.request.GoogleMapRoutesHttpRequest;
+import com.lamnguyen.ticket_movie_nlu.service.LatLngService;
+import com.lamnguyen.ticket_movie_nlu.service.cinema.CinemaService;
+import com.lamnguyen.ticket_movie_nlu.service.google.GoogleMapService;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-public class GoogleMapFragment extends Fragment {
+public class GoogleMapFragment extends Fragment implements OnMapReadyCallback {
     private static final String TAG = "GoogleMapFragment";
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
-    private GoogleMap mMap;
+    private GoogleMap googleMap;
     private ValueAnimator valueAnimatorZoom;
-    private Location currentLocation;
     private SupportMapFragment mapFragment;
-    private List<LatLng> locations;
-    private FusedLocationProviderClient fusedLocationClient;
+    private LatLng currentLocation, destination;
+    private CinemaService cinemaService;
+    private GoogleMapService googleMapService;
+    private LatLngService latLngService;
+    private File fileCache;
+    private Boolean direct = false, showDurationDistance = false;
+    private Button btnChangeTypeMap, btnListCinema, btnVehicle;
+    private Fragment frgDistanceDuration;
 
-    private static final LatLng LAT_LNG_CINESTAR = new LatLng(10.875169012879635, 106.80071966748321);
-
-    private OnMapReadyCallback callback = new OnMapReadyCallback() {
-
-        /**
-         * Manipulates the map once available.
-         * This callback is triggered when the map is ready to be used.
-         * This is where we can add markers or lines, add listeners or move the camera.
-         * In this case, we just add a marker near Sydney, Australia.
-         * If Google Play services is not installed on the device, the user will be prompted to
-         * install it inside the SupportMapFragment. This method will only be triggered once the
-         * user has installed Google Play services and returned to the app.
-         */
-        @Override
-        public void onMapReady(GoogleMap googleMap) {
-            mMap = googleMap;
-            if (ActivityCompat.checkSelfPermission(GoogleMapFragment.this.getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                    && ActivityCompat.checkSelfPermission(GoogleMapFragment.this.getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-
-                ActivityCompat.requestPermissions(GoogleMapFragment.this.getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_PERMISSION_REQUEST_CODE);
-
-                Toast.makeText(GoogleMapFragment.this.getContext(), "Permission denied", Toast.LENGTH_SHORT).show();
-                return;
-            }
-
-            mMap.setMyLocationEnabled(true);
-
-            mMap.setOnMyLocationClickListener(location -> {
-                if (currentLocation == null) currentLocation = location;
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), 18));
-            });
-
-            mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-                @Override
-                public boolean onMarkerClick(@NonNull Marker marker) {
-                    animationMarkerClick(marker.getPosition());
-                    return true;
-                }
-            });
-        }
-    };
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this.getActivity());
-        if (ActivityCompat.checkSelfPermission(this.getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this.getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
-            return;
-        fusedLocationClient.getLastLocation()
-                .addOnSuccessListener(this.getActivity(), new OnSuccessListener<Location>() {
-                    @Override
-                    public void onSuccess(Location location) {
-                        // Got last known location. In some rare situations this can be null.
-                        if (location != null) {
-                            currentLocation = location;
-                        }
-                    }
-                });
+        cinemaService = CinemaService.getInstance();
+        latLngService = LatLngService.getInstance();
+        cinemaService.getLatLngs(this.getActivity());
 
         valueAnimatorZoom = ValueAnimator.ofFloat(0, 18);
         valueAnimatorZoom.setDuration(2000);
+
+
+        File cacheDir = getActivity().getCacheDir();
+        fileCache = new File(cacheDir.getAbsolutePath(), "location.cache");
+        if (fileCache.exists()) {
+            try {
+                fileCache.createNewFile();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        currentLocation = latLngService.loadCurrentLocation(fileCache);
+
+        destination = cinemaService.getLatLngs(GoogleMapFragment.this.getActivity()).get(0);
+
+        googleMapService = GoogleMapService.getInstance();
+
+        getChildFragmentManager().setFragmentResultListener(DurationDistanceDestinationFragment.class.getSimpleName(), this, (requestKey, result) -> {
+            showDurationDistance = !result.getBoolean("close");
+            direct = result.getBoolean("go");
+            if (showDurationDistance != null && !showDurationDistance) {
+                googleMapService.clearPolyLine();
+                FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+                transaction.remove(frgDistanceDuration);
+                transaction.commit();
+                direct = false;
+            }
+        });
     }
 
     @Nullable
@@ -132,122 +106,153 @@ public class GoogleMapFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
-        if (mapFragment != null)
-            mapFragment.getMapAsync(callback);
+        btnChangeTypeMap = view.findViewById(R.id.button_type_map);
+        btnListCinema = view.findViewById(R.id.button_list_cinema);
+        btnVehicle = view.findViewById(R.id.button_vehicle_google_map);
+        frgDistanceDuration = new DurationDistanceDestinationFragment();
+        if (mapFragment != null) mapFragment.getMapAsync(this);
+        PopupMenu popupMenuTypeMap = new PopupMenu(this.getActivity(), btnChangeTypeMap);
+        popupMenuTypeMap.getMenuInflater().inflate(R.menu.menu_type_google_map, popupMenuTypeMap.getMenu());
 
-        if (currentLocation != null)
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), 18));
+        popupMenuTypeMap.setOnMenuItemClickListener(item -> {
+            int id = item.getItemId();
+            if (id == R.id.menu_item_google_map_type_normal)
+                googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+            else if (id == R.id.menu_item_google_map_type_terrain)
+                googleMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
+            else if (id == R.id.menu_item_google_map_type_hybrid)
+                googleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+            else googleMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+            return true;
+        });
+
+        PopupMenu popupMenuVehicle = new PopupMenu(this.getActivity(), btnChangeTypeMap);
+        popupMenuVehicle.getMenuInflater().inflate(R.menu.menu_vehicle_google_map, popupMenuVehicle.getMenu());
+        popupMenuVehicle.setForceShowIcon(true);
+
+        popupMenuVehicle.setOnMenuItemClickListener(item -> {
+            int id = item.getItemId();
+            if (id == R.id.menu_item_google_map_vehicle_car) {
+                GoogleMapRoutesHttpRequest.vehicle = DriverType.DRIVE.toString();
+                btnVehicle.setBackgroundResource(R.mipmap.ic_car);
+            } else if (id == R.id.menu_item_google_map_vehicle_walk) {
+                GoogleMapRoutesHttpRequest.vehicle = DriverType.WALK.toString();
+                btnVehicle.setBackgroundResource(R.mipmap.ic_walk);
+            } else {
+                GoogleMapRoutesHttpRequest.vehicle = DriverType.TWO_WHEELER.toString();
+                btnVehicle.setBackgroundResource(R.mipmap.ic_motorbike);
+            }
+
+            if (showDurationDistance) {
+                googleMapService.drawWay(this, googleMap, currentLocation, destination);
+            }
+            return true;
+        });
+
+
+        btnChangeTypeMap.setOnClickListener(v -> {
+            popupMenuTypeMap.show();
+        });
+
+        btnListCinema.setOnClickListener(v -> {
+            PopupMenu popupMenuListCinema = new PopupMenu(this.getActivity(), btnListCinema);
+            Menu menu = popupMenuListCinema.getMenu();
+            List<MenuItem> menuItems = new ArrayList<>();
+            List<CinemaService.CinemaLatLng> cinemaLatLags = cinemaService.getCinemaLatLag(GoogleMapFragment.this.getActivity());
+            for (CinemaService.CinemaLatLng cinemaLatLng : cinemaLatLags) {
+                MenuItem menuItem = menu.add(cinemaLatLng.getName());
+                menuItems.add(menuItem);
+            }
+
+            popupMenuListCinema.setOnMenuItemClickListener(item -> {
+                if (showDurationDistance == null || !showDurationDistance) {
+                    FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+                    transaction.add(R.id.fragment_distance_duration_destination, frgDistanceDuration, null);
+                    transaction.commit();
+                }
+                showDurationDistance = true;
+                for (int i = 0; i < menuItems.size(); i++) {
+                    MenuItem menuItem = menu.getItem(i);
+                    if (!item.equals(menuItem)) continue;
+
+                    Log.i(TAG, cinemaLatLags.get(i).getName() + "; " + cinemaLatLags.get(i).getLatLng().toString());
+                    destination = cinemaLatLags.get(i).getLatLng();
+                    googleMapService.drawWay(this, googleMap, currentLocation, destination);
+                }
+                return true;
+            });
+
+            popupMenuListCinema.show();
+        });
+
+        btnVehicle.setOnClickListener(v -> {
+            popupMenuVehicle.show();
+        });
     }
 
-    public void setListMarker(List<LatLng> latLngList, List<String> titles) {
-        for (int index = 0; index < latLngList.size(); index++) {
-            mMap.addMarker(new MarkerOptions().position(latLngList.get(index)).title(titles.get(index)));
-        }
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 
-    private void animationMarkerClick(LatLng position) {
-        valueAnimatorZoom.setFloatValues(mMap.getCameraPosition().zoom, 18);
+    @Override
+    public void onPause() {
+        super.onPause();
+        latLngService.saveCurrentLocation(fileCache, currentLocation);
+    }
+
+    private void clickMarket(LatLng position) {
+        valueAnimatorZoom.setFloatValues(googleMap.getCameraPosition().zoom, 18);
         valueAnimatorZoom.addUpdateListener(animation -> {
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(position, (float) animation.getAnimatedValue()));
+            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(position, (float) animation.getAnimatedValue()));
         });
 
         valueAnimatorZoom.start();
     }
 
-    public void direct(GoogleMap googleMap, LatLng origin, LatLng destination) {
-        RequestQueue queue = Volley.newRequestQueue(this.getContext());
-        String url = "https://routes.googleapis.com/directions/v2:computeRoutes";
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    JSONObject object = (JSONObject) response.getJSONArray("routes").get(0);
-                    String distanceMeters = object.getString("distanceMeters");
-                    String duration = object.getString("duration");
-                    String encodedPolyline = object.getJSONObject("polyline").getString("encodedPolyline");
-                    PolylineOptions polylineOptions = new PolylineOptions();
-                    for (LatLng latLng : PolylineEncodingUtil.decode(encodedPolyline))
-                        polylineOptions.add(latLng);
-                    polylineOptions.width(5) // Độ dày của đường đường dẫn
-                            .color(Color.RED); // Màu sắc của đường đường dẫn
 
+    public void transferData(String distanceMeters, String duration) {
+        Bundle bundle = new Bundle();
+        bundle.putString(DurationDistanceDestinationFragment.ARG_PARAM1, distanceMeters);
+        bundle.putString(DurationDistanceDestinationFragment.ARG_PARAM2, duration);
 
-                    googleMap.addPolyline(polylineOptions);
-                } catch (JSONException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        }) {
-            @Override
-            public byte[] getBody() {
-                StringBuilder stringBuilder = new StringBuilder();
-                stringBuilder.append("{")
-                        .append("\"origin\":{")
-                        .append("\"location\": {")
-                        .append("\"latLng\":{")
-                        .append("\"latitude\": ")
-                        .append(origin.latitude)
-                        .append(",")
-                        .append("\"longitude\": ")
-                        .append(origin.longitude)
-                        .append("}")
-                        .append("}")
-                        .append("},")
-                        .append("\"destination\":{")
-                        .append("\"location\": {")
-                        .append("\"latLng\":{")
-                        .append("\"latitude\": ")
-                        .append(destination.latitude)
-                        .append(",")
-                        .append("\"longitude\": ")
-                        .append(destination.longitude)
-                        .append("}")
-                        .append("}")
-                        .append("},")
-                        .append("\"routingPreference\":\"TRAFFIC_AWARE\",")
-                        .append("\"travelMode\":\"DRIVE\"")
-                        .append("}");
-
-                return stringBuilder.toString().getBytes();
-            }
-
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> result = new HashMap<>();
-                Map<String, String> headers = super.getHeaders();
-                for (Map.Entry<String, String> header : headers.entrySet()) {
-                    result.put(header.getKey(), header.getValue());
-                }
-                result.put("User-Agent", "Mozilla/5.0");
-                result.put("Content-Type", "application/json");
-                result.put("X-Goog-Api-Key", "AIzaSyAkJ-NbtMqrX05P5LzHQr86aAZeJ6iEmuA");
-                result.put("X-Goog-FieldMask", "routes.duration,routes.distanceMeters,routes.polyline.encodedPolyline");
-                return result;
-            }
-        };
-
-
-        queue.add(request);
+        getChildFragmentManager().setFragmentResult(this.getClass().getSimpleName(), bundle);
     }
 
-    private void createListLocation() {
-        locations = new ArrayList<>();
-        String[] locationCineStar = getResources().getStringArray(R.array.CINESTAR);
-        String[] locationGalaxy = getResources().getStringArray(R.array.GALAXY);
-        String[] locationGigaMall = getResources().getStringArray(R.array.GIGALMALL);
-        String[] locationCoopMart = getResources().getStringArray(R.array.COOP_MART);
-        locations.add(createLatLng(locationCineStar));
-        locations.add(createLatLng(locationGalaxy));
-        locations.add(createLatLng(locationGigaMall));
-        locations.add(createLatLng(locationCoopMart));
+
+    @Override
+    public void onMapReady(@NonNull GoogleMap googleMap) {
+        this.googleMap = googleMap;
+        googleMap.setMapStyle(new MapStyleOptions(style));
+        if (ActivityCompat.checkSelfPermission(GoogleMapFragment.this.getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(GoogleMapFragment.this.getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(GoogleMapFragment.this.getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_PERMISSION_REQUEST_CODE);
+
+            Toast.makeText(GoogleMapFragment.this.getContext(), "Permission denied", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        googleMap.setMyLocationEnabled(true);
+        googleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+
+        googleMap.setOnMyLocationChangeListener(location -> {
+            currentLocation = LatLngService.createLatLng(location);
+
+            googleMapService.drawWay(GoogleMapFragment.this, googleMap, currentLocation, destination);
+        });
+
+        googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(@NonNull Marker marker) {
+                clickMarket(marker.getPosition());
+                return true;
+            }
+        });
+
+        if (currentLocation != null)
+            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 18));
     }
 
-    private LatLng createLatLng(String[] location) {
-        return new LatLng(Double.parseDouble(location[0]), Double.parseDouble(location[1]));
-    }
+    String style = "[\n" + "  {\n" + "    \"elementType\": \"geometry\",\n" + "    \"stylers\": [\n" + "      {\n" + "        \"color\": \"#242f3e\"\n" + "      }\n" + "    ]\n" + "  },\n" + "  {\n" + "    \"elementType\": \"labels.text.fill\",\n" + "    \"stylers\": [\n" + "      {\n" + "        \"color\": \"#746855\"\n" + "      }\n" + "    ]\n" + "  },\n" + "  {\n" + "    \"elementType\": \"labels.text.stroke\",\n" + "    \"stylers\": [\n" + "      {\n" + "        \"color\": \"#242f3e\"\n" + "      }\n" + "    ]\n" + "  },\n" + "  {\n" + "    \"featureType\": \"administrative.locality\",\n" + "    \"elementType\": \"labels.text.fill\",\n" + "    \"stylers\": [\n" + "      {\n" + "        \"color\": \"#d59563\"\n" + "      }\n" + "    ]\n" + "  },\n" + "  {\n" + "    \"featureType\": \"poi\",\n" + "    \"elementType\": \"labels.text.fill\",\n" + "    \"stylers\": [\n" + "      {\n" + "        \"color\": \"#d59563\"\n" + "      }\n" + "    ]\n" + "  },\n" + "  {\n" + "    \"featureType\": \"poi.park\",\n" + "    \"elementType\": \"geometry\",\n" + "    \"stylers\": [\n" + "      {\n" + "        \"color\": \"#263c3f\"\n" + "      }\n" + "    ]\n" + "  },\n" + "  {\n" + "    \"featureType\": \"poi.park\",\n" + "    \"elementType\": \"labels.text.fill\",\n" + "    \"stylers\": [\n" + "      {\n" + "        \"color\": \"#6b9a76\"\n" + "      }\n" + "    ]\n" + "  },\n" + "  {\n" + "    \"featureType\": \"road\",\n" + "    \"elementType\": \"geometry\",\n" + "    \"stylers\": [\n" + "      {\n" + "        \"color\": \"#38414e\"\n" + "      }\n" + "    ]\n" + "  },\n" + "  {\n" + "    \"featureType\": \"road\",\n" + "    \"elementType\": \"geometry.stroke\",\n" + "    \"stylers\": [\n" + "      {\n" + "        \"color\": \"#212a37\"\n" + "      }\n" + "    ]\n" + "  },\n" + "  {\n" + "    \"featureType\": \"road\",\n" + "    \"elementType\": \"labels.text.fill\",\n" + "    \"stylers\": [\n" + "      {\n" + "        \"color\": \"#9ca5b3\"\n" + "      }\n" + "    ]\n" + "  },\n" + "  {\n" + "    \"featureType\": \"road.highway\",\n" + "    \"elementType\": \"geometry\",\n" + "    \"stylers\": [\n" + "      {\n" + "        \"color\": \"#746855\"\n" + "      }\n" + "    ]\n" + "  },\n" + "  {\n" + "    \"featureType\": \"road.highway\",\n" + "    \"elementType\": \"geometry.stroke\",\n" + "    \"stylers\": [\n" + "      {\n" + "        \"color\": \"#1f2835\"\n" + "      }\n" + "    ]\n" + "  },\n" + "  {\n" + "    \"featureType\": \"road.highway\",\n" + "    \"elementType\": \"labels.text.fill\",\n" + "    \"stylers\": [\n" + "      {\n" + "        \"color\": \"#f3d19c\"\n" + "      }\n" + "    ]\n" + "  },\n" + "  {\n" + "    \"featureType\": \"transit\",\n" + "    \"elementType\": \"geometry\",\n" + "    \"stylers\": [\n" + "      {\n" + "        \"color\": \"#2f3948\"\n" + "      }\n" + "    ]\n" + "  },\n" + "  {\n" + "    \"featureType\": \"transit.station\",\n" + "    \"elementType\": \"labels.text.fill\",\n" + "    \"stylers\": [\n" + "      {\n" + "        \"color\": \"#d59563\"\n" + "      }\n" + "    ]\n" + "  },\n" + "  {\n" + "    \"featureType\": \"water\",\n" + "    \"elementType\": \"geometry\",\n" + "    \"stylers\": [\n" + "      {\n" + "        \"color\": \"#17263c\"\n" + "      }\n" + "    ]\n" + "  },\n" + "  {\n" + "    \"featureType\": \"water\",\n" + "    \"elementType\": \"labels.text.fill\",\n" + "    \"stylers\": [\n" + "      {\n" + "        \"color\": \"#515c6d\"\n" + "      }\n" + "    ]\n" + "  },\n" + "  {\n" + "    \"featureType\": \"water\",\n" + "    \"elementType\": \"labels.text.stroke\",\n" + "    \"stylers\": [\n" + "      {\n" + "        \"color\": \"#17263c\"\n" + "      }\n" + "    ]\n" + "  }\n" + "]";
+
 }

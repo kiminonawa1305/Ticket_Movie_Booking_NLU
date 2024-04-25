@@ -2,7 +2,6 @@ package com.lamnguyen.ticket_movie_nlu.view.fragments;
 
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
@@ -14,7 +13,7 @@ import android.view.ViewGroup;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.lamnguyen.ticket_movie_nlu.R;
-import com.lamnguyen.ticket_movie_nlu.adapters.DisplayPageMovieShowtimeAdapter;
+import com.lamnguyen.ticket_movie_nlu.adapters.ViewPagerMovieAdapter;
 import com.lamnguyen.ticket_movie_nlu.service.Movie.MovieService;
 
 import java.time.LocalDate;
@@ -50,9 +49,9 @@ public class MovieFragment extends Fragment {
     }
 
     private void init(View view) {
-        tlDisplayTicketMovie = view.findViewById(R.id.tab_layout_display_ticket_movie);
-        vpgDisplayTicketMovie = view.findViewById(R.id.view_pager_display_ticket_movie);
-        vpgDisplayTicketMovie.setAdapter(new DisplayPageMovieShowtimeAdapter(this.getActivity()));
+        tlDisplayTicketMovie = view.findViewById(R.id.tab_layout_display_movie);
+        vpgDisplayTicketMovie = view.findViewById(R.id.view_pager_display_movie);
+        vpgDisplayTicketMovie.setAdapter(new ViewPagerMovieAdapter(this.getActivity()));
         movieInfoService = MovieService.getInstance();
     }
 

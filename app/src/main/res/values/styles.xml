@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <style name="btn_sign">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -69,5 +68,9 @@
 
     <style name="image_avatar_user">
         <item name="cornerSize">@dimen/corner_size_avatar_user</item>
+    </style>
+
+    <style name="image_movie_ticket_item">
+        <item name="cornerSize">@dimen/corner_size_movie_ticket_item</item>
     </style>
 </resources>

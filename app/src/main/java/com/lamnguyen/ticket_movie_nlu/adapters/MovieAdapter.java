@@ -15,23 +15,23 @@ import com.lamnguyen.ticket_movie_nlu.dto.MovieDTO;
 
 import java.util.List;
 
-public class PageMovieShowtimeAdapter extends RecyclerView.Adapter<PageMovieShowtimeAdapter.MovieTicketViewHolder> {
+public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
     private List<MovieDTO> movies;
 
-    public PageMovieShowtimeAdapter(@NonNull List<MovieDTO> movies) {
+    public MovieAdapter(@NonNull List<MovieDTO> movies) {
         this.movies = movies;
     }
 
     @NonNull
     @Override
-    public MovieTicketViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public MovieViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view;
-        view = View.inflate(parent.getContext(), R.layout.item_ticket_movie, null);
-        return new MovieTicketViewHolder(view);
+        view = View.inflate(parent.getContext(), R.layout.item_movie, null);
+        return new MovieViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MovieTicketViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MovieViewHolder holder, int position) {
         MovieDTO movie = movies.get(position);
         holder.setImage(movie.getPoster());
         holder.setGenre(movie.getGenre());
@@ -46,17 +46,17 @@ public class PageMovieShowtimeAdapter extends RecyclerView.Adapter<PageMovieShow
         return movies.size();
     }
 
-    public static class MovieTicketViewHolder extends RecyclerView.ViewHolder {
+    public static class MovieViewHolder extends RecyclerView.ViewHolder {
         private ImageView imgvMovieImage;
         private RatingBar rtbMovieRate;
         private TextView tvMovieTitle, tvMovieTime, tvMovieVote, tvMovieType;
 
-        public MovieTicketViewHolder(@NonNull View itemView) {
+        public MovieViewHolder(@NonNull View itemView) {
             super(itemView);
             imgvMovieImage = itemView.findViewById(R.id.image_view_movie_image);
             tvMovieType = itemView.findViewById(R.id.text_view_movie_type);
             tvMovieVote = itemView.findViewById(R.id.text_view_movie_vote);
-            tvMovieTitle = itemView.findViewById(R.id.text_view_movie_Title);
+            tvMovieTitle = itemView.findViewById(R.id.text_view_movie_title);
             tvMovieTime = itemView.findViewById(R.id.text_view_movie_time);
             rtbMovieRate = itemView.findViewById(R.id.rating_bar_movie_rate);
         }

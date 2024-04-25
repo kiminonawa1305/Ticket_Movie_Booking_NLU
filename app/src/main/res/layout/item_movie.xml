@@ -70,7 +70,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
-        android:id="@+id/text_view_movie_Title"
+        android:id="@+id/text_view_movie_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/gray_secondary"

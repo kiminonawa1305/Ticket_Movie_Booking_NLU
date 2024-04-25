@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/menu_item_google_map_vehicle_motorbike"
+        android:icon="@mipmap/ic_motorbike"
+        android:title="Xe hai bánh"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/menu_item_google_map_vehicle_car"
+        android:icon="@mipmap/ic_car"
+        android:title="Xe hơi"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/menu_item_google_map_vehicle_walk"
+        android:icon="@mipmap/ic_walk"
+        android:title="Đi bộ"
+        app:showAsAction="ifRoom" />
+</menu>

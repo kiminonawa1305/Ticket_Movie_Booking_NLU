@@ -7,10 +7,10 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.lamnguyen.ticket_movie_nlu.view.fragments.PageMovieShowtimeFragment;
+import com.lamnguyen.ticket_movie_nlu.view.fragments.ViewPagerMovieFragment;
 
-public class DisplayPageMovieShowtimeAdapter extends FragmentStateAdapter {
-    public DisplayPageMovieShowtimeAdapter(@NonNull FragmentActivity fragmentActivity) {
+public class ViewPagerMovieAdapter extends FragmentStateAdapter {
+    public ViewPagerMovieAdapter(@NonNull FragmentActivity fragmentActivity) {
         super(fragmentActivity);
     }
 
@@ -21,7 +21,7 @@ public class DisplayPageMovieShowtimeAdapter extends FragmentStateAdapter {
         Bundle args = new Bundle();
         // The object is just an integer.
         args.putInt("position", position);
-        fragment = new PageMovieShowtimeFragment();
+        fragment = new ViewPagerMovieFragment();
         fragment.setArguments(args);
         return fragment;
     }
