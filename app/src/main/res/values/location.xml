@@ -3,19 +3,23 @@
     <string-array name="CINESTAR">
         <item>10.875169012879635</item>
         <item>106.80071966748321</item>
+        <item>Cinestar Sinh Viên (Bình Dương)</item>
     </string-array>
     <string-array name="GIGALMALL">
         <item>10.827842707980409</item>
         <item>106.72151361124503</item>
+        <item>Gigamall Thủ Đức</item>
     </string-array>
 
     <string-array name="GALAXY">
         <item>10.868013035269518</item>
         <item>106.77668136615202</item>
+        <item>Galaxy Co.opXtra Linh Trung</item>
     </string-array>
 
     <string-array name="COOP_MART">
         <item>10.868373049683854</item>
         <item>106.77662320959017</item>
+        <item>Co.opmart Xa Lộ Hà Nội</item>
     </string-array>
 </resources>

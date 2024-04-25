@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Cinemas>
+    <Cinema id="1">
+        <Name>CineStar</Name>
+        <LatLng>
+            <Lat>10.875169012879635</Lat>
+            <Lng>106.80071966748321</Lng>
+        </LatLng>
+    </Cinema>
+
+    <Cinema id="2">
+        <Name>Gigalmall</Name>
+        <LatLng>
+            <Lat>10.827842707980409</Lat>
+            <Lng>106.72151361124503</Lng>
+        </LatLng>
+    </Cinema>
+
+    <Cinema id="3">
+        <Name>Galaxy</Name>
+        <LatLng>
+            <Lat>10.868013035269518</Lat>
+            <Lng>106.77668136615202</Lng>
+        </LatLng>
+    </Cinema>
+
+    <Cinema id="4">
+        <Name>Coop.Mart</Name>
+        <LatLng>
+            <Lat>10.868373049683854</Lat>
+            <Lng>106.77662320959017</Lng>
+        </LatLng>
+    </Cinema>
+</Cinemas>

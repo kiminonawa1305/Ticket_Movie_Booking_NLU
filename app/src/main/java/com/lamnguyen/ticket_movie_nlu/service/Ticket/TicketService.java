@@ -26,7 +26,6 @@ public class TicketService {
         for (int i = 0; i < 10; i++) {
             ticket = new TicketDTO("", "Phim đánh lộn  " + i, "Cinestar", 1, "2B", LocalTime.of(12, 30, 0), LocalDate.of(2024, 5, 13));
             ticketDTOList.add(ticket);
-            Log.i(TicketService.class.getSimpleName(), ticket.toString());
         }
 
         return ticketDTOList;
