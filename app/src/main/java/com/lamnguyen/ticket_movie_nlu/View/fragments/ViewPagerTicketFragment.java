@@ -10,14 +10,12 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lamnguyen.ticket_movie_nlu.R;
 import com.lamnguyen.ticket_movie_nlu.adapters.TicketAdapter;
 import com.lamnguyen.ticket_movie_nlu.service.Ticket.TicketService;
-import com.lamnguyen.ticket_movie_nlu.utils.DialogLoading;
 
 import java.time.LocalDate;
 
