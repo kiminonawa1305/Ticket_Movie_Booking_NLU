@@ -13,14 +13,7 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.lamnguyen.ticket_movie_nlu.R;
-import com.lamnguyen.ticket_movie_nlu.adapters.TicketAdapter;
 import com.lamnguyen.ticket_movie_nlu.adapters.ViewPagerTicketAdapter;
-import com.lamnguyen.ticket_movie_nlu.dto.TicketDTO;
-
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.

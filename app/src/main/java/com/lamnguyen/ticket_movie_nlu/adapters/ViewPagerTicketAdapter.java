@@ -7,7 +7,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.lamnguyen.ticket_movie_nlu.view.fragments.ViewPagerMovieFragment;
 import com.lamnguyen.ticket_movie_nlu.view.fragments.ViewPagerTicketFragment;
 
 public class ViewPagerTicketAdapter extends FragmentStateAdapter {
