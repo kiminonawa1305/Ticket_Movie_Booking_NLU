@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginRight="6dp"
+    android:background="@drawable/bg_rounded_corner"
+    android:backgroundTint="#B2B5BB"
+    android:padding="4dp">>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginRight="4dp"
+        android:background="@drawable/bg_rounded_corner"
+        android:backgroundTint="@color/black_secondary"
+        android:paddingHorizontal="4dp"
+        android:src="@drawable/ic_person" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/career_tv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:hint="career"
+            android:textColor="@color/black_secondary"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/name_tv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:hint="name"
+            android:textColor="@color/black_secondary"
+            android:textSize="10dp" />
+    </LinearLayout>
+</LinearLayout>
