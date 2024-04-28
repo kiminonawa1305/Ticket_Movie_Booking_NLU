@@ -1,4 +1,4 @@
-package com.lamnguyen.ticket_movie_nlu.dao;
+package com.lamnguyen.ticket_movie_nlu.api;
 
 import android.content.Context;
 
@@ -7,7 +7,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.lamnguyen.ticket_movie_nlu.service.UserService.SaveInfoUserService;
 import com.lamnguyen.ticket_movie_nlu.bean.User;
 
-public class UserDAO implements SaveInfoUserService {
+public class UserApi implements SaveInfoUserService {
     @Override
     public void save(Context context, FirebaseAuth auth, User user) {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
