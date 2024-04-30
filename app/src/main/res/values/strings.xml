@@ -55,6 +55,21 @@
     <string name="failed">Thất bại!</string>
     <string name="loading">Đang tải...</string>
     <string name="MAPS_API_KEY">AIzaSyAkJ-NbtMqrX05P5LzHQr86aAZeJ6iEmuA</string>
+    <string name="th_2">Thứ 2</string>
+    <string name="th_3">Thứ 3</string>
+    <string name="th_4">Thứ 4</string>
+    <string name="th_5">Thứ 5</string>
+    <string name="th_6">Thứ 6</string>
+    <string name="th_7">Thứ 7</string>
+    <string name="_24_4">24/4</string>
+    <string name="_25_4">25/4</string>
+    <string name="_26_4">26/4</string>
+    <string name="_27_4">27/4</string>
+    <string name="_28_4">28/4</string>
+    <string name="_29_4">29/4</string>
+    <string name="bi_t_i_avenger">Biệt Đội Avenger</string>
+    <string name="th_lo_i">Thể loại:</string>
+    <string name="h_nh_ng_khoa_h_c_vi_n_t_ng">Hành động, Khoa học viễn tưởng</string>
 
     <!--Google Map API-->
   
