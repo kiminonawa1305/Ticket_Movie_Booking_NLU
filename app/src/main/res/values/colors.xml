@@ -12,4 +12,5 @@
     <color name="black_system">#121212</color>
     <color name="purple_system">#6750A4</color>
     <color name="item_date">#AFA0A0</color>
+    <color name="bg_footer">#E19E79</color>
 </resources>

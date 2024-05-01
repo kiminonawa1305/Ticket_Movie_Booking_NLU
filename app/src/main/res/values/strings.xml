@@ -70,6 +70,13 @@
     <string name="bi_t_i_avenger">Biệt Đội Avenger</string>
     <string name="th_lo_i">Thể loại:</string>
     <string name="h_nh_ng_khoa_h_c_vi_n_t_ng">Hành động, Khoa học viễn tưởng</string>
+    <string name="cinestar_b_nh_d_ng">CineStar Bình Dương</string>
+    <string name="m_n_h_nh">Màn hình</string>
+    <string name="s_l_ng_mu_n_thanh_to_n">Số lượng muốn thanh toán:</string>
+    <string name="_4">4</string>
+    <string name="gi_v">Giá vé:</string>
+    <string name="_45_000">45.000</string>
+    <string name="t_m_t_nh">Tạm tính:</string>
 
     <!--Google Map API-->
   
