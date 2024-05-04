@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_input_info_sign">
+
+    <TextView
+        android:id="@+id/PersonalInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:text="@string/User_Info"
+        android:textColor="#FFFFFF"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/backIcon"
+        android:layout_width="43dp"
+        android:layout_height="38dp"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="40dp"
+        app:layout_constraintEnd_toStartOf="@+id/PersonalInfo"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_back_arrow"
+        app:tint="#FFFFFF" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/avatarCardView"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="19dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="19dp"
+        app:cardCornerRadius="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/PersonalInfo">
+
+        <ImageView
+            android:id="@+id/avata"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
+            android:src="@drawable/avata" />
+    </com.google.android.material.card.MaterialCardView>
+    <Button
+        android:id="@+id/btnChangeAvata"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-10dp"
+        android:backgroundTint="#AFACAC"
+        android:text="Change Avatar"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/avatarCardView"
+        app:layout_constraintVertical_bias="0.007" />
+
+    <View
+        android:id="@+id/line"
+        android:layout_width="wrap_content"
+        android:layout_height="2dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="10dp"
+        android:background="#C3C1C1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.6"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnChangeAvata" />
+
+    <TextView
+        android:id="@+id/UserNameLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="20dp"
+        android:text="UserName"
+        android:textColor="#FFFFFF"
+        android:textSize="20dp"
+        android:textStyle="normal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/line" />
+
+    <EditText
+        android:id="@+id/UserNameInput"
+        style="@style/edt_input_info_sign"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="20dp"
+        android:autofillHints="name"
+        android:background="@drawable/bg_input_info_user"
+        android:drawableLeft="@drawable/person"
+        android:drawableRight="@drawable/pencil"
+        android:drawablePadding="10dp"
+        android:hint="UserName"
+        android:focusable="false"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="10dp"
+        android:text="OzuSus"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/UserNameLabel" />
+
+    <TextView
+        android:id="@+id/EmailLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="20dp"
+        android:text="Email"
+        android:textColor="#FFFFFF"
+        android:textSize="20dp"
+        android:textStyle="normal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/UserNameInput" />
+
+    <EditText
+        android:id="@+id/EmailInput"
+        style="@style/edt_input_info_sign"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="20dp"
+        android:autofillHints="name"
+        android:background="@drawable/bg_input_info_user"
+        android:drawableLeft="@drawable/email"
+        android:drawableRight="@drawable/pencil"
+        android:drawablePadding="10dp"
+        android:hint="Email"
+        android:focusable="false"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="10dp"
+        android:text="pvduoc2003@gmail.com"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/EmailLabel" />
+
+    <TextView
+        android:id="@+id/PhoneLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="20dp"
+        android:text="Phone"
+        android:textColor="#FFFFFF"
+        android:textSize="20dp"
+        android:textStyle="normal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/EmailInput" />
+
+    <EditText
+        android:id="@+id/PhoneInput"
+        style="@style/edt_input_info_sign"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="20dp"
+        android:autofillHints="name"
+        android:background="@drawable/bg_input_info_user"
+        android:drawableLeft="@drawable/phone"
+        android:drawableRight="@drawable/pencil"
+        android:drawablePadding="10dp"
+        android:focusable="false"
+        android:hint="Phone Number"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="10dp"
+        android:text="0703237559"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/PhoneLabel" />
+
+    <TextView
+        android:id="@+id/BirthdayLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:text="Birthday"
+        android:textColor="#FFFFFF"
+        android:textSize="20dp"
+        android:textStyle="normal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/PhoneInput" />
+    <EditText
+        android:id="@+id/BirthdayInput"
+        style="@style/edt_input_info_sign"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="20dp"
+        android:autofillHints="name"
+        android:background="@drawable/bg_input_info_user"
+        android:drawableLeft="@drawable/birthday_cake"
+        android:drawableRight="@drawable/calendar"
+        android:drawablePadding="10dp"
+        android:focusable="false"
+        android:hint="Birthday"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="10dp"
+        android:text="05/04/2024"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/BirthdayLabel" />
+
+    <TextView
+        android:id="@+id/AddressLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:text="Address"
+        android:textColor="#FFFFFF"
+        android:textSize="20dp"
+        android:textStyle="normal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/BirthdayInput" />
+    <EditText
+        android:id="@+id/AddressInput"
+        style="@style/edt_input_info_sign"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="20dp"
+        android:autofillHints="name"
+        android:background="@drawable/bg_input_info_user"
+        android:drawableLeft="@drawable/location"
+        android:drawableRight="@drawable/pencil"
+        android:drawablePadding="10dp"
+        android:focusable="false"
+        android:hint="Address"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="10dp"
+        android:text="Bình Dương-Thủ Đức"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/AddressLabel" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
