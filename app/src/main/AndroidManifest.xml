@@ -56,6 +56,11 @@
             android:label="GreetingActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".view.activities.UserInfoActivity"
+            android:exported="false"
+            android:label="UserInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".view.activities.GreetingActivity"
             android:exported="true"
             android:label="MainActivity"
