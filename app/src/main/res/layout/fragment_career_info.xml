@@ -5,40 +5,39 @@
     android:layout_marginRight="6dp"
     android:background="@drawable/bg_rounded_corner"
     android:backgroundTint="#B2B5BB"
-    android:padding="4dp">>
+    android:gravity="center_vertical"
+    android:padding="6dp">
 
     <ImageView
-        android:layout_width="wrap_content"
+        android:layout_width="26dp"
         android:layout_height="match_parent"
         android:layout_marginRight="4dp"
         android:background="@drawable/bg_rounded_corner"
         android:backgroundTint="@color/black_secondary"
-        android:paddingHorizontal="4dp"
+        android:padding="8dp"
         android:src="@drawable/ic_person" />
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/career_tv"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:hint="career"
+            android:layout_height="wrap_content"
+            android:hint="Career"
+            android:textSize="12dp"
             android:textColor="@color/black_secondary"
-            android:textStyle="bold" />
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/name_tv"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:hint="name"
+            android:hint="Name"
             android:textColor="@color/black_secondary"
-            android:textSize="10dp" />
+            android:textSize="8dp" />
     </LinearLayout>
 </LinearLayout>

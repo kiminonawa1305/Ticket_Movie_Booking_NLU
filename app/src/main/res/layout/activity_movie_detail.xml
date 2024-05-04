@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingVertical="18dp"
+        android:paddingVertical="24dp"
         android:paddingHorizontal="26dp"
         android:gravity="center_vertical"
         app:layout_constraintTop_toTopOf="parent">
@@ -28,8 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="Movie detail"
-            android:textStyle="bold"
+            android:text="Thông tin chi tiết phim"
             android:textColor="@color/white"
             android:textSize="20dp" />
     </LinearLayout>
@@ -42,20 +41,159 @@
         android:scrollbars="none"
         app:layout_constraintBottom_toTopOf="@+id/footer"
         app:layout_constraintTop_toBottomOf="@+id/header"
-        tools:layout_editor_absoluteX="0dp">
+        tools:layout_editor_absoluteX="-66dp">
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
             android:orientation="vertical">
 
-            <com.google.android.material.imageview.ShapeableImageView
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingHorizontal="40dp"
-                android:scaleType="fitXY"
-                android:src="@drawable/smatsv"
-                app:shapeAppearanceOverlay="@style/roundedImageView" />
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:layout_width="240dp"
+                    android:layout_height="360dp"
+                    android:src="@drawable/smatsv"
+                    android:scaleType="fitXY"
+                    app:shapeAppearanceOverlay="@style/roundedImageView" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="#36363F"
+                    android:layout_marginHorizontal="12dp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/duration_group"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_rounded_corner"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="10dp"
+                        android:layout_marginBottom="10dp">
+
+                        <ImageView
+                            android:id="@+id/duration_icon"
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:src="@drawable/ic_duration"
+                            android:layout_marginBottom="10dp"/>
+
+                        <TextView
+                            android:id="@+id/duration_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="Thời lượng phim"
+                            android:textColor="#9F9F9F"
+                            android:textSize="10dp" />
+
+                        <TextView
+                            android:id="@+id/duration_amount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:layout_marginBottom="2dp"
+                            android:text="140 phút"
+                            android:textColor="#54A8E5"
+                            android:textSize="12dp"
+                            android:textStyle="bold"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/rating_group"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_rounded_corner"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="10dp"
+                        android:layout_marginBottom="10dp">
+
+                        <ImageView
+                            android:id="@+id/rating_icon"
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:src="@drawable/ic_star"
+                            android:layout_marginBottom="10dp"/>
+
+                        <TextView
+                            android:id="@+id/rating_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="Đánh giá phim"
+                            android:textColor="#9F9F9F"
+                            android:textSize="10dp"/>
+
+
+                        <TextView
+                            android:id="@+id/rating_amount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:layout_marginBottom="2dp"
+                            android:text="8.6/10"
+                            android:textColor="#FFA235"
+                            android:textSize="12dp"
+                            android:textStyle="bold"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/premiere_group"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_rounded_corner"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="10dp">
+
+                        <ImageView
+                            android:id="@+id/premiere_icon"
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:src="@drawable/ic_premiere"
+                            android:layout_marginBottom="10dp"/>
+
+                        <TextView
+                            android:id="@+id/premiere_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="Ngày khởi chiếu"
+                            android:textColor="#9F9F9F"
+                            android:textSize="10dp"/>
+
+
+                        <TextView
+                            android:id="@+id/premiere_date"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:layout_marginBottom="2dp"
+                            android:text="02/06/2023"
+                            android:textColor="#CB2027"
+                            android:textSize="12dp"
+                            android:textStyle="bold"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#36363F"
+                android:layout_marginTop="16dp"/>
 
             <LinearLayout
                 android:id="@+id/section_first"
@@ -67,54 +205,14 @@
                 <TextView
                     android:id="@+id/movie_title"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Spider-Man: Across the Spider-Verse (2023)"
                     android:textColor="@color/white"
-                    android:textSize="18dp"
+                    android:textSize="26dp"
+                    android:textAllCaps="true"
                     android:textStyle="bold"
                     tools:ignore="MissingConstraints" />
-
-                <LinearLayout
-                    android:id="@+id/duration_group"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center_vertical">
-
-                    <ImageView
-                        android:id="@+id/duration_icon"
-                        android:layout_width="36dp"
-                        android:layout_height="36dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginRight="4dp"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/ic_duration" />
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="2dp"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/duration_title"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Duration"
-                            android:textColor="#54A8E5"
-                            android:textSize="18dp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
-                            android:text="2h 20m"
-                            android:textColor="#BABFC9"
-                            android:textSize="12dp" />
-                    </LinearLayout>
-                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
@@ -126,82 +224,76 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="6dp"
+                    android:layout_marginRight="8dp"
                     android:background="@drawable/bg_rounded_corner"
-                    android:backgroundTint="#252932"
-                    android:paddingHorizontal="10dp"
+                    android:paddingHorizontal="12dp"
                     android:paddingVertical="6dp"
-                    android:text="Action"
-                    android:textColor="#B2B5BB" />
+                    android:text="Hành động"
+                    android:textColor="#B2B5BB"
+                    android:textSize="10dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="6dp"
+                    android:layout_marginRight="8dp"
                     android:background="@drawable/bg_rounded_corner"
-                    android:backgroundTint="#252932"
-                    android:paddingHorizontal="10dp"
+                    android:paddingHorizontal="12dp"
                     android:paddingVertical="6dp"
-                    android:text="Adventure"
-                    android:textColor="#B2B5BB" />
+                    android:text="Phiêu lưu"
+                    android:textColor="#B2B5BB"
+                    android:textSize="10dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="6dp"
+                    android:layout_marginRight="8dp"
                     android:background="@drawable/bg_rounded_corner"
-                    android:backgroundTint="#252932"
-                    android:paddingHorizontal="10dp"
+                    android:paddingHorizontal="12dp"
                     android:paddingVertical="6dp"
-                    android:text="Animation"
-                    android:textColor="#B2B5BB" />
+                    android:text="Hoạt hình"
+                    android:textColor="#B2B5BB"
+                    android:textSize="10dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="8dp"
+                    android:background="@drawable/bg_rounded_corner"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="6dp"
+                    android:text="Khoa học - viễn tưởng"
+                    android:textColor="#B2B5BB"
+                    android:textSize="10dp" />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/section_third"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="18dp">
+                android:layout_marginTop="18dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Đạo diễn"
+                    android:layout_marginBottom="6dp"
+                    android:textStyle="bold"
+                    android:textSize="18dp"
+                    android:textColor="@color/white"/>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/director_rv"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent">
-
-                    <ImageView
-                        android:layout_width="36dp"
-                        android:layout_height="36dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginRight="4dp"
-                        android:src="@drawable/ic_star" />
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Rating"
-                            android:textColor="#FFA235"
-                            android:textSize="18dp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="8.6/10"
-                            android:textColor="#B2B5BB"
-                            android:textSize="12dp" />
-                    </LinearLayout>
-                </LinearLayout>
             </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#36363F"
+                android:layout_marginTop="16dp"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -213,17 +305,31 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="6dp"
-                    android:text="Synopsis"
+                    android:text="Nội dung"
                     android:textColor="@color/white"
                     android:textSize="18dp"
                     android:textStyle="bold" />
 
-                <TextView
+                <com.borjabravo.readmoretextview.ReadMoreTextView
+                    android:id="@+id/movie_synopsis"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Miles Morales catapults across the multiverse, where he encounters a team of Spider-People charged with protecting its very existence. When the heroes clash on how to handle a new threat, Miles must redefine what it means to be a hero."
-                    android:textColor="#B2B5BB" />
+                    android:text="Miles Morales tái xuất trong phần tiếp theo của bom tấn hoạt hình từng đoạt giải Oscar - Spider-Man: Across the Spider-Verse. Sau khi gặp lại Gwen Stacy, chàng Spider-Man thân thiện đến từ Brooklyn phải du hành qua đa vũ trụ và gặp một nhóm Người Nhện chịu trách nhiệm bảo vệ các vũ trụ song song. Nhưng khi nhóm siêu anh hùng xung đột về cách xử lý một mối đe dọa mới, Miles buộc phải đọ sức với các Người Nhện khác và phải xác định lại ý nghĩa của việc trở thành một người hùng để có thể cứu những người cậu yêu thương nhất."
+                    android:textColor="#B2B5BB"
+                    android:lineSpacingExtra="4dp"
+                    android:textSize="12dp"
+                    app:trimExpandedText="@string/collapsed_text"
+                    app:trimCollapsedText="@string/expanded_text"
+                    app:trimMode="trimModeLine"
+                    app:trimLines="3"
+                    app:colorClickableText="#54A8E5"/>
             </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#36363F"
+                android:layout_marginTop="16dp"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -235,99 +341,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="6dp"
-                    android:text="Cast"
+                    android:text="Diễn viên"
                     android:textColor="@color/white"
                     android:textSize="18dp"
                     android:textStyle="bold" />
 
-                <LinearLayout
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/actor_rv"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginRight="6dp"
-                        android:background="@drawable/bg_rounded_corner"
-                        android:backgroundTint="#B2B5BB"
-                        android:padding="4dp">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_marginRight="4dp"
-                            android:background="@drawable/bg_rounded_corner"
-                            android:backgroundTint="@color/black_secondary"
-                            android:paddingHorizontal="4dp"
-                            android:src="@drawable/ic_person" />
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1"
-                                android:gravity="center_vertical"
-                                android:text="Actor"
-                                android:textColor="@color/black_secondary"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1"
-                                android:gravity="center_vertical"
-                                android:text="Shameik Moore"
-                                android:textColor="@color/black_secondary"
-                                android:textSize="10dp" />
-                        </LinearLayout>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginRight="6dp"
-                        android:background="@drawable/bg_rounded_corner"
-                        android:backgroundTint="#B2B5BB"
-                        android:padding="4dp">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_marginRight="4dp"
-                            android:background="@drawable/bg_rounded_corner"
-                            android:backgroundTint="@color/black_secondary"
-                            android:paddingHorizontal="4dp"
-                            android:src="@drawable/ic_person" />
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1"
-                                android:gravity="center_vertical"
-                                android:text="Actor"
-                                android:textColor="@color/black_secondary"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1"
-                                android:gravity="center_vertical"
-                                android:text="Shameik Moore"
-                                android:textColor="@color/black_secondary"
-                                android:textSize="10dp" />
-                        </LinearLayout>
-                    </LinearLayout>
-                </LinearLayout>
+                    android:layout_height="wrap_content" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
@@ -345,8 +367,9 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Book ticket"
-            android:textSize="22dp"
+            android:text="Đặt vé"
+            android:paddingVertical="12dp"
+            android:textSize="24dp"
             android:textStyle="bold"
             android:background="@drawable/bg_rounded_corner"
             android:backgroundTint="#54A8E5" />

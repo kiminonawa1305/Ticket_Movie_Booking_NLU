@@ -16,26 +16,48 @@ import java.util.List;
 public class MovieDetailActivity extends AppCompatActivity {
 
     private RecyclerView directorRecyclerView;
+    private RecyclerView actorRecyclerView;
     private List<CareerInfo> listDirectorInfo;
-    private LinearLayoutManager linearLayoutManager;
 
-    private CareerInfoAdapter careerInfoAdapter;
+    private List<CareerInfo> listActorInfo;
+    private LinearLayoutManager diretorLinearLayoutManager;
+
+    private LinearLayoutManager actorLinearLayoutManager;
+
+    private CareerInfoAdapter directorInfoAdapter;
+
+    private CareerInfoAdapter actorInfoAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_detail);
         directorRecyclerView = findViewById(R.id.director_rv);
+        actorRecyclerView = findViewById(R.id.actor_rv);
 
         listDirectorInfo = new ArrayList<>();
-        listDirectorInfo.add(new CareerInfo("Director", "Shameik Moore"));
-        listDirectorInfo.add(new CareerInfo("Director", "Kemp Powers"));
-        listDirectorInfo.add(new CareerInfo("Director", "Dave Callaham"));
+        listDirectorInfo.add(new CareerInfo("Đạo diễn", "Shameik Moore"));
+        listDirectorInfo.add(new CareerInfo("Đạo diễn", "Kemp Powers"));
+        listDirectorInfo.add(new CareerInfo("Đạo diễn", "Dave Callaham"));
 
-        linearLayoutManager = new LinearLayoutManager(MovieDetailActivity.this, LinearLayoutManager.HORIZONTAL, false);
-        careerInfoAdapter = new CareerInfoAdapter();
-        careerInfoAdapter.setData(listDirectorInfo);
-        directorRecyclerView.setLayoutManager(linearLayoutManager);
-        directorRecyclerView.setAdapter(careerInfoAdapter);
+        listActorInfo = new ArrayList<>();
+        listActorInfo.add(new CareerInfo("Diễn viên", "Shameik Moore"));
+        listActorInfo.add(new CareerInfo("Diễn viên", "Hailee Steinfeld"));
+        listActorInfo.add(new CareerInfo("Diễn viên", "Brian Tyree Henry"));
+        listActorInfo.add(new CareerInfo("Diễn viên", "Luna Lauren Velez"));
+        listActorInfo.add(new CareerInfo("Diễn viên", "Jake Johnson"));
+
+        diretorLinearLayoutManager = new LinearLayoutManager(MovieDetailActivity.this, LinearLayoutManager.HORIZONTAL, false);
+        actorLinearLayoutManager = new LinearLayoutManager(MovieDetailActivity.this, LinearLayoutManager.HORIZONTAL, false);
+
+        directorInfoAdapter = new CareerInfoAdapter();
+        directorInfoAdapter.setData(listDirectorInfo);
+        directorRecyclerView.setLayoutManager(diretorLinearLayoutManager);
+        directorRecyclerView.setAdapter(directorInfoAdapter);
+
+        actorInfoAdapter = new CareerInfoAdapter();
+        actorInfoAdapter.setData(listActorInfo);
+        actorRecyclerView.setLayoutManager(actorLinearLayoutManager);
+        actorRecyclerView.setAdapter(actorInfoAdapter);
     }
 }
