@@ -55,6 +55,11 @@ public class TicketDetailActivity extends AppCompatActivity {
         // Tạo mã QR:
         try{
             qrgEncoder = new QRGEncoder(tv_ticket_id.getText().toString(), null, QRGContents.Type.TEXT, dimen);
+
+            /*
+            Bitmap đại diện cho một ma trận các điểm ảnh (pixels) được sắp xếp 2D.
+            Mỗi điểm ảnh trong Bitmap có thể được mô tả bằng một số nguyên, trong đó mỗi bit của số nguyên đó biểu diễn một màu sắc cụ thể.
+             */
             Bitmap bitmap = qrgEncoder.encodeAsBitmap();
             imgv_qr.setImageBitmap(bitmap);
         }catch (WriterException e){
