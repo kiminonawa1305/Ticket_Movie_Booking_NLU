@@ -33,7 +33,7 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".view.activities.TicketDetailActivity"
+            android:name=".view.activities.GreetingActivity"
             android:exported="false" />
 
         <meta-data
@@ -59,7 +59,7 @@
             android:label="GreetingActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.activities.GreetingActivity"
+            android:name=".view.activities.TicketDetailActivity"
             android:exported="true"
             android:label="MainActivity"
             android:screenOrientation="portrait">
