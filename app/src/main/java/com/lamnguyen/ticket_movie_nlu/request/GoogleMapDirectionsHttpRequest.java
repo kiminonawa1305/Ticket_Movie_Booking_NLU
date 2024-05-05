@@ -7,6 +7,7 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.android.gms.maps.model.LatLng;
 import com.lamnguyen.ticket_movie_nlu.enums.DriverType;
+import com.lamnguyen.ticket_movie_nlu.utils.CallAPI;
 
 import org.json.JSONObject;
 
@@ -20,7 +21,7 @@ public class GoogleMapDirectionsHttpRequest extends JsonObjectRequest {
 
 
     public GoogleMapDirectionsHttpRequest(Integer method, Response.Listener<JSONObject> listener, @Nullable Response.ErrorListener errorListener) {
-        super(method, "https://maps.googleapis.com/maps/api/directions/json", null, listener, errorListener);
+        super(method, CallAPI.URL_GOOGLE_MAP_DIRECTION, null, listener, errorListener);
     }
 
     public void setBody(LatLng origin, LatLng destination) {

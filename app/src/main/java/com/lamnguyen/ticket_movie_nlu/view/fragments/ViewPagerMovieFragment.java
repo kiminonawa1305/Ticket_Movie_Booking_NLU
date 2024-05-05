@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.lamnguyen.ticket_movie_nlu.R;
 import com.lamnguyen.ticket_movie_nlu.dto.MovieDTO;
 import com.lamnguyen.ticket_movie_nlu.adapters.MovieAdapter;
-import com.lamnguyen.ticket_movie_nlu.service.Movie.MovieService;
+import com.lamnguyen.ticket_movie_nlu.api.MovieApi;
 import com.lamnguyen.ticket_movie_nlu.utils.DialogLoading;
 
 import java.time.LocalDate;
@@ -28,7 +28,7 @@ public class ViewPagerMovieFragment extends Fragment {
     public static final String TAG = ViewPagerMovieFragment.class.getSimpleName();
     private RecyclerView rclDisplayListMovieShowtime;
     private Dialog dialog;
-    private MovieService movieService;
+    private MovieApi movieService;
 
     public ViewPagerMovieFragment() {
     }
@@ -36,7 +36,7 @@ public class ViewPagerMovieFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        movieService = MovieService.getInstance();
+        movieService = MovieApi.getInstance();
     }
 
     @Override
@@ -69,7 +69,7 @@ public class ViewPagerMovieFragment extends Fragment {
 
     private void loadMovieShowtime(LocalDate dateTime) {
         DialogLoading.showDialogLoading(dialog, getString(R.string.loading));
-        movieService.getMovieShowtime(dateTime, this.getContext(), new MovieService.MovieServiceListener() {
+        movieService.getMovieShowtime(dateTime, this.getContext(), new MovieApi.MovieServiceListener() {
 
             @Override
             public void completed(List<MovieDTO> movieDTOs) {
