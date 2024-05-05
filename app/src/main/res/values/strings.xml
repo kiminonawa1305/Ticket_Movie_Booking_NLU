@@ -66,4 +66,7 @@
     <string name="user_birth_day">Birthday</string>
     <string name="user_address">Address</string>
 
+    <!--favoriteList-->
+    <string name="favorite_list">Favorite List</string>
+
 </resources>

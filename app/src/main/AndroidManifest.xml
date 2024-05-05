@@ -61,7 +61,7 @@
             android:label="UserInfoActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.activities.GreetingActivity"
+            android:name=".view.activities.FavoriteMovieList"
             android:exported="true"
             android:label="MainActivity"
             android:screenOrientation="portrait">
