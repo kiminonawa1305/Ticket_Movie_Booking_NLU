@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/bg_input_info_sign"
     android:orientation="vertical">
 
@@ -38,6 +39,7 @@
         android:layout_height="wrap_content"
         android:layout_marginVertical="20dp"
         android:paddingHorizontal="20dp">
+
         <View
             android:id="@+id/line"
             android:layout_width="match_parent"
@@ -45,13 +47,10 @@
             android:background="#FFFFFF" />
     </FrameLayout>
 
-    <GridView
-        android:id="@+id/gridView"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view_display_favorite_movie"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        android:numColumns="2"
-        />
+        android:layout_height="wrap_content" />
 
 
 </LinearLayout>
