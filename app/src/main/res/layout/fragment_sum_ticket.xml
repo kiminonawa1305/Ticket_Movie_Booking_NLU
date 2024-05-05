@@ -1,0 +1,95 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingHorizontal="15dp"
+    android:background="@color/gray_secondary"
+    android:padding="10dp">
+
+    <!-- Button bên ngoài GridLayout -->
+    <GridLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:columnCount="2"
+        android:paddingRight="10dp"
+        android:orientation="horizontal"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total Seats:"
+            android:textSize="12sp"
+            android:textColor="@color/white"
+            android:layout_marginTop="5dp"/>
+
+        <TextView
+            android:id="@+id/txtTotalSeatsValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ádfasdfasdfasdfas fdasdfasdfasdfasdfas dfasdf"
+            android:textSize="12sp"
+            android:textColor="@color/white"
+            android:layout_marginTop="5dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ticket Price:"
+            android:textSize="12sp"
+            android:textColor="@color/white"
+            android:layout_marginTop="5dp"/>
+
+        <TextView
+            android:id="@+id/txtTicketPriceValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ádfasdfa sdfasdfasfdasdfasdf sdfasdfasdfasdf"
+            android:textSize="12sp"
+            android:textColor="@color/white"
+            android:layout_marginTop="5dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Selected Seats:"
+            android:layout_marginRight="10dp"
+            android:textSize="12sp"
+            android:textColor="@color/white"
+            android:layout_marginTop="5dp"/>
+
+        <TextView
+            android:id="@+id/txtSelectedSeatsValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ádfasdfasdfa sdfasfdasdfasdf asdfasdfa sdfasdf"
+            android:textSize="12sp"
+            android:textColor="@color/white"
+            android:layout_marginTop="5dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total Price:"
+            android:textSize="12sp"
+            android:textColor="@color/white"
+            android:layout_marginTop="5dp"/>
+
+        <TextView
+            android:id="@+id/txtTotalPriceValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ádfasdfasdfasdfasfdasdfasdfasdfasdfasdfasdf"
+            android:textSize="12sp"
+            android:textColor="@color/white"
+            android:layout_marginTop="5dp"/>
+    </GridLayout>
+
+    <Button
+        android:id="@+id/button_pay"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/pay" />
+</LinearLayout>
