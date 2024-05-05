@@ -7,19 +7,9 @@
     android:orientation="vertical"
     tools:context=".view.fragments.MovieFragment">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/tool_bar_back"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
-        app:titleTextColor="#000000" />
-
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tab_layout_display_movie"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        style="@style/tab_layout" />
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/view_pager_display_movie"

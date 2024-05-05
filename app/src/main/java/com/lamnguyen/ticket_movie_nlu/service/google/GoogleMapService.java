@@ -5,11 +5,8 @@ import android.util.Log;
 
 import androidx.fragment.app.Fragment;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.Volley;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Polyline;
@@ -26,6 +23,7 @@ import java.util.List;
 public class GoogleMapService {
     private static GoogleMapService instance;
     private Polyline polylinePrevious;
+    private GoogleMapRoutesHttpRequest request;
 
     public static GoogleMapService getInstance() {
         if (instance == null) instance = new GoogleMapService();
@@ -33,11 +31,11 @@ public class GoogleMapService {
     }
 
     private GoogleMapService() {
+
     }
 
     public void drawWay(Fragment fragment, GoogleMap googleMap, LatLng origin, LatLng destination) {
-        RequestQueue queue = Volley.newRequestQueue(fragment.getContext());
-        GoogleMapRoutesHttpRequest request = new GoogleMapRoutesHttpRequest(Request.Method.POST, new Response.Listener<JSONObject>() {
+        GoogleMapRoutesHttpRequest request = new GoogleMapRoutesHttpRequest(fragment.getContext(), new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
@@ -70,9 +68,7 @@ public class GoogleMapService {
             }
         });
 
-
-        request.setBody(origin, destination);
-        queue.add(request);
+        request.call(origin, destination);
     }
 
     public void clearPolyLine() {

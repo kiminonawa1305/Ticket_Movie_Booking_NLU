@@ -8,8 +8,7 @@
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tab_layout_display_ticket"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        style="@style/tab_layout" />
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/view_pager_display_ticket"

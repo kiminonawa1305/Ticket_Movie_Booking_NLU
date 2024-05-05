@@ -1,12 +1,12 @@
 package com.lamnguyen.ticket_movie_nlu.request;
 
-import androidx.annotation.Nullable;
+import android.content.Context;
 
-import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
 import com.android.volley.Response;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.android.gms.maps.model.LatLng;
 import com.lamnguyen.ticket_movie_nlu.enums.DriverType;
+import com.lamnguyen.ticket_movie_nlu.utils.CallAPI;
 
 import org.json.JSONObject;
 
@@ -14,22 +14,27 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class GoogleMapRoutesHttpRequest extends JsonObjectRequest {
+public class GoogleMapRoutesHttpRequest {
     private LatLng origin, destination;
     public static String vehicle = DriverType.TWO_WHEELER.toString();
+    private Response.Listener<JSONObject> listener;
+    private Response.ErrorListener errorListener;
+    private int method;
+    private Context context;
 
-
-    public GoogleMapRoutesHttpRequest(Integer method, Response.Listener<JSONObject> listener, @Nullable Response.ErrorListener errorListener) {
-        super(method, "https://routes.googleapis.com/directions/v2:computeRoutes", null, listener, errorListener);
+    public GoogleMapRoutesHttpRequest(Context context, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
+        this.context = context;
+        this.method = Request.Method.POST;
+        this.listener = listener;
+        this.errorListener = errorListener;
     }
 
-    public void setBody(LatLng origin, LatLng destination) {
-        this.origin = origin;
-        this.destination = destination;
+    public void call(LatLng origin, LatLng destination) {
+        String body = getBody(origin, destination);
+        CallAPI.callJsonObjectRequest(context, CallAPI.URL_GOOGLE_MAP_COMPUTE_ROUTES, "", body, getHeaders(), method, listener, errorListener);
     }
 
-    @Override
-    public byte[] getBody() {
+    private String getBody(LatLng origin, LatLng destination) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("{")
                 .append("\"origin\":{")
@@ -59,16 +64,11 @@ public class GoogleMapRoutesHttpRequest extends JsonObjectRequest {
                 .append(vehicle)
                 .append("\"")
                 .append("}");
-        return stringBuilder.toString().getBytes();
+        return stringBuilder.toString();
     }
 
-    @Override
-    public Map<String, String> getHeaders() throws AuthFailureError {
+    private Map<String, String> getHeaders() {
         Map<String, String> result = new HashMap<>();
-        Map<String, String> headers = super.getHeaders();
-        for (Map.Entry<String, String> header : headers.entrySet()) {
-            result.put(header.getKey(), header.getValue());
-        }
         result.put("User-Agent", "Mozilla/5.0");
         result.put("Content-Type", "application/json");
         result.put("X-Goog-Api-Key", "AIzaSyAkJ-NbtMqrX05P5LzHQr86aAZeJ6iEmuA");
