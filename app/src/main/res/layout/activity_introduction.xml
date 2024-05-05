@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".view.activities.IntroductionActivity"
-    android:background="@color/black_secondary">
+    android:background="@color/black_secondary"
+    android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/header"
@@ -31,14 +32,14 @@
             android:layout_weight="1"
             android:text="Giới thiệu"
             android:textStyle="bold"
-            android:textSize="24dp"/>
+            android:textSize="22dp"/>
     </LinearLayout>
 
     <ScrollView
         android:layout_width="match_parent"
+        android:layout_weight="1"
         android:layout_height="0dp"
         android:scrollbars="none"
-        app:layout_constraintTop_toBottomOf="@+id/header"
         tools:ignore="MissingConstraints">
 
         <LinearLayout
@@ -99,7 +100,7 @@
                         android:text="Thông tin ứng dụng"
                         android:textColor="@color/white"
                         android:textStyle="bold"
-                        android:textSize="16dp"
+                        android:textSize="18dp"
                         android:layout_marginBottom="10dp"/>
 
                     <LinearLayout
@@ -108,29 +109,67 @@
                         android:orientation="horizontal">
 
                         <LinearLayout
-                            android:layout_width="wrap_content"
+                            android:layout_weight="2"
+                            android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:orientation="vertical">
 
-                            <ImageView
-                                android:layout_width="100dp"
-                                android:layout_height="100dp"
-                                android:src="@drawable/logo"
-                                android:scaleType="fitXY"
-                                android:layout_weight="1"
-                                android:layout_gravity="center"
-                                android:background="@drawable/bg_rounded_corner"
-                                android:backgroundTint="@color/white"
-                                android:layout_marginBottom="6dp"/>
-
-                            <TextView
+                            <LinearLayout
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textColor="@color/white"
-                                android:textStyle="bold"
-                                android:textSize="12dp"
-                                android:text="MovieBooking"
-                                android:layout_gravity="center"/>
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:layout_weight="1"
+                                android:layout_marginBottom="14dp">
+
+                                <ImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/logo"
+                                    android:scaleType="fitCenter"
+                                    android:layout_weight="1"
+                                    android:layout_gravity="center"
+                                    android:background="@drawable/bg_rounded_corner"
+                                    android:backgroundTint="@color/white"
+                                    android:paddingVertical="12dp"
+                                    android:layout_marginBottom="2dp"/>
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/white"
+                                    android:textSize="12dp"
+                                    android:textStyle="bold"
+                                    android:text="@string/app_name"
+                                    android:gravity="center"/>
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:layout_weight="1">
+
+                                <ImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/logo_hcmuaf"
+                                    android:scaleType="fitCenter"
+                                    android:layout_weight="1"
+                                    android:layout_gravity="center"
+                                    android:background="@drawable/bg_rounded_corner"
+                                    android:backgroundTint="@color/white"
+                                    android:paddingVertical="12dp"
+                                    android:layout_marginBottom="2dp"/>
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/white"
+                                    android:textSize="12dp"
+                                    android:textStyle="bold"
+                                    android:gravity="center"
+                                    android:lineSpacingExtra="2dp"
+                                    android:text="Đại học Nông Lâm TP. Hồ Chí Minh"/>
+                            </LinearLayout>
                         </LinearLayout>
 
                         <View
@@ -142,12 +181,12 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textSize="10dp"
+                            android:textSize="12dp"
                             android:textColor="@color/white"
                             android:lineSpacingExtra="4dp"
                             android:background="@drawable/bg_rounded_corner"
-                            android:padding="10dp"
-                            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc venenatis est vitae pretium finibus. Pellentesque eget molestie mauris. Nulla erat massa, dignissim ut rutrum in, maximus quis nisl. Suspendisse dictum orci arcu, non rhoncus nunc ultricies quis"
+                            android:padding="12dp"
+                            android:text="Ticket Movie Booking NLU là một ứng dụng di động tiện lợi cho phép người dùng dễ dàng tìm kiếm, đặt và mua vé xem phim từ các rạp chiếu phim phổ biến. Người dùng có thể duyệt qua danh sách các bộ phim đang chiếu, xem lịch chiếu, chọn ghế ngồi và thanh toán trực tuyến một cách thuận tiện. Ứng dụng cũng cung cấp thông tin chi tiết về các bộ phim bao gồm thông tin về đạo diễn và diễn viên, thời lượng phim, ngày khởi chiếu, các đánh giá từ cộng đồng,... giúp người dùng có thể chọn lựa phim phù hợp với sở thích của mình."
                             android:layout_weight="1"/>
                     </LinearLayout>
                 </LinearLayout>
@@ -162,6 +201,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
+                    android:layout_marginBottom="26dp"
                     android:orientation="vertical">
 
                     <TextView
@@ -170,8 +210,7 @@
                         android:text="Thành viên thực hiện"
                         android:textColor="@color/white"
                         android:textStyle="bold"
-                        android:textSize="16dp"
-                        android:layout_marginBottom="10dp"/>
+                        android:textSize="18dp"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -182,10 +221,11 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
-                            android:layout_marginBottom="10dp">
+                            android:layout_marginTop="10dp">
 
                             <ImageView
-                                android:layout_width="70dp"
+                                android:layout_weight="3.4"
+                                android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:scaleType="fitXY"
                                 android:src="@drawable/avatar_member"/>
@@ -197,6 +237,7 @@
                                 android:layout_marginHorizontal="8dp"/>
 
                             <LinearLayout
+                                android:layout_weight="1"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:padding="10dp"
@@ -216,7 +257,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="MÃ SỐ SINH VIÊN: 211xxxx"
+                                    android:text="Mã số sinh viên: 21130416"
                                     android:textAllCaps="true"
                                     android:textColor="@color/white"
                                     android:textSize="10dp"
@@ -237,10 +278,11 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
-                            android:layout_marginBottom="10dp">
+                            android:layout_marginTop="10dp">
 
                             <ImageView
-                                android:layout_width="70dp"
+                                android:layout_weight="3.4"
+                                android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:scaleType="fitXY"
                                 android:src="@drawable/avatar_member"/>
@@ -252,6 +294,7 @@
                                 android:layout_marginHorizontal="8dp"/>
 
                             <LinearLayout
+                                android:layout_weight="1"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:padding="10dp"
@@ -271,7 +314,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="MÃ SỐ SINH VIÊN: 21130319"
+                                    android:text="Mã số sinh viên: 21130319"
                                     android:textAllCaps="true"
                                     android:textColor="@color/white"
                                     android:textSize="10dp"
@@ -287,10 +330,180 @@
 
                             </LinearLayout>
                         </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="10dp">
+
+                            <ImageView
+                                android:layout_weight="3.4"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:scaleType="fitXY"
+                                android:src="@drawable/avatar_member"/>
+
+                            <View
+                                android:layout_width="1dp"
+                                android:layout_height="match_parent"
+                                android:background="#36363F"
+                                android:layout_marginHorizontal="8dp"/>
+
+                            <LinearLayout
+                                android:layout_weight="1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:padding="10dp"
+                                android:background="@drawable/bg_rounded_corner"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Lâm Hồng Phong"
+                                    android:textAllCaps="true"
+                                    android:textColor="@color/white"
+                                    android:textStyle="bold"
+                                    android:textSize="16dp"
+                                    android:layout_marginBottom="6dp"/>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Mã số sinh viên: 21130473"
+                                    android:textAllCaps="true"
+                                    android:textColor="@color/white"
+                                    android:textSize="10dp"
+                                    android:layout_marginBottom="4dp"/>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Lớp: DH21HTDTC"
+                                    android:textAllCaps="true"
+                                    android:textColor="@color/white"
+                                    android:textSize="10dp"/>
+
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="10dp">
+
+                            <ImageView
+                                android:layout_weight="3.4"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:scaleType="fitXY"
+                                android:src="@drawable/avatar_member"/>
+
+                            <View
+                                android:layout_width="1dp"
+                                android:layout_height="match_parent"
+                                android:background="#36363F"
+                                android:layout_marginHorizontal="8dp"/>
+
+                            <LinearLayout
+                                android:layout_weight="1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:padding="10dp"
+                                android:background="@drawable/bg_rounded_corner"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Phùng Văn Được"
+                                    android:textAllCaps="true"
+                                    android:textColor="@color/white"
+                                    android:textStyle="bold"
+                                    android:textSize="16dp"
+                                    android:layout_marginBottom="6dp"/>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Mã số sinh viên: 21130327"
+                                    android:textAllCaps="true"
+                                    android:textColor="@color/white"
+                                    android:textSize="10dp"
+                                    android:layout_marginBottom="4dp"/>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Lớp: DH21HTDTB"
+                                    android:textAllCaps="true"
+                                    android:textColor="@color/white"
+                                    android:textSize="10dp"/>
+
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="10dp">
+
+                            <ImageView
+                                android:layout_weight="3.4"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:scaleType="fitXY"
+                                android:src="@drawable/avatar_member"/>
+
+                            <View
+                                android:layout_width="1dp"
+                                android:layout_height="match_parent"
+                                android:background="#36363F"
+                                android:layout_marginHorizontal="8dp"/>
+
+                            <LinearLayout
+                                android:layout_weight="1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:padding="10dp"
+                                android:background="@drawable/bg_rounded_corner"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Nguyễn Hoàng Ánh Dương"
+                                    android:textAllCaps="true"
+                                    android:textColor="@color/white"
+                                    android:textStyle="bold"
+                                    android:textSize="16dp"
+                                    android:layout_marginBottom="6dp"/>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Mã số sinh viên: 21130328"
+                                    android:textAllCaps="true"
+                                    android:textColor="@color/white"
+                                    android:textSize="10dp"
+                                    android:layout_marginBottom="4dp"/>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Lớp: DH21HTDTB"
+                                    android:textAllCaps="true"
+                                    android:textColor="@color/white"
+                                    android:textSize="10dp"/>
+                            </LinearLayout>
+                        </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
