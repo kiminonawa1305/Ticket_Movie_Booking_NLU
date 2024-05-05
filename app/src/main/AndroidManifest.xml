@@ -69,7 +69,7 @@
         </activity>
         <activity
             android:name=".view.activities.MovieDetailActivity"
-            android:exported="false"
+            android:exported="true"
             android:label="MovieDetailActivity"
             android:screenOrientation="portrait">
 <!--            <intent-filter>-->
