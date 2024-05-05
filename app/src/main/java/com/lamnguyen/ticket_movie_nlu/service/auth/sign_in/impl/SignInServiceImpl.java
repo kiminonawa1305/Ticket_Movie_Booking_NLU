@@ -1,5 +1,7 @@
 package com.lamnguyen.ticket_movie_nlu.service.auth.sign_in.impl;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -51,6 +53,7 @@ public class SignInServiceImpl implements SignInService {
             }
         }).addOnFailureListener(e -> {
             callBackSignIn.isFail();
+            Log.e(getClass().getSimpleName(), "error", e);
         });
     }
 
