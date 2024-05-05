@@ -72,5 +72,6 @@
 
     <string name="expanded_text">Xem thêm</string>
     <string name="collapsed_text">Thu gọn</string>
+    <string name="change_avatar">Change Avatar</string>
 
 </resources>

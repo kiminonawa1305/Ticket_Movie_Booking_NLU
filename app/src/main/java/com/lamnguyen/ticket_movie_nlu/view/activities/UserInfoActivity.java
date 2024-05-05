@@ -88,7 +88,7 @@ public class UserInfoActivity extends AppCompatActivity {
         updateDate();
 
         //changeAvata
-        Button changeAvatarButton = findViewById(R.id.btnChangeAvata);
+        Button changeAvatarButton = findViewById(R.id.btnChangeAvatar);
         changeAvatarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

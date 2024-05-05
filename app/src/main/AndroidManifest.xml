@@ -63,7 +63,7 @@
             android:label="UserInfoActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.activities.UserInfoActivity"
+            android:name=".view.activities.MovieDetailActivity"
             android:exported="true"
             android:label="MainActivity"
             android:screenOrientation="portrait">
@@ -78,7 +78,7 @@
 <!--                <category android:name="android.intent.category.LAUNCHER" />-->
 <!--            </intent-filter>-->
         </activity>
-        <activity android:name=".view.activities.MovieDetailActivity"
+        <activity android:name=".view.activities.UserInfoActivity"
             android:exported="true"
             android:label="MovieDetailActivity"
             android:screenOrientation="portrait">

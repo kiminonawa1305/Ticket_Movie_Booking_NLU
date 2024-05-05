@@ -22,7 +22,6 @@
             app:tint="@color/white" />
 
         <TextView
-            android:id="@+id/PersonalInfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"

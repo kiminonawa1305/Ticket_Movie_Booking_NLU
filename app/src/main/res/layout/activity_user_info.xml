@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_input_info_sign">
@@ -22,7 +21,6 @@
             android:textSize="30sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.496"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -39,13 +37,11 @@
             app:srcCompat="@drawable/ic_back_arrow"
             app:tint="#FFFFFF" />
 
-        <com.google.android.material.card.MaterialCardView
+        <androidx.cardview.widget.CardView
             android:id="@+id/avatarCardView"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_marginStart="19dp"
             android:layout_marginTop="30dp"
-            android:layout_marginEnd="19dp"
             app:cardCornerRadius="50dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -57,22 +53,21 @@
                 android:layout_height="wrap_content"
                 android:scaleType="centerCrop"
                 android:src="@drawable/avatar" />
-        </com.google.android.material.card.MaterialCardView>
+        </androidx.cardview.widget.CardView>
 
         <Button
-            android:id="@+id/btnChangeAvata"
+            android:id="@+id/btnChangeAvatar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="-5dp"
-            android:backgroundTint="#AFACAC"
-            android:text="Change Avatar"
+            android:text="@string/change_avatar"
             android:textColor="#FFFFFF"
+            android:paddingHorizontal="20dp"
+            android:background="@drawable/bg_button_sign"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/avatarCardView"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintVertical_bias="0.02" />
 
         <View
             android:id="@+id/line"
@@ -85,7 +80,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.6"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnChangeAvata" />
+            app:layout_constraintTop_toBottomOf="@+id/btnChangeAvatar" />
 
         <TextView
             android:id="@+id/UserNameLabel"
