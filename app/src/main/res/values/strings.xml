@@ -79,5 +79,8 @@
     <string name="t_m_t_nh">Tạm tính:</string>
 
     <!--Google Map API-->
+
+    <string name="expanded_text">Xem thêm</string>
+    <string name="collapsed_text">Thu gọn</string>
   
 </resources>
