@@ -74,4 +74,7 @@ dependencies {
 
     implementation("com.etebarian:meow-bottom-navigation-java:1.2.0")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.9.23")
+
+    // library QR
+        implementation("androidmads.library.qrgenearator:QRGenearator:1.0.3")
 }
