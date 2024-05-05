@@ -5,6 +5,8 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    
+
     <uses-permission
         android:name="android.permission.ACCESS_FINE_LOCATION"
         tools:ignore="CoarseFineLocation" />
@@ -56,14 +58,19 @@
             android:label="GreetingActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.activities.UserInfoActivity"
+            android:name=".view.activities.GreetingActivity"
             android:exported="false"
             android:label="UserInfoActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.activities.FavoriteMovieActivity"
+            android:name=".view.activities.UserInfoActivity"
             android:exported="true"
             android:label="MainActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".view.activities.FavoriteMovieActivity"
+            android:exported="true"
+            android:label="MovieDetailActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

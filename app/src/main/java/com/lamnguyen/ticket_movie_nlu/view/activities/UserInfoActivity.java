@@ -2,17 +2,21 @@ package com.lamnguyen.ticket_movie_nlu.view.activities;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
 import com.lamnguyen.ticket_movie_nlu.R;
-//import com.lamnguyen.ticket_movie_nlu.adapters.CustomSpinnerAdapter;
-//import com.lamnguyen.ticket_movie_nlu.adapters.GenderDropdownAdapter;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -20,10 +24,10 @@ import java.util.Locale;
 
 public class UserInfoActivity extends AppCompatActivity {
 
-
-
+    private EditText currentEditText;
     private EditText birthdayInput;
     private Calendar calendar;
+    private static final int PICK_IMAGE_REQUEST = 1;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -36,13 +40,12 @@ public class UserInfoActivity extends AppCompatActivity {
         final EditText phoneInput = findViewById(R.id.PhoneInput);
         final EditText addressInput = findViewById(R.id.AddressInput);
 
-        // Thiết lập trạng thái ban đầu của EditText là không thể chỉnh sửa
         userNameInput.setFocusable(false);
         emailInput.setFocusable(false);
         phoneInput.setFocusable(false);
         addressInput.setFocusable(false);
 
-        // Thêm sự kiện click cho drawableRight của EditText
+
         View.OnTouchListener onTouchListener = new View.OnTouchListener() {
             final int DRAWABLE_RIGHT = 2;
 
@@ -50,9 +53,8 @@ public class UserInfoActivity extends AppCompatActivity {
             public boolean onTouch(View v, MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_UP) {
                     if (event.getRawX() >= (v.getRight() - ((EditText) v).getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
-                        // Người dùng nhấn vào drawableRight (nút bút chì)
-                        // Chuyển trạng thái EditText thành có thể chỉnh sửa
-                        v.setFocusableInTouchMode(true);
+
+                        setEditable((EditText) v);
                         return true;
                     }
                 }
@@ -60,7 +62,6 @@ public class UserInfoActivity extends AppCompatActivity {
             }
         };
 
-        // Ánh xạ sự kiện cho từng EditText
         userNameInput.setOnTouchListener(onTouchListener);
         emailInput.setOnTouchListener(onTouchListener);
         phoneInput.setOnTouchListener(onTouchListener);
@@ -85,6 +86,15 @@ public class UserInfoActivity extends AppCompatActivity {
         });
 
         updateDate();
+
+        //changeAvata
+        Button changeAvatarButton = findViewById(R.id.btnChangeAvata);
+        changeAvatarButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openFileChooser();
+            }
+        });
     }
 
     private void showDatePickerDialog() {
@@ -107,6 +117,31 @@ public class UserInfoActivity extends AppCompatActivity {
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.getDefault());
         birthdayInput.setText(sdf.format(calendar.getTime()));
     }
+    private void setEditable(EditText editText) {
+        if (currentEditText != null) {
+            currentEditText.setFocusable(false);
+        }
+        editText.setFocusableInTouchMode(true);
+        currentEditText = editText;
+    }
 
 
+    private void openFileChooser() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(intent, PICK_IMAGE_REQUEST);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
+                && data != null && data.getData() != null) {
+            Uri imageUri = data.getData();
+            ImageView imageView = findViewById(R.id.avatar);
+            Glide.with(imageView).load(imageUri).into(imageView);
+        }
+    }
 }
