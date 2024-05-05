@@ -33,20 +33,26 @@ public class TicketDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ticket_detail);
+
+
+        // Tạo QR từ chuỗi text ticket id
         tv_ticket_id = findViewById(R.id.textview_ticket_id);
         imgv_qr = findViewById(R.id.imageview_QR);
 
-
+        // Lấy WindowManager và Display:
         WindowManager manager = (WindowManager) getSystemService(WINDOW_SERVICE) ;
         Display display = manager.getDefaultDisplay();
 
+        // Lấy kích thước màn hình:
         Point point = new Point();
-        display.getSize(point) ;
+        display.getSize(point) ; //lấy kích thước màn hình và lưu nó vào đối tượng Point.
         int width = point.x;
         int height = point.y;
+        // Tính toán kích thước cho mã QR:
         int dimen = width < height ? width : height;
         dimen = dimen * 3/4;
 
+        // Tạo mã QR:
         try{
             qrgEncoder = new QRGEncoder(tv_ticket_id.getText().toString(), null, QRGContents.Type.TEXT, dimen);
             Bitmap bitmap = qrgEncoder.encodeAsBitmap();
