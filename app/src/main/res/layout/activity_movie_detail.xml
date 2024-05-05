@@ -212,60 +212,16 @@
                     android:textColor="@color/white"
                     android:textSize="26dp"
                     android:textAllCaps="true"
+                    android:lineSpacingExtra="2dp"
                     android:textStyle="bold"
                     tools:ignore="MissingConstraints" />
             </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/section_second"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/genre_rv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="8dp"
-                    android:background="@drawable/bg_rounded_corner"
-                    android:paddingHorizontal="12dp"
-                    android:paddingVertical="6dp"
-                    android:text="Hành động"
-                    android:textColor="#B2B5BB"
-                    android:textSize="10dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="8dp"
-                    android:background="@drawable/bg_rounded_corner"
-                    android:paddingHorizontal="12dp"
-                    android:paddingVertical="6dp"
-                    android:text="Phiêu lưu"
-                    android:textColor="#B2B5BB"
-                    android:textSize="10dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="8dp"
-                    android:background="@drawable/bg_rounded_corner"
-                    android:paddingHorizontal="12dp"
-                    android:paddingVertical="6dp"
-                    android:text="Hoạt hình"
-                    android:textColor="#B2B5BB"
-                    android:textSize="10dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="8dp"
-                    android:background="@drawable/bg_rounded_corner"
-                    android:paddingHorizontal="12dp"
-                    android:paddingVertical="6dp"
-                    android:text="Khoa học - viễn tưởng"
-                    android:textColor="#B2B5BB"
-                    android:textSize="10dp" />
-            </LinearLayout>
+                android:layout_marginTop="16dp"/>
 
             <LinearLayout
                 android:id="@+id/section_third"
@@ -285,8 +241,8 @@
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/director_rv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1" />
             </LinearLayout>
 
