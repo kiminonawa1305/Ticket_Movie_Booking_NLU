@@ -13,8 +13,10 @@ import org.json.JSONObject;
 
 import java.util.Map;
 
+import lombok.SneakyThrows;
+
 public class CallAPI {
-    public static final String URL_WEB_SERVICE = "http://10.0.20.216:80";
+    public static final String URL_WEB_SERVICE = "http://10.0.23.94:80";
     public static final String URL_OMDB = "http://www.omdbapi.com/?apikey=c3d0a99f";
     public static final String URL_GOOGLE_MAP_COMPUTE_ROUTES = "https://routes.googleapis.com/directions/v2:computeRoutes";
     public static final String URL_GOOGLE_MAP_DIRECTION = "https://maps.googleapis.com/maps/api/directions/json";
@@ -28,6 +30,7 @@ public class CallAPI {
         queue.add(stringRequest);
     }
 
+    @SneakyThrows
     public static void callJsonObjectRequest(Context context, String url, String query, int method, Response.Listener<JSONObject> responseListener, Response.ErrorListener errorListener) {
         RequestQueue queue = Volley.newRequestQueue(context);
         JsonObjectRequest stringRequest = new JsonObjectRequest(method, url + query, null, responseListener, errorListener);

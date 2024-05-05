@@ -37,8 +37,8 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         holder.setGenre(movie.getGenre());
         holder.setRating(movie.getRate());
         holder.setVote(movie.getVote());
-        holder.setTitle(movie.getName());
-        holder.setTime(movie.getRunTime());
+        holder.setTitle(movie.getTitle());
+        holder.setTime(movie.getDuration());
     }
 
     @Override
@@ -70,7 +70,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         }
 
         public void setRating(double rating) {
-            rtbMovieRate.setRating((float) rating / 2);
+            rtbMovieRate.setRating((float) rating);
         }
 
         public void setVote(Integer vote) {
@@ -81,8 +81,8 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
             tvMovieTitle.setText(title);
         }
 
-        public void setTime(Integer time) {
-            tvMovieTime.setText(time + "muns");
+        public void setTime(String time) {
+            tvMovieTime.setText(time);
         }
     }
 }

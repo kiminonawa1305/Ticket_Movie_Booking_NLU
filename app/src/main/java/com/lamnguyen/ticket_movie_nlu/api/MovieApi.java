@@ -9,8 +9,10 @@ import com.google.gson.Gson;
 import com.lamnguyen.ticket_movie_nlu.dto.MovieDTO;
 import com.lamnguyen.ticket_movie_nlu.utils.CallAPI;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.List;
 
 
@@ -29,22 +31,29 @@ public class MovieApi {
     }
 
     public void getMovieShowtime(LocalDate date, Context context, MovieServiceListener... listeners) {
-        String body = "/movie/api/movie-showtime?date=" + date.toString();
-        CallAPI.callStringRequest(context, CallAPI.URL_WEB_SERVICE, body, Request.Method.GET, new Response.Listener<String>() {
+        String body = "/movie/api/showtime?date=" + date.toString();
+        CallAPI.callJsonObjectRequest(context, CallAPI.URL_WEB_SERVICE, body, Request.Method.GET, new Response.Listener<JSONObject>() {
                     @Override
-                    public void onResponse(String response) {
-                        Gson gson = new Gson();
-                        MovieDTO[] movieDTOs = gson.fromJson(response, MovieDTO[].class);
-                        if (listeners[0] != null) listeners[0].completed(Arrays.asList(movieDTOs));
-                    }
-                },
+                    public void onResponse(JSONObject jsonObject) {
+                        try {
+                            if (jsonObject.getInt("status") != 202) {
+                                listeners[0].error(jsonObject.getString("message"));
+                                return;
+                            }
 
-                new Response.ErrorListener() {
+                            MovieDTO[] movieDTOs = new Gson().fromJson(jsonObject.getString("data"), MovieDTO[].class);
+                            listeners[0].completed(List.of(movieDTOs));
+                        } catch (JSONException e) {
+                            listeners[0].error(e.getMessage());
+                        }
+                    }
+                }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        if (listeners[0] != null) listeners[0].error(error);
+                        listeners[0].error(error);
                     }
-                });
+                }
+        );
     }
 
 

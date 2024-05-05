@@ -1,12 +1,12 @@
 package com.lamnguyen.ticket_movie_nlu.dto;
 
 public class MovieDTO {
-    private String name, poster, genre;
-    private Integer runTime, vote;
+    private String title, poster, genre, duration;
+    private Integer vote;
     private Double rate;
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
     public String getPoster() {
@@ -17,8 +17,8 @@ public class MovieDTO {
         return genre;
     }
 
-    public Integer getRunTime() {
-        return runTime;
+    public String getDuration() {
+        return duration;
     }
 
     public Double getRate() {

@@ -23,6 +23,8 @@ import com.lamnguyen.ticket_movie_nlu.utils.DialogLoading;
 import java.time.LocalDate;
 import java.util.List;
 
+import lombok.SneakyThrows;
+
 //Khởi tạo Fragment cho ViewPager2
 public class ViewPagerMovieFragment extends Fragment {
     public static final String TAG = ViewPagerMovieFragment.class.getSimpleName();
@@ -72,6 +74,7 @@ public class ViewPagerMovieFragment extends Fragment {
         movieService.getMovieShowtime(dateTime, this.getContext(), new MovieApi.MovieServiceListener() {
 
             @Override
+            @SneakyThrows
             public void completed(List<MovieDTO> movieDTOs) {
                 dialog.dismiss();
                 rclDisplayListMovieShowtime.setAdapter(new MovieAdapter(movieDTOs));
