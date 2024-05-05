@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.activities.MovieDetailActivity"
+    android:background="@color/black_secondary">
+
+    <LinearLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingVertical="24dp"
+        android:paddingHorizontal="26dp"
+        android:gravity="center_vertical"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_arrow_previous"
+            android:background="@color/black_secondary" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Thông tin chi tiết phim"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="22dp" />
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:paddingHorizontal="26dp"
+        android:scrollbars="none"
+        app:layout_constraintBottom_toTopOf="@+id/footer"
+        app:layout_constraintTop_toBottomOf="@+id/header"
+        tools:layout_editor_absoluteX="-66dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/smatsv"
+                    android:scaleType="centerCrop"
+                    app:shapeAppearanceOverlay="@style/roundedImageView" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="#36363F"
+                    android:layout_marginHorizontal="12dp"/>
+
+                <LinearLayout
+                    android:layout_weight="2.2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/duration_group"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_rounded_corner"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="10dp"
+                        android:layout_marginBottom="10dp">
+
+                        <ImageView
+                            android:id="@+id/duration_icon"
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:src="@drawable/ic_duration"
+                            android:layout_marginBottom="10dp"/>
+
+                        <TextView
+                            android:id="@+id/duration_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="Thời lượng phim"
+                            android:textColor="#9F9F9F"
+                            android:textSize="10dp" />
+
+                        <TextView
+                            android:id="@+id/duration_amount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:layout_marginBottom="2dp"
+                            android:text="140 phút"
+                            android:textColor="#54A8E5"
+                            android:textSize="12dp"
+                            android:textStyle="bold"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/rating_group"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_rounded_corner"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="10dp"
+                        android:layout_marginBottom="10dp">
+
+                        <ImageView
+                            android:id="@+id/rating_icon"
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:src="@drawable/ic_star"
+                            android:layout_marginBottom="10dp"/>
+
+                        <TextView
+                            android:id="@+id/rating_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="Đánh giá phim"
+                            android:textColor="#9F9F9F"
+                            android:textSize="10dp"/>
+
+
+                        <TextView
+                            android:id="@+id/rating_amount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:layout_marginBottom="2dp"
+                            android:text="8.6/10"
+                            android:textColor="#FFA235"
+                            android:textSize="12dp"
+                            android:textStyle="bold"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/premiere_group"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_rounded_corner"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="10dp">
+
+                        <ImageView
+                            android:id="@+id/premiere_icon"
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:src="@drawable/ic_premiere"
+                            android:layout_marginBottom="10dp"/>
+
+                        <TextView
+                            android:id="@+id/premiere_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="Ngày khởi chiếu"
+                            android:textColor="#9F9F9F"
+                            android:textSize="10dp"/>
+
+
+                        <TextView
+                            android:id="@+id/premiere_date"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:layout_marginBottom="2dp"
+                            android:text="02/06/2023"
+                            android:textColor="#CB2027"
+                            android:textSize="12dp"
+                            android:textStyle="bold"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#36363F"
+                android:layout_marginTop="16dp"/>
+
+            <LinearLayout
+                android:id="@+id/section_first"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/movie_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Spider-Man: Across the Spider-Verse (2023)"
+                    android:textColor="@color/white"
+                    android:textSize="26dp"
+                    android:textAllCaps="true"
+                    android:lineSpacingExtra="2dp"
+                    android:textStyle="bold"
+                    tools:ignore="MissingConstraints" />
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/genre_rv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"/>
+
+            <LinearLayout
+                android:id="@+id/section_third"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Đạo diễn"
+                    android:layout_marginBottom="6dp"
+                    android:textStyle="bold"
+                    android:textSize="18dp"
+                    android:textColor="@color/white"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/director_rv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#36363F"
+                android:layout_marginTop="16dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="6dp"
+                    android:text="Nội dung"
+                    android:textColor="@color/white"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
+
+                <com.borjabravo.readmoretextview.ReadMoreTextView
+                    android:id="@+id/movie_synopsis"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Miles Morales tái xuất trong phần tiếp theo của bom tấn hoạt hình từng đoạt giải Oscar - Spider-Man: Across the Spider-Verse. Sau khi gặp lại Gwen Stacy, chàng Spider-Man thân thiện đến từ Brooklyn phải du hành qua đa vũ trụ và gặp một nhóm Người Nhện chịu trách nhiệm bảo vệ các vũ trụ song song. Nhưng khi nhóm siêu anh hùng xung đột về cách xử lý một mối đe dọa mới, Miles buộc phải đọ sức với các Người Nhện khác và phải xác định lại ý nghĩa của việc trở thành một người hùng để có thể cứu những người cậu yêu thương nhất."
+                    android:textColor="#B2B5BB"
+                    android:lineSpacingExtra="4dp"
+                    android:textSize="12dp"
+                    app:trimExpandedText="@string/collapsed_text"
+                    app:trimCollapsedText="@string/expanded_text"
+                    app:trimMode="trimModeLine"
+                    app:trimLines="3"
+                    app:colorClickableText="#54A8E5"/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#36363F"
+                android:layout_marginTop="16dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="6dp"
+                    android:text="Diễn viên"
+                    android:textColor="@color/white"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/actor_rv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/footer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="26dp"
+        android:paddingVertical="20dp"
+        app:layout_constraintTop_toBottomOf="@+id/content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Đặt vé"
+            android:textColor="@color/white"
+            android:paddingVertical="12dp"
+            android:textSize="24dp"
+            android:textStyle="bold"
+            android:background="@drawable/bg_rounded_corner"
+            android:backgroundTint="#54A8E5" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

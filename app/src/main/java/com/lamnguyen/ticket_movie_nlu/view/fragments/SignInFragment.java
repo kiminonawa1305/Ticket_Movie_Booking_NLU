@@ -78,7 +78,8 @@ public class SignInFragment extends Fragment {
             changeFragmentForgetPassword();
         });
         this.btnSignIn.setOnClickListener(v -> {
-            checkEmailHandler();
+//            checkEmailHandler();
+            signInHandler();
         });
     }
 
@@ -131,7 +132,7 @@ public class SignInFragment extends Fragment {
             @Override
             public void isFail() {
                 dialog.dismiss();
-                Toast.makeText(SignInFragment.this.getContext(), getString(R.string.sign_in_fail), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(SignInFragment.this.getContext(), getString(R.string.sign_in_fail), Toast.LENGTH_SHORT).show();
             }
         });
     }

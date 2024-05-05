@@ -69,4 +69,8 @@
     <!--favoriteList-->
     <string name="favorite_list">Favorite List</string>
 
+
+    <string name="expanded_text">Xem thêm</string>
+    <string name="collapsed_text">Thu gọn</string>
+
 </resources>
