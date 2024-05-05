@@ -162,7 +162,7 @@ public class ProfileFragment extends Fragment {
     private void initViewInDialogChangePassword() {
         edtNewPassword = dlgChangePassword.findViewById(R.id.edit_text_new_password);
         edtReNewPassword = dlgChangePassword.findViewById(R.id.edit_text_re_new_password);
-        btnSubmitChangePassword = dlgChangePassword.findViewById(R.id.button_submit_change_pasword);
+        btnSubmitChangePassword = dlgChangePassword.findViewById(R.id.button_submit_change_password);
     }
 
     // Phương thức để mở bộ chọn hình ảnh
