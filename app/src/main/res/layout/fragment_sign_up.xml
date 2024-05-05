@@ -13,6 +13,7 @@
         style="@style/edt_input_info_sign"
         android:hint="@string/hint_email"
         android:autofillHints="name"
+        android:textColor="@color/white"
         android:inputType="textEmailAddress" />
 
     <EditText
@@ -20,6 +21,7 @@
         style="@style/edt_input_info_sign"
         android:hint="@string/hint_password"
         android:inputType="textPassword"
+        android:textColor="@color/white"
         android:autofillHints="password" />
 
 
@@ -28,6 +30,7 @@
         style="@style/edt_input_info_sign"
         android:hint="@string/hint_re_password"
         android:inputType="textPassword"
+        android:textColor="@color/white"
         android:autofillHints="password" />
 
     <android.widget.Button

@@ -57,5 +57,8 @@
     <string name="MAPS_API_KEY">AIzaSyAkJ-NbtMqrX05P5LzHQr86aAZeJ6iEmuA</string>
 
     <!--Google Map API-->
+
+    <string name="expanded_text">Xem thêm</string>
+    <string name="collapsed_text">Thu gọn</string>
   
 </resources>
