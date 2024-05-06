@@ -15,11 +15,9 @@
     <uses-permission
         android:name="android.permission.READ_EXTERNAL_STORAGE"
         android:maxSdkVersion="32" />
-
     <uses-permission
         android:name="android.permission.MANAGE_EXTERNAL_STORAGE"
         tools:ignore="ScopedStorage" />
-
 
     <application
         android:allowBackup="true"
@@ -32,7 +30,6 @@
         android:theme="@style/Theme.MyApplication"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
-
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyD4Y4NgldsQdiJo7I1qHEyIqx11UOeBUz4" />
@@ -40,35 +37,49 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity
-            android:name=".view.activities.GoogleSignInActivity"
-            android:exported="false"
-            android:label="GoogleSignInActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".view.activities.SignActivity"
-            android:exported="false"
-            android:label="SignActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".view.activities.MainActivity"
-            android:exported="false"
-            android:label="GreetingActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".view.activities.GreetingActivity"
-            android:exported="true"
-            android:label="MainActivity"
-            android:screenOrientation="portrait">
+<!--        <activity-->
+<!--            android:name=".view.activities.GoogleSignInActivity"-->
+<!--            android:exported="false"-->
+<!--            android:label="GoogleSignInActivity"-->
+<!--            android:screenOrientation="portrait" />-->
+<!--        <activity-->
+<!--            android:name=".view.activities.SignActivity"-->
+<!--            android:exported="false"-->
+<!--            android:label="SignActivity"-->
+<!--            android:screenOrientation="portrait" />-->
+<!--        <activity-->
+<!--            android:name=".view.activities.MainActivity"-->
+<!--            android:exported="false"-->
+<!--            android:label="GreetingActivity"-->
+<!--            android:screenOrientation="portrait" />-->
+<!--        <activity-->
+<!--            android:name=".view.activities.GreetingActivity"-->
+<!--            android:exported="true"-->
+<!--            android:label="MainActivity"-->
+<!--            android:screenOrientation="portrait">-->
+
+<!--            &lt;!&ndash; <intent-filter> &ndash;&gt;-->
+<!--            &lt;!&ndash; <action android:name="android.intent.action.MAIN" /> &ndash;&gt;-->
+
+
+<!--            &lt;!&ndash; <category android:name="android.intent.category.LAUNCHER" /> &ndash;&gt;-->
+<!--            &lt;!&ndash; </intent-filter> &ndash;&gt;-->
+<!--        </activity>-->
+<!--        <activity-->
+<!--            android:name=".view.activities.MovieDetailActivity"-->
+<!--            android:exported="true"-->
+<!--            android:label="MovieDetailActivity"-->
+<!--            android:screenOrientation="portrait">-->
 <!--            <intent-filter>-->
 <!--                <action android:name="android.intent.action.MAIN" />-->
 
 <!--                <category android:name="android.intent.category.LAUNCHER" />-->
 <!--            </intent-filter>-->
-        </activity>
-        <activity android:name=".view.activities.MovieDetailActivity"
+<!--        </activity>-->
+        <activity
+            android:name=".view.activities.PaymentActivity"
             android:exported="true"
-            android:label="MovieDetailActivity"
+            android:label="PaymentActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -77,4 +88,5 @@
             </intent-filter>
         </activity>
     </application>
+
 </manifest>
