@@ -13,6 +13,7 @@ import com.google.android.material.imageview.ShapeableImageView;
 import com.lamnguyen.ticket_movie_nlu.R;
 import com.lamnguyen.ticket_movie_nlu.dto.TicketDTO;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class TicketAdapter extends RecyclerView.Adapter<TicketAdapter.TicketItemViewHolder> {
@@ -33,14 +34,15 @@ public class TicketAdapter extends RecyclerView.Adapter<TicketAdapter.TicketItem
     @Override
     public void onBindViewHolder(@NonNull TicketItemViewHolder holder, int position) {
         TicketDTO ticket = tickets.get(position);
+        LocalDateTime startShowtime = LocalDateTime.parse(ticket.getStartShowtime());
         Log.i("TicketAdapter", "onBindViewHolder: " + ticket.toString());
-        holder.setMovieName(ticket.getMovieName());
-        holder.setCinemaName(ticket.getCinemaName());
-        holder.setRoomNumber(ticket.getRoomNumber());
+        holder.setMovieName(ticket.getNameMovie());
+        holder.setCinemaName(ticket.getNameCinema());
+        holder.setRoomName(ticket.getNameRoom());
         holder.setChairNumber(ticket.getChairNumber());
-        holder.setTime(ticket.getTime().toString());
-//        holder.setDate(ticket.getDate().toString());
-//        holder.setShibMovieImage(ticket.setMovieImage());
+        holder.setTime(startShowtime.toLocalTime().toString());
+        holder.setDate(startShowtime.toLocalDate().toString());
+        holder.setShibMovieImage(ticket.getPoster());
     }
 
     @Override
@@ -56,11 +58,11 @@ public class TicketAdapter extends RecyclerView.Adapter<TicketAdapter.TicketItem
             super(itemView);
             tvMovieName = itemView.findViewById(R.id.text_view_movie_name);
             tvCinemaName = itemView.findViewById(R.id.text_view_cinema_name);
-            tvRoomNumber = itemView.findViewById(R.id.text_view_room_number);
+            tvRoomNumber = itemView.findViewById(R.id.text_view_room_name);
             tvChairNumber = itemView.findViewById(R.id.text_view_chair_number);
             tvTime = itemView.findViewById(R.id.text_view_ticket_time);
             tvDate = itemView.findViewById(R.id.text_view_ticket_date);
-//            shibMovieImage = itemView.findViewById(R.id.shapeable_image_view_ticket_image);
+            shibMovieImage = itemView.findViewById(R.id.shapeable_image_view_movie_ticket_item);
         }
 
 
@@ -72,12 +74,12 @@ public class TicketAdapter extends RecyclerView.Adapter<TicketAdapter.TicketItem
             this.tvCinemaName.setText(cinemaName);
         }
 
-        public void setRoomNumber(int roomNumber) {
-            this.tvRoomNumber.setText("Phòng " + roomNumber);
+        public void setRoomName(String roomNumber) {
+            this.tvRoomNumber.setText(roomNumber);
         }
 
         public void setChairNumber(String chairNumber) {
-            this.tvChairNumber.setText("Ghế " + chairNumber);
+            this.tvChairNumber.setText(chairNumber);
         }
 
         public void setTime(String time) {
@@ -85,7 +87,7 @@ public class TicketAdapter extends RecyclerView.Adapter<TicketAdapter.TicketItem
         }
 
         public void setDate(String date) {
-            this.setDate(date);
+            tvDate.setText(date);
         }
 
         public void setShibMovieImage(String url) {

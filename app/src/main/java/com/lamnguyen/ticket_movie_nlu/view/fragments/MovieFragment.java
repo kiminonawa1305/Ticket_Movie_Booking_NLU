@@ -20,7 +20,7 @@ import java.time.format.DateTimeFormatter;
 public class MovieFragment extends Fragment {
     private TabLayout tlDisplayTicketMovie;
     private ViewPager2 vpgDisplayTicketMovie;
-    private MovieApi movieInfoService;
+    private MovieApi movieApi;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,7 +49,7 @@ public class MovieFragment extends Fragment {
         tlDisplayTicketMovie = view.findViewById(R.id.tab_layout_display_movie);
         vpgDisplayTicketMovie = view.findViewById(R.id.view_pager_display_movie);
         vpgDisplayTicketMovie.setAdapter(new ViewPagerMovieAdapter(this.getActivity()));
-        movieInfoService = MovieApi.getInstance();
+        movieApi = MovieApi.getInstance();
     }
 
 

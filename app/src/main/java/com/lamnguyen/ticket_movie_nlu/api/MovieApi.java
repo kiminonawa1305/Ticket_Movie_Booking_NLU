@@ -30,7 +30,7 @@ public class MovieApi {
         movieInfoDao = MovieInfoApi.getInstance();
     }
 
-    public void getMovieShowtime(LocalDate date, Context context, MovieServiceListener... listeners) {
+    public void getMovieShowtime(LocalDate date, Context context, CallAPI.CallAPIListener<List<MovieDTO>>... listeners) {
         String body = "/movie/api/showtime?date=" + date.toString();
         CallAPI.callJsonObjectRequest(context, CallAPI.URL_WEB_SERVICE, body, Request.Method.GET, new Response.Listener<JSONObject>() {
                     @Override
@@ -54,12 +54,5 @@ public class MovieApi {
                     }
                 }
         );
-    }
-
-
-    public interface MovieServiceListener {
-        void completed(List<MovieDTO> movieDTOs);
-
-        void error(Object error);
     }
 }

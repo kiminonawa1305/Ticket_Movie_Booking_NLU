@@ -79,4 +79,10 @@ public class CallAPI {
         // Add the request to the RequestQueue.
         queue.add(stringRequest);
     }
+
+    public interface CallAPIListener<T> {
+        void completed(T t);
+
+        void error(Object error);
+    }
 }

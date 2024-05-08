@@ -14,6 +14,7 @@
         android:background="@drawable/bg_left_ticket">
 
         <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/shapeable_image_view_movie_ticket_item"
             android:layout_width="@dimen/size_image_movie_ticket_item"
             android:layout_height="@dimen/size_image_movie_ticket_item"
             android:layout_gravity="center"
@@ -55,7 +56,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/text_view_room_number"
+                android:id="@+id/text_view_room_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Phòng số 2"

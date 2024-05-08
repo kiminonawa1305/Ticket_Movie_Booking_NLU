@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,24 +16,26 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.lamnguyen.ticket_movie_nlu.R;
 import com.lamnguyen.ticket_movie_nlu.adapters.TicketAdapter;
+import com.lamnguyen.ticket_movie_nlu.api.TicketApi;
+import com.lamnguyen.ticket_movie_nlu.dto.TicketDTO;
 import com.lamnguyen.ticket_movie_nlu.service.Ticket.TicketService;
+import com.lamnguyen.ticket_movie_nlu.utils.CallAPI;
+import com.lamnguyen.ticket_movie_nlu.utils.DialogLoading;
 
-import java.time.LocalDate;
+import java.util.List;
 
-//Khởi tạo Fragment cho ViewPager2
 public class ViewPagerTicketFragment extends Fragment {
     public static final String TAG = ViewPagerTicketFragment.class.getSimpleName();
     private RecyclerView rclTicket;
     private Dialog dialog;
     private TicketService ticketService;
-
-    public ViewPagerTicketFragment() {
-    }
+    private TicketApi ticketApi;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ticketService = TicketService.getInstance();
+        ticketApi = TicketApi.getInstance();
     }
 
     @Override
@@ -47,7 +50,6 @@ public class ViewPagerTicketFragment extends Fragment {
         rclTicket = view.findViewById(R.id.recycler_view_display_ticket);
         rclTicket.setLayoutManager(new LinearLayoutManager(view.getContext(), RecyclerView.VERTICAL, false));
 
-        rclTicket.setAdapter(new TicketAdapter(ticketService.getTicketsDemo()));
         dialog = new Dialog(getContext());
         dialog.setContentView(R.layout.dialog_loading);
         dialog.setCancelable(false);
@@ -61,10 +63,26 @@ public class ViewPagerTicketFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        loadMovieShowtime(LocalDate.now().plusDays(getArguments().getInt("position")));
+        Bundle bundle = getArguments();
+        boolean avail = bundle.getBoolean("avail");
+        loadTicket(avail);
     }
 
-    private void loadMovieShowtime(LocalDate dateTime) {
-//        DialogLoading.showDialogLoading(dialog, getString(R.string.loading));
+    private void loadTicket(boolean avail) {
+        DialogLoading.showDialogLoading(dialog, getString(R.string.loading));
+        ticketApi.call(this.getContext(), avail, new CallAPI.CallAPIListener<List<TicketDTO>>() {
+
+            @Override
+            public void completed(List<TicketDTO> ticketDTOS) {
+                dialog.dismiss();
+                rclTicket.setAdapter(new TicketAdapter(ticketDTOS));
+            }
+
+            @Override
+            public void error(Object error) {
+                dialog.dismiss();
+                Toast.makeText(ViewPagerTicketFragment.this.getContext(), error.toString(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

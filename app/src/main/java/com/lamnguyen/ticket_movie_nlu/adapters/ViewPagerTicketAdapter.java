@@ -20,7 +20,7 @@ public class ViewPagerTicketAdapter extends FragmentStateAdapter {
         Fragment fragment;
         Bundle args = new Bundle();
         // The object is just an integer.
-        args.putInt("position", position);
+        args.putBoolean("avail", position != 1);
         fragment = new ViewPagerTicketFragment();
         fragment.setArguments(args);
         return fragment;
@@ -30,4 +30,6 @@ public class ViewPagerTicketAdapter extends FragmentStateAdapter {
     public int getItemCount() {
         return 2;
     }
+
+
 }

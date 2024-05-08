@@ -15,9 +15,10 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lamnguyen.ticket_movie_nlu.R;
-import com.lamnguyen.ticket_movie_nlu.dto.MovieDTO;
 import com.lamnguyen.ticket_movie_nlu.adapters.MovieAdapter;
 import com.lamnguyen.ticket_movie_nlu.api.MovieApi;
+import com.lamnguyen.ticket_movie_nlu.dto.MovieDTO;
+import com.lamnguyen.ticket_movie_nlu.utils.CallAPI;
 import com.lamnguyen.ticket_movie_nlu.utils.DialogLoading;
 
 import java.time.LocalDate;
@@ -71,7 +72,7 @@ public class ViewPagerMovieFragment extends Fragment {
 
     private void loadMovieShowtime(LocalDate dateTime) {
         DialogLoading.showDialogLoading(dialog, getString(R.string.loading));
-        movieService.getMovieShowtime(dateTime, this.getContext(), new MovieApi.MovieServiceListener() {
+        movieService.getMovieShowtime(dateTime, this.getContext(), new CallAPI.CallAPIListener<List<MovieDTO>>() {
 
             @Override
             @SneakyThrows

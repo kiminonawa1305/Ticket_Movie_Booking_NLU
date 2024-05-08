@@ -1,55 +1,51 @@
 package com.lamnguyen.ticket_movie_nlu.dto;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 
 public class TicketDTO {
-    private Integer roomNumber;
-    private String movieImage, movieName, cinemaName, chairNumber;
-    private LocalTime time;
-    private LocalDate date;
+    private String id, poster, nameRoom, nameMovie, nameCinema, chairNumber, startShowtime;
 
-    public TicketDTO(String movieImage, String movieName, String cinemaName, Integer roomNumber, String chairNumber, LocalTime time, LocalDate date) {
-        this.roomNumber = roomNumber;
-        this.movieImage = movieImage;
-        this.movieName = movieName;
-        this.cinemaName = cinemaName;
-        this.chairNumber = chairNumber;
-        this.time = time;
-        this.date = date;
+    public String getId() {
+        return id;
     }
 
-    public Integer getRoomNumber() {
-        return roomNumber;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public void setRoomNumber(Integer roomNumber) {
-        this.roomNumber = roomNumber;
+    public String getPoster() {
+        return poster;
     }
 
-    public String getMovieImage() {
-        return movieImage;
+    public void setPoster(String poster) {
+        this.poster = poster;
     }
 
-    public void setMovieImage(String movieImage) {
-        this.movieImage = movieImage;
+    public String getNameRoom() {
+        return nameRoom;
     }
 
-    public String getMovieName() {
-        return movieName;
+    public void setNameRoom(String nameRoom) {
+        this.nameRoom = nameRoom;
     }
 
-    public void setMovieName(String movieName) {
-        this.movieName = movieName;
+    public String getNameMovie() {
+        return nameMovie;
     }
 
-    public String getCinemaName() {
-        return cinemaName;
+    public void setNameMovie(String nameMovie) {
+        this.nameMovie = nameMovie;
     }
 
-    public void setCinemaName(String cinemaName) {
-        this.cinemaName = cinemaName;
+    public String getNameCinema() {
+        return nameCinema;
+    }
+
+    public void setNameCinema(String nameCinema) {
+        this.nameCinema = nameCinema;
     }
 
     public String getChairNumber() {
@@ -60,32 +56,11 @@ public class TicketDTO {
         this.chairNumber = chairNumber;
     }
 
-    public LocalTime getTime() {
-        return time;
+    public String getStartShowtime() {
+        return startShowtime;
     }
 
-    public void setTime(LocalTime time) {
-        this.time = time;
-    }
-
-    public LocalDate getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
-
-    @Override
-    public String toString() {
-        return "TicketDTO{" +
-                ", movieImage='" + movieImage + '\'' +
-                ", movieName='" + movieName + '\'' +
-                ", cinemaName='" + cinemaName + '\'' +
-                ", roomNumber=" + roomNumber +
-                ", chairNumber='" + chairNumber + '\'' +
-                ", time=" + time +
-                ", date=" + date +
-                '}';
+    public void setStartShowtime(String startShowtime) {
+        this.startShowtime = startShowtime;
     }
 }
