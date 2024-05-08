@@ -13,4 +13,5 @@
     <color name="purple_system">#6750A4</color>
     <color name="item_date">#AFA0A0</color>
     <color name="bg_footer">#E19E79</color>
+    <color name="bg_input_info_user">#8D8D8D</color>
 </resources>

@@ -35,10 +35,10 @@ public class FavoriteMovieActivity extends AppCompatActivity {
 
         for (int i = 0; i < 10; i++) {
             MovieDTO movie = new MovieDTO();
-            movie.setName("Movie " + (i + 1));
+            movie.setTitle("Movie " + (i + 1));
             movie.setPoster("https://upload.wikimedia.org/wikipedia/en/b/be/Godzilla_x_kong_the_new_empire_poster.jpg");
             movie.setGenre("Genre " + (i + 1));
-            movie.setRunTime(120);
+            movie.setDuration("120 muns");
             movie.setRate(4.5);
             movie.setVote(1000);
 

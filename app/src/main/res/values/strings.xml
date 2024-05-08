@@ -65,6 +65,7 @@
     <string name="user_phone_number">Phone Number</string>
     <string name="user_birth_day">Birthday</string>
     <string name="user_address">Address</string>
+    <string name="change_avatar">Đổi ảnh đại diện</string>
 
     <!--favoriteList-->
     <string name="favorite_list">Favorite List</string>
