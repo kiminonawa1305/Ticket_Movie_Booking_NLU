@@ -1,20 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    tools:context=".view.fragments.ChooseChairFragment">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
 
-    <GridView
-        android:id="@+id/gridView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:numColumns="12"
-        android:columnWidth="80dp"
-        android:verticalSpacing="5dp"
-        android:horizontalSpacing="5dp"
-        android:stretchMode="columnWidth"
-        android:gravity="center"
-        android:padding="10dp"/>
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
-</RelativeLayout>
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <GridView
+                android:id="@+id/grid_view_seats"
+                android:layout_width="700dp"
+                android:layout_height="500dp"
+                android:horizontalSpacing="5dp"
+                android:numColumns="12"
+                android:scrollbars="vertical|horizontal"
+                android:verticalSpacing="5dp"
+                tools:context=".view.fragments.ChooseChairFragment"
+                tools:ignore="NestedScrolling" />
+        </FrameLayout>
+    </ScrollView>
+</HorizontalScrollView>
+
+
