@@ -22,8 +22,8 @@ android {
         release {
             isMinifyEnabled = false
             proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                    getDefaultProguardFile("proguard-android-optimize.txt"),
+                    "proguard-rules.pro"
             )
         }
     }
@@ -74,5 +74,8 @@ dependencies {
     implementation("androidx.cardview:cardview:1.0.0")
     implementation("com.etebarian:meow-bottom-navigation-java:1.2.0")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.9.23")
+
+    // library QR
+    implementation("androidmads.library.qrgenearator:QRGenearator:1.0.3")
     implementation("com.borjabravo:readmoretextview:2.1.0")
 }
