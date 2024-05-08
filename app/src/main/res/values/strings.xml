@@ -58,6 +58,19 @@
 
     <!--Google Map API-->
 
+    <!--User Info-->
+    <string name="User_Info">Personal Info</string>
+    <string name="user_name">UserName</string>
+    <string name="user_email">Email</string>
+    <string name="user_phone_number">Phone Number</string>
+    <string name="user_birth_day">Birthday</string>
+    <string name="user_address">Address</string>
+
+    <!--favoriteList-->
+    <string name="favorite_list">Favorite List</string>
+
+
     <string name="expanded_text">Xem thêm</string>
     <string name="collapsed_text">Thu gọn</string>
+  
 </resources>
