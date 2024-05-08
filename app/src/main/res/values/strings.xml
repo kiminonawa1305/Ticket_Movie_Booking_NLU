@@ -73,5 +73,9 @@
 
     <string name="expanded_text">Xem thêm</string>
     <string name="collapsed_text">Thu gọn</string>
-  
+    <string name="title_payment">THÔNG TIN THANH TOÁN</string>
+    <string name="name_film">Người nhện trở về nhà</string>
+    <string name="title_category">Thể loại:</string>
+    <string name="item_category">Hành động, khoa học viễn tưởng</string>
+
 </resources>
