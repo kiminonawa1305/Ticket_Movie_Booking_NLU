@@ -86,4 +86,5 @@
     <string name="payment_phone_number">Số điện thoại:</string>
     <string name="payment_name">Họ và tên:</string>
     <string name="info_payment">Thông tin đặt vé</string>
+    <string name="choose_seat">Chọn chổ ngồi</string>
 </resources>

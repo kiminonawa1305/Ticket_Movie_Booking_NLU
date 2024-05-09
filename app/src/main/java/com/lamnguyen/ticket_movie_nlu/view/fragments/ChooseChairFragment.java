@@ -1,6 +1,7 @@
 package com.lamnguyen.ticket_movie_nlu.view.fragments;
 
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.lamnguyen.ticket_movie_nlu.R;
+import com.lamnguyen.ticket_movie_nlu.utils.Convert;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,8 +28,9 @@ public class ChooseChairFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         GridView gridView = view.findViewById(R.id.grid_view_seats);
-        gridView.setNumColumns(16);
-        gridView.getLayoutParams().width = 16 * 100;
+        int numberColumns = 12;
+        gridView.setNumColumns(numberColumns);
+        gridView.getLayoutParams().width = (int) (numberColumns * Convert.convertToPx(this.getContext(), 55));
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this.getContext(), R.layout.item_seat, generateSeatList());
         gridView.setAdapter(adapter);
     }

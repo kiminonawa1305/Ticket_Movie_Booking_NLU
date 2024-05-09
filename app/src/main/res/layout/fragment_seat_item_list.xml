@@ -14,12 +14,11 @@
 
             <GridView
                 android:id="@+id/grid_view_seats"
-                android:layout_width="700dp"
+                android:layout_width="0dp"
                 android:layout_height="500dp"
-                android:horizontalSpacing="5dp"
-                android:numColumns="12"
+                android:paddingLeft="7dp"
                 android:scrollbars="vertical|horizontal"
-                android:verticalSpacing="5dp"
+                android:verticalSpacing="7dp"
                 tools:context=".view.fragments.ChooseChairFragment"
                 tools:ignore="NestedScrolling" />
         </FrameLayout>

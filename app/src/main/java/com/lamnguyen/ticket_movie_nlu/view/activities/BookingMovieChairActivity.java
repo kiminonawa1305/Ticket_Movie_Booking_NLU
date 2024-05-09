@@ -20,8 +20,6 @@ import java.util.List;
 
 
 public class BookingMovieChairActivity extends AppCompatActivity {
-    RecyclerView recyclerView;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
