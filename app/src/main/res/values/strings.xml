@@ -73,9 +73,18 @@
 
     <string name="expanded_text">Xem thêm</string>
     <string name="collapsed_text">Thu gọn</string>
+
+    <!--Payment activity-->
     <string name="title_payment">THÔNG TIN THANH TOÁN</string>
-    <string name="name_film">Người nhện trở về nhà</string>
     <string name="title_category">Thể loại:</string>
-    <string name="item_category">Hành động, khoa học viễn tưởng</string>
+    <string name="pay">Thanh toán</string>
+    <string name="total_pay">Tổng tiền:</string>
+    <string name="chair">Ghế:</string>
+    <string name="room_show">Phòng chiếu:</string>
+    <string name="payment_cinema">Rạp:</string>
+    <string name="payment_email">Email:</string>
+    <string name="payment_phone_number">Số điện thoại:</string>
+    <string name="payment_name">Họ và tên:</string>
+    <string name="info_payment">Thông tin đặt vé</string>
 
 </resources>
