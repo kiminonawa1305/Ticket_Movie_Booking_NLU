@@ -40,7 +40,33 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".view.activities.PaymentActivity"
+        <activity
+            android:name=".view.activities.GoogleSignInActivity"
+            android:exported="false"
+            android:label="GoogleSignInActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activities.SignActivity"
+            android:exported="false"
+            android:label="SignActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activities.MainActivity"
+            android:exported="false"
+            android:label="GreetingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activities.GreetingActivity"
+            android:exported="true"
+            android:label="MainActivity"
+            android:screenOrientation="portrait">
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+        </activity>
+        <activity android:name=".view.activities.MovieDetailActivity"
             android:exported="true"
             android:label="MovieDetailActivity"
             android:screenOrientation="portrait">
