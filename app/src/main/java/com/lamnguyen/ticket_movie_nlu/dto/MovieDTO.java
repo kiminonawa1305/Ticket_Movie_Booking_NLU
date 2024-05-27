@@ -1,18 +1,12 @@
 package com.lamnguyen.ticket_movie_nlu.dto;
 
+import lombok.Data;
+
 public class MovieDTO {
     private String title, poster, genre, duration;
-    private Integer vote;
+    private Integer vote, id;
     private Double rate;
 
-    public MovieDTO(String title, String poster, String genre, String duration, String name, Integer vote, Double rate) {
-        this.title = title;
-        this.poster = poster;
-        this.genre = genre;
-        this.duration = duration;
-        this.vote = vote;
-        this.rate = rate;
-    }
 
     public MovieDTO() {
     }
@@ -49,7 +43,6 @@ public class MovieDTO {
         this.duration = duration;
     }
 
-
     public Integer getVote() {
         return vote;
     }
@@ -64,5 +57,13 @@ public class MovieDTO {
 
     public void setRate(Double rate) {
         this.rate = rate;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 }

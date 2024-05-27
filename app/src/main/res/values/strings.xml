@@ -88,4 +88,9 @@
     <string name="info_payment">Thông tin đặt vé</string>
     <string name="choose_seat">Chọn chổ ngồi</string>
     <string name="find_way">Tìm đường</string>
+    <string name="review_film">Đánh giá phim</string>
+    <string name="date_start">Ngày khởi chiếu</string>
+    <string name="film_duration">Thời lượng phim</string>
+    <string name="film_detail">Thông tin chi tiết phim</string>
+    <string name="booking">Đặt vé</string>
 </resources>
