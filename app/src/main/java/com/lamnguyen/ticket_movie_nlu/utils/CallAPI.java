@@ -18,11 +18,11 @@ import java.util.Map;
 import lombok.SneakyThrows;
 
 public class CallAPI {
-    public static final String URL_WEB_SERVICE = "http://10.0.23.200:8080";
+    public static final String URL_WEB_SERVICE = "http://192.168.164.49:8080";
     public static final String URL_OMDB = "http://www.omdbapi.com/?apikey=c3d0a99f";
     public static final String URL_GOOGLE_MAP_COMPUTE_ROUTES = "https://routes.googleapis.com/directions/v2:computeRoutes";
     public static final String URL_GOOGLE_MAP_DIRECTION = "https://maps.googleapis.com/maps/api/directions/json";
-    private static final int TIME_OUT = 1000 * 60 * 10;
+    private static final int TIME_OUT = 1000 * 30;
 
     public static void callStringRequest(Context context, String url, String query, int method, Response.Listener<String> responseListener, Response.ErrorListener errorListener) {
         RequestQueue queue = Volley.newRequestQueue(context);
@@ -40,7 +40,7 @@ public class CallAPI {
     @SneakyThrows
     public static void callJsonObjectRequest(Context context, String url, String query, int method, Response.Listener<JSONObject> responseListener, Response.ErrorListener errorListener) {
         RequestQueue queue = Volley.newRequestQueue(context);
-        Log.i("URL", url + query);
+        Log.i(CallAPI.class.getSimpleName(), url + query);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(method, url + query, null, responseListener, errorListener);
         jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(
                 TIME_OUT,

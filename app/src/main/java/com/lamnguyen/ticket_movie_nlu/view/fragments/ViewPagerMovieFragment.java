@@ -3,6 +3,7 @@ package com.lamnguyen.ticket_movie_nlu.view.fragments;
 
 import android.app.Dialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,22 +17,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.lamnguyen.ticket_movie_nlu.R;
 import com.lamnguyen.ticket_movie_nlu.adapters.MovieAdapter;
-import com.lamnguyen.ticket_movie_nlu.api.MovieApi;
 import com.lamnguyen.ticket_movie_nlu.dto.MovieDTO;
+import com.lamnguyen.ticket_movie_nlu.service.Movie.MovieService;
 import com.lamnguyen.ticket_movie_nlu.utils.CallAPI;
 import com.lamnguyen.ticket_movie_nlu.utils.DialogLoading;
 
 import java.time.LocalDate;
 import java.util.List;
 
-import lombok.SneakyThrows;
-
 //Khởi tạo Fragment cho ViewPager2
 public class ViewPagerMovieFragment extends Fragment {
     public static final String TAG = ViewPagerMovieFragment.class.getSimpleName();
     private RecyclerView rclDisplayListMovieShowtime;
     private Dialog dialog;
-    private MovieApi movieService;
+    private MovieService movieService;
 
     public ViewPagerMovieFragment() {
     }
@@ -39,7 +38,7 @@ public class ViewPagerMovieFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        movieService = MovieApi.getInstance();
+        movieService = MovieService.getInstance();
     }
 
     @Override
@@ -72,18 +71,18 @@ public class ViewPagerMovieFragment extends Fragment {
 
     private void loadMovieShowtime(LocalDate dateTime) {
         DialogLoading.showDialogLoading(dialog, getString(R.string.loading));
-        movieService.getMovieShowtime(dateTime, this.getContext(), new CallAPI.CallAPIListener<List<MovieDTO>>() {
+        movieService.loadMovieShowtime(dateTime, this.getContext(), new CallAPI.CallAPIListener<List<MovieDTO>>() {
 
             @Override
-            @SneakyThrows
             public void completed(List<MovieDTO> movieDTOs) {
                 dialog.dismiss();
-                rclDisplayListMovieShowtime.setAdapter(new MovieAdapter(movieDTOs));
+                rclDisplayListMovieShowtime.setAdapter(new MovieAdapter(movieDTOs, ViewPagerMovieFragment.this.getActivity()));
             }
 
             @Override
             public void error(Object error) {
                 dialog.dismiss();
+                Log.e(ViewPagerMovieFragment.class.getSimpleName(), error.toString());
                 Toast.makeText(ViewPagerMovieFragment.this.getContext(), error.toString(), Toast.LENGTH_SHORT).show();
             }
         });

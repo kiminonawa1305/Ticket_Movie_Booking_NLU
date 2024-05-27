@@ -24,7 +24,7 @@ public class FavoriteMovieActivity extends AppCompatActivity {
         rvDisplayFavoriteMovie = findViewById(R.id.recycler_view_display_favorite_movie);
 
         List<MovieDTO> sampleData = createSampleData();
-        MovieAdapter movieAdapter = new MovieAdapter(sampleData);
+        MovieAdapter movieAdapter = new MovieAdapter(sampleData, this);
         rvDisplayFavoriteMovie.setAdapter(movieAdapter);
         GridLayoutManager layoutManager = new GridLayoutManager(this, 2);
         rvDisplayFavoriteMovie.setLayoutManager(layoutManager);
