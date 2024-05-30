@@ -18,11 +18,12 @@ import java.util.Map;
 import lombok.SneakyThrows;
 
 public class CallAPI {
-    public static final String URL_WEB_SERVICE = "http://192.168.164.49:8080";
+    public static final String IP = "172.16.1.113";
+    public static final String URL_WEB_SERVICE = "http://" + IP + ":8080";
     public static final String URL_OMDB = "http://www.omdbapi.com/?apikey=c3d0a99f";
     public static final String URL_GOOGLE_MAP_COMPUTE_ROUTES = "https://routes.googleapis.com/directions/v2:computeRoutes";
     public static final String URL_GOOGLE_MAP_DIRECTION = "https://maps.googleapis.com/maps/api/directions/json";
-    private static final int TIME_OUT = 1000 * 30;
+    private static final int TIME_OUT = 1000;
 
     public static void callStringRequest(Context context, String url, String query, int method, Response.Listener<String> responseListener, Response.ErrorListener errorListener) {
         RequestQueue queue = Volley.newRequestQueue(context);

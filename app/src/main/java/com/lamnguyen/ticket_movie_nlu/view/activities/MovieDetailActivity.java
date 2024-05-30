@@ -124,7 +124,7 @@ public class MovieDetailActivity extends AppCompatActivity {
 
         loadActor(movieDetailDTO.getActors());
 
-        loadActor(movieDetailDTO.getDirectors());
+        loadDirector(movieDetailDTO.getDirectors());
 
         Glide.with(shapeableImageViewPosterMovieDetail).load(movieDetailDTO.getPoster()).into(shapeableImageViewPosterMovieDetail);
 
