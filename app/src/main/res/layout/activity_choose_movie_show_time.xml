@@ -29,7 +29,6 @@
             android:gravity="center"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
-            android:text="@string/title_payment"
             android:textColor="@color/white"
             android:textSize="22sp" />
     </LinearLayout>
