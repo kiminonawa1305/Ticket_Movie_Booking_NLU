@@ -18,7 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.lamnguyen.ticket_movie_nlu.R;
 import com.lamnguyen.ticket_movie_nlu.adapters.MovieAdapter;
 import com.lamnguyen.ticket_movie_nlu.dto.MovieDTO;
-import com.lamnguyen.ticket_movie_nlu.service.Movie.MovieService;
+import com.lamnguyen.ticket_movie_nlu.service.movie.MovieService;
 import com.lamnguyen.ticket_movie_nlu.utils.CallAPI;
 import com.lamnguyen.ticket_movie_nlu.utils.DialogLoading;
 

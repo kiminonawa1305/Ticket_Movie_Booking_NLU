@@ -1,5 +1,7 @@
 package com.lamnguyen.ticket_movie_nlu.dto;
 
+import java.io.Serializable;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,8 +11,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class MovieDTO {
-    private String title, poster, genre, duration;
-    private Integer vote, id;
-    private Double rate;
+public class PriceBoardDTO implements Serializable {
+    private Double single;
+    private Double couple;
+    private Double vip;
 }

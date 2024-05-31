@@ -10,6 +10,7 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.JsonObject;
 
 import org.json.JSONObject;
 
@@ -18,7 +19,7 @@ import java.util.Map;
 import lombok.SneakyThrows;
 
 public class CallAPI {
-    public static final String IP = "172.16.1.113";
+    public static final String IP = "192.168.137.133";
     public static final String URL_WEB_SERVICE = "http://" + IP + ":8080";
     public static final String URL_OMDB = "http://www.omdbapi.com/?apikey=c3d0a99f";
     public static final String URL_GOOGLE_MAP_COMPUTE_ROUTES = "https://routes.googleapis.com/directions/v2:computeRoutes";
@@ -76,19 +77,18 @@ public class CallAPI {
         queue.add(stringRequest);
     }
 
-    public static void callJsonObjectRequest(Context context, String url, String query, String body, Map<String, String> header, int method, Response.Listener<JSONObject> responseListener, Response.ErrorListener errorListener) {
+    public static void callJsonObjectRequest(Context context, String url, String query, JSONObject jsonObject, Map<String, String> header, int method, Response.Listener<JSONObject> responseListener, Response.ErrorListener errorListener) {
         RequestQueue queue = Volley.newRequestQueue(context);
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(method, url + query, null, responseListener, errorListener) {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(method, url + query, jsonObject, responseListener, errorListener) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> headers = super.getHeaders();
-                header.putAll(headers);
-                return header;
-            }
+                if (header != null) {
+                    Map<String, String> headers = super.getHeaders();
+                    header.putAll(headers);
+                    return header;
+                }
 
-            @Override
-            public byte[] getBody() {
-                return body.getBytes();
+                return super.getHeaders();
             }
         };
         jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(
