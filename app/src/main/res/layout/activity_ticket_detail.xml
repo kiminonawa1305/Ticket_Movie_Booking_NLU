@@ -64,6 +64,7 @@
             app:cardCornerRadius="20dp">
 
             <ImageView
+                android:id="@+id/imageview_movie_td"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
