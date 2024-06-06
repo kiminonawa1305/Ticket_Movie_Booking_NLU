@@ -287,7 +287,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:scaleType="fitXY"
-                                android:src="@drawable/avatar_member"/>
+                                android:src="@drawable/dong_avatar"/>
 
                             <View
                                 android:layout_width="1dp"
@@ -344,7 +344,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:scaleType="fitXY"
-                                android:src="@drawable/avatar_member"/>
+                                android:src="@drawable/phong_avatar"/>
 
                             <View
                                 android:layout_width="1dp"
@@ -401,7 +401,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:scaleType="fitXY"
-                                android:src="@drawable/avatar_member"/>
+                                android:src="@drawable/duoc_avatar"/>
 
                             <View
                                 android:layout_width="1dp"
@@ -458,7 +458,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:scaleType="fitXY"
-                                android:src="@drawable/avatar_member"/>
+                                android:src="@drawable/duong_avatar"/>
 
                             <View
                                 android:layout_width="1dp"
