@@ -33,6 +33,14 @@ public class MainActivity extends AppCompatActivity {
 
         this.init();
         this.eventNavigation();
+
+        Intent intent = getIntent();
+        if (intent != null) {
+            int fragmentId = intent.getIntExtra("fragment_id", 1);
+            if (fragmentId == 5) {
+                changeFragment(fragmentId);
+            }
+        }
     }
 
     private void init() {
@@ -87,6 +95,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
         bottomNavigation.show(1, true);
+
+
     }
 
     private void changeFragment(int id) {

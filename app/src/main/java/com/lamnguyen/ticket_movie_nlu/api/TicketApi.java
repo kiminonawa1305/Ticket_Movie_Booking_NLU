@@ -34,7 +34,7 @@ public class TicketApi {
         Map<String, String> header = new HashMap<String, String>();
         SharedPreferences preferences = context.getSharedPreferences("user", Context.MODE_PRIVATE);
         String userId = preferences.getString("id", "-1");
-        header.put("user-id", userId);
+        header.put("user-id", "1");
         CallAPI.callJsonObjectRequest(context, CallAPI.URL_WEB_SERVICE, query, null, header, Request.Method.GET,
                 new Response.Listener<JSONObject>() {
                     @Override

@@ -3,6 +3,7 @@ package com.lamnguyen.ticket_movie_nlu.view.fragments;
 
 import android.app.Dialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -75,7 +76,7 @@ public class ViewPagerTicketFragment extends Fragment {
             @Override
             public void completed(List<TicketDTO> ticketDTOS) {
                 dialog.dismiss();
-                rclTicket.setAdapter(new TicketAdapter(ticketDTOS));
+                rclTicket.setAdapter(new TicketAdapter(ticketDTOS, avail));
             }
 
             @Override
