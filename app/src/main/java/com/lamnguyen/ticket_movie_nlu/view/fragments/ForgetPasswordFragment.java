@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.lamnguyen.ticket_movie_nlu.R;
 import com.lamnguyen.ticket_movie_nlu.utils.DialogLoading;
 import com.lamnguyen.ticket_movie_nlu.service.auth.ThreadCallBackSign;
@@ -72,30 +73,24 @@ public class ForgetPasswordFragment extends Fragment {
                 return;
             }
 
-            DialogLoading.showDialogLoading(dialog, "Gửi mail xác thật!");
+            DialogLoading.showDialogLoading(dialog, "Gửi mail...");
             ForgetPasswordServiceImpl.getInstance().sendForgetPassword(email,
                     new ThreadCallBackSign() {
                         @Override
                         public void isSuccess() {
-                        }
-
-                        @Override
-                        public void isFail() {
-                            Toast.makeText(ForgetPasswordFragment.this.getContext(), "Email không tồn tại...", Toast.LENGTH_LONG).show();
                             dialog.dismiss();
-                        }
-                    },
-
-                    new ThreadCallBackSign() {
-                        @Override
-                        public void isSuccess() {
                             Toast.makeText(ForgetPasswordFragment.this.getContext(), "Vui lòng kiểm tra mail...", Toast.LENGTH_LONG).show();
-                            dialog.dismiss();
+                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                            fragmentTransaction.setReorderingAllowed(true);
+
+                            // Replace whatever is in the fragment_container view with this fragment
+                            fragmentTransaction.replace(R.id.fragment_sign, SignInFragment.class, null);
+                            fragmentTransaction.commit();
                         }
 
                         @Override
                         public void isFail() {
-                            Toast.makeText(ForgetPasswordFragment.this.getContext(), "Lỗi...", Toast.LENGTH_LONG).show();
+                            Toast.makeText(ForgetPasswordFragment.this.getContext(), getString(R.string.email_not_register), Toast.LENGTH_LONG).show();
                             dialog.dismiss();
                         }
                     });
