@@ -1,12 +1,10 @@
-package com.lamnguyen.ticket_movie_nlu.service.Movie;
+package com.lamnguyen.ticket_movie_nlu.service.movie;
 
 import android.content.Context;
 
 import com.lamnguyen.ticket_movie_nlu.api.MovieApi;
 import com.lamnguyen.ticket_movie_nlu.dto.MovieDetailDTO;
 import com.lamnguyen.ticket_movie_nlu.utils.CallAPI;
-
-import java.util.List;
 
 public class MovieDetailService {
     private MovieApi movieApi;

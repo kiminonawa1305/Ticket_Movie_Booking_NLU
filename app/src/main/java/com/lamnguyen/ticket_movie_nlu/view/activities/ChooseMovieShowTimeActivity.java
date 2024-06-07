@@ -15,6 +15,6 @@ public class ChooseMovieShowTimeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_choose_movie_show_time);
+        setContentView(R.layout.activity_choose_movie_showtime);
     }
 }

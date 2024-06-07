@@ -93,4 +93,7 @@
     <string name="film_duration">Thời lượng phim</string>
     <string name="film_detail">Thông tin chi tiết phim</string>
     <string name="booking">Đặt vé</string>
+    <string name="total_price">Tổng giá:</string>
+    <string name="selected_chair">Ghế đã chọn:</string>
+    <string name="total_chair">Tổng ghế:</string>
 </resources>

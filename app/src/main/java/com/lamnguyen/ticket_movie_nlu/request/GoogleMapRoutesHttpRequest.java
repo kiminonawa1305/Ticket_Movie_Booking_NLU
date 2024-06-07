@@ -1,17 +1,23 @@
 package com.lamnguyen.ticket_movie_nlu.request;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.gson.Gson;
 import com.lamnguyen.ticket_movie_nlu.enums.DriverType;
 import com.lamnguyen.ticket_movie_nlu.utils.CallAPI;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import lombok.SneakyThrows;
 
 
 public class GoogleMapRoutesHttpRequest {
@@ -31,7 +37,11 @@ public class GoogleMapRoutesHttpRequest {
 
     public void call(LatLng origin, LatLng destination) {
         String body = getBody(origin, destination);
-        CallAPI.callJsonObjectRequest(context, CallAPI.URL_GOOGLE_MAP_COMPUTE_ROUTES, "", body, getHeaders(), method, listener, errorListener);
+        try {
+            CallAPI.callJsonObjectRequest(context, CallAPI.URL_GOOGLE_MAP_COMPUTE_ROUTES, "", new JSONObject().getJSONObject(body), getHeaders(), method, listener, errorListener);
+        } catch (JSONException e) {
+            Log.e(GoogleMapRoutesHttpRequest.class.getSimpleName(), "call: " + e.toString());
+        }
     }
 
     private String getBody(LatLng origin, LatLng destination) {

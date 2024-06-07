@@ -4,6 +4,7 @@
     android:id="@+id/text_view_seat"
     android:layout_width="50dp"
     android:layout_height="50dp"
+    android:layout_margin="5dp"
     android:background="@drawable/bg_chair_available"
     android:gravity="center"
     android:padding="5dp"

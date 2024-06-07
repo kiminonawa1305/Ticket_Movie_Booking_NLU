@@ -19,30 +19,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:text="Total Seats:"
+            android:text="@string/total_chair"
             android:textColor="@color/white" />
 
         <TextView
-            android:id="@+id/txtTotalSeatsValue"
+            android:id="@+id/tv_total_chair"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:text="200.000 VNĐ"
-            android:textColor="@color/white" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:text="Ticket Price:"
-            android:textColor="@color/white" />
-
-        <TextView
-            android:id="@+id/txtTicketPriceValue"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:text="200.000 VNĐ"
             android:textColor="@color/white" />
 
         <TextView
@@ -50,11 +34,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:layout_marginRight="10dp"
-            android:text="Selected Seats:"
+            android:text="@string/selected_chair"
             android:textColor="@color/white" />
 
         <TextView
-            android:id="@+id/txtSelectedSeatsValue"
+            android:id="@+id/text_view_selected_chair"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
@@ -65,11 +49,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:text="Total Price:"
+            android:text="@string/total_price"
             android:textColor="@color/white" />
 
         <TextView
-            android:id="@+id/txtTotalPriceValue"
+            android:id="@+id/text_view_total_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
