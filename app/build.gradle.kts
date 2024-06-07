@@ -79,7 +79,7 @@ dependencies {
     // library QR
     implementation("androidmads.library.qrgenearator:QRGenearator:1.0.3")
     implementation("com.borjabravo:readmoretextview:2.1.0")
-
+    implementation("com.squareup.picasso:picasso:2.71828")
     // Lombok
     compileOnly("org.projectlombok:lombok:1.18.32")
     annotationProcessor("org.projectlombok:lombok:1.18.32")

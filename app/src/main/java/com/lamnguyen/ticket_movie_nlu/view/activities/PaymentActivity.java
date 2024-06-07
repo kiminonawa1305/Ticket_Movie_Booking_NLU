@@ -5,14 +5,18 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.lamnguyen.ticket_movie_nlu.R;
+import com.lamnguyen.ticket_movie_nlu.bean.Movie;
+import com.squareup.picasso.Picasso;
 
 public class PaymentActivity extends AppCompatActivity {
 
+    private ImageView movieImageView;
     private TextView movieNameTextView;
     private TextView movieTypeTextView;
     private TextView paymentNameTextView;
@@ -27,7 +31,7 @@ public class PaymentActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment); // đổi thành tên file layout của bạn
-
+        movieImageView = findViewById(R.id.image_view_payment_movie_image);
         movieNameTextView = findViewById(R.id.text_view_payment_movie_name);
         movieTypeTextView = findViewById(R.id.text_view_payment_movie_type);
         paymentNameTextView = findViewById(R.id.text_view_payment_name);
@@ -39,7 +43,12 @@ public class PaymentActivity extends AppCompatActivity {
         payButton = findViewById(R.id.button_pay);
 
 
+        Movie movie = Movie.getMovieTest();
         // Tính tổng tiền và cập nhật totalPayTextView
+
+        movieNameTextView.setText(movie.getTitle());
+        movieTypeTextView.setText(movie.getGenre());
+        Picasso.get().load(movie.getPoster()).into(movieImageView);
         calculateAndDisplayTotalPay();
 
         payButton.setOnClickListener(new View.OnClickListener() {
