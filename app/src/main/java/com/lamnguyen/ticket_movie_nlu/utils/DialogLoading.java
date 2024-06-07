@@ -16,4 +16,11 @@ public class DialogLoading {
         tvTitleDialogLoading.setText(title);
         dialog.show();
     }
+
+    public static Dialog newInstance(Context context) {
+        Dialog dialog = new Dialog(context);
+        dialog.setContentView(R.layout.dialog_loading);
+        dialog.setCancelable(false);
+        return dialog;
+    }
 }
