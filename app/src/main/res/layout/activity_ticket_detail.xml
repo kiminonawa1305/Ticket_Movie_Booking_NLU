@@ -20,7 +20,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal" >
+            android:orientation="horizontal">
 
             <androidx.cardview.widget.CardView
                 android:layout_width="wrap_content"
@@ -51,11 +51,11 @@
             android:id="@+id/textview_movie_name_td"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:paddingLeft="10dp"
             android:text="Movie's name"
             android:textColor="@color/white"
             android:textSize="20dp"
-            android:layout_marginTop="10dp"
             android:textStyle="bold" />
 
         <androidx.cardview.widget.CardView
@@ -73,133 +73,133 @@
 
         <TextView
             android:layout_width="wrap_content"
-            android:text="Date and Time"
-            android:paddingTop="10dp"
-            android:textColor="@color/white"
+            android:layout_height="wrap_content"
             android:paddingLeft="10dp"
-            android:textStyle="bold"
-            android:layout_height="wrap_content"/>
+            android:paddingTop="10dp"
+            android:text="Date and Time"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/textview_date_and_time"
             android:layout_width="wrap_content"
-            android:text="dd/MM/yyyy - HH:mm"
-            android:textSize="20dp"
-            android:textStyle="bold"
-            android:textColor="@color/design_default_color_primary"
+            android:layout_height="wrap_content"
             android:paddingLeft="10dp"
             android:paddingBottom="10dp"
-            android:layout_height="wrap_content"/>
+            android:text="dd/MM/yyyy - HH:mm"
+            android:textColor="@color/design_default_color_primary"
+            android:textSize="20dp"
+            android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingTop="10dp"
             android:paddingLeft="10dp"
-            android:layout_height="wrap_content">
+            android:paddingTop="10dp">
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="left"
-                android:layout_height="wrap_content"
                 android:orientation="vertical">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:text="Screen"
+                    android:textAlignment="center"
                     android:textColor="@color/white"
-                    android:textStyle="bold"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"/>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/textview_screen"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:text="01"
-                    android:textSize="20dp"
-                    android:textStyle="bold"
-                    android:layout_weight="1"
+                    android:textAlignment="center"
                     android:textColor="@color/design_default_color_primary"
-                    android:layout_height="wrap_content"/>
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="left"
-                android:layout_height="wrap_content"
                 android:orientation="vertical">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:text="Row"
+                    android:textAlignment="center"
                     android:textColor="@color/white"
-                    android:textStyle="bold"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"/>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/textview_row"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:text="01"
-                    android:textSize="20dp"
-                    android:textStyle="bold"
-                    android:layout_weight="1"
+                    android:textAlignment="center"
                     android:textColor="@color/design_default_color_primary"
-                    android:layout_height="wrap_content"/>
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="left"
-                android:layout_height="wrap_content"
                 android:orientation="vertical">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:text="Seat"
+                    android:textAlignment="center"
                     android:textColor="@color/white"
-                    android:textStyle="bold"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"/>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/textview_seat"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:text="01"
-                    android:textSize="20dp"
-                    android:textStyle="bold"
-                    android:layout_weight="1"
+                    android:textAlignment="center"
                     android:textColor="@color/design_default_color_primary"
-                    android:layout_height="wrap_content"/>
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="left"
-                android:layout_height="wrap_content"
                 android:orientation="vertical">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:text="Duration"
+                    android:textAlignment="center"
                     android:textColor="@color/white"
-                    android:textStyle="bold"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"/>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/textview_duration"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:text="01"
-                    android:textSize="20dp"
-                    android:textStyle="bold"
-                    android:layout_weight="1"
+                    android:textAlignment="center"
                     android:textColor="@color/design_default_color_primary"
-                    android:layout_height="wrap_content"/>
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
@@ -207,52 +207,53 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="20dp"
-        android:paddingVertical="40dp"
         android:background="@drawable/bg_ticket_detail_bottom"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="40dp">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingLeft="10dp"
-            android:layout_height="wrap_content">
+            android:paddingLeft="10dp">
 
             <androidx.cardview.widget.CardView
                 android:layout_width="140dp"
-                app:cardCornerRadius="20dp"
-                android:layout_height="140dp">
+                android:layout_height="140dp"
+                app:cardCornerRadius="20dp">
 
                 <ImageView
                     android:id="@+id/imageview_QR"
                     android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/logo"
-                    android:layout_height="wrap_content"/>
+                    android:src="@drawable/logo" />
             </androidx.cardview.widget.CardView>
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingTop="40dp"
-                android:paddingLeft="10dp"
-                android:layout_height="wrap_content">
+                android:layout_gravity="center_vertical"
+                android:paddingLeft="10dp">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:text="Ticket ID:"
-                    android:textStyle="bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Ticket ID"
+                    android:textAlignment="center"
                     android:textColor="@color/white"
-                    android:layout_height="wrap_content"/>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/textview_ticket_id"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:text="xxxxxxxxxx"
-                    android:textStyle="bold"
-                    android:textSize="20dp"
                     android:textColor="@color/design_default_color_primary"
-                    android:layout_height="wrap_content"/>
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

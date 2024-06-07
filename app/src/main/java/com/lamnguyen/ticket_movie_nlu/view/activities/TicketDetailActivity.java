@@ -1,5 +1,6 @@
 package com.lamnguyen.ticket_movie_nlu.view.activities;
 
+import android.app.Dialog;
 import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.os.Bundle;
@@ -30,6 +31,7 @@ import com.google.zxing.pdf417.encoder.BarcodeMatrix;
 import com.lamnguyen.ticket_movie_nlu.R;
 import com.lamnguyen.ticket_movie_nlu.response.TicketDetailResponse;
 import com.lamnguyen.ticket_movie_nlu.utils.CallAPI;
+import com.lamnguyen.ticket_movie_nlu.utils.DialogLoading;
 
 import org.json.JSONException;
 
@@ -53,7 +55,8 @@ public class TicketDetailActivity extends AppCompatActivity {
     private TextView tv_seat;
     private TextView tv_duration;
     private ImageView imgv_poster;
-    private  static final String TAG = "TicketDetailActivity";
+    private Dialog dialog;
+    private static final String TAG = "TicketDetailActivity";
 
     private String url = "/ticket-detail/api/009a4ccd-89a2-4bd1-a0a4-f2b5dd148961";
 
@@ -74,13 +77,15 @@ public class TicketDetailActivity extends AppCompatActivity {
         tv_duration = findViewById(R.id.textview_duration);
         imgv_poster = findViewById(R.id.imageview_movie_td);
 
+        dialog = DialogLoading.newInstance(this);
+
         getTicketDetail();
-        createQR();
     }
 
     private void getTicketDetail() {
-        Log.i(TAG, "getTicketDetail: CallAPI.URL_WEB_SERVICE + url");
-        CallAPI.callJsonObjectRequest(this,CallAPI.URL_WEB_SERVICE + url, "", Request.Method.GET, response -> {
+        Log.i(TAG, "getTicketDetail: " + CallAPI.URL_WEB_SERVICE + url);
+        DialogLoading.showDialogLoading(dialog, getString(R.string.loading));
+        CallAPI.callJsonObjectRequest(this, CallAPI.URL_WEB_SERVICE + url, "", Request.Method.GET, response -> {
             try {
                 TicketDetailResponse ticketDetail = new Gson().fromJson(response.getString("data"), TicketDetailResponse.class);
 
@@ -100,17 +105,22 @@ public class TicketDetailActivity extends AppCompatActivity {
 
                 // Load poster
                 Glide.with(this).load(ticketDetail.getPoster()).into(imgv_poster);
+
+                createQR(ticketDetail.getId());
             } catch (JSONException e) {
                 Log.e(TAG, "getTicketDetail: ", e);
             }
+            dialog.dismiss();
         }, error -> {
+            dialog.dismiss();
             Log.e(TAG, "getTicketDetail: ", error);
+            createQR("xxxxxxxx");
         });
 
 
     }
 
-    private void createQR(){
+    private void createQR(String ticket_id) {
         // Tạo QR từ chuỗi text ticket id
         // Lấy WindowManager và Display:
         WindowManager manager = (WindowManager) getSystemService(WINDOW_SERVICE);
