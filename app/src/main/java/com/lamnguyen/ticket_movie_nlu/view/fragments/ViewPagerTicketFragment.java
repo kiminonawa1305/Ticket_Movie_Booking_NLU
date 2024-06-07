@@ -18,7 +18,7 @@ import com.lamnguyen.ticket_movie_nlu.R;
 import com.lamnguyen.ticket_movie_nlu.adapters.TicketAdapter;
 import com.lamnguyen.ticket_movie_nlu.api.TicketApi;
 import com.lamnguyen.ticket_movie_nlu.dto.TicketDTO;
-import com.lamnguyen.ticket_movie_nlu.service.Ticket.TicketService;
+import com.lamnguyen.ticket_movie_nlu.service.ticket.TicketService;
 import com.lamnguyen.ticket_movie_nlu.utils.CallAPI;
 import com.lamnguyen.ticket_movie_nlu.utils.DialogLoading;
 

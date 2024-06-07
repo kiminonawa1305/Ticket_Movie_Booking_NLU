@@ -1,4 +1,4 @@
-package com.lamnguyen.ticket_movie_nlu.service.Movie;
+package com.lamnguyen.ticket_movie_nlu.service.movie;
 
 import android.content.Context;
 

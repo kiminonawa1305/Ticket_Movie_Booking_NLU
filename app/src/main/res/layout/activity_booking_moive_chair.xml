@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.activities.BookingMovieChairActivity">
+    tools:context=".view.activities.BookingChairActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -54,7 +54,7 @@
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/fragment_container"
-            android:name="com.lamnguyen.ticket_movie_nlu.view.fragments.ChooseChairFragment"
+            android:name="com.lamnguyen.ticket_movie_nlu.view.fragments.BookingChairFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp" />
