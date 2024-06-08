@@ -3,7 +3,6 @@ package com.lamnguyen.ticket_movie_nlu.view.fragments;
 
 import android.app.Dialog;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,7 +62,7 @@ public class ViewPagerTicketFragment extends Fragment {
     public void onResume() {
         super.onResume();
         Bundle bundle = getArguments();
-        boolean avail = bundle.getBoolean("avail");
+        boolean avail = bundle.getBoolean(getString(R.string.avail_ticket));
         loadTicket(avail);
     }
 

@@ -6,14 +6,12 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
 import com.google.firebase.auth.FirebaseAuth;
 import com.lamnguyen.ticket_movie_nlu.R;
-import com.lamnguyen.ticket_movie_nlu.utils.SharedPreferencesUtils;
 import com.lamnguyen.ticket_movie_nlu.view.fragments.FavouriteMovieFragment;
 import com.lamnguyen.ticket_movie_nlu.view.fragments.GoogleMapFragment;
 import com.lamnguyen.ticket_movie_nlu.view.fragments.MovieFragment;
@@ -22,10 +20,20 @@ import com.lamnguyen.ticket_movie_nlu.view.fragments.TicketFragment;
 
 
 public class MainActivity extends AppCompatActivity {
-
     private MeowBottomNavigation bottomNavigation;
     private FragmentManager fragmentManager;
     private Fragment frmDisplayMain;
+    private static final String TAG = "MainActivity";
+    public static final int FRAGMENT_MOVIE = 1,
+            FRAGMENT_TICKET = 2,
+            FRAGMENT_FAVOURITE = 3,
+            FRAGMENT_MAP = 4,
+            FRAGMENT_PROFILE = 5;
+    private static final String FRAGMENT_ID = "fragment_id";
+
+    public static void saveFragmentId(Intent intent, int fragmentId) {
+        intent.putExtra(FRAGMENT_ID, fragmentId);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,23 +45,20 @@ public class MainActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         if (intent != null) {
-            int fragmentId = intent.getIntExtra("fragment_id", 1);
-            if (fragmentId == 5) {
-                changeFragment(fragmentId);
-            }
+            int fragmentId = intent.getIntExtra(FRAGMENT_ID, -1);
+            changeFragment(fragmentId);
         }
     }
 
     private void init() {
         bottomNavigation = findViewById(R.id.meow_bottom_navigation);
-        bottomNavigation.add(new MeowBottomNavigation.Model(1, R.drawable.ic_movie));
-        bottomNavigation.add(new MeowBottomNavigation.Model(2, R.drawable.ic_ticket));
-        bottomNavigation.add(new MeowBottomNavigation.Model(3, R.drawable.ic_love));
-        bottomNavigation.add(new MeowBottomNavigation.Model(4, R.drawable.ic_map_pin));
-        bottomNavigation.add(new MeowBottomNavigation.Model(5, R.drawable.ic_profile));
+        bottomNavigation.add(new MeowBottomNavigation.Model(FRAGMENT_MOVIE, R.drawable.ic_movie));
+        bottomNavigation.add(new MeowBottomNavigation.Model(FRAGMENT_TICKET, R.drawable.ic_ticket));
+        bottomNavigation.add(new MeowBottomNavigation.Model(FRAGMENT_FAVOURITE, R.drawable.ic_love));
+        bottomNavigation.add(new MeowBottomNavigation.Model(FRAGMENT_MAP, R.drawable.ic_map_pin));
+        bottomNavigation.add(new MeowBottomNavigation.Model(FRAGMENT_PROFILE, R.drawable.ic_profile));
         fragmentManager = getSupportFragmentManager();
 
-        getIntent().getBundleExtra("key");
         frmDisplayMain = fragmentManager.findFragmentById(R.id.fragment_display_main);
     }
 
@@ -69,11 +74,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onShowItem(MeowBottomNavigation.Model item) {
                 switch (item.getId()) {
-                    case 1:
-                    case 2:
-                    case 3:
-                    case 4:
-                    case 5: {
+                    case FRAGMENT_MOVIE:
+                    case FRAGMENT_TICKET:
+                    case FRAGMENT_FAVOURITE:
+                    case FRAGMENT_MAP:
+                    case FRAGMENT_PROFILE: {
                         break;
                     }
                 }
@@ -84,11 +89,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onReselectItem(MeowBottomNavigation.Model item) {
                 switch (item.getId()) {
-                    case 1:
-                    case 2:
-                    case 3:
-                    case 4:
-                    case 5: {
+                    case FRAGMENT_MOVIE:
+                    case FRAGMENT_TICKET:
+                    case FRAGMENT_FAVOURITE:
+                    case FRAGMENT_MAP:
+                    case FRAGMENT_PROFILE: {
                         break;
                     }
                 }
@@ -96,34 +101,38 @@ public class MainActivity extends AppCompatActivity {
         });
 
         bottomNavigation.show(1, true);
-
-
     }
 
     private void changeFragment(int id) {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         switch (id) {
-            case 1: {
+            case FRAGMENT_MOVIE: {
                 transaction.replace(R.id.fragment_display_main, MovieFragment.class, null);
                 break;
             }
-            case 2: {
-                transaction.replace(R.id.fragment_display_main, TicketFragment.class, null);
+            case FRAGMENT_TICKET: {
+                boolean avail = getIntent().getBooleanExtra(getString(R.string.avail_ticket), true);
+                Bundle args = new Bundle();
+                args.putBoolean(getString(R.string.avail_ticket), avail);
+                transaction.replace(R.id.fragment_display_main, TicketFragment.class, args);
                 break;
             }
-            case 3: {
+            case FRAGMENT_FAVOURITE: {
                 transaction.replace(R.id.fragment_display_main, FavouriteMovieFragment.class, null);
                 break;
             }
-            case 4: {
+            case FRAGMENT_MAP: {
                 transaction.replace(R.id.fragment_display_main, GoogleMapFragment.class, null);
                 break;
             }
-            case 5: {
+            case FRAGMENT_PROFILE: {
                 transaction.replace(R.id.fragment_display_main, ProfileFragment.class, null);
                 break;
             }
+            default:
+                break;
         }
+        if (id >= 1 && id <= 5) bottomNavigation.show(id, true);
         transaction.commit();
     }
 

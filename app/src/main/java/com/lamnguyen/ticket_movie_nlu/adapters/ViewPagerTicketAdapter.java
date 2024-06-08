@@ -10,8 +10,11 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import com.lamnguyen.ticket_movie_nlu.view.fragments.ViewPagerTicketFragment;
 
 public class ViewPagerTicketAdapter extends FragmentStateAdapter {
-    public ViewPagerTicketAdapter(@NonNull FragmentActivity fragmentActivity) {
+    private boolean avail;
+
+    public ViewPagerTicketAdapter(@NonNull FragmentActivity fragmentActivity, boolean avail) {
         super(fragmentActivity);
+        this.avail = avail;
     }
 
     @NonNull
@@ -21,7 +24,7 @@ public class ViewPagerTicketAdapter extends FragmentStateAdapter {
         Fragment fragment;
         fragment = new ViewPagerTicketFragment();
         fragment.setArguments(args);
-        switch (position){
+        switch (position) {
             case 0:
                 args.putBoolean("avail", true);
                 break;
@@ -29,11 +32,6 @@ public class ViewPagerTicketAdapter extends FragmentStateAdapter {
                 args.putBoolean("avail", false);
                 break;
         }
-//        Fragment fragment;
-//        Bundle args = new Bundle();
-//        // The object is just an integer.
-//        args.putBoolean("avail", position != 1);
-//        fragment = new ViewPagerTicketFragment();
         fragment.setArguments(args);
         return fragment;
     }
