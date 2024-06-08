@@ -2,7 +2,6 @@ package com.lamnguyen.ticket_movie_nlu.view.fragments;
 
 import android.app.Dialog;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +14,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
 import com.lamnguyen.ticket_movie_nlu.utils.DialogLoading;
 import com.lamnguyen.ticket_movie_nlu.service.auth.sign_up.impl.SignUpServiceImpl;
 import com.lamnguyen.ticket_movie_nlu.service.user.UserService;
@@ -65,7 +66,6 @@ public class SignUpFragment extends Fragment {
     public void onStart() {
         super.onStart();
         Bundle bundle = this.getArguments();
-        Log.d(SignUpFragment.class.getName(), "onStart: " + bundle);
         if (bundle == null) return;
 
         email = bundle.getString(EMAIL_ARG);
@@ -116,51 +116,67 @@ public class SignUpFragment extends Fragment {
     }
 
     private void signUp() {
+        if (!validation()) return;
+
+        DialogLoading.showDialogLoading(dialog, getString(R.string.sign_up));
+        SignUpServiceImpl signUpService = SignUpServiceImpl.getInstance();
+        signUpService.signUp(getUser(), new ThreadCallBackSign() {
+            @Override
+            public void isSuccess() {
+                dialog.dismiss();
+                signUpSuccess();
+                Toast.makeText(SignUpFragment.this.getContext(), getString(R.string.request_verify_account), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void isFail() {
+                dialog.dismiss();
+                Toast.makeText(SignUpFragment.this.getContext(), getString(R.string.email_is_exist), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void signUpSuccess() {
+        SignUpServiceImpl signUpService = SignUpServiceImpl.getInstance();
+        signUpService.sendMailVerify(getUser(), callBack);
+        changeFragmentSignIn();
+        FirebaseAuth.getInstance().signOut();
+    }
+
+    private boolean validation() {
         UserService userService = UserServiceImpl.getInstance();
         User user = getUser();
         rePassword = edtRePassword.getText().toString();
         if (user.getEmail().isEmpty()) {
             edtEmail.setError(getString(R.string.request_email));
-            return;
+            return false;
         }
 
         if (!Pattern.matches(SignActivity.EMAIL_PATTERN, user.getEmail())) {
             edtEmail.setError(getString(R.string.error_validate_email));
-            return;
+            return false;
         }
 
         int resultMatchPassword = userService.matchPassword(getUser().getPassword(), rePassword);
         switch (resultMatchPassword) {
             case UserService.EMPTY_PASSWORD: {
                 edtPassword.setError(getString(R.string.request_password));
-                break;
+                return false;
             }
             case UserService.EMPTY_RE_PASSWORD: {
                 edtPassword.setError(getString(R.string.request_re_password));
-                break;
+                return false;
             }
             case UserService.NOT_MATCH: {
                 edtPassword.setError(getString(R.string.not_match_password));
                 edtRePassword.setError(getString(R.string.not_match_password));
-                break;
+                return false;
             }
             case UserService.MATCH: {
-                DialogLoading.showDialogLoading(dialog, getString(R.string.sign_up));
-                SignUpServiceImpl signUpService = SignUpServiceImpl.getInstance();
-                signUpService.signUp(getUser(), new ThreadCallBackSign() {
-                    @Override
-                    public void isSuccess() {
-                        dialog.dismiss();
-//                        verifyHandle();
-                        Toast.makeText(SignUpFragment.this.getContext(), getString(R.string.sign_up_success), Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void isFail() {
-                        dialog.dismiss();
-                        Toast.makeText(SignUpFragment.this.getContext(), getString(R.string.email_is_exist), Toast.LENGTH_SHORT).show();
-                    }
-                });
+                return true;
+            }
+            default: {
+                return false;
             }
         }
     }
@@ -176,12 +192,6 @@ public class SignUpFragment extends Fragment {
     }
 
 
-    private void verifyHandle() {
-        SignUpServiceImpl signUpService = SignUpServiceImpl.getInstance();
-
-        signUpService.verify(getUser(), callBack);
-    }
-
     private User getUser() {
         return initUser();
     }
@@ -190,9 +200,10 @@ public class SignUpFragment extends Fragment {
         if (user != null) return user;
         email = edtEmail.getText().toString();
         password = edtPassword.getText().toString();
-        user = new User();
-        user.setEmail(email);
-        user.setPassword(password);
+        user = User.builder()
+                .email(email)
+                .password(password)
+                .build();
         return user;
     }
 }

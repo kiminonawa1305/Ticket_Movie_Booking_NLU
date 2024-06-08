@@ -6,5 +6,5 @@ import com.lamnguyen.ticket_movie_nlu.bean.User;
 import com.lamnguyen.ticket_movie_nlu.service.auth.ThreadCallBackSign;
 
 public interface SignUpVerify {
-    void verify(User user, @NonNull ThreadCallBackSign... callBack);
+    void sendMailVerify(User user, @NonNull ThreadCallBackSign... callBack);
 }

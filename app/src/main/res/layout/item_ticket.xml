@@ -1,114 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:padding="20dp"
-    android:paddingBottom="0dp">
+    android:layout_width="match_parent"
+    app:cardBackgroundColor="@android:color/transparent"
+    app:cardElevation="0dp">
 
-    <FrameLayout
-        android:id="@+id/frame_layout_left_ticket"
-        android:layout_width="@dimen/height_movie_ticket_item"
-        android:layout_height="@dimen/height_movie_ticket_item"
-        android:background="@drawable/bg_left_ticket">
-
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/shapeable_image_view_movie_ticket_item"
-            android:layout_width="@dimen/size_image_movie_ticket_item"
-            android:layout_height="@dimen/size_image_movie_ticket_item"
-            android:layout_gravity="center"
-            android:scaleType="centerCrop"
-            android:src="@drawable/image_movie_demo"
-            app:shapeAppearanceOverlay="@style/image_movie_ticket_item" />
-    </FrameLayout>
-
-    <LinearLayout
-        android:id="@+id/linear_layout_right_ticket"
+    <RelativeLayout
+        android:id="@+id/relative_layout_card_ticket"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/height_movie_ticket_item"
-        android:layout_marginStart="0dp"
-        android:layout_toEndOf="@+id/frame_layout_left_ticket"
-        android:background="@drawable/bg_right_ticket"
-        android:orientation="vertical"
-        android:padding="10dp">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginHorizontal="20dp"
+        android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/text_view_movie_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:singleLine="true"
-            android:text="Phim đánh lộn ầm ầm, chíu chíu, úm ba la xì bùa"
-            android:textColor="@color/black"
-            android:textSize="17dp"
-            android:textStyle="bold" />
+        <FrameLayout
+            android:id="@+id/frame_layout_left_ticket"
+            android:layout_width="@dimen/height_movie_ticket_item"
+            android:layout_height="@dimen/height_movie_ticket_item"
+            android:background="@drawable/bg_left_ticket">
 
-        <TextView
-            android:id="@+id/text_view_cinema_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Cinestar Bình Dương"
-            android:textColor="@color/black" />
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/shapeable_image_view_movie_ticket_item"
+                android:layout_width="@dimen/size_image_movie_ticket_item"
+                android:layout_height="@dimen/size_image_movie_ticket_item"
+                android:layout_gravity="center"
+                android:scaleType="centerCrop"
+                android:src="@drawable/image_movie_demo"
+                app:shapeAppearanceOverlay="@style/image_movie_ticket_item" />
+        </FrameLayout>
 
         <LinearLayout
+            android:id="@+id/linear_layout_right_ticket"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="@dimen/height_movie_ticket_item"
+            android:layout_marginStart="0dp"
+            android:layout_toEndOf="@+id/frame_layout_left_ticket"
+            android:background="@drawable/bg_right_ticket"
+            android:orientation="vertical"
+            android:padding="10dp">
 
             <TextView
-                android:id="@+id/text_view_room_name"
-                android:layout_width="wrap_content"
+                android:id="@+id/text_view_movie_name"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Phòng số 2"
-                android:textColor="@color/black" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="5dp"
-                android:text="•"
+                android:singleLine="true"
+                android:text="Phim đánh lộn ầm ầm, chíu chíu, úm ba la xì bùa"
                 android:textColor="@color/black"
-                android:gravity="center"
-                android:textAlignment="center"
-                android:textSize="12dp" />
-
-            <TextView
-                android:id="@+id/text_view_chair_number"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Ghế 12B"
-                android:textColor="@color/black" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/text_view_ticket_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="12:30"
-                android:textColor="@color/black"
+                android:textSize="17dp"
                 android:textStyle="bold" />
 
             <TextView
-                android:layout_width="wrap_content"
+                android:id="@+id/text_view_cinema_name"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="5dp"
-                android:textAlignment="center"
-                android:gravity="center"
-                android:text="•"
-                android:textColor="@color/black"
-                android:textSize="12dp" />
-
-            <TextView
-                android:id="@+id/text_view_ticket_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Thứ 3, 13/05"
+                android:text="Cinestar Bình Dương"
                 android:textColor="@color/black" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/text_view_room_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Phòng số 2"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="5dp"
+                    android:text="•"
+                    android:textColor="@color/black"
+                    android:gravity="center"
+                    android:textAlignment="center"
+                    android:textSize="12dp" />
+
+                <TextView
+                    android:id="@+id/text_view_chair_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ghế 12B"
+                    android:textColor="@color/black" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/text_view_ticket_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="12:30"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="5dp"
+                    android:textAlignment="center"
+                    android:gravity="center"
+                    android:text="•"
+                    android:textColor="@color/black"
+                    android:textSize="12dp" />
+
+                <TextView
+                    android:id="@+id/text_view_ticket_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Thứ 3, 13/05"
+                    android:textColor="@color/black" />
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
-</RelativeLayout>
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

@@ -33,6 +33,7 @@ import com.lamnguyen.ticket_movie_nlu.service.user.UserService;
 import com.lamnguyen.ticket_movie_nlu.service.user.impl.UserServiceImpl;
 import com.lamnguyen.ticket_movie_nlu.service.auth.change_password.ChangePasswordService;
 import com.lamnguyen.ticket_movie_nlu.service.auth.change_password.impl.ChangePasswordServiceImpl;
+import com.lamnguyen.ticket_movie_nlu.view.activities.IntroductionActivity;
 import com.lamnguyen.ticket_movie_nlu.view.activities.SignActivity;
 
 import java.io.IOException;
@@ -107,6 +108,16 @@ public class ProfileFragment extends Fragment {
         imgvBackgroundUser.setOnClickListener(view -> {
             chooseBackground.launch(intent_pick_image);
         });
+
+        btnInformation.setOnClickListener(view -> {
+            eventShowIntroduction();
+        });
+    }
+
+    private void eventShowIntroduction(){
+        Intent intent = new Intent(getActivity(), IntroductionActivity.class);
+        this.startActivity(intent);
+        getActivity().finish();
     }
 
     private void eventSignOut() {

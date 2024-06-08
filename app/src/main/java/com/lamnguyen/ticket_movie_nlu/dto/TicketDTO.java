@@ -10,5 +10,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TicketDTO {
-    private String id, poster, nameRoom, nameMovie, nameCinema, chairNumber, startShowtime;
+    private String id, poster, nameRoom, nameMovie, nameCinema, nameChair, startShowtime;
 }
