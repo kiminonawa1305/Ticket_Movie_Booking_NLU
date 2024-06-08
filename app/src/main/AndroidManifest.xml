@@ -30,6 +30,11 @@
         android:theme="@style/Theme.MyApplication"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <activity
+            android:name=".view.activities.PaymentSuccessActivity"
+            android:exported="false" >
+
+        </activity>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -69,8 +74,14 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activities.PaymentActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
+            android:exported="true"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".view.activities.SignActivity"
             android:exported="false"
@@ -85,13 +96,13 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activities.GreetingActivity"
-            android:exported="true"
+            android:exported="false"
             android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
         </activity>
     </application>
 

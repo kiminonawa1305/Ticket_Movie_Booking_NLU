@@ -97,6 +97,11 @@
     <string name="selected_chair">Ghế đã chọn:</string>
     <string name="total_chair">Tổng ghế:</string>
 
+    <string name="time">Thời gian</string>
+    <string name="back_to_home">Về trang chủ</string>
+    <string name="pay_success">THANH TOÁN THÀNH CÔNG</string>
+    <string name="code_pay">Mã thanh toán</string>
+
     <string name="avail_ticket">avail</string>
     <string name="info_ticket">Thông tin vé</string>
 </resources>
