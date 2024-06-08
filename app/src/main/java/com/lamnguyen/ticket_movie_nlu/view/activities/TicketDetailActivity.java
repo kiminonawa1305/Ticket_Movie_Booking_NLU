@@ -31,6 +31,7 @@ import com.google.zxing.pdf417.encoder.BarcodeMatrix;
 import com.lamnguyen.ticket_movie_nlu.R;
 import com.lamnguyen.ticket_movie_nlu.response.TicketDetailResponse;
 import com.lamnguyen.ticket_movie_nlu.utils.CallAPI;
+import com.lamnguyen.ticket_movie_nlu.utils.DateTimeFormat;
 import com.lamnguyen.ticket_movie_nlu.utils.DialogLoading;
 
 import org.json.JSONException;
@@ -97,7 +98,7 @@ public class TicketDetailActivity extends AppCompatActivity {
                 tv_ticket_id.setText(ticketDetail.getId());
                 tv_theater_name.setText(ticketDetail.getNameCinema());
                 tv_movie_name.setText(ticketDetail.getNameMovie());
-                tv_date_and_time.setText(dateTime.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")));
+                tv_date_and_time.setText(DateTimeFormat.getDateTime(dateTime));
                 tv_screen_name.setText(room);
                 tv_seat.setText(seat);
                 tv_row.setText(row);

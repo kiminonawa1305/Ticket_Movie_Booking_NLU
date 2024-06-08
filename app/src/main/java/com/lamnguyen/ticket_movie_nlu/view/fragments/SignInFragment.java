@@ -16,7 +16,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.lamnguyen.ticket_movie_nlu.bean.User;
+import com.lamnguyen.ticket_movie_nlu.service.user.UserService;
+import com.lamnguyen.ticket_movie_nlu.service.user.impl.UserServiceImpl;
 import com.lamnguyen.ticket_movie_nlu.utils.DialogLoading;
 import com.lamnguyen.ticket_movie_nlu.service.auth.check_mail.CheckEmailService;
 import com.lamnguyen.ticket_movie_nlu.service.auth.check_mail.impl.CheckEmailServiceImpl;
@@ -42,9 +46,13 @@ public class SignInFragment extends Fragment {
     private Button btnSignIn;
     private Dialog dialog;
 
+    private UserService userService;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        userService = UserServiceImpl.getInstance();
     }
 
 
@@ -78,7 +86,6 @@ public class SignInFragment extends Fragment {
             changeFragmentForgetPassword();
         });
         this.btnSignIn.setOnClickListener(v -> {
-//            checkEmailHandler();
             signInHandler();
         });
     }
@@ -122,19 +129,43 @@ public class SignInFragment extends Fragment {
         if (!isValidate(email, password)) return;
         DialogLoading.showDialogLoading(dialog, getString(R.string.sign_in));
         SignInService signInService = SignInServiceImpl.getInstance();
-        signInService.signIn(email, password, new ThreadCallBackSign() {
-            @Override
-            public void isSuccess() {
-                dialog.dismiss();
-                signInSuccess();
-            }
+        signInService.signIn(email, password,
+                new ThreadCallBackSign() {
+                    @Override
+                    public void isSuccess() {
+                        dialog.dismiss();
+                        signInSuccess();
+                    }
 
-            @Override
-            public void isFail() {
-                dialog.dismiss();
-                Toast.makeText(SignInFragment.this.getContext(), getString(R.string.sign_in_fail), Toast.LENGTH_SHORT).show();
-            }
-        });
+                    @Override
+                    public void isFail() {
+                        dialog.dismiss();
+                        Toast.makeText(SignInFragment.this.getContext(), getString(R.string.sign_in_fail), Toast.LENGTH_SHORT).show();
+                    }
+                },
+                new ThreadCallBackSign() {
+                    @Override
+                    public void isSuccess() {
+                    }
+
+                    @Override
+                    public void isFail() {
+                        dialog.dismiss();
+                        Toast.makeText(SignInFragment.this.getContext(), getString(R.string.email_not_register), Toast.LENGTH_SHORT).show();
+                    }
+                },
+                new ThreadCallBackSign() {
+                    @Override
+                    public void isSuccess() {
+                    }
+
+                    @Override
+                    public void isFail() {
+                        dialog.dismiss();
+                        Toast.makeText(SignInFragment.this.getContext(), "Yêu cầu đã bị khóa!\nVui lòng nhấn quên mật khẩu để thiết lập lại mật khẩu!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+        );
     }
 
     private void checkEmailHandler() {
@@ -149,16 +180,20 @@ public class SignInFragment extends Fragment {
             @Override
             public void isFail() {
                 Toast.makeText(SignInFragment.this.getContext(), getString(R.string.email_not_register), Toast.LENGTH_SHORT).show();
+                reSendVerify();
             }
         });
     }
 
-    private void reSendVerify(String email, String password) {
-        User user = new User();
-        user.setEmail(email);
-        user.setPassword(password);
+    private void reSendVerify() {
+        String email = this.edtEmail.getText().toString();
+        String password = this.edtPassword.getText().toString();
+        User user = User.builder()
+                .email(email)
+                .password(password)
+                .build();
 
-        SignUpServiceImpl.getInstance().verify(user, new ThreadCallBackSign() {
+        SignUpServiceImpl.getInstance().sendMailVerify(user, new ThreadCallBackSign() {
             @Override
             public void isSuccess() {
                 dialog.dismiss();
@@ -168,16 +203,25 @@ public class SignInFragment extends Fragment {
             @Override
             public void isFail() {
                 dialog.dismiss();
+                FirebaseAuth.getInstance().signOut();
                 Toast.makeText(SignInFragment.this.getContext(), getString(R.string.send_mail_verify_fail), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     private void signInSuccess() {
-        Toast.makeText(this.getContext(), getString(R.string.sign_in_success), Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(this.getContext(), MainActivity.class);
-        this.getActivity().startActivity(intent);
-        this.getActivity().finish();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (!user.isEmailVerified()) {
+            reSendVerify();
+            return;
+        }
+
+        userService.checkRegister(this.getContext(), user.getUid(), () -> {
+            Toast.makeText(this.getContext(), getString(R.string.sign_in_success), Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this.getContext(), MainActivity.class);
+            this.getActivity().startActivity(intent);
+            this.getActivity().finish();
+        });
     }
 
     private boolean isValidate(String email, String password) {

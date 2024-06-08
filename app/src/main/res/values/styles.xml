@@ -82,8 +82,11 @@
     <style name="tab_layout">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:background">@drawable/bg_tab_layout</item>
-        <item name="tabTextColor">@color/text_color_hint</item>
-        <item name="tabSelectedTextColor">@color/purple_system</item>
+        <item name="tabTextColor">@color/tab_text_color</item>
+        <item name="tabBackground">@drawable/tab_background</item>
+        <item name="tabIndicator">@null</item>
+        <item name="tabMode">fixed</item>
+        <item name="tabGravity">fill</item>
+
     </style>
 </resources>

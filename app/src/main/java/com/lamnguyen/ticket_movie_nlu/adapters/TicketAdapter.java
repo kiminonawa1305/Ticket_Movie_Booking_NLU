@@ -1,8 +1,15 @@
 package com.lamnguyen.ticket_movie_nlu.adapters;
 
+import android.annotation.SuppressLint;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -12,15 +19,19 @@ import com.bumptech.glide.Glide;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.lamnguyen.ticket_movie_nlu.R;
 import com.lamnguyen.ticket_movie_nlu.dto.TicketDTO;
+import com.lamnguyen.ticket_movie_nlu.utils.DateTimeFormat;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class TicketAdapter extends RecyclerView.Adapter<TicketAdapter.TicketItemViewHolder> {
     List<TicketDTO> tickets;
+    static boolean avail;
 
-    public TicketAdapter(List<TicketDTO> tickets) {
+    public TicketAdapter(List<TicketDTO> tickets, boolean avail) {
         this.tickets = tickets;
+        TicketAdapter.avail = avail;
     }
 
     @NonNull
@@ -35,13 +46,12 @@ public class TicketAdapter extends RecyclerView.Adapter<TicketAdapter.TicketItem
     public void onBindViewHolder(@NonNull TicketItemViewHolder holder, int position) {
         TicketDTO ticket = tickets.get(position);
         LocalDateTime startShowtime = LocalDateTime.parse(ticket.getStartShowtime());
-        Log.i("TicketAdapter", "onBindViewHolder: " + ticket.toString());
         holder.setMovieName(ticket.getNameMovie());
         holder.setCinemaName(ticket.getNameCinema());
         holder.setRoomName(ticket.getNameRoom());
-        holder.setChairNumber(ticket.getChairNumber());
-        holder.setTime(startShowtime.toLocalTime().toString());
-        holder.setDate(startShowtime.toLocalDate().toString());
+        holder.setNameChair(ticket.getNameChair());
+        holder.setTime(DateTimeFormat.getTime(startShowtime));
+        holder.setDate(DateTimeFormat.getDate(startShowtime));
         holder.setShibMovieImage(ticket.getPoster());
     }
 
@@ -53,7 +63,11 @@ public class TicketAdapter extends RecyclerView.Adapter<TicketAdapter.TicketItem
     public static class TicketItemViewHolder extends RecyclerView.ViewHolder {
         private TextView tvMovieName, tvCinemaName, tvRoomNumber, tvChairNumber, tvTime, tvDate;
         private ShapeableImageView shibMovieImage;
+        private FrameLayout leftTicketFrameLayout;
+        private LinearLayout rightTicketLinearLayout;
+        private RelativeLayout cardTicketRelativeLayout;
 
+        @SuppressLint("ResourceAsColor")
         public TicketItemViewHolder(@NonNull View itemView) {
             super(itemView);
             tvMovieName = itemView.findViewById(R.id.text_view_movie_name);
@@ -63,8 +77,22 @@ public class TicketAdapter extends RecyclerView.Adapter<TicketAdapter.TicketItem
             tvTime = itemView.findViewById(R.id.text_view_ticket_time);
             tvDate = itemView.findViewById(R.id.text_view_ticket_date);
             shibMovieImage = itemView.findViewById(R.id.shapeable_image_view_movie_ticket_item);
-        }
+            leftTicketFrameLayout = itemView.findViewById(R.id.frame_layout_left_ticket);
+            rightTicketLinearLayout = itemView.findViewById(R.id.linear_layout_right_ticket);
+            cardTicketRelativeLayout = itemView.findViewById(R.id.relative_layout_card_ticket);
 
+            if (!avail) {
+                ColorMatrix colorMatrix = new ColorMatrix();
+                colorMatrix.setSaturation(0);
+                ColorMatrixColorFilter filter = new ColorMatrixColorFilter(colorMatrix);
+                leftTicketFrameLayout.getBackground().setColorFilter(filter);
+                rightTicketLinearLayout.getBackground().setColorFilter(filter);
+                shibMovieImage.setColorFilter(filter);
+                cardTicketRelativeLayout.setEnabled(false);
+                cardTicketRelativeLayout.setClickable(false);
+                cardTicketRelativeLayout.setFocusable(false);
+            }
+        }
 
         public void setMovieName(String movieName) {
             this.tvMovieName.setText(movieName);
@@ -78,8 +106,8 @@ public class TicketAdapter extends RecyclerView.Adapter<TicketAdapter.TicketItem
             this.tvRoomNumber.setText(roomNumber);
         }
 
-        public void setChairNumber(String chairNumber) {
-            this.tvChairNumber.setText(chairNumber);
+        public void setNameChair(String nameChair) {
+            this.tvChairNumber.setText("Ghế " + nameChair);
         }
 
         public void setTime(String time) {

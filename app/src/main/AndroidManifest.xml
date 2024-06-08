@@ -34,9 +34,11 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyD4Y4NgldsQdiJo7I1qHEyIqx11UOeBUz4" />
+        
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
+
         <activity
             android:name=".view.activities.BookingChairActivity"
             android:exported="false"

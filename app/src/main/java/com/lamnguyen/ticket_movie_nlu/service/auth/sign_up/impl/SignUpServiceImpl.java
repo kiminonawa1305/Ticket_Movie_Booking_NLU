@@ -1,15 +1,22 @@
 package com.lamnguyen.ticket_movie_nlu.service.auth.sign_up.impl;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.lamnguyen.ticket_movie_nlu.service.auth.sign_up.SignUpService;
 import com.lamnguyen.ticket_movie_nlu.service.auth.sign_up.SignUpVerify;
 import com.lamnguyen.ticket_movie_nlu.bean.User;
 import com.lamnguyen.ticket_movie_nlu.service.auth.ThreadCallBackSign;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 public class SignUpServiceImpl implements SignUpService, SignUpVerify {
     private static SignUpServiceImpl instance;
+    private final static String TAG = "SignUpServiceImpl";
 
 
     private SignUpServiceImpl() {
@@ -34,8 +41,7 @@ public class SignUpServiceImpl implements SignUpService, SignUpVerify {
         });
     }
 
-    @Override
-    public void verify(User user, @NonNull ThreadCallBackSign... callBack) {
+    public void sendMailVerify(User user, @NonNull ThreadCallBackSign... callBack) {
         FirebaseAuth auth = FirebaseAuth.getInstance();
         auth.signInWithEmailAndPassword(user.getEmail(), user.getPassword());
         if (auth.getCurrentUser() == null) {
@@ -63,5 +69,4 @@ public class SignUpServiceImpl implements SignUpService, SignUpVerify {
             }
         });
     }
-
 }
