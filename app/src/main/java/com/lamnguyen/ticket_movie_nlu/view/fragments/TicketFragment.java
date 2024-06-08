@@ -40,7 +40,13 @@ public class TicketFragment extends Fragment {
         tabLDisplayTicket = view.findViewById(R.id.tab_layout_display_ticket);
         vpDisplayTicket = view.findViewById(R.id.view_pager_display_ticket);
 
-        vpDisplayTicket.setAdapter(new ViewPagerTicketAdapter(this.getActivity()));
+        Bundle args = getArguments();
+        boolean avail = true;
+        if (!args.isEmpty())
+            avail = args.getBoolean(getString(R.string.avail_ticket));
+
+
+        vpDisplayTicket.setAdapter(new ViewPagerTicketAdapter(this.getActivity(), avail));
 
 
         new TabLayoutMediator(tabLDisplayTicket, vpDisplayTicket, (tab, i) -> {
@@ -54,5 +60,7 @@ public class TicketFragment extends Fragment {
                 }
             }
         }).attach();
+
+        vpDisplayTicket.setCurrentItem(avail ? 0 : 1);
     }
 }
