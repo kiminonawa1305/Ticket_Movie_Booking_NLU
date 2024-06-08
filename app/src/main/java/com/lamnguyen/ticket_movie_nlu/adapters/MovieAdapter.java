@@ -1,7 +1,6 @@
 package com.lamnguyen.ticket_movie_nlu.adapters;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,11 +27,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         this.activity = activity;
     }
 
-    public void setMovies(List<MovieDTO> movies) {
-        this.movies = movies;
-        notifyDataSetChanged(); // Cập nhật lại RecyclerView khi dữ liệu thay đổi
-    }
-
     @NonNull
     @Override
     public MovieViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -56,7 +50,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
             intent.putExtra("id", movie.getId());
             this.activity.startActivity(intent);
         });
-
     }
 
     @Override
