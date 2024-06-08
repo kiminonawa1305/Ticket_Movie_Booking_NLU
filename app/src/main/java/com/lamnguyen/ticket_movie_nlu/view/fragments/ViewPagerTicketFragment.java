@@ -51,9 +51,7 @@ public class ViewPagerTicketFragment extends Fragment {
         rclTicket = view.findViewById(R.id.recycler_view_display_ticket);
         rclTicket.setLayoutManager(new LinearLayoutManager(view.getContext(), RecyclerView.VERTICAL, false));
 
-        dialog = new Dialog(getContext());
-        dialog.setContentView(R.layout.dialog_loading);
-        dialog.setCancelable(false);
+        dialog = DialogLoading.newInstance(this.getContext());
     }
 
     @Override

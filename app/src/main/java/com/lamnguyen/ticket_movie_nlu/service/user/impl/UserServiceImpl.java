@@ -75,9 +75,8 @@ public class UserServiceImpl implements UserService {
     }
 
     private void saveUser(Context context, JSONObject response) {
-        SharedPreferences.Editor edit = SharedPreferencesUtils.getEditor(context, SIGN_IN);
         try {
-            edit.putInt("user", response.getInt("data"));
+            SharedPreferencesUtils.saveUserID(context, response.getInt("data"));
         } catch (JSONException e) {
             Toast.makeText(context, "Lỗi đăng nhập!", Toast.LENGTH_SHORT).show();
             signOut();
