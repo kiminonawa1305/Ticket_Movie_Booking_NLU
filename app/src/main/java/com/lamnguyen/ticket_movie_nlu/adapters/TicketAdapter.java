@@ -19,13 +19,16 @@ import com.bumptech.glide.Glide;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.lamnguyen.ticket_movie_nlu.R;
 import com.lamnguyen.ticket_movie_nlu.dto.TicketDTO;
+import com.lamnguyen.ticket_movie_nlu.utils.DateTimeFormat;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class TicketAdapter extends RecyclerView.Adapter<TicketAdapter.TicketItemViewHolder> {
     List<TicketDTO> tickets;
     static boolean avail;
+
     public TicketAdapter(List<TicketDTO> tickets, boolean avail) {
         this.tickets = tickets;
         TicketAdapter.avail = avail;
@@ -43,13 +46,12 @@ public class TicketAdapter extends RecyclerView.Adapter<TicketAdapter.TicketItem
     public void onBindViewHolder(@NonNull TicketItemViewHolder holder, int position) {
         TicketDTO ticket = tickets.get(position);
         LocalDateTime startShowtime = LocalDateTime.parse(ticket.getStartShowtime());
-        Log.i("TicketAdapter", "onBindViewHolder: " + ticket.toString());
         holder.setMovieName(ticket.getNameMovie());
         holder.setCinemaName(ticket.getNameCinema());
         holder.setRoomName(ticket.getNameRoom());
         holder.setNameChair(ticket.getNameChair());
-        holder.setTime(startShowtime.toLocalTime().toString());
-        holder.setDate(startShowtime.toLocalDate().toString());
+        holder.setTime(DateTimeFormat.getTime(startShowtime));
+        holder.setDate(DateTimeFormat.getDate(startShowtime));
         holder.setShibMovieImage(ticket.getPoster());
     }
 
@@ -79,7 +81,7 @@ public class TicketAdapter extends RecyclerView.Adapter<TicketAdapter.TicketItem
             rightTicketLinearLayout = itemView.findViewById(R.id.linear_layout_right_ticket);
             cardTicketRelativeLayout = itemView.findViewById(R.id.relative_layout_card_ticket);
 
-            if(!avail){
+            if (!avail) {
                 ColorMatrix colorMatrix = new ColorMatrix();
                 colorMatrix.setSaturation(0);
                 ColorMatrixColorFilter filter = new ColorMatrixColorFilter(colorMatrix);
