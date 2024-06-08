@@ -28,6 +28,11 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         this.activity = activity;
     }
 
+    public void setMovies(List<MovieDTO> movies) {
+        this.movies = movies;
+        notifyDataSetChanged(); // Cập nhật lại RecyclerView khi dữ liệu thay đổi
+    }
+
     @NonNull
     @Override
     public MovieViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -51,6 +56,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
             intent.putExtra("id", movie.getId());
             this.activity.startActivity(intent);
         });
+
     }
 
     @Override
@@ -104,5 +110,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         public void onClick(View.OnClickListener listener) {
             this.itemView.setOnClickListener(listener);
         }
+
     }
 }

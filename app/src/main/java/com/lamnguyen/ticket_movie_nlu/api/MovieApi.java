@@ -1,6 +1,7 @@
 package com.lamnguyen.ticket_movie_nlu.api;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.android.volley.Request;
@@ -11,10 +12,12 @@ import com.lamnguyen.ticket_movie_nlu.dto.MovieDTO;
 import com.lamnguyen.ticket_movie_nlu.dto.MovieDetailDTO;
 import com.lamnguyen.ticket_movie_nlu.utils.CallAPI;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -27,7 +30,7 @@ public class MovieApi {
         return instance;
     }
 
-    private MovieApi() {
+    public MovieApi() {
 
     }
 
@@ -83,4 +86,48 @@ public class MovieApi {
                 }
         );
     }
+
+    public void loadListFavoriteMovieDetail( Context context, CallAPI.CallAPIListener<List<MovieDetailDTO>>... listeners) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("sign", Context.MODE_PRIVATE);
+        int userId = sharedPreferences.getInt("userId", 0); // Sử dụng getInt() thay vì getString()
+        String body = "/api/customers/favoriteList/" + userId;
+
+
+
+        CallAPI.callJsonObjectRequest(context, CallAPI.URL_WEB_SERVICE, body, Request.Method.GET, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                try {
+                    int status = jsonObject.getInt("status");
+                    if (status != 200) {
+                        listeners[0].error(jsonObject.getString("message"));
+                        return;
+                    }
+
+                    JSONArray dataArray = jsonObject.getJSONArray("data");
+                    List<MovieDetailDTO> movieDetails = new ArrayList<>();
+
+                    for (int i = 0; i < dataArray.length(); i++) {
+                        JSONObject movieObject = dataArray.getJSONObject(i);
+
+                        int movieStatus = movieObject.getInt("status");
+                        if (movieStatus == 200) {
+                            MovieDetailDTO movieDetailDTO = new Gson().fromJson(movieObject.getJSONObject("data").toString(), MovieDetailDTO.class);
+                            movieDetails.add(movieDetailDTO);
+                        }
+                    }
+
+                    listeners[0].completed(movieDetails);
+                } catch (JSONException e) {
+                    listeners[0].error(e.getMessage());
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                listeners[0].error(error);
+            }
+        });
+    }
+
 }
