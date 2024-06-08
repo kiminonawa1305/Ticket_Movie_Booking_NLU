@@ -61,7 +61,6 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     implementation("com.github.bumptech.glide:glide:4.16.0")
-    // https://mvnrepository.com/artifact/com.google.code.gson/gson
     implementation("com.google.code.gson:gson:2.10.1")
     implementation("com.android.volley:volley:1.2.1")
 
@@ -80,8 +79,15 @@ dependencies {
     // library QR
     implementation("androidmads.library.qrgenearator:QRGenearator:1.0.3")
     implementation("com.borjabravo:readmoretextview:2.1.0")
-
-    /*lombok*/
+    implementation("com.squareup.picasso:picasso:2.71828")
+    implementation("pl.droidsonroids.gif:android-gif-drawable:1.2.23")
+    // Lombok
     compileOnly("org.projectlombok:lombok:1.18.32")
     annotationProcessor("org.projectlombok:lombok:1.18.32")
+
+
+    // Retrofit and OkHttp
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
 }
+
