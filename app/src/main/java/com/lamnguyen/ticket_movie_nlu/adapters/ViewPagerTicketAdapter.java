@@ -17,11 +17,23 @@ public class ViewPagerTicketAdapter extends FragmentStateAdapter {
     @NonNull
     @Override
     public Fragment createFragment(int position) {
-        Fragment fragment;
         Bundle args = new Bundle();
-        // The object is just an integer.
-        args.putBoolean("avail", position != 1);
+        Fragment fragment;
         fragment = new ViewPagerTicketFragment();
+        fragment.setArguments(args);
+        switch (position){
+            case 0:
+                args.putBoolean("avail", true);
+                break;
+            case 1:
+                args.putBoolean("avail", false);
+                break;
+        }
+//        Fragment fragment;
+//        Bundle args = new Bundle();
+//        // The object is just an integer.
+//        args.putBoolean("avail", position != 1);
+//        fragment = new ViewPagerTicketFragment();
         fragment.setArguments(args);
         return fragment;
     }

@@ -74,10 +74,13 @@ public class SumTicketFragment extends Fragment {
         String selected = dtos.stream().map(ChairDTO::getName).collect(Collectors.joining(", "));
         tvSelectChair.setText(selected);
         Double totalPrice = dtos.stream().mapToDouble(chair -> {
-            return chair.getType().equals(ChairType.COUPLE) ? priceBoardDTO.getCouple() :
-                    chair.getType().equals(ChairType.SINGLE) ? priceBoardDTO.getSingle() :
-                            chair.getType().equals(ChairType.VIP) ? priceBoardDTO.getVip() :
-                                    0;
+            return switch (chair.getType()) {
+                case COUPLE -> priceBoardDTO.getCouple();
+                case SINGLE -> priceBoardDTO.getSingle();
+                case VIP -> priceBoardDTO.getVip();
+                default -> 0;
+
+            };
         }).sum();
         tvTotalPrice.setText(formatter.format(totalPrice));
     }

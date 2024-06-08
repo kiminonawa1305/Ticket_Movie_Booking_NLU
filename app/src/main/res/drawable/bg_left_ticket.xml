@@ -38,7 +38,7 @@
         android:gravity="bottom|right"
         android:right="-4dp">
         <shape android:shape="oval">
-            <solid android:color="#000" />
+            <solid android:color="@color/black_system" />
         </shape>
     </item>
     <item
@@ -48,7 +48,7 @@
         android:gravity="right"
         android:top="-6dp">
         <shape android:shape="oval">
-            <solid android:color="#000" />
+            <solid android:color="@color/black_system" />
         </shape>
     </item>
 

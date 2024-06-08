@@ -19,6 +19,7 @@
         tools:ignore="MissingConstraints">
 
         <ImageButton
+            android:id="@+id/back_to_profile_btn"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:src="@drawable/ic_arrow_previous"
@@ -228,7 +229,8 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:scaleType="fitXY"
-                                android:src="@drawable/avatar_member"/>
+                                android:src="@drawable/lam_avatar"
+                                android:background="@drawable/bg_rounded_corner"/>
 
                             <View
                                 android:layout_width="1dp"
@@ -285,7 +287,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:scaleType="fitXY"
-                                android:src="@drawable/avatar_member"/>
+                                android:src="@drawable/dong_avatar"/>
 
                             <View
                                 android:layout_width="1dp"
@@ -342,7 +344,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:scaleType="fitXY"
-                                android:src="@drawable/avatar_member"/>
+                                android:src="@drawable/phong_avatar"/>
 
                             <View
                                 android:layout_width="1dp"
@@ -399,7 +401,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:scaleType="fitXY"
-                                android:src="@drawable/avatar_member"/>
+                                android:src="@drawable/duoc_avatar"/>
 
                             <View
                                 android:layout_width="1dp"
@@ -456,7 +458,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:scaleType="fitXY"
-                                android:src="@drawable/avatar_member"/>
+                                android:src="@drawable/duong_avatar"/>
 
                             <View
                                 android:layout_width="1dp"
