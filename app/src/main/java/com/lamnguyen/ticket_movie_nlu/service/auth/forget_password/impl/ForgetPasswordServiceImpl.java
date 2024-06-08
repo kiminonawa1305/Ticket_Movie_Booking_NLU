@@ -21,9 +21,9 @@ public class ForgetPasswordServiceImpl implements ForgetPasswordService {
     public void sendForgetPassword(String email, ThreadCallBackSign... callBack) {
         auth.sendPasswordResetEmail(email).addOnCompleteListener(taskResentPassword -> {
             if (taskResentPassword.isSuccessful()) {
-                callBack[1].isSuccess();
+                callBack[0].isSuccess();
             } else {
-                callBack[1].isFail();
+                callBack[0].isFail();
             }
         });
     }
