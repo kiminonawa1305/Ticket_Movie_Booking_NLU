@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <style name="btn_sign">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -87,6 +88,13 @@
         <item name="tabIndicator">@null</item>
         <item name="tabMode">fixed</item>
         <item name="tabGravity">fill</item>
+    </style>
 
+    <style name="column_info_payment">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/white</item>
     </style>
 </resources>
