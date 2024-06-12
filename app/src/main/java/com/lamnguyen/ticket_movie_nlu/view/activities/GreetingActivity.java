@@ -2,10 +2,13 @@ package com.lamnguyen.ticket_movie_nlu.view.activities;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.LinearGradient;
 import android.graphics.Shader;
 import android.net.ConnectivityManager;
@@ -15,6 +18,7 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.AbsoluteSizeSpan;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.lamnguyen.ticket_movie_nlu.R;
 
@@ -35,11 +39,14 @@ public class GreetingActivity extends AppCompatActivity {
         };
 
         buildAlertDialogNetwork();
+
         float width = tvGreeting.getLayoutParams().width;
         float height = tvGreeting.getLayoutParams().height;
         Shader shader = new LinearGradient(
                 0, height / 2, width, height / 2, colors, null, Shader.TileMode.CLAMP);
         tvGreeting.getPaint().setShader(shader);
+
+        requestPermission();
 
         setTimerChangePageSign();
     }
@@ -93,5 +100,11 @@ public class GreetingActivity extends AppCompatActivity {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 
         return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
+    }
+
+    private void requestPermission() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
+        }
     }
 }
