@@ -1,5 +1,6 @@
 package com.lamnguyen.ticket_movie_nlu.adapters;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,15 +11,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.lamnguyen.ticket_movie_nlu.R;
 import com.lamnguyen.ticket_movie_nlu.dto.TimeSeat;
+import com.lamnguyen.ticket_movie_nlu.view.activities.BookingChairActivity;
 
 import java.util.List;
 import java.util.zip.Inflater;
 
 public class TimeSeatAdapter extends RecyclerView.Adapter<TimeSeatAdapter.TimeViewHolder> {
     List<TimeSeat> timeSeats;
+    private int movieId;
 
-    public TimeSeatAdapter(List<TimeSeat> timeSeats) {
+    public TimeSeatAdapter(List<TimeSeat> timeSeats, int movieId) {
         this.timeSeats = timeSeats;
+        this.movieId = movieId;
     }
 
     @NonNull
@@ -35,6 +39,12 @@ public class TimeSeatAdapter extends RecyclerView.Adapter<TimeSeatAdapter.TimeVi
         holder.setTimeEnd(timeSeat.getEnd());
         holder.setTotalSeat(timeSeat.getTotalSeat());
         holder.setAvailableSeat(timeSeat.getAvailableSeat());
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(v.getContext(), BookingChairActivity.class);
+            intent.putExtra("showtimeId", timeSeat.getShowtimeId());
+            intent.putExtra("id", movieId);
+            v.getContext().startActivity(intent);
+        });
     }
 
     @Override

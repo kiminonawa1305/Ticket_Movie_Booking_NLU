@@ -1,5 +1,6 @@
 package com.lamnguyen.ticket_movie_nlu.adapters;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,16 +18,19 @@ import com.google.firebase.storage.StorageReference;
 import com.lamnguyen.ticket_movie_nlu.R;
 import com.lamnguyen.ticket_movie_nlu.dto.ShowtimeByCinema;
 import com.lamnguyen.ticket_movie_nlu.dto.TimeSeat;
+import com.lamnguyen.ticket_movie_nlu.view.activities.BookingChairActivity;
 
 import java.util.List;
 
 public class ShowTimeAdapter extends RecyclerView.Adapter<ShowTimeAdapter.ShowTimeViewHolder> {
     List<ShowtimeByCinema> showtimeList;
     public static FirebaseStorage firebaseStorage;
+    public static int movieId;
 
-    public ShowTimeAdapter(List<ShowtimeByCinema> showtimeList) {
+    public ShowTimeAdapter(List<ShowtimeByCinema> showtimeList, int movieId) {
         this.showtimeList = showtimeList;
         firebaseStorage = FirebaseStorage.getInstance();
+        ShowTimeAdapter.movieId = movieId;
     }
 
     @NonNull
@@ -43,11 +47,11 @@ public class ShowTimeAdapter extends RecyclerView.Adapter<ShowTimeAdapter.ShowTi
         holder.setCinemaName(showtime.getNameCinema());
         holder.setCinemaAddress(showtime.getAddressCinema());
         holder.setCinemaDetailAddress(showtime.getDetailAddressCinema());
+        holder.setImageIcon(showtime.getUrlImageCinema());
         if (showtime.getDistance() != null)
             holder.setCinemaDistance(String.valueOf(
                     ((int) ((Integer.valueOf(showtime.getDistance()) / 1000) * 100)) / 100.0 + " km"
             ));
-        holder.setImageIcon(showtime.getUrlImageCinema());
     }
 
     @Override
@@ -72,7 +76,7 @@ public class ShowTimeAdapter extends RecyclerView.Adapter<ShowTimeAdapter.ShowTi
         }
 
         public void setTimeSeat(List<TimeSeat> timeSeats) {
-            TimeSeatAdapter timeSeatAdapter = new TimeSeatAdapter(timeSeats);
+            TimeSeatAdapter timeSeatAdapter = new TimeSeatAdapter(timeSeats, movieId);
             rvTimeSeat.setAdapter(timeSeatAdapter);
         }
 
@@ -100,7 +104,6 @@ public class ShowTimeAdapter extends RecyclerView.Adapter<ShowTimeAdapter.ShowTi
                     Glide.with(itemView.getContext()).load(uri).into(ivCinema);
                 }
             });
-
         }
     }
 }

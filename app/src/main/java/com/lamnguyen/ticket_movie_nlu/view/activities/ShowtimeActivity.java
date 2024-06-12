@@ -1,10 +1,12 @@
 package com.lamnguyen.ticket_movie_nlu.view.activities;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -35,7 +37,7 @@ public class ShowtimeActivity extends AppCompatActivity {
     private Location location;
     private List<CinemaService.CinemaLatLng> cinemaLatLags;
     private GoogleMapService googleMapService;
-    private List<ShowtimeByCinema> showtimeList;
+    private ImageView imageView;
 
     private static final String TAG = "ShowtimeActivity";
 
@@ -47,6 +49,8 @@ public class ShowtimeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_showtime);
 
         rvShowTime = findViewById(R.id.recycler_view_showtime);
+        imageView = findViewById(R.id.image_view_back_movie_detail);
+
         rvShowTime.setLayoutManager(new LinearLayoutManager(this));
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
@@ -56,13 +60,22 @@ public class ShowtimeActivity extends AppCompatActivity {
 
         cinemaLatLags = CinemaService.getInstance().getCinemaLatLag(ShowtimeActivity.this);
 
+        int movieId = getIntent().getIntExtra("id", -1);
+
         getLocation();
 
-        loadShowtimeByCinema();
+        loadShowtimeByCinema(movieId);
+
+        imageView.setOnClickListener(v -> {
+            Intent intent = new Intent(ShowtimeActivity.this, MovieDetailActivity.class);
+            intent.putExtra("id", movieId);
+            startActivity(intent);
+            finish();
+        });
     }
 
-    private void loadShowtimeByCinema() {
-        movieService.loadShowtime(1, this, new CallAPI.CallAPIListener<List<ShowtimeByCinema>>() {
+    private void loadShowtimeByCinema(int movieId) {
+        movieService.loadShowtime(movieId, this, new CallAPI.CallAPIListener<List<ShowtimeByCinema>>() {
             @Override
             public void completed(List<ShowtimeByCinema> showTimeByCinemas) {
                 showTimeByCinemas.stream().forEach(showTimeByCinema -> {
@@ -71,7 +84,7 @@ public class ShowtimeActivity extends AppCompatActivity {
                     });
                 });
 
-                showTimeAdapter = new ShowTimeAdapter(showTimeByCinemas);
+                showTimeAdapter = new ShowTimeAdapter(showTimeByCinemas, movieId);
                 rvShowTime.setAdapter(showTimeAdapter);
             }
 

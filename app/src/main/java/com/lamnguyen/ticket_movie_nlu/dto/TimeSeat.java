@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TimeSeat {
+    private int showtimeId;
     private String start, end;
     private int totalSeat, availableSeat;
 }
