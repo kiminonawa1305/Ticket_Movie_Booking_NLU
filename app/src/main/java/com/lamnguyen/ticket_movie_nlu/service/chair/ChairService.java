@@ -10,6 +10,7 @@ import com.lamnguyen.ticket_movie_nlu.dto.ChairDTO;
 import com.lamnguyen.ticket_movie_nlu.enums.ChairStatus;
 import com.lamnguyen.ticket_movie_nlu.response.ChairResponse;
 import com.lamnguyen.ticket_movie_nlu.utils.CallAPI;
+import com.lamnguyen.ticket_movie_nlu.utils.SharedPreferencesUtils;
 
 
 public class ChairService {
@@ -28,7 +29,7 @@ public class ChairService {
     }
 
     public void updateChair(String uuid, int chairId, ChairStatus status, Context context, CallAPI.CallAPIListener<ChairDTO>... listeners) {
-        int userId = context.getSharedPreferences("sign", Context.MODE_PRIVATE).getInt("userId", 0);
+        int userId = SharedPreferencesUtils.getUserID(context);
         chairApi.updateChair(userId, uuid, chairId, status, context, listeners);
     }
 

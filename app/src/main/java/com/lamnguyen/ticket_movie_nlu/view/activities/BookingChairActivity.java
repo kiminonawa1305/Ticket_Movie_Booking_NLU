@@ -27,6 +27,9 @@ public class BookingChairActivity extends AppCompatActivity {
         getSupportFragmentManager().setFragmentResult(getClass().getSimpleName(), bundle);
 
         ivBackToShowtimeByCinema.setOnClickListener(v -> {
+            Bundle b = new Bundle();
+            b.putBoolean("back", true);
+            getSupportFragmentManager().setFragmentResult(getClass().getSimpleName(), b);
             Intent intent = new Intent(this, ShowtimeActivity.class);
             int movieId = getIntent().getIntExtra("id", -1);
             intent.putExtra("id", movieId);
