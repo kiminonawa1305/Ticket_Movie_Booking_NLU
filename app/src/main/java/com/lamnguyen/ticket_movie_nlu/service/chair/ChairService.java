@@ -34,7 +34,7 @@ public class ChairService {
     }
 
     public void rollBack(String uuid, int chairId, ChairStatus status, Context context) {
-        int userId = context.getSharedPreferences("sign", Context.MODE_PRIVATE).getInt("userId", 0);
+        int userId = SharedPreferencesUtils.getUserID(context);
         chairApi.updateChair(userId, uuid, chairId, status, context, new CallAPI.CallAPIListener<ChairDTO>() {
             @Override
             public void completed(ChairDTO chairDTO) {
