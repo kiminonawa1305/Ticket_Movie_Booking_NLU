@@ -28,7 +28,7 @@ public class MovieService {
     }
 
 
-    public void loadShowtime(int movieId, Context context, CallAPI.CallAPIListener<List<ShowtimeByCinema>> listener) {
-        movieApi.loadShowtime(movieId, context, listener);
+    public void loadShowtime(int movieId, LocalDate date, Context context, CallAPI.CallAPIListener<List<ShowtimeByCinema>> listener) {
+        movieApi.loadShowtime(movieId, date, context, listener);
     }
 }

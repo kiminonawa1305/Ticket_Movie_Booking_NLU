@@ -27,6 +27,7 @@ import com.lamnguyen.ticket_movie_nlu.service.movie.MovieService;
 import com.lamnguyen.ticket_movie_nlu.utils.CallAPI;
 import com.lamnguyen.ticket_movie_nlu.view.fragments.GoogleMapFragment;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,10 +62,11 @@ public class ShowtimeActivity extends AppCompatActivity {
         cinemaLatLags = CinemaService.getInstance().getCinemaLatLag(ShowtimeActivity.this);
 
         int movieId = getIntent().getIntExtra("id", -1);
+        LocalDate date = getIntent().getExtras().getSerializable("date") != null ? (LocalDate) getIntent().getExtras().getSerializable("date") : LocalDate.now();
 
         getLocation();
 
-        loadShowtimeByCinema(movieId);
+        loadShowtimeByCinema(movieId, date);
 
         imageView.setOnClickListener(v -> {
             Intent intent = new Intent(ShowtimeActivity.this, MovieDetailActivity.class);
@@ -74,8 +76,8 @@ public class ShowtimeActivity extends AppCompatActivity {
         });
     }
 
-    private void loadShowtimeByCinema(int movieId) {
-        movieService.loadShowtime(movieId, this, new CallAPI.CallAPIListener<List<ShowtimeByCinema>>() {
+    private void loadShowtimeByCinema(int movieId, LocalDate date) {
+        movieService.loadShowtime(movieId, date, this, new CallAPI.CallAPIListener<List<ShowtimeByCinema>>() {
             @Override
             public void completed(List<ShowtimeByCinema> showTimeByCinemas) {
                 showTimeByCinemas.stream().forEach(showTimeByCinema -> {

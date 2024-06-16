@@ -168,23 +168,6 @@ public class SignInFragment extends Fragment {
         );
     }
 
-    private void checkEmailHandler() {
-        String email = this.edtEmail.getText().toString();
-        CheckEmailService checkEmailService = CheckEmailServiceImpl.getInstance();
-        checkEmailService.checkEmail(email, new ThreadCallBackSign() {
-            @Override
-            public void isSuccess() {
-                signInHandler();
-            }
-
-            @Override
-            public void isFail() {
-                Toast.makeText(SignInFragment.this.getContext(), getString(R.string.email_not_register), Toast.LENGTH_SHORT).show();
-                reSendVerify();
-            }
-        });
-    }
-
     private void reSendVerify() {
         String email = this.edtEmail.getText().toString();
         String password = this.edtPassword.getText().toString();
@@ -217,10 +200,15 @@ public class SignInFragment extends Fragment {
         }
 
         userService.checkRegister(this.getContext(), user.getUid(), () -> {
-            Toast.makeText(this.getContext(), getString(R.string.sign_in_success), Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(this.getContext(), MainActivity.class);
             this.getActivity().startActivity(intent);
             this.getActivity().finish();
+        }, () -> {
+            Bundle bundle = getBundleData();
+            bundle.putString("email", edtEmail.getText().toString());
+            getParentFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_sign, InsertInfoFragment.class, bundle)
+                    .commit();
         });
     }
 

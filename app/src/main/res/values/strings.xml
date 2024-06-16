@@ -105,4 +105,7 @@
     <string name="avail_ticket">avail</string>
     <string name="info_ticket">Thông tin vé</string>
     <string name="showtime">Thông tin xuất chiếu</string>
+    <string name="hint_full_name">Họ và tên</string>
+    <string name="hint_phone">Số điện thoại</string>
+    <string name="next">Tiếp theo</string>
 </resources>

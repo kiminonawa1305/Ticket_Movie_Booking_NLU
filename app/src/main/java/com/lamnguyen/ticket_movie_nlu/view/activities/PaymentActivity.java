@@ -2,7 +2,6 @@ package com.lamnguyen.ticket_movie_nlu.view.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -31,9 +30,6 @@ public class PaymentActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment); // đổi thành tên file layout của bạn
-        movieImageView = findViewById(R.id.image_view_payment_movie_image);
-        movieNameTextView = findViewById(R.id.text_view_payment_movie_name);
-        movieTypeTextView = findViewById(R.id.text_view_payment_movie_type);
         paymentNameTextView = findViewById(R.id.text_view_payment_name);
         phoneNumberTextView = findViewById(R.id.text_view_payment_phone_number);
         emailTextView = findViewById(R.id.text_view_payment_email);

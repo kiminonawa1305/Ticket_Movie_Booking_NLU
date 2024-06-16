@@ -1,6 +1,10 @@
 package com.lamnguyen.ticket_movie_nlu.view.fragments;
 
+import static com.android.volley.Request.Method.POST;
+
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,12 +13,17 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import com.lamnguyen.ticket_movie_nlu.R;
 import com.lamnguyen.ticket_movie_nlu.dto.ChairDTO;
-import com.lamnguyen.ticket_movie_nlu.enums.ChairType;
 import com.lamnguyen.ticket_movie_nlu.dto.PriceBoardDTO;
+import com.lamnguyen.ticket_movie_nlu.utils.CallAPI;
+import com.lamnguyen.ticket_movie_nlu.utils.SharedPreferencesUtils;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -25,7 +34,7 @@ import java.util.stream.Collectors;
 public class SumTicketFragment extends Fragment {
 
     // Dummy data for selected seats, replace it with your actual data
-    private List<ChairDTO> dtos;
+    private List<ChairDTO> chairSelected;
     private Button btnPay;
     private TextView tvTotalPrice, tvTotalChair, tvSelectChair;
     private PriceBoardDTO priceBoardDTO;
@@ -33,13 +42,13 @@ public class SumTicketFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        dtos = new ArrayList<>();
+        chairSelected = new ArrayList<>();
         getParentFragmentManager().setFragmentResultListener(BookingChairFragment.class.getSimpleName(), this, (requestKey, result) -> {
             if (result.get("add") != null)
-                dtos.add((ChairDTO) result.get("add"));
+                chairSelected.add((ChairDTO) result.get("add"));
 
             if (result.get("remove") != null)
-                dtos.remove((ChairDTO) result.get("remove"));
+                chairSelected.remove((ChairDTO) result.get("remove"));
 
             if (result.get("price") != null)
                 priceBoardDTO = (PriceBoardDTO) result.get("price");
@@ -60,20 +69,24 @@ public class SumTicketFragment extends Fragment {
 
         // Handle payment button click
         btnPay.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
-                // Add your payment logic here
-                // For example, navigate to payment screen
-                // Or initiate payment process
+                List<Integer> listId = chairSelected.stream().map(ChairDTO::getId).collect(Collectors.toList());
+                try {
+                    buyTickets(listId);
+                } catch (JSONException e) {
+                    Log.i("SumTicketFragment", "onClick: " + e.getMessage());
+                }
             }
         });
     }
 
     private void updateValue() {
-        tvTotalChair.setText(String.valueOf(dtos.size()));
-        String selected = dtos.stream().map(ChairDTO::getName).collect(Collectors.joining(", "));
+        tvTotalChair.setText(String.valueOf(chairSelected.size()));
+        String selected = chairSelected.stream().map(ChairDTO::getName).collect(Collectors.joining(", "));
         tvSelectChair.setText(selected);
-        Double totalPrice = dtos.stream().mapToDouble(chair -> {
+        Double totalPrice = chairSelected.stream().mapToDouble(chair -> {
             return switch (chair.getType()) {
                 case COUPLE -> priceBoardDTO.getCouple();
                 case SINGLE -> priceBoardDTO.getSingle();
@@ -88,6 +101,18 @@ public class SumTicketFragment extends Fragment {
     @Override
     public void onStop() {
         super.onStop();
-        dtos.clear();
+        chairSelected.clear();
+    }
+
+    public void buyTickets(List<Integer> listId) throws JSONException {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("chairIds", listId);
+        jsonObject.put("customerId", SharedPreferencesUtils.getUserID(getContext()));
+
+        CallAPI.callJsonObjectRequest(getContext(), CallAPI.URL_WEB_SERVICE + "/ticket/api/buy", "", jsonObject, null, POST, (response) -> {
+            Log.i("SumTicketFragment", "buyTickets: " + response);
+        }, error -> {
+            Log.i("SumTicketFragment", "buyTickets: " + error.getMessage());
+        });
     }
 }
