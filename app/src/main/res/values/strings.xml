@@ -79,7 +79,9 @@
     <string name="title_category">Thể loại:</string>
     <string name="pay">Thanh toán</string>
     <string name="total_pay">Tổng tiền:</string>
-    <string name="chair">Ghế:</string>
+    <string name="single_chair">Ghế đơn: </string>
+    <string name="couple_chair">Ghế đôi: </string>
+    <string name="vip_chair">Ghế đôi: </string>
     <string name="room_show">Phòng chiếu:</string>
     <string name="payment_cinema">Rạp:</string>
     <string name="payment_email">Email:</string>
