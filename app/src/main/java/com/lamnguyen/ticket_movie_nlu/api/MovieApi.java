@@ -58,8 +58,8 @@ public class MovieApi {
         );
     }
 
-    public void loadMovieDetail(Integer id, Context context, CallAPI.CallAPIListener<MovieDetailDTO> listener) {
-        String body = "/movie/api/detail/" + id;
+    public void loadMovieDetail(Integer id, LocalDate date, Context context, CallAPI.CallAPIListener<MovieDetailDTO> listener) {
+        String body = "/movie/api/detail/" + id + "/" + date.toString();
         CallAPI.callJsonObjectRequest(context, CallAPI.URL_WEB_SERVICE, body, Request.Method.GET, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject jsonObject) {
@@ -112,8 +112,8 @@ public class MovieApi {
         });
     }
 
-    public void loadShowtime(int movieId, Context context, CallAPI.CallAPIListener<List<ShowtimeByCinema>> listener) {
-        String body = "/showtime/api/" + movieId;
+    public void loadShowtime(int movieId, LocalDate date, Context context, CallAPI.CallAPIListener<List<ShowtimeByCinema>> listener) {
+        String body = "/showtime/api/" + movieId + "/" + date.toString();
 
         CallAPI.callJsonObjectRequest(context, CallAPI.URL_WEB_SERVICE + body, null, Request.Method.GET, new Response.Listener<JSONObject>() {
             @Override

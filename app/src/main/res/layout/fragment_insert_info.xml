@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingHorizontal="20dp"
+    android:paddingVertical="50dp"
+    tools:context=".view.fragments.InsertInfoFragment">
+
+    <EditText
+        android:id="@+id/edit_text_full_name"
+        style="@style/edt_input_info_sign"
+        android:autofillHints="name"
+        android:hint="@string/hint_full_name"
+        android:inputType="text"
+        android:textColor="@color/white" />
+
+    <EditText
+        android:id="@+id/edit_text_phone"
+        style="@style/edt_input_info_sign"
+        android:autofillHints="phone"
+        android:hint="@string/hint_phone"
+        android:inputType="phone"
+        android:textColor="@color/white" />
+
+    <android.widget.Button
+        android:id="@+id/button_next"
+        style="@style/btn_sign"
+        android:text="@string/next"
+        android:textColor="@color/white" />
+</LinearLayout>

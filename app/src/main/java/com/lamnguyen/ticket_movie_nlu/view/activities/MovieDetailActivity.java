@@ -55,6 +55,7 @@ public class MovieDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_detail);
         Integer id = getIntent().getExtras().getInt("id", -1);
+        LocalDate date = getIntent().getExtras().getSerializable("date") != null ? (LocalDate) getIntent().getExtras().getSerializable("date") : LocalDate.now();
 
         init();
 
@@ -68,7 +69,7 @@ public class MovieDetailActivity extends AppCompatActivity {
         genreRecyclerView.addItemDecoration(new ItemSpacingDecoration(6));
 
         DialogLoading.showDialogLoading(dialog, getString(R.string.loading));
-        movieDetailService.loadMovieDetail(id, this, new CallAPI.CallAPIListener<MovieDetailDTO>() {
+        movieDetailService.loadMovieDetail(id, date, this, new CallAPI.CallAPIListener<MovieDetailDTO>() {
             @Override
             public void completed(MovieDetailDTO movieDetailDTO) {
                 dialog.dismiss();
@@ -89,6 +90,7 @@ public class MovieDetailActivity extends AppCompatActivity {
         buttonBooking.setOnClickListener(v -> {
             Intent intent = new Intent(this, ShowtimeActivity.class);
             intent.putExtra("id", id);
+            intent.putExtra("date", date);
             startActivity(intent);
         });
     }

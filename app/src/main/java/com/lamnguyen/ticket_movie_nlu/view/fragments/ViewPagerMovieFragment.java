@@ -76,7 +76,7 @@ public class ViewPagerMovieFragment extends Fragment {
             @Override
             public void completed(List<MovieDTO> movieDTOs) {
                 dialog.dismiss();
-                rclDisplayListMovieShowtime.setAdapter(new MovieAdapter(movieDTOs, ViewPagerMovieFragment.this.getActivity()));
+                rclDisplayListMovieShowtime.setAdapter(new MovieAdapter(movieDTOs, dateTime, ViewPagerMovieFragment.this.getActivity()));
             }
 
             @Override
