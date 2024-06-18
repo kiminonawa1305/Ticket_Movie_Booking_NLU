@@ -206,6 +206,8 @@ public class SignInFragment extends Fragment {
         }, () -> {
             Bundle bundle = getBundleData();
             bundle.putString("email", edtEmail.getText().toString());
+            bundle.putString("apiId", user.getUid());
+            bundle.putString("password", edtPassword.getText().toString());
             getParentFragmentManager().beginTransaction()
                     .replace(R.id.fragment_sign, InsertInfoFragment.class, bundle)
                     .commit();

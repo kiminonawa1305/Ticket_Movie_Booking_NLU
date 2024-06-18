@@ -14,6 +14,7 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.lamnguyen.ticket_movie_nlu.R;
 import com.lamnguyen.ticket_movie_nlu.bean.User;
 import com.lamnguyen.ticket_movie_nlu.service.auth.ThreadCallBackSign;
@@ -35,8 +36,8 @@ public class InsertInfoFragment extends Fragment {
 
     private UserService userService;
 
-    private final static String EMAIL_ARG = "email";
-    private String email;
+    private final static String EMAIL_ARG = "email", API_ID_ARG = "apiId", PASSWORD_ARG = "password";
+    private String email, password, apiId;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -64,6 +65,8 @@ public class InsertInfoFragment extends Fragment {
         if (bundle == null) return;
 
         email = bundle.getString(EMAIL_ARG);
+        apiId = bundle.getString(API_ID_ARG);
+        password = bundle.getString(PASSWORD_ARG);
     }
 
     private void init(View view) {
@@ -76,20 +79,38 @@ public class InsertInfoFragment extends Fragment {
 
 
     private void event() {
-        DialogLoading.showDialogLoading(dialog, getString(R.string.loading));
         btnNext.setOnClickListener(v -> {
+            DialogLoading.showDialogLoading(dialog, getString(R.string.loading));
+            String phone = edtPhone.getText().toString();
+            String fullName = edtFullName.getText().toString();
+            if (phone.isEmpty()) {
+                edtPhone.setError(getString(R.string.phone_empty));
+                return;
+            }
+            if (fullName.isEmpty()) {
+                edtFullName.setError(getString(R.string.full_name_empty));
+                return;
+            }
+
             userService.register(getContext(),
                     User.builder()
+                            .apiId(apiId)
                             .email(email)
                             .fullName(edtFullName.getText().toString())
                             .phone(edtPhone.getText().toString())
                             .build(),
                     () -> {
                         dialog.dismiss();
-                        Toast.makeText(this.getContext(), getString(R.string.sign_in_success), Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(this.getContext(), MainActivity.class);
-                        this.getActivity().startActivity(intent);
-                        this.getActivity().finish();
+                        FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password).addOnCompleteListener(command -> {
+                            if (command.isSuccessful()) {
+                                Toast.makeText(this.getContext(), getString(R.string.sign_in_success), Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(this.getContext(), MainActivity.class);
+                                this.getActivity().startActivity(intent);
+                                this.getActivity().finish();
+                            } else {
+                                Toast.makeText(this.getContext(), getString(R.string.sign_in_fail), Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     }, () -> {
                         dialog.dismiss();
                     });

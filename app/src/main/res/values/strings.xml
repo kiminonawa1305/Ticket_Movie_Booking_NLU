@@ -108,4 +108,6 @@
     <string name="hint_full_name">Họ và tên</string>
     <string name="hint_phone">Số điện thoại</string>
     <string name="next">Tiếp theo</string>
+    <string name="phone_empty">Số điện thoại không được bỏ trống!</string>
+    <string name="full_name_empty">Họ và tên không được bỏ trống!</string>
 </resources>
