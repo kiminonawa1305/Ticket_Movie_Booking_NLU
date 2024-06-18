@@ -71,6 +71,7 @@ public class PaymentActivity extends AppCompatActivity {
             buyTickets(ids);
             Intent intent = new Intent(PaymentActivity.this, PaymentSuccessActivity.class);
             startActivity(intent);
+            finish();
         });
     }
 
