@@ -19,7 +19,7 @@ public class MovieDetailService {
         movieApi = MovieApi.getInstance();
     }
 
-    public void loadMovieDetail(Integer id, Context context, CallAPI.CallAPIListener<MovieDetailDTO>... listeners) {
-        movieApi.loadMovieDetail(id, context, listeners);
+    public void loadMovieDetail(Integer id, Context context, CallAPI.CallAPIListener<MovieDetailDTO> listener) {
+        movieApi.loadMovieDetail(id, context, listener);
     }
 }

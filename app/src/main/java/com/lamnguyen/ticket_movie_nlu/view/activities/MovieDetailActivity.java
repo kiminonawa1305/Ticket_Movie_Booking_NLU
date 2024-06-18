@@ -87,7 +87,8 @@ public class MovieDetailActivity extends AppCompatActivity {
         });
 
         buttonBooking.setOnClickListener(v -> {
-            Intent intent = new Intent(this, ChooseMovieShowTimeActivity.class);
+            Intent intent = new Intent(this, ShowtimeActivity.class);
+            intent.putExtra("id", id);
             startActivity(intent);
         });
     }
