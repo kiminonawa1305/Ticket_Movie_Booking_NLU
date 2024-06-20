@@ -7,18 +7,17 @@ import android.widget.CheckBox;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.lamnguyen.ticket_movie_nlu.R;
-import com.lamnguyen.ticket_movie_nlu.bean.User;
+import com.lamnguyen.ticket_movie_nlu.bean.Account;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class AccountManagementActivity extends AppCompatActivity {
 
-    private List<User> users;
+    private List<Account> accounts;
     private TableLayout tableLayout;
 
     @Override
@@ -29,9 +28,9 @@ public class AccountManagementActivity extends AppCompatActivity {
         tableLayout = findViewById(R.id.table_account);
 
 
-        users = new ArrayList<>();
-        users.add(new User(1, "Nguyễn Văn A", "0333840481", "anhduong@gmail.com", "abc123", "22/2/2022", false));
-        users.add(new User(2, "Nguyễn Văn B", "0333840481", "anhduong@gmail.com", "xyz789", "22/2/2022", true));
+        accounts = new ArrayList<>();
+        accounts.add(new Account(1, "Nguyễn Văn A", "0333840481", "anhduong@gmail.com", "abc123", "22/2/2022", false));
+        accounts.add(new Account(2, "Nguyễn Văn B", "0333840481", "anhduong@gmail.com", "xyz789", "22/2/2022", true));
 
 
         populateTable();
@@ -63,17 +62,17 @@ public class AccountManagementActivity extends AppCompatActivity {
         tableLayout.addView(headerRow);
 
         // Add account rows
-        for (User user : users) {
+        for (Account account : accounts) {
             TableRow row = new TableRow(this);
-            row.addView(createTextView(String.valueOf(user.getStt()), false));
-            row.addView(createTextView(user.getName(), false));
-            row.addView(createTextView(user.getPhone(), false));
-            row.addView(createTextView(user.getEmail(), false));
-            row.addView(createTextView(hashPassword(user.getPassword()), false));
-            row.addView(createTextView(user.getCreatedDate(), false));
+            row.addView(createTextView(String.valueOf(account.getStt()), false));
+            row.addView(createTextView(account.getName(), false));
+            row.addView(createTextView(account.getPhone(), false));
+            row.addView(createTextView(account.getEmail(), false));
+            row.addView(createTextView(hashPassword(account.getPassword()), false));
+            row.addView(createTextView(account.getCreatedDate(), false));
             CheckBox checkBox = new CheckBox(this);
-            checkBox.setChecked(user.isLocked());
-            checkBox.setTag(user);
+            checkBox.setChecked(account.isLocked());
+            checkBox.setTag(account);
             row.addView(checkBox);
 
             tableLayout.addView(row);
@@ -104,7 +103,7 @@ public class AccountManagementActivity extends AppCompatActivity {
         for (int i = 1; i < childCount; i++) {
             TableRow row = (TableRow) tableLayout.getChildAt(i);
             CheckBox checkBox = (CheckBox) row.getChildAt(6);
-            User account = (User) checkBox.getTag();
+            Account account = (Account) checkBox.getTag();
 
             if (checkBox.isChecked()) {
                 account.setLocked(true);

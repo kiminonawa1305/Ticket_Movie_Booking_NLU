@@ -14,5 +14,6 @@ public class MovieDetailDTO {
     private String title, poster, duration, description;
     private Integer id, vote;
     private Double rate;
+    private Boolean avail;
     private String[] actors, directors, genres;
 }

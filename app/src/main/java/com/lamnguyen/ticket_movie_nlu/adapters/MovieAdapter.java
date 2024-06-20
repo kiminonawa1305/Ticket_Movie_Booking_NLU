@@ -1,7 +1,6 @@
 package com.lamnguyen.ticket_movie_nlu.adapters;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,15 +16,18 @@ import com.lamnguyen.ticket_movie_nlu.R;
 import com.lamnguyen.ticket_movie_nlu.dto.MovieDTO;
 import com.lamnguyen.ticket_movie_nlu.view.activities.MovieDetailActivity;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
     private List<MovieDTO> movies;
     private Activity activity;
+    private LocalDate date;
 
-    public MovieAdapter(@NonNull List<MovieDTO> movies, Activity activity) {
+    public MovieAdapter(@NonNull List<MovieDTO> movies, LocalDate date, Activity activity) {
         this.movies = movies;
         this.activity = activity;
+        this.date = date;
     }
 
     @NonNull
@@ -49,6 +51,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         holder.onClick(view -> {
             Intent intent = new Intent(this.activity, MovieDetailActivity.class);
             intent.putExtra("id", movie.getId());
+            intent.putExtra("date", date);
             this.activity.startActivity(intent);
         });
     }
@@ -104,5 +107,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         public void onClick(View.OnClickListener listener) {
             this.itemView.setOnClickListener(listener);
         }
+
     }
 }

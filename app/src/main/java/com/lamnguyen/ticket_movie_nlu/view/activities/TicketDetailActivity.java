@@ -1,6 +1,7 @@
 package com.lamnguyen.ticket_movie_nlu.view.activities;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.os.Bundle;
@@ -8,26 +9,15 @@ import android.util.Log;
 import android.view.Display;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
-import com.google.zxing.common.BitMatrix;
-import com.google.zxing.pdf417.encoder.BarcodeMatrix;
 import com.lamnguyen.ticket_movie_nlu.R;
 import com.lamnguyen.ticket_movie_nlu.response.TicketDetailResponse;
 import com.lamnguyen.ticket_movie_nlu.utils.CallAPI;
@@ -36,57 +26,69 @@ import com.lamnguyen.ticket_movie_nlu.utils.DialogLoading;
 
 import org.json.JSONException;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 import androidmads.library.qrgenearator.QRGContents;
 import androidmads.library.qrgenearator.QRGEncoder;
 
 public class TicketDetailActivity extends AppCompatActivity {
-    private TextView tv_ticket_id;
-    private ImageView imgv_qr;
+    private TextView tvTicketId;
+    private ImageView imgvQr;
     private QRGEncoder qrgEncoder;
-
-    private TextView tv_theater_name;
-    private TextView tv_movie_name;
-    private TextView tv_date_and_time;
-    private TextView tv_screen_name;
-    private TextView tv_row;
-    private TextView tv_seat;
-    private TextView tv_duration;
-    private ImageView imgv_poster;
+    private TextView tvTheaterName;
+    private TextView tvMovieName;
+    private TextView tvDateAndTime;
+    private TextView tvScreenName;
+    private TextView tvRow;
+    private TextView tvSeat;
+    private TextView tvDuration;
+    private ImageView imgvPoster;
+    private ImageView btnBack;
     private Dialog dialog;
+    private LinearLayout llAvail;
     private static final String TAG = "TicketDetailActivity";
 
-    private String url = "/ticket-detail/api/009a4ccd-89a2-4bd1-a0a4-f2b5dd148961";
+    private String url = "/ticket/api/detail/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ticket_detail);
 
+        boolean avail = getIntent().getBooleanExtra(getString(R.string.avail_ticket), true);
 
-        tv_ticket_id = findViewById(R.id.textview_ticket_id);
-        imgv_qr = findViewById(R.id.imageview_QR);
-        tv_theater_name = findViewById(R.id.textview_theater_name);
-        tv_movie_name = findViewById(R.id.textview_movie_name_td);
-        tv_date_and_time = findViewById(R.id.textview_date_and_time);
-        tv_screen_name = findViewById(R.id.textview_screen);
-        tv_seat = findViewById(R.id.textview_seat);
-        tv_row = findViewById(R.id.textview_row);
-        tv_duration = findViewById(R.id.textview_duration);
-        imgv_poster = findViewById(R.id.imageview_movie_td);
+        btnBack = findViewById(R.id.back_to_tickets);
+        llAvail = findViewById(R.id.linear_layout_avail);
+        if (!avail)
+            llAvail.setVisibility(LinearLayout.GONE);
+
+        tvTicketId = findViewById(R.id.textview_ticket_id);
+        imgvQr = findViewById(R.id.imageview_QR);
+        tvTheaterName = findViewById(R.id.textview_theater_name);
+        tvMovieName = findViewById(R.id.textview_movie_name_td);
+        tvDateAndTime = findViewById(R.id.textview_date_and_time);
+        tvScreenName = findViewById(R.id.textview_screen);
+        tvSeat = findViewById(R.id.textview_seat);
+        tvRow = findViewById(R.id.textview_row);
+        tvDuration = findViewById(R.id.textview_duration);
+        imgvPoster = findViewById(R.id.imageview_movie_td);
 
         dialog = DialogLoading.newInstance(this);
+
+        btnBack.setOnClickListener(view -> {
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.putExtra(getString(R.string.avail_ticket), avail);
+            MainActivity.saveFragmentId(intent, MainActivity.FRAGMENT_TICKET);
+            startActivity(intent);
+        });
 
         getTicketDetail();
     }
 
     private void getTicketDetail() {
-        Log.i(TAG, "getTicketDetail: " + CallAPI.URL_WEB_SERVICE + url);
+        String ticketId = getIntent().getStringExtra("ticketId");
         DialogLoading.showDialogLoading(dialog, getString(R.string.loading));
-        CallAPI.callJsonObjectRequest(this, CallAPI.URL_WEB_SERVICE + url, "", Request.Method.GET, response -> {
+        CallAPI.callJsonObjectRequest(this, CallAPI.URL_WEB_SERVICE + url + ticketId, "", Request.Method.GET, response -> {
             try {
                 TicketDetailResponse ticketDetail = new Gson().fromJson(response.getString("data"), TicketDetailResponse.class);
 
@@ -95,17 +97,17 @@ public class TicketDetailActivity extends AppCompatActivity {
                 String room = ticketDetail.getNameRoom().split(" ")[1];
                 LocalDateTime dateTime = LocalDateTime.parse(ticketDetail.getStartShowtime());
 
-                tv_ticket_id.setText(ticketDetail.getId());
-                tv_theater_name.setText(ticketDetail.getNameCinema());
-                tv_movie_name.setText(ticketDetail.getNameMovie());
-                tv_date_and_time.setText(DateTimeFormat.getDateTime(dateTime));
-                tv_screen_name.setText(room);
-                tv_seat.setText(seat);
-                tv_row.setText(row);
-                tv_duration.setText(ticketDetail.getDuration());
+                tvTicketId.setText(ticketDetail.getId());
+                tvTheaterName.setText(ticketDetail.getNameCinema());
+                tvMovieName.setText(ticketDetail.getNameMovie());
+                tvDateAndTime.setText(DateTimeFormat.getDateTime(dateTime));
+                tvScreenName.setText(room);
+                tvSeat.setText(seat);
+                tvRow.setText(row);
+                tvDuration.setText(ticketDetail.getDuration());
 
                 // Load poster
-                Glide.with(this).load(ticketDetail.getPoster()).into(imgv_poster);
+                Glide.with(this).load(ticketDetail.getPoster()).into(imgvPoster);
 
                 createQR(ticketDetail.getId());
             } catch (JSONException e) {
@@ -138,14 +140,14 @@ public class TicketDetailActivity extends AppCompatActivity {
 
         // Tạo mã QR:
         try {
-            qrgEncoder = new QRGEncoder(tv_ticket_id.getText().toString(), null, QRGContents.Type.TEXT, dimen);
+            qrgEncoder = new QRGEncoder(tvTicketId.getText().toString(), null, QRGContents.Type.TEXT, dimen);
 
             /*
             Bitmap đại diện cho một ma trận các điểm ảnh (pixels) được sắp xếp 2D.
             Mỗi điểm ảnh trong Bitmap có thể được mô tả bằng một số nguyên, trong đó mỗi bit của số nguyên đó biểu diễn một màu sắc cụ thể.
              */
             Bitmap bitmap = qrgEncoder.encodeAsBitmap();
-            imgv_qr.setImageBitmap(bitmap);
+            imgvQr.setImageBitmap(bitmap);
         } catch (WriterException e) {
             throw new RuntimeException(e);
         }

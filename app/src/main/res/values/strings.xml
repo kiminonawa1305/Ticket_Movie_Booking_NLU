@@ -79,7 +79,9 @@
     <string name="title_category">Thể loại:</string>
     <string name="pay">Thanh toán</string>
     <string name="total_pay">Tổng tiền:</string>
-    <string name="chair">Ghế:</string>
+    <string name="single_chair">Ghế đơn: </string>
+    <string name="couple_chair">Ghế đôi: </string>
+    <string name="vip_chair">Ghế đôi: </string>
     <string name="room_show">Phòng chiếu:</string>
     <string name="payment_cinema">Rạp:</string>
     <string name="payment_email">Email:</string>
@@ -96,4 +98,18 @@
     <string name="total_price">Tổng giá:</string>
     <string name="selected_chair">Ghế đã chọn:</string>
     <string name="total_chair">Tổng ghế:</string>
+
+    <string name="time">Thời gian</string>
+    <string name="back_to_home">Về trang chủ</string>
+    <string name="pay_success">THANH TOÁN THÀNH CÔNG</string>
+    <string name="code_pay">Mã thanh toán</string>
+
+    <string name="avail_ticket">avail</string>
+    <string name="info_ticket">Thông tin vé</string>
+    <string name="showtime">Thông tin xuất chiếu</string>
+    <string name="hint_full_name">Họ và tên</string>
+    <string name="hint_phone">Số điện thoại</string>
+    <string name="next">Tiếp theo</string>
+    <string name="phone_empty">Số điện thoại không được bỏ trống!</string>
+    <string name="full_name_empty">Họ và tên không được bỏ trống!</string>
 </resources>

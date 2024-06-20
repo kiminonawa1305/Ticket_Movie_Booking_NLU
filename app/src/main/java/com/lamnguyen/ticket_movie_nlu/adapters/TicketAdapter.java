@@ -1,6 +1,7 @@
 package com.lamnguyen.ticket_movie_nlu.adapters;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
 import android.graphics.drawable.Drawable;
@@ -20,6 +21,7 @@ import com.google.android.material.imageview.ShapeableImageView;
 import com.lamnguyen.ticket_movie_nlu.R;
 import com.lamnguyen.ticket_movie_nlu.dto.TicketDTO;
 import com.lamnguyen.ticket_movie_nlu.utils.DateTimeFormat;
+import com.lamnguyen.ticket_movie_nlu.view.activities.TicketDetailActivity;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -53,6 +55,7 @@ public class TicketAdapter extends RecyclerView.Adapter<TicketAdapter.TicketItem
         holder.setTime(DateTimeFormat.getTime(startShowtime));
         holder.setDate(DateTimeFormat.getDate(startShowtime));
         holder.setShibMovieImage(ticket.getPoster());
+        holder.setId(ticket.getId());
     }
 
     @Override
@@ -120,6 +123,15 @@ public class TicketAdapter extends RecyclerView.Adapter<TicketAdapter.TicketItem
 
         public void setShibMovieImage(String url) {
             Glide.with(shibMovieImage).load(url).into(shibMovieImage);
+        }
+
+        public void setId(String id) {
+            this.itemView.setOnClickListener(element -> {
+                Intent intent = new Intent(itemView.getContext(), TicketDetailActivity.class);
+                intent.putExtra("ticketId", id);
+                intent.putExtra(itemView.getContext().getString(R.string.avail_ticket), avail);
+                itemView.getContext().startActivity(intent);
+            });
         }
     }
 }
