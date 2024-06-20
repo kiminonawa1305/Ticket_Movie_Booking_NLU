@@ -38,7 +38,7 @@ public class GoogleMapRoutesHttpRequest {
     public void call(LatLng origin, LatLng destination) {
         String body = getBody(origin, destination);
         try {
-            CallAPI.callJsonObjectRequest(context, CallAPI.URL_GOOGLE_MAP_COMPUTE_ROUTES, "", new JSONObject().getJSONObject(body), getHeaders(), method, listener, errorListener);
+            CallAPI.callJsonObjectRequest(context, CallAPI.URL_GOOGLE_MAP_COMPUTE_ROUTES, "", new JSONObject(body), getHeaders(), method, listener, errorListener);
         } catch (JSONException e) {
             Log.e(GoogleMapRoutesHttpRequest.class.getSimpleName(), "call: " + e.toString());
         }

@@ -133,6 +133,8 @@ public class MovieDetailActivity extends AppCompatActivity {
         textViewPremiereDate.setText(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyy")));
         textViewTitle.setText(movieDetailDTO.getTitle());
         readMoreTextViewMovieSynopsis.setText(movieDetailDTO.getDescription());
+
+        buttonBooking.setVisibility(movieDetailDTO.getAvail() ? Button.VISIBLE : Button.GONE);
     }
 
     private void loadGenre(String[] genres) {
