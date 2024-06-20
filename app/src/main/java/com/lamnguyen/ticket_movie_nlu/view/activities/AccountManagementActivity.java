@@ -29,8 +29,8 @@ public class AccountManagementActivity extends AppCompatActivity {
 
 
         accounts = new ArrayList<>();
-        accounts.add(new Account(1, "Nguyễn Văn A", "0333840481", "anhduong@gmail.com", "abc123", "22/2/2022", false));
-        accounts.add(new Account(2, "Nguyễn Văn B", "0333840481", "anhduong@gmail.com", "xyz789", "22/2/2022", true));
+        accounts.add(new Account(1, "Nguyễn Văn A", "0333840481", "anhduong@gmail.com", "abc123", false));
+        accounts.add(new Account(2, "Nguyễn Văn B", "0333840481", "anhduong@gmail.com", "xyz789", true));
 
 
         populateTable();
@@ -57,7 +57,6 @@ public class AccountManagementActivity extends AppCompatActivity {
         headerRow.addView(createTextView("Số điện thoại", true));
         headerRow.addView(createTextView("Email", true));
         headerRow.addView(createTextView("Mật khẩu", true));
-        headerRow.addView(createTextView("Ngày tạo", true));
         headerRow.addView(createTextView("Khóa", true));
         tableLayout.addView(headerRow);
 
@@ -69,7 +68,6 @@ public class AccountManagementActivity extends AppCompatActivity {
             row.addView(createTextView(account.getPhone(), false));
             row.addView(createTextView(account.getEmail(), false));
             row.addView(createTextView(hashPassword(account.getPassword()), false));
-            row.addView(createTextView(account.getCreatedDate(), false));
             CheckBox checkBox = new CheckBox(this);
             checkBox.setChecked(account.isLocked());
             checkBox.setTag(account);

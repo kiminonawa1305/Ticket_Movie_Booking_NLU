@@ -80,12 +80,6 @@
                         android:textStyle="bold"
                         android:gravity="center"/>
                     <TextView
-                        android:text="Ngày tạo"
-                        android:padding="8dp"
-                        android:background="#CCCCCC"
-                        android:textStyle="bold"
-                        android:gravity="center"/>
-                    <TextView
                         android:text="Khóa"
                         android:padding="8dp"
                         android:background="#CCCCCC"

@@ -6,16 +6,15 @@ public class Account {
     private String phone;
     private String email;
     private String password;
-    private String createdDate;
+
     private boolean locked;
 
-    public Account(int stt, String name, String phone, String email, String password, String createdDate, boolean locked) {
+    public Account(int stt, String name, String phone, String email, String password, boolean locked) {
         this.stt = stt;
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.password = password;
-        this.createdDate = createdDate;
         this.locked = locked;
     }
 
@@ -37,10 +36,6 @@ public class Account {
 
     public String getPassword() {
         return password;
-    }
-
-    public String getCreatedDate() {
-        return createdDate;
     }
 
     public boolean isLocked() {
