@@ -104,4 +104,17 @@
 
     <string name="avail_ticket">avail</string>
     <string name="info_ticket">Thông tin vé</string>
+
+    <!--    Dashboard-->
+    <string name="dashboard">Dashboard</string>
+    <string name="dashboard_day">Ngày</string>
+    <string name="dashboard_week">Tuần</string>
+    <string name="dashboard_month">Tháng</string>
+    <string name="dashboard_num_of_ticket_sale">Số lượng vé bán ra</string>
+    <string name="dashboard_revenu_report">Báo cáo doanh thu</string>
+    <string name="dashboard_full_room">Lấp đầy phòng</string>
+    <string name="dashboard_fully">Lấp</string>
+    <string name="dashboard_empty">Trống</string>
+    <string name="dashboard_sum_revenu">Tổng doanh thu</string>
+    <string name="dashboard_sum_num_of_ticket_sale">Tổng số lượng vé bán ra</string>
 </resources>
