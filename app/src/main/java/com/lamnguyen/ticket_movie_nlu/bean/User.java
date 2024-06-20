@@ -1,5 +1,9 @@
 package com.lamnguyen.ticket_movie_nlu.bean;
 
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -54,4 +58,5 @@ public class User {
     public boolean isLocked() {
         return locked;
     }
+
 }

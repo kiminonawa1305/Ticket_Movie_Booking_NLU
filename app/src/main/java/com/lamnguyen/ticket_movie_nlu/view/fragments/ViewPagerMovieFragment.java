@@ -71,12 +71,12 @@ public class ViewPagerMovieFragment extends Fragment {
 
     private void loadMovieShowtime(LocalDate dateTime) {
         DialogLoading.showDialogLoading(dialog, getString(R.string.loading));
-        movieService.loadMovieShowtime(dateTime, this.getContext(), new CallAPI.CallAPIListener<List<MovieDTO>>() {
+        movieService.loadMovie(dateTime, this.getContext(), new CallAPI.CallAPIListener<List<MovieDTO>>() {
 
             @Override
             public void completed(List<MovieDTO> movieDTOs) {
                 dialog.dismiss();
-                rclDisplayListMovieShowtime.setAdapter(new MovieAdapter(movieDTOs, ViewPagerMovieFragment.this.getActivity()));
+                rclDisplayListMovieShowtime.setAdapter(new MovieAdapter(movieDTOs, dateTime, ViewPagerMovieFragment.this.getActivity()));
             }
 
             @Override

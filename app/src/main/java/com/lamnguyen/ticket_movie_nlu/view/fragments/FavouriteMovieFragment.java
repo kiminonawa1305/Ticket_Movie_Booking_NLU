@@ -21,6 +21,7 @@ import com.lamnguyen.ticket_movie_nlu.dto.MovieDTO;
 import com.lamnguyen.ticket_movie_nlu.utils.CallAPI;
 import com.lamnguyen.ticket_movie_nlu.utils.DialogLoading;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,7 +46,7 @@ public class FavouriteMovieFragment extends Fragment {
 
         // Khởi tạo adapter và RecyclerView
         List<MovieDTO> movieList = new ArrayList<>();
-        movieAdapter = new MovieAdapter(movieList, getActivity());
+        movieAdapter = new MovieAdapter(movieList, LocalDate.now(), getActivity());
         rvDisplayFavoriteMovie.setAdapter(movieAdapter);
         GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
         rvDisplayFavoriteMovie.setLayoutManager(layoutManager);
@@ -57,7 +58,7 @@ public class FavouriteMovieFragment extends Fragment {
             @Override
             public void completed(List<MovieDTO> movieDTOs) {
                 dialog.dismiss();
-                rvDisplayFavoriteMovie.setAdapter(new MovieAdapter(movieDTOs, FavouriteMovieFragment.this.getActivity()));
+                rvDisplayFavoriteMovie.setAdapter(movieAdapter);
             }
 
             @Override
