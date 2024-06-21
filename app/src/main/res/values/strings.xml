@@ -117,4 +117,10 @@
     <string name="dashboard_empty">Trống</string>
     <string name="dashboard_sum_revenu">Tổng doanh thu</string>
     <string name="dashboard_sum_num_of_ticket_sale">Tổng số lượng vé bán ra</string>
+    <string-array name="spinner_items_name_cinema">
+        <item>CINESTAR</item>
+        <item>GIGALMALL</item>
+        <item>COOP MART</item>
+        <item>GALAXY</item>
+    </string-array>
 </resources>

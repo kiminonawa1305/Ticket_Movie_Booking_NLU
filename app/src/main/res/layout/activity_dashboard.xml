@@ -71,10 +71,20 @@
             android:paddingVertical="10dp"
             android:layout_height="wrap_content">
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:paddingHorizontal="4dp"
+                android:layout_marginRight="20dp"
+                android:gravity="center"
+                android:background="@drawable/bg_gradient_in_dashboard_round1"
+                android:layout_height="match_parent">
+                <Spinner
+                    android:id="@+id/spinner_name_cinema"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
 
-            <TextView
-                android:layout_width="120dp"
-                android:layout_height="wrap_content"/>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:orientation="horizontal"
@@ -168,11 +178,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <Spinner
-                    android:id="@+id/spinner_name_cinema"
-                    android:layout_width="wrap_content"
-                    android:background="@drawable/bg_gradient_in_dashboard_round1"
-                    android:layout_height="wrap_content"/>
+
 
                 <TableLayout
                     android:layout_width="match_parent"

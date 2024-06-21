@@ -2,8 +2,10 @@ package com.lamnguyen.ticket_movie_nlu.view.activities;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -31,7 +33,7 @@ public class DashboardActivity extends AppCompatActivity {
     private ImageView imgViewEditCalendar;
     private AnyChartView anyChartViewDisplayNumOfSaleTicket, getAnyChartViewDisplayRevenueReport;
     private TextView txtViewDay, txtViewWeek, txtViewMonth, txtViewSumOfSaleTicket, txtViewSumOfRevenue;
-
+    private Spinner spnSelectCinema;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,8 +50,17 @@ public class DashboardActivity extends AppCompatActivity {
         txtViewMonth = findViewById(R.id.text_view_show_month);
         txtViewSumOfSaleTicket = findViewById(R.id.text_view_sum_sale_ticket);
         txtViewSumOfRevenue = findViewById(R.id.text_view_sum_revenu);
+        spnSelectCinema = findViewById(R.id.spinner_name_cinema);
 
+        addItemToSpinner();
         createLineChart();
+    }
+
+    private void addItemToSpinner() {
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.spinner_items_name_cinema, R.layout.items_spinner_name_cinema);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spnSelectCinema.setAdapter(adapter);
     }
 
     private void createLineChart() {
