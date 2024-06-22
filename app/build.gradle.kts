@@ -92,5 +92,6 @@ dependencies {
 
     //anychart
     implementation("com.github.AnyChart:AnyChart-Android:1.1.5")
+    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
 }
 

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:barchart="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:background="@color/black"
@@ -47,7 +48,7 @@
                     android:id="@+id/button_week"
                     android:layout_width="wrap_content"
                     android:text="@string/dashboard_week"
-                    android:background="@drawable/bg_nav_dashboard"
+                    android:background="@android:color/transparent"
                     android:textColor="@color/black"
                     android:textStyle="bold"
                     android:textSize="20sp"
@@ -57,7 +58,7 @@
                     android:id="@+id/button_month"
                     android:layout_width="wrap_content"
                     android:text="@string/dashboard_month"
-                    android:background="@drawable/bg_nav_dashboard"
+                    android:background="@android:color/transparent"
                     android:textColor="@color/black"
                     android:textStyle="bold"
                     android:textSize="20sp"
@@ -74,7 +75,7 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:paddingHorizontal="4dp"
-                android:layout_marginRight="20dp"
+                android:layout_marginRight="10dp"
                 android:gravity="center"
                 android:background="@drawable/bg_gradient_in_dashboard_round1"
                 android:layout_height="match_parent">
@@ -145,10 +146,13 @@
                 android:textSize="20sp"
                 android:paddingHorizontal="20dp"
                 android:layout_height="wrap_content"/>
-            <com.anychart.AnyChartView
-                android:id="@+id/any_chart_view_display_sale_ticket"
+
+            <com.github.mikephil.charting.charts.BarChart
+                android:id="@+id/bar_chart_view_display_sale_ticket"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="match_parent" />
+
+
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -162,12 +166,14 @@
                 android:text="@string/dashboard_revenu_report"
                 android:textColor="@color/white"
                 android:textSize="20sp"
+                android:background="#4C84BC"
                 android:paddingHorizontal="20dp"
                 android:layout_height="wrap_content"/>
+
             <com.anychart.AnyChartView
                 android:id="@+id/any_chart_view_display_revenu_report"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="match_parent"/>
         </LinearLayout>
         <TableLayout
             android:layout_width="match_parent"
