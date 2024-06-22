@@ -1,9 +1,11 @@
 package com.lamnguyen.ticket_movie_nlu.view.activities;
 
+import android.app.DatePickerDialog;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -29,14 +31,17 @@ import com.lamnguyen.ticket_movie_nlu.view.fragments.DayDashBoardFragment;
 import com.lamnguyen.ticket_movie_nlu.view.fragments.MonthDashboardFragment;
 import com.lamnguyen.ticket_movie_nlu.view.fragments.WeekDashBoardFragment;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 public class DashboardActivity extends AppCompatActivity {
     private static final String TAG = "DashboardActivity";
     private Button btnDay, btnWeek, btnMonth;
     private ImageView imgViewEditCalendar;
-
+    private TextView txtDay, txtWeek, txtMonth;
     private Spinner spnSelectCinema;
 
     @Override
@@ -49,6 +54,9 @@ public class DashboardActivity extends AppCompatActivity {
         btnMonth = findViewById(R.id.button_month);
         imgViewEditCalendar = findViewById(R.id.image_view_edit_calendar);
         spnSelectCinema = findViewById(R.id.spinner_name_cinema);
+        txtDay = findViewById(R.id.text_view_show_day);
+        txtWeek = findViewById(R.id.text_view_show_week);
+        txtMonth = findViewById(R.id.text_view_show_month);
 
         // Set initial fragment
         if (savedInstanceState == null) {
@@ -75,6 +83,7 @@ public class DashboardActivity extends AppCompatActivity {
             replaceFragment(new MonthDashboardFragment());
         });
         imgViewEditCalendar.setOnClickListener(v -> {
+            showDatePicker();
         });
     }
 
@@ -93,7 +102,31 @@ public class DashboardActivity extends AppCompatActivity {
         spnSelectCinema.setAdapter(adapter);
     }
 
+    private void showDatePicker() {
+        final Calendar calendar = Calendar.getInstance();
 
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(
+                DashboardActivity.this,
+                new DatePickerDialog.OnDateSetListener(){
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        calendar.set(year, month, dayOfMonth);
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+                        String selectedDate = dateFormat.format(calendar.getTime());
+                        txtDay.setText(selectedDate.split("/")[0]);
+                        txtWeek.setText(selectedDate.split("/")[1]);
+                        txtMonth.setText(selectedDate.split("/")[2]);
+                    }
+
+                },
+                year, month, day
+        );
+        datePickerDialog.show();
+    }
     private void replaceFragment(Fragment fragment) {
         // Lấy FragmentManager và bắt đầu giao dịch
         FragmentManager fragmentManager = getSupportFragmentManager();
