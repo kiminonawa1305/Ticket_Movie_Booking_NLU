@@ -67,6 +67,9 @@ public class WeekDashBoardFragment extends Fragment {
         entries.add(new BarEntry(1f, 20));
         entries.add(new BarEntry(2f, 25));
         entries.add(new BarEntry(3f, 30));
+        entries.add(new BarEntry(4f, 20));
+        entries.add(new BarEntry(5f, 25));
+        entries.add(new BarEntry(6f, 30));
 
         BarDataSet dataSet = new BarDataSet(entries, "Số vé bán được");
         dataSet.setColors(Color.WHITE);
@@ -81,6 +84,11 @@ public class WeekDashBoardFragment extends Fragment {
         barChartViewDisplayWeekNumOfSaleTicket.setFitBars(true);
         barChartViewDisplayWeekNumOfSaleTicket.setDescription(null);
         barChartViewDisplayWeekNumOfSaleTicket.animateXY(1000, 1000);
+        // Cho phép cuộn và thu phóng
+        barChartViewDisplayWeekNumOfSaleTicket.setDragEnabled(true);
+        barChartViewDisplayWeekNumOfSaleTicket.setScaleEnabled(true);
+        barChartViewDisplayWeekNumOfSaleTicket.setPinchZoom(true);
+
         barChartViewDisplayWeekNumOfSaleTicket.invalidate(); // Refresh chart
 
         // Cấu hình trục X
@@ -114,6 +122,8 @@ public class WeekDashBoardFragment extends Fragment {
         entries.add(new Entry(2f, 20));
         entries.add(new Entry(3f, 12));
         entries.add(new Entry(4f, 9));
+        entries.add(new Entry(5f, 20));
+        entries.add(new Entry(6f, 12));
 
         LineDataSet dataSet = new LineDataSet(entries, "Doanh thu");
         dataSet.setColor(Color.WHITE);
@@ -129,6 +139,11 @@ public class WeekDashBoardFragment extends Fragment {
         lineChartDisplayWeekRevenueReport.setData(data);
         lineChartDisplayWeekRevenueReport.setDescription(null);
         lineChartDisplayWeekRevenueReport.animateXY(1000, 1000);
+        // Cho phép cuộn và thu phóng
+        lineChartDisplayWeekRevenueReport.setDragEnabled(true);
+        lineChartDisplayWeekRevenueReport.setScaleEnabled(true);
+        lineChartDisplayWeekRevenueReport.setPinchZoom(true);
+
         lineChartDisplayWeekRevenueReport.invalidate(); // Refresh chart
 
         // Cấu hình trục X

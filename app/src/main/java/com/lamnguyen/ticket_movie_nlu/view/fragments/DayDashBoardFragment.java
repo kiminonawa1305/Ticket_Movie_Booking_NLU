@@ -76,6 +76,11 @@ public class DayDashBoardFragment extends Fragment {
         barChartViewDisplayDayNumOfSaleTicket.setFitBars(true);
         barChartViewDisplayDayNumOfSaleTicket.setDescription(null);
         barChartViewDisplayDayNumOfSaleTicket.animateXY(1000, 1000);
+        // Cho phép cuộn và thu phóng
+        barChartViewDisplayDayNumOfSaleTicket.setDragEnabled(true);
+        barChartViewDisplayDayNumOfSaleTicket.setScaleEnabled(true);
+        barChartViewDisplayDayNumOfSaleTicket.setPinchZoom(true);
+
         barChartViewDisplayDayNumOfSaleTicket.invalidate(); // Refresh chart
 
         // Cấu hình trục X
@@ -123,6 +128,10 @@ public class DayDashBoardFragment extends Fragment {
         lineChartDisplayDayRevenueReport.setData(data);
         lineChartDisplayDayRevenueReport.setDescription(null);
         lineChartDisplayDayRevenueReport.animateXY(1000, 1000);
+        // Cho phép cuộn và thu phóng
+        lineChartDisplayDayRevenueReport.setDragEnabled(true);
+        lineChartDisplayDayRevenueReport.setScaleEnabled(true);
+        lineChartDisplayDayRevenueReport.setPinchZoom(true);
         lineChartDisplayDayRevenueReport.invalidate(); // Refresh chart
 
         // Cấu hình trục X

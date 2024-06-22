@@ -80,6 +80,11 @@ public class MonthDashboardFragment extends Fragment {
         barChartViewDisplayMonthNumOfSaleTicket.setFitBars(true);
         barChartViewDisplayMonthNumOfSaleTicket.setDescription(null);
         barChartViewDisplayMonthNumOfSaleTicket.animateXY(1000, 1000);
+        // Cho phép cuộn và thu phóng
+        barChartViewDisplayMonthNumOfSaleTicket.setDragEnabled(true);
+        barChartViewDisplayMonthNumOfSaleTicket.setScaleEnabled(true);
+        barChartViewDisplayMonthNumOfSaleTicket.setPinchZoom(true);
+
         barChartViewDisplayMonthNumOfSaleTicket.invalidate(); // Refresh chart
 
         // Cấu hình trục X
@@ -128,6 +133,11 @@ public class MonthDashboardFragment extends Fragment {
         lineChartDisplayMonthRevenueReport.setData(data);
         lineChartDisplayMonthRevenueReport.setDescription(null);
         lineChartDisplayMonthRevenueReport.animateXY(1000, 1000);
+        // Cho phép cuộn và thu phóng
+        lineChartDisplayMonthRevenueReport.setDragEnabled(true);
+        lineChartDisplayMonthRevenueReport.setScaleEnabled(true);
+        lineChartDisplayMonthRevenueReport.setPinchZoom(true);
+
         lineChartDisplayMonthRevenueReport.invalidate(); // Refresh chart
 
         // Cấu hình trục X
