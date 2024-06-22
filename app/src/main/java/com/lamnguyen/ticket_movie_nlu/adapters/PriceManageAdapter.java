@@ -21,11 +21,15 @@ public class PriceManageAdapter extends RecyclerView.Adapter<PriceManageAdapter.
 
     private Context mContext;
     private List<PriceManageDTO> mListPriceManage;
+    private OnEditListener mOnEditListener;
 
+    public interface OnEditListener {
+        void onEditClicked(int position);
+    }
 
-    public PriceManageAdapter(Context mContext) {
+    public PriceManageAdapter(Context mContext, OnEditListener onEditListener) {
         this.mContext = mContext;
-
+        this.mOnEditListener = onEditListener;
     }
 
     public void setData(List<PriceManageDTO> list) {
@@ -37,6 +41,12 @@ public class PriceManageAdapter extends RecyclerView.Adapter<PriceManageAdapter.
         return mListPriceManage;
     }
 
+    public void updatePrice(int position, PriceManageDTO updatedPrice) {
+        if (mListPriceManage != null && position >= 0 && position < mListPriceManage.size()) {
+            mListPriceManage.set(position, updatedPrice);
+            notifyItemChanged(position);
+        }
+    }
 
     @NonNull
     @Override
@@ -56,7 +66,13 @@ public class PriceManageAdapter extends RecyclerView.Adapter<PriceManageAdapter.
         holder.coupleChairPrice.setText(priceManage.getCouple());
         holder.VIPChairPrice.setText(priceManage.getVip());
 
+        holder.pencilImage.setOnClickListener(v -> mOnEditListener.onEditClicked(position));
 
+        if (position % 2 == 0) {
+            holder.cardView.setCardBackgroundColor(mContext.getResources().getColor(R.color.bg_cinema_1)); // Màu 1
+        } else {
+            holder.cardView.setCardBackgroundColor(mContext.getResources().getColor(R.color.bg_cinema_2)); // Màu 2
+        }
     }
 
     @Override
@@ -72,6 +88,8 @@ public class PriceManageAdapter extends RecyclerView.Adapter<PriceManageAdapter.
         private EditText singleChairPPrice;
         private EditText coupleChairPrice;
         private EditText VIPChairPrice;
+        private CardView cardView;
+        private ImageView pencilImage;
 
         public PriceManageViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -79,7 +97,8 @@ public class PriceManageAdapter extends RecyclerView.Adapter<PriceManageAdapter.
             singleChairPPrice = itemView.findViewById(R.id.single_chair_price);
             coupleChairPrice = itemView.findViewById(R.id.couple_chair_price);
             VIPChairPrice = itemView.findViewById(R.id.VIP_chair_price);
-
+            cardView = itemView.findViewById(R.id.cv_price_manage);
+            pencilImage = itemView.findViewById(R.id.pencil_image);
         }
     }
 }
