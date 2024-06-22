@@ -21,6 +21,7 @@ import java.util.Map;
 public class PriceManageActivity extends AppCompatActivity implements PriceManageAdapter.OnEditListener {
     private RecyclerView rcvPriceManage;
     private PriceManageAdapter mpriceManage;
+    private Map<Integer, PriceManageDTO> originalPrices = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +59,12 @@ public class PriceManageActivity extends AppCompatActivity implements PriceManag
             EditText vipChairPrice = itemView.findViewById(R.id.VIP_chair_price);
 
 
+            originalPrices.put(position, new PriceManageDTO(
+                    mpriceManage.getPriceList().get(position).getCinemaName(),
+                    singleChairPrice.getText().toString(),
+                    coupleChairPrice.getText().toString(),
+                    vipChairPrice.getText().toString()
+            ));
 
             buttonContainer.setVisibility(View.VISIBLE);
             singleChairPrice.setFocusableInTouchMode(true);
@@ -68,6 +75,13 @@ public class PriceManageActivity extends AppCompatActivity implements PriceManag
             vipChairPrice.setFocusable(true);
 
             buttonContainer.findViewById(R.id.button1).setOnClickListener(v -> {
+
+                PriceManageDTO originalPrice = originalPrices.get(position);
+                if (originalPrice != null) {
+                    singleChairPrice.setText(originalPrice.getSingle());
+                    coupleChairPrice.setText(originalPrice.getCouple());
+                    vipChairPrice.setText(originalPrice.getVip());
+                }
 
                 buttonContainer.setVisibility(View.GONE);
                 singleChairPrice.setFocusableInTouchMode(false);
@@ -95,6 +109,7 @@ public class PriceManageActivity extends AppCompatActivity implements PriceManag
                 );
 
                 mpriceManage.updatePrice(position, updatedPriceManageDTO);
+                originalPrices.remove(position);
             });
         }
     }
