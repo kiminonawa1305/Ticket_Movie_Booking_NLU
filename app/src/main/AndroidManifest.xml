@@ -52,10 +52,10 @@
             android:name=".view.activities.ChooseMovieShowTimeActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".view.activities.FavoriteMovieActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
+<!--        <activity-->
+<!--            android:name=".view.activities.FavoriteMovieActivity"-->
+<!--            android:exported="false"-->
+<!--            android:screenOrientation="portrait" />-->
         <activity
             android:name=".view.activities.GoogleSignInActivity"
             android:exported="false"
@@ -73,7 +73,7 @@
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.activities.PaymentActivity"
+            android:name=".view.activities.PriceManageActivity"
             android:exported="true"
             android:screenOrientation="portrait" >
             <intent-filter>
@@ -92,6 +92,10 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activities.UserInfoActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activities.PaymentActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
