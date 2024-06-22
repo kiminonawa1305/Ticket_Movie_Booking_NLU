@@ -19,11 +19,15 @@ import com.anychart.charts.Cartesian;
 import com.anychart.core.cartesian.series.Line;
 import com.anychart.graphics.vector.GradientKey;
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.lamnguyen.ticket_movie_nlu.R;
 
@@ -34,8 +38,8 @@ public class DashboardActivity extends AppCompatActivity {
     private static final String TAG = "DashboardActivity";
     private Button btnDay, btnWeek, btnMonth;
     private ImageView imgViewEditCalendar;
-    private AnyChartView anyChartViewDisplayNumOfSaleTicket, anyChartViewDisplayRevenueReport;
     private BarChart barChartViewDisplayNumOfSaleTicket;
+    private LineChart lineChartDisplayRevenueReport;
     private TextView txtViewDay, txtViewWeek, txtViewMonth, txtViewSumOfSaleTicket, txtViewSumOfRevenue;
     private Spinner spnSelectCinema;
 
@@ -46,20 +50,21 @@ public class DashboardActivity extends AppCompatActivity {
 
         btnDay = findViewById(R.id.button_day);
         btnWeek = findViewById(R.id.button_week);
+        btnMonth = findViewById(R.id.button_month);
         imgViewEditCalendar = findViewById(R.id.image_view_edit_calendar);
-        barChartViewDisplayNumOfSaleTicket = (BarChart) findViewById(R.id.bar_chart_view_display_sale_ticket);
-        anyChartViewDisplayRevenueReport = findViewById(R.id.any_chart_view_display_revenu_report);
-        txtViewDay = findViewById(R.id.text_view_show_day);
-        txtViewWeek = findViewById(R.id.text_view_show_week);
-        txtViewMonth = findViewById(R.id.text_view_show_month);
-        txtViewSumOfSaleTicket = findViewById(R.id.text_view_sum_sale_ticket);
-        txtViewSumOfRevenue = findViewById(R.id.text_view_sum_revenu);
-        spnSelectCinema = findViewById(R.id.spinner_name_cinema);
+//        barChartViewDisplayNumOfSaleTicket = (BarChart) findViewById(R.id.bar_chart_view_display_sale_ticket);
+//        lineChartDisplayRevenueReport = (LineChart) findViewById(R.id.any_chart_view_display_revenu_report);
+//        txtViewDay = findViewById(R.id.text_view_show_day);
+//        txtViewWeek = findViewById(R.id.text_view_show_week);
+//        txtViewMonth = findViewById(R.id.text_view_show_month);
+//        txtViewSumOfSaleTicket = findViewById(R.id.text_view_sum_sale_ticket);
+//        txtViewSumOfRevenue = findViewById(R.id.text_view_sum_revenu);
+//        spnSelectCinema = findViewById(R.id.spinner_name_cinema);
 
-        createBarChart();
+
         addItemToSpinner();
-        createLineChart();
-
+//        createLineChart();
+//        createBarChart();
 
         imgViewEditCalendar.setOnClickListener(v -> {
         });
@@ -84,6 +89,7 @@ public class DashboardActivity extends AppCompatActivity {
         // Thiết lập biểu đồ
         barChartViewDisplayNumOfSaleTicket.setData(data);
         barChartViewDisplayNumOfSaleTicket.setFitBars(true);
+        barChartViewDisplayNumOfSaleTicket.setDescription(null);
         barChartViewDisplayNumOfSaleTicket.invalidate(); // Refresh chart
 
         // Cấu hình trục X
@@ -107,7 +113,7 @@ public class DashboardActivity extends AppCompatActivity {
         rightAxis.setDrawGridLines(false);
 
         // Vô hiệu hóa biểu đồ bên phải
-        rightAxis.setEnabled(true);
+        rightAxis.setEnabled(false);
     }
 
     private void addItemToSpinner() {
@@ -118,29 +124,48 @@ public class DashboardActivity extends AppCompatActivity {
     }
 
     private void createLineChart() {
-        Cartesian cartesian = AnyChart.line();
-        cartesian.animation(true);
+        // Dữ liệu cho biểu đồ đường
+        List<Entry> entries = new ArrayList<>();
+        entries.add(new Entry(0f, 5));
+        entries.add(new Entry(1f, 10));
+        entries.add(new Entry(2f, 20));
+        entries.add(new Entry(3f, 12));
+        entries.add(new Entry(4f, 9));
 
-        List<DataEntry> seriesData = new ArrayList<>();
-        seriesData.add(new ValueDataEntry("Sáng", 10000));
-        seriesData.add(new ValueDataEntry("Trưa", 12000));
-        seriesData.add(new ValueDataEntry("Chiều", 18000));
-        seriesData.add(new ValueDataEntry("Tối", 11000));
+        String[] labels = {"Jan", "Feb", "Mar", "Apr"};
+        LineDataSet dataSet = new LineDataSet(entries, "Values");
+        dataSet.setColor(Color.WHITE);
+        dataSet.setValueTextColor(Color.WHITE);
+        dataSet.setLineWidth(2f);
+        dataSet.setCircleColor(Color.WHITE); // Màu của điểm
+        dataSet.setCircleRadius(4f);      // Kích thước của điểm
+        dataSet.setFillAlpha(65);
+        dataSet.setFillColor(Color.WHITE);
+        dataSet.setDrawFilled(true);
 
-        Line series = cartesian.line(seriesData);
-        series.name("Doanh thu");
-        series.color("#ffffff");
-        setBackgroundGradient(cartesian);
+        LineData data = new LineData(dataSet);
+        lineChartDisplayRevenueReport.setData(data);
+        lineChartDisplayRevenueReport.setDescription(null);
+        lineChartDisplayRevenueReport.invalidate(); // Refresh chart
 
-        anyChartViewDisplayRevenueReport.setChart(cartesian);
-    }
-    public void setBackgroundGradient(Cartesian cartesian){
-        cartesian.background().fill(new GradientKey("#4C84BC", 0, 1), 135, false, 0.5);
-        // Set X-axis labels color
-        cartesian.xAxis(0).labels().fontColor("#ffffff");
+        // Cấu hình trục X
+        XAxis xAxis = lineChartDisplayRevenueReport.getXAxis();
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setDrawGridLines(false);
+        xAxis.setGranularity(1f);
+        xAxis.setLabelCount(labels.length);
+        xAxis.setAxisLineColor(Color.WHITE);
+        xAxis.setTextColor(Color.WHITE);
+        xAxis.setValueFormatter(new IndexAxisValueFormatter(labels));
 
-        // Set Y-axis labels color
-        cartesian.yAxis(0).labels().fontColor("#ffffff");
+        // Cấu hình trục Y
+        YAxis leftAxis = lineChartDisplayRevenueReport.getAxisLeft();
+        leftAxis.setDrawGridLines(false);
+        leftAxis.setAxisLineColor(Color.WHITE);
+        leftAxis.setTextColor(Color.WHITE);
 
+        YAxis rightAxis = lineChartDisplayRevenueReport.getAxisRight();
+        rightAxis.setDrawGridLines(false);
+        rightAxis.setEnabled(false); // Vô hiệu hóa trục Y bên phải
     }
 }
