@@ -75,6 +75,7 @@ public class DayDashBoardFragment extends Fragment {
         barChartViewDisplayDayNumOfSaleTicket.setData(data);
         barChartViewDisplayDayNumOfSaleTicket.setFitBars(true);
         barChartViewDisplayDayNumOfSaleTicket.setDescription(null);
+        barChartViewDisplayDayNumOfSaleTicket.animateXY(1000, 1000);
         barChartViewDisplayDayNumOfSaleTicket.invalidate(); // Refresh chart
 
         // Cấu hình trục X
@@ -101,7 +102,6 @@ public class DayDashBoardFragment extends Fragment {
     }
 
     private void createLineChart() {
-        // Dữ liệu cho biểu đồ đường
         List<Entry> entries = new ArrayList<>();
         entries.add(new Entry(0f, 5));
         entries.add(new Entry(1f, 10));
@@ -109,8 +109,7 @@ public class DayDashBoardFragment extends Fragment {
         entries.add(new Entry(3f, 12));
         entries.add(new Entry(4f, 9));
 
-        String[] labels = {"Jan", "Feb", "Mar", "Apr"};
-        LineDataSet dataSet = new LineDataSet(entries, "Values");
+        LineDataSet dataSet = new LineDataSet(entries, "Doanh thu");
         dataSet.setColor(Color.WHITE);
         dataSet.setValueTextColor(Color.WHITE);
         dataSet.setLineWidth(2f);
@@ -123,6 +122,7 @@ public class DayDashBoardFragment extends Fragment {
         LineData data = new LineData(dataSet);
         lineChartDisplayDayRevenueReport.setData(data);
         lineChartDisplayDayRevenueReport.setDescription(null);
+        lineChartDisplayDayRevenueReport.animateXY(1000, 1000);
         lineChartDisplayDayRevenueReport.invalidate(); // Refresh chart
 
         // Cấu hình trục X
