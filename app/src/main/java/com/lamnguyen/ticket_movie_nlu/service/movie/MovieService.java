@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.lamnguyen.ticket_movie_nlu.api.MovieApi;
 import com.lamnguyen.ticket_movie_nlu.dto.MovieDTO;
+import com.lamnguyen.ticket_movie_nlu.dto.ShowtimeByCinema;
 import com.lamnguyen.ticket_movie_nlu.utils.CallAPI;
 
 import java.time.LocalDate;
@@ -22,7 +23,12 @@ public class MovieService {
         movieApi = MovieApi.getInstance();
     }
 
-    public void loadMovieShowtime(LocalDate date, Context context, CallAPI.CallAPIListener<List<MovieDTO>>... listeners) {
-        movieApi.loadMovieShowtime(date, context, listeners);
+    public void loadMovie(LocalDate date, Context context, CallAPI.CallAPIListener<List<MovieDTO>> listener) {
+        movieApi.loadMovie(date, context, listener);
+    }
+
+
+    public void loadShowtime(int movieId, LocalDate date, Context context, CallAPI.CallAPIListener<List<ShowtimeByCinema>> listener) {
+        movieApi.loadShowtime(movieId, date, context, listener);
     }
 }

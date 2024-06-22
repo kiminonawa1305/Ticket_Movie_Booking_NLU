@@ -15,6 +15,7 @@ import com.lamnguyen.ticket_movie_nlu.dto.ChairDTO;
 import com.lamnguyen.ticket_movie_nlu.enums.ChairStatus;
 import com.lamnguyen.ticket_movie_nlu.service.chair.ChairService;
 import com.lamnguyen.ticket_movie_nlu.utils.CallAPI;
+import com.lamnguyen.ticket_movie_nlu.utils.SharedPreferencesUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +32,7 @@ public class ChairAdapter extends RecyclerView.Adapter<ChairAdapter.ChairHolder>
         chairService = ChairService.getInstance();
         this.context = context;
         this.uuid = uuid;
-        userId = context.getSharedPreferences("sign", Context.MODE_PRIVATE).getInt("userId", 0);
+        userId = SharedPreferencesUtils.getUserID(context);
     }
 
     @NonNull

@@ -1,5 +1,6 @@
 package com.lamnguyen.ticket_movie_nlu.service.google;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.util.Log;
 
@@ -12,6 +13,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.lamnguyen.ticket_movie_nlu.request.GoogleMapRoutesHttpRequest;
+import com.lamnguyen.ticket_movie_nlu.utils.CallAPI;
 import com.lamnguyen.ticket_movie_nlu.utils.PolylineEncodingUtil;
 import com.lamnguyen.ticket_movie_nlu.view.fragments.GoogleMapFragment;
 
@@ -65,6 +67,28 @@ public class GoogleMapService {
             @Override
             public void onErrorResponse(VolleyError error) {
 
+            }
+        });
+
+        request.call(origin, destination);
+    }
+
+    public void getDistanceMeters(Context context, LatLng origin, LatLng destination, CallAPI.CallAPIListener<String> listener) {
+        GoogleMapRoutesHttpRequest request = new GoogleMapRoutesHttpRequest(context, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    JSONObject object = (JSONObject) response.getJSONArray("routes").get(0);
+                    String distanceMeters = object.getString("distanceMeters");
+                    listener.completed(distanceMeters);
+                } catch (JSONException e) {
+                    listener.error(e);
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                listener.error(error);
             }
         });
 

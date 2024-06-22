@@ -40,7 +40,7 @@ public class ChairApi {
 
     public void loadChair(int showtimeId, Context context, CallAPI.CallAPIListener<ChairResponse>... listeners) {
         String body = "/chair/api/" + showtimeId;
-        CallAPI.callJsonObjectRequest(context, CallAPI.URL_WEB_SERVICE, body, Request.Method.GET, new Response.Listener<JSONObject>() {
+        CallAPI.callJsonObjectRequest(context, CallAPI.URL_WEB_SERVICE + body, "", Request.Method.GET, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject jsonObject) {
                         try {

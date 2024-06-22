@@ -6,6 +6,8 @@ import com.lamnguyen.ticket_movie_nlu.api.MovieApi;
 import com.lamnguyen.ticket_movie_nlu.dto.MovieDetailDTO;
 import com.lamnguyen.ticket_movie_nlu.utils.CallAPI;
 
+import java.time.LocalDate;
+
 public class MovieDetailService {
     private MovieApi movieApi;
     private static MovieDetailService instance;
@@ -19,7 +21,7 @@ public class MovieDetailService {
         movieApi = MovieApi.getInstance();
     }
 
-    public void loadMovieDetail(Integer id, Context context, CallAPI.CallAPIListener<MovieDetailDTO>... listeners) {
-        movieApi.loadMovieDetail(id, context, listeners);
+    public void loadMovieDetail(Integer id, LocalDate date, Context context, CallAPI.CallAPIListener<MovieDetailDTO> listener) {
+        movieApi.loadMovieDetail(id, date, context, listener);
     }
 }

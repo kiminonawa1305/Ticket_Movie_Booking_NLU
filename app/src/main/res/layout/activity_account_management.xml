@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".view.activities.AccountManagementActivity">
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Quản lí tài khoản"
+        android:textSize="20sp"
+        android:layout_gravity="center"
+        android:paddingBottom="10dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+        <Button
+            android:id="@+id/btnCreateAccount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tạo tài khoản mới" />
+        <Button
+            android:id="@+id/btnConfirm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Xác nhận"
+            android:layout_marginStart="16dp" />
+    </LinearLayout>
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TableLayout
+                android:id="@+id/table_account"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:stretchColumns="1">
+
+                <TableRow>
+                    <TextView
+                        android:text="STT"
+                        android:padding="8dp"
+                        android:background="#CCCCCC"
+                        android:textStyle="bold"
+                        android:gravity="center"/>
+                    <TextView
+                        android:text="Tên người dùng"
+                        android:padding="8dp"
+                        android:background="#CCCCCC"
+                        android:textStyle="bold"
+                        android:gravity="center"/>
+                    <TextView
+                        android:text="Số điện thoại"
+                        android:padding="8dp"
+                        android:background="#CCCCCC"
+                        android:textStyle="bold"
+                        android:gravity="center"/>
+                    <TextView
+                        android:text="Email"
+                        android:padding="8dp"
+                        android:background="#CCCCCC"
+                        android:textStyle="bold"
+                        android:gravity="center"/>
+                    <TextView
+                        android:text="Mật khẩu"
+                        android:padding="8dp"
+                        android:background="#CCCCCC"
+                        android:textStyle="bold"
+                        android:gravity="center"/>
+                    <TextView
+                        android:text="Khóa"
+                        android:padding="8dp"
+                        android:background="#CCCCCC"
+                        android:textStyle="bold"
+                        android:gravity="center"/>
+                </TableRow>
+            </TableLayout>
+        </ScrollView>
+    </HorizontalScrollView>
+</LinearLayout>
