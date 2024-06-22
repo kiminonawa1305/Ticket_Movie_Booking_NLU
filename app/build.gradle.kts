@@ -57,9 +57,6 @@ dependencies {
     implementation("com.google.android.gms:play-services-location:21.2.0")
     implementation("androidx.activity:activity:1.8.0")
     implementation("androidx.gridlayout:gridlayout:1.0.0")
-    implementation("androidx.legacy:legacy-support-v4:1.0.0")
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.8.2")
-    implementation("androidx.lifecycle:lifecycle-runtime:2.8.2")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
@@ -96,5 +93,6 @@ dependencies {
     //anychart
     implementation("com.github.AnyChart:AnyChart-Android:1.1.5")
     implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
+    implementation("androidx.startup:startup-runtime:1.1.1")
 }
 

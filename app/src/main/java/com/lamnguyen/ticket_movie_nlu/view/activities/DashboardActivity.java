@@ -58,7 +58,7 @@ public class DashboardActivity extends AppCompatActivity {
 //        txtViewMonth = findViewById(R.id.text_view_show_month);
 //        txtViewSumOfSaleTicket = findViewById(R.id.text_view_sum_sale_ticket);
 //        txtViewSumOfRevenue = findViewById(R.id.text_view_sum_revenu);
-//        spnSelectCinema = findViewById(R.id.spinner_name_cinema);
+        spnSelectCinema = findViewById(R.id.spinner_name_cinema);
 
         // Set initial fragment
         if (savedInstanceState == null) {

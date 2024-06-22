@@ -4,31 +4,31 @@
     xmlns:barchart="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/black"
     android:layout_height="match_parent"
+    android:background="@color/black"
     tools:context=".view.activities.DashboardActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:padding="20dp"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_height="match_parent">
+        android:padding="20dp">
 
         <TextView
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
             android:text="@string/dashboard"
             android:textColor="@color/white"
             android:textSize="40sp"
-            android:textStyle="bold"
-            android:paddingBottom="10dp"
-            android:layout_height="wrap_content"/>
+            android:textStyle="bold" />
 
         <TableLayout
             android:layout_width="match_parent"
-            android:background="@drawable/bg_nav_dashboard"
+            android:layout_height="wrap_content"
 
-            android:stretchColumns="*"
-            android:layout_height="wrap_content">
+            android:background="@drawable/bg_nav_dashboard"
+            android:stretchColumns="*">
 
             <TableRow
                 android:layout_width="match_parent"
@@ -37,222 +37,221 @@
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/button_day"
                     android:layout_width="wrap_content"
-                    android:text="@string/dashboard_day"
+                    android:layout_height="wrap_content"
                     android:background="@drawable/bg_gradient_in_dashboard"
+                    android:text="@string/dashboard_day"
                     android:textColor="@color/white"
-                    android:textStyle="bold"
                     android:textSize="20sp"
-                    android:layout_height="wrap_content"/>
+                    android:textStyle="bold" />
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/button_week"
                     android:layout_width="wrap_content"
-                    android:text="@string/dashboard_week"
+                    android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
+                    android:text="@string/dashboard_week"
                     android:textColor="@color/black"
-                    android:textStyle="bold"
                     android:textSize="20sp"
-                    android:layout_height="wrap_content"/>
+                    android:textStyle="bold" />
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/button_month"
                     android:layout_width="wrap_content"
-                    android:text="@string/dashboard_month"
+                    android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
+                    android:text="@string/dashboard_month"
                     android:textColor="@color/black"
-                    android:textStyle="bold"
                     android:textSize="20sp"
-                    android:layout_height="wrap_content"/>
+                    android:textStyle="bold" />
             </TableRow>
         </TableLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingVertical="10dp"
-            android:layout_height="wrap_content">
+            android:paddingVertical="10dp">
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:paddingHorizontal="4dp"
+                android:layout_height="match_parent"
                 android:layout_marginRight="10dp"
-                android:gravity="center"
                 android:background="@drawable/bg_gradient_in_dashboard_round1"
-                android:layout_height="match_parent">
+                android:gravity="center"
+                android:paddingHorizontal="4dp">
+
                 <Spinner
                     android:id="@+id/spinner_name_cinema"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content" />
             </LinearLayout>
-
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:orientation="horizontal"
+                android:layout_height="wrap_content"
                 android:gravity="center|right"
-                android:layout_height="wrap_content">
+                android:orientation="horizontal">
 
                 <ImageView
                     android:id="@+id/image_view_edit_calendar"
                     android:layout_width="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:background="@mipmap/ic_edit_calendar"
-                    android:layout_height="wrap_content"/>
+                    android:background="@mipmap/ic_edit_calendar" />
 
                 <TextView
                     android:id="@+id/text_view_show_day"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:text="dd"
-                    android:gravity="center"
-                    android:background="@drawable/bg_gradient_in_dashboard_round1"
-                    android:textColor="@color/white"
+                    android:layout_height="40dp"
                     android:layout_marginHorizontal="8dp"
-                    android:layout_height="40dp"/>
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_gradient_in_dashboard_round1"
+                    android:gravity="center"
+                    android:text="dd"
+                    android:textColor="@color/white" />
+
                 <TextView
                     android:id="@+id/text_view_show_week"
-                    android:layout_weight="1"
                     android:layout_width="0dp"
-                    android:text="MM"
-                    android:gravity="center"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
                     android:background="@drawable/bg_gradient_in_dashboard_round1"
-                    android:textColor="@color/white"
-                    android:layout_height="40dp"/>
+                    android:gravity="center"
+                    android:text="MM"
+                    android:textColor="@color/white" />
+
                 <TextView
                     android:id="@+id/text_view_show_month"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:text="yyyy"
-                    android:gravity="center"
-                    android:background="@drawable/bg_gradient_in_dashboard_round1"
-                    android:textColor="@color/white"
+                    android:layout_height="40dp"
                     android:layout_marginLeft="8dp"
-                    android:layout_height="40dp"/>
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_gradient_in_dashboard_round1"
+                    android:gravity="center"
+                    android:text="yyyy"
+                    android:textColor="@color/white" />
 
             </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/linear_layout_show_statistical"
-                android:layout_width="match_parent"
-                android:orientation="vertical"
-                android:layout_height="wrap_content"/>
-
         </LinearLayout>
+        <LinearLayout
+            android:id="@+id/linear_layout_show_statistical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" />
 
-<!--        <LinearLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:orientation="vertical"-->
-<!--            android:background="@drawable/bg_gradient_in_dashboard_round1"-->
-<!--            android:layout_height="200dp">-->
+        <!--        <LinearLayout-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:orientation="vertical"-->
+        <!--            android:background="@drawable/bg_gradient_in_dashboard_round1"-->
+        <!--            android:layout_height="200dp">-->
 
-<!--            <TextView-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:text="@string/dashboard_num_of_ticket_sale"-->
-<!--                android:textColor="@color/white"-->
-<!--                android:textSize="20sp"-->
-<!--                android:paddingHorizontal="20dp"-->
-<!--                android:layout_height="wrap_content"/>-->
+        <!--            <TextView-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:text="@string/dashboard_num_of_ticket_sale"-->
+        <!--                android:textColor="@color/white"-->
+        <!--                android:textSize="20sp"-->
+        <!--                android:paddingHorizontal="20dp"-->
+        <!--                android:layout_height="wrap_content"/>-->
 
-<!--            <com.github.mikephil.charting.charts.BarChart-->
-<!--                android:id="@+id/bar_chart_view_display_sale_ticket"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="match_parent" />-->
-
-
-<!--        </LinearLayout>-->
-<!--        <LinearLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:orientation="vertical"-->
-<!--            android:layout_marginVertical="10dp"-->
-<!--            android:background="@drawable/bg_gradient_in_dashboard_round1"-->
-<!--            android:layout_height="200dp">-->
-
-<!--            <TextView-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:text="@string/dashboard_revenu_report"-->
-<!--                android:textColor="@color/white"-->
-<!--                android:textSize="20sp"-->
-<!--                android:paddingHorizontal="20dp"-->
-<!--                android:layout_height="wrap_content"/>-->
-
-<!--            <com.github.mikephil.charting.charts.LineChart-->
-<!--                android:id="@+id/any_chart_view_display_revenu_report"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="match_parent"/>-->
-<!--        </LinearLayout>-->
-<!--        <TableLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:stretchColumns="*"-->
-<!--            android:layout_height="wrap_content">-->
-
-<!--            <TableRow-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content">-->
+        <!--            <com.github.mikephil.charting.charts.BarChart-->
+        <!--                android:id="@+id/bar_chart_view_display_sale_ticket"-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="match_parent" />-->
 
 
+        <!--        </LinearLayout>-->
+        <!--        <LinearLayout-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:orientation="vertical"-->
+        <!--            android:layout_marginVertical="10dp"-->
+        <!--            android:background="@drawable/bg_gradient_in_dashboard_round1"-->
+        <!--            android:layout_height="200dp">-->
 
-<!--                <TableLayout-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:shrinkColumns="*"-->
-<!--                    android:background="@drawable/bg_gradient_in_dashboard_round1"-->
-<!--                    android:layout_height="wrap_content">-->
+        <!--            <TextView-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:text="@string/dashboard_revenu_report"-->
+        <!--                android:textColor="@color/white"-->
+        <!--                android:textSize="20sp"-->
+        <!--                android:paddingHorizontal="20dp"-->
+        <!--                android:layout_height="wrap_content"/>-->
 
-<!--                    <TextView-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:text="@string/dashboard_sum_num_of_ticket_sale"-->
-<!--                        android:textColor="@color/white"-->
-<!--                        android:textSize="20sp"-->
-<!--                        android:paddingHorizontal="10dp"-->
-<!--                        android:layout_height="wrap_content"/>-->
+        <!--            <com.github.mikephil.charting.charts.LineChart-->
+        <!--                android:id="@+id/any_chart_view_display_revenu_report"-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="match_parent"/>-->
+        <!--        </LinearLayout>-->
+        <!--        <TableLayout-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:stretchColumns="*"-->
+        <!--            android:layout_height="wrap_content">-->
 
-<!--                    <TableRow-->
-<!--                        android:paddingHorizontal="10dp"-->
-<!--                        android:layout_height="wrap_content">-->
-<!--                        <TextView-->
-<!--                            android:id="@+id/text_view_sum_sale_ticket"-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:textColor="@color/white"-->
-<!--                            android:text="xxxxxxxxxxx"-->
-<!--                            android:textSize="20sp"-->
-<!--                            android:layout_height="50dp"/>-->
-<!--                        <ImageView-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:paddingHorizontal="10dp"-->
-<!--                            android:background="@mipmap/ic_movie_ticket"/>-->
-<!--                    </TableRow>-->
+        <!--            <TableRow-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="wrap_content">-->
 
-<!--                    <TextView-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:text="@string/dashboard_sum_revenu"-->
-<!--                        android:textColor="@color/white"-->
-<!--                        android:textSize="20sp"-->
-<!--                        android:paddingHorizontal="10dp"-->
-<!--                        android:layout_height="wrap_content"/>-->
 
-<!--                    <TableRow-->
-<!--                        android:paddingHorizontal="10dp"-->
-<!--                        android:layout_height="wrap_content">-->
+        <!--                <TableLayout-->
+        <!--                    android:layout_width="match_parent"-->
+        <!--                    android:shrinkColumns="*"-->
+        <!--                    android:background="@drawable/bg_gradient_in_dashboard_round1"-->
+        <!--                    android:layout_height="wrap_content">-->
 
-<!--                        <TextView-->
-<!--                            android:id="@+id/text_view_sum_revenu"-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:textColor="@color/white"-->
-<!--                            android:text="xxxxxxxx"-->
-<!--                            android:textSize="20sp"-->
-<!--                            android:layout_height="wrap_content"/>-->
+        <!--                    <TextView-->
+        <!--                        android:layout_width="wrap_content"-->
+        <!--                        android:text="@string/dashboard_sum_num_of_ticket_sale"-->
+        <!--                        android:textColor="@color/white"-->
+        <!--                        android:textSize="20sp"-->
+        <!--                        android:paddingHorizontal="10dp"-->
+        <!--                        android:layout_height="wrap_content"/>-->
 
-<!--                        <ImageView-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:background="@mipmap/ic_bag_money"/>-->
+        <!--                    <TableRow-->
+        <!--                        android:paddingHorizontal="10dp"-->
+        <!--                        android:layout_height="wrap_content">-->
+        <!--                        <TextView-->
+        <!--                            android:id="@+id/text_view_sum_sale_ticket"-->
+        <!--                            android:layout_width="wrap_content"-->
+        <!--                            android:textColor="@color/white"-->
+        <!--                            android:text="xxxxxxxxxxx"-->
+        <!--                            android:textSize="20sp"-->
+        <!--                            android:layout_height="50dp"/>-->
+        <!--                        <ImageView-->
+        <!--                            android:layout_width="wrap_content"-->
+        <!--                            android:layout_height="wrap_content"-->
+        <!--                            android:paddingHorizontal="10dp"-->
+        <!--                            android:background="@mipmap/ic_movie_ticket"/>-->
+        <!--                    </TableRow>-->
 
-<!--                    </TableRow>-->
-<!--                </TableLayout>-->
+        <!--                    <TextView-->
+        <!--                        android:layout_width="wrap_content"-->
+        <!--                        android:text="@string/dashboard_sum_revenu"-->
+        <!--                        android:textColor="@color/white"-->
+        <!--                        android:textSize="20sp"-->
+        <!--                        android:paddingHorizontal="10dp"-->
+        <!--                        android:layout_height="wrap_content"/>-->
 
-<!--            </TableRow>-->
+        <!--                    <TableRow-->
+        <!--                        android:paddingHorizontal="10dp"-->
+        <!--                        android:layout_height="wrap_content">-->
 
-<!--        </TableLayout>-->
+        <!--                        <TextView-->
+        <!--                            android:id="@+id/text_view_sum_revenu"-->
+        <!--                            android:layout_width="wrap_content"-->
+        <!--                            android:textColor="@color/white"-->
+        <!--                            android:text="xxxxxxxx"-->
+        <!--                            android:textSize="20sp"-->
+        <!--                            android:layout_height="wrap_content"/>-->
+
+        <!--                        <ImageView-->
+        <!--                            android:layout_width="wrap_content"-->
+        <!--                            android:layout_height="wrap_content"-->
+        <!--                            android:background="@mipmap/ic_bag_money"/>-->
+
+        <!--                    </TableRow>-->
+        <!--                </TableLayout>-->
+
+        <!--            </TableRow>-->
+
+        <!--        </TableLayout>-->
     </LinearLayout>
 
 
