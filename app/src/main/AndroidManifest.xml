@@ -30,32 +30,33 @@
         android:theme="@style/Theme.MyApplication"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
-        <activity
-            android:name=".view.activities.PaymentSuccessActivity"
-            android:exported="false" >
-
-        </activity>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyD4Y4NgldsQdiJo7I1qHEyIqx11UOeBUz4" />
-        
+
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
         <activity
-            android:name=".view.activities.BookingChairActivity"
+            android:name=".view.activities.AccountManagementActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.activities.ChooseMovieShowTimeActivity"
+            android:name=".view.activities.PaymentSuccessActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
-<!--        <activity-->
-<!--            android:name=".view.activities.FavoriteMovieActivity"-->
-<!--            android:exported="false"-->
-<!--            android:screenOrientation="portrait" />-->
+
+        <activity
+            android:name=".view.activities.ShowtimeActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".view.activities.BookingChairActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.activities.GoogleSignInActivity"
             android:exported="false"
@@ -73,15 +74,9 @@
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.activities.PriceManageActivity"
-            android:exported="true"
-            android:screenOrientation="portrait" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:name=".view.activities.PaymentActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.activities.SignActivity"
             android:exported="false"
@@ -95,19 +90,14 @@
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.activities.PaymentActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".view.activities.GreetingActivity"
-            android:exported="false"
+            android:exported="true"
             android:screenOrientation="portrait">
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
-
 </manifest>
