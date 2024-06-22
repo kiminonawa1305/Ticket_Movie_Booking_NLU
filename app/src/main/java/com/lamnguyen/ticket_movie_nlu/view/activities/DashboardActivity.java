@@ -2,7 +2,6 @@ package com.lamnguyen.ticket_movie_nlu.view.activities;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.view.animation.Animation;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -10,14 +9,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
-import com.anychart.AnyChart;
-import com.anychart.AnyChartView;
-import com.anychart.chart.common.dataentry.DataEntry;
-import com.anychart.chart.common.dataentry.ValueDataEntry;
-import com.anychart.charts.Cartesian;
-import com.anychart.core.cartesian.series.Line;
-import com.anychart.graphics.vector.GradientKey;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
@@ -30,6 +25,9 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.lamnguyen.ticket_movie_nlu.R;
+import com.lamnguyen.ticket_movie_nlu.view.fragments.DayDashBoardFragment;
+import com.lamnguyen.ticket_movie_nlu.view.fragments.MonthDashboardFragment;
+import com.lamnguyen.ticket_movie_nlu.view.fragments.WeekDashBoardFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +36,7 @@ public class DashboardActivity extends AppCompatActivity {
     private static final String TAG = "DashboardActivity";
     private Button btnDay, btnWeek, btnMonth;
     private ImageView imgViewEditCalendar;
+
     private BarChart barChartViewDisplayNumOfSaleTicket;
     private LineChart lineChartDisplayRevenueReport;
     private TextView txtViewDay, txtViewWeek, txtViewMonth, txtViewSumOfSaleTicket, txtViewSumOfRevenue;
@@ -61,11 +60,23 @@ public class DashboardActivity extends AppCompatActivity {
 //        txtViewSumOfRevenue = findViewById(R.id.text_view_sum_revenu);
 //        spnSelectCinema = findViewById(R.id.spinner_name_cinema);
 
-
+        // Set initial fragment
+        if (savedInstanceState == null) {
+            replaceFragment (new DayDashBoardFragment());
+        }
         addItemToSpinner();
 //        createLineChart();
 //        createBarChart();
 
+        btnDay.setOnClickListener(v -> {
+            replaceFragment(new DayDashBoardFragment());
+        });
+        btnWeek.setOnClickListener(v -> {
+            replaceFragment(new WeekDashBoardFragment());
+        });
+        btnMonth.setOnClickListener(v -> {
+            replaceFragment(new MonthDashboardFragment());
+        });
         imgViewEditCalendar.setOnClickListener(v -> {
         });
     }
@@ -167,5 +178,16 @@ public class DashboardActivity extends AppCompatActivity {
         YAxis rightAxis = lineChartDisplayRevenueReport.getAxisRight();
         rightAxis.setDrawGridLines(false);
         rightAxis.setEnabled(false); // Vô hiệu hóa trục Y bên phải
+    }
+
+    private void replaceFragment(Fragment fragment) {
+        // Lấy FragmentManager và bắt đầu giao dịch
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+        fragmentTransaction.replace(R.id.linear_layout_show_statistical, fragment);
+        fragmentTransaction.addToBackStack(fragment.getClass().getSimpleName());
+        fragmentTransaction.commit();
+
     }
 }

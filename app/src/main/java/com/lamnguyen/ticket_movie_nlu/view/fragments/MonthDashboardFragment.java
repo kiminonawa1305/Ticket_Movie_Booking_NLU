@@ -16,7 +16,6 @@ import com.lamnguyen.ticket_movie_nlu.R;
 
 public class MonthDashboardFragment extends Fragment {
 
-    private MonthDashboardViewModel mViewModel;
 
     public static MonthDashboardFragment newInstance() {
         return new MonthDashboardFragment();

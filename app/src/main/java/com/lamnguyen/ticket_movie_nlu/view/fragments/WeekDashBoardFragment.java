@@ -16,8 +16,6 @@ import com.lamnguyen.ticket_movie_nlu.R;
 
 public class WeekDashBoardFragment extends Fragment {
 
-    private WeekDashBoardViewModel mViewModel;
-
     public static WeekDashBoardFragment newInstance() {
         return new WeekDashBoardFragment();
     }
