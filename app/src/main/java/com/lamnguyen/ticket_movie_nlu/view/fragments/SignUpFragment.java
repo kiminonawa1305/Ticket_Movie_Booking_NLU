@@ -15,7 +15,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.FirebaseDatabase;
 import com.lamnguyen.ticket_movie_nlu.utils.DialogLoading;
 import com.lamnguyen.ticket_movie_nlu.service.auth.sign_up.impl.SignUpServiceImpl;
 import com.lamnguyen.ticket_movie_nlu.service.user.UserService;

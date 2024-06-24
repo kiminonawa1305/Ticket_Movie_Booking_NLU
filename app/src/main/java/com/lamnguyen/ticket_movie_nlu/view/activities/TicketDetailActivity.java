@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Display;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -49,7 +48,7 @@ public class TicketDetailActivity extends AppCompatActivity {
     private LinearLayout llAvail;
     private static final String TAG = "TicketDetailActivity";
 
-    private String url = "/ticket-detail/api/";
+    private String url = "/ticket/api/detail/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

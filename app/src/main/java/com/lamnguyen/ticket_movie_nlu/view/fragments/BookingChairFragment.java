@@ -26,6 +26,7 @@ import com.lamnguyen.ticket_movie_nlu.response.ChairResponse;
 import com.lamnguyen.ticket_movie_nlu.service.chair.ChairService;
 import com.lamnguyen.ticket_movie_nlu.utils.CallAPI;
 import com.lamnguyen.ticket_movie_nlu.utils.DialogLoading;
+import com.lamnguyen.ticket_movie_nlu.utils.SharedPreferencesUtils;
 import com.lamnguyen.ticket_movie_nlu.view.activities.BookingChairActivity;
 
 import java.util.ArrayList;
@@ -45,14 +46,16 @@ public class BookingChairFragment extends Fragment {
     private List<ChairDTO> listChairSelect;
     private boolean connect = false;
     private Integer userId;
+    private boolean back;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         getParentFragmentManager().setFragmentResultListener(BookingChairActivity.class.getSimpleName(), this, (key, bundle) -> {
-            showtimeiId = bundle.getInt("showtimeiId");
+            showtimeiId = bundle.getInt("showtimeId");
+            back = bundle.getBoolean("back");
         });
         chairService = ChairService.getInstance();
-        userId = getContext().getSharedPreferences("sign", Context.MODE_PRIVATE).getInt("userId", 0);
+        userId = SharedPreferencesUtils.getUserID(this.getContext());
         return inflater.inflate(R.layout.fragment_seat_item_list, container, false);
     }
 
@@ -182,6 +185,7 @@ public class BookingChairFragment extends Fragment {
     private void sendChairSelected(String key, ChairDTO chairDTO) {
         Bundle bundle = new Bundle();
         bundle.putSerializable(key, chairDTO);
+        if (back) return;
         getParentFragmentManager().setFragmentResult(BookingChairFragment.class.getSimpleName(), bundle);
     }
 }
