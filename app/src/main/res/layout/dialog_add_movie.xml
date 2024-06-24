@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="30dp"
+    app:cardElevation="10dp"
+    app:cardBackgroundColor="@color/gray"
+    app:cardCornerRadius="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="20dp"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/add_movie"
+            android:layout_gravity="center"
+            android:layout_marginBottom="14dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="18dp"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:background="@drawable/bg_rounded_corner"
+            android:paddingVertical="8dp"
+            android:paddingHorizontal="16dp"
+            android:text="Thêm phim mới"
+            android:layout_marginBottom="20dp"/>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="18dp">
+
+            <EditText
+                android:layout_weight="1"
+                android:id="@+id/edit_text_input_id_movie"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textAlignment="center"
+                android:textSize="14dp"
+                android:background="@drawable/bg_rounded_corner"
+                android:padding="14dp"
+                android:layout_marginRight="6dp"
+                android:textColorHint="@color/text_color_hint"
+                android:hint="Nhập mã của phim" />
+
+            <ImageView
+                android:id="@+id/image_view_clear_input_id_movie"
+                android:padding="14dp"
+                android:layout_weight="5"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_rounded_corner"
+                android:backgroundTint="@color/purple_system"
+                android:src="@drawable/ic_clear"/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/button_cancel_add_movie"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="Hủy"
+                android:textColor="@color/white"
+                android:background="@drawable/bg_rounded_corner"
+                android:layout_marginRight="8dp"
+                android:backgroundTint="@color/orange"
+                android:textStyle="bold"
+                android:textSize="16dp"/>
+
+            <Button
+                android:id="@+id/button_accept_add_movie"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="Xác nhận"
+                android:textColor="@color/white"
+                android:background="@drawable/bg_rounded_corner"
+                android:layout_marginRight="8dp"
+                android:backgroundTint="@color/blue"
+                android:textStyle="bold"
+                android:textSize="16dp"/>
+        </LinearLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
