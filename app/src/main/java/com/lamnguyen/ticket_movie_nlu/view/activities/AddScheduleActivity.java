@@ -140,7 +140,7 @@ public class AddScheduleActivity extends AppCompatActivity {
         showtimeGrouplayoutParams.setMargins(0, 0, spacing, 0);
         showtimeGroup.setLayoutParams(showtimeGrouplayoutParams);
 
-        LinearLayout deleteShowtimeGroupTextView = showtimeGroup.findViewById(R.id.delete_showtime_group);
+        ImageView deleteShowtimeGroupTextView = showtimeGroup.findViewById(R.id.image_view_delete_showtime_group);
         ImageView openTimePickerImageView = showtimeGroup.findViewById(R.id.image_view_open_time_picker);
         EditText showtimeEditText = showtimeGroup.findViewById(R.id.edit_text_showtime);
 
