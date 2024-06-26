@@ -33,7 +33,7 @@ public class DayDashBoardFragment extends Fragment {
     private LineChart lineChartDisplayDayRevenueReport;
     private TextView txtViewSumOfSaleTicket, txtViewSumOfRevenue;
 
-    private String[] labels = {"Sáng", "Trưa", "Chiều", "Tối"};
+    private String[] labels = {"Sáng", "Trưa", "Chiều", "Tối", "Đêm"};
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

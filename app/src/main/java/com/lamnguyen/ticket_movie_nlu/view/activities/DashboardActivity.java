@@ -40,8 +40,8 @@ import java.util.Locale;
 public class DashboardActivity extends AppCompatActivity {
     private static final String TAG = "DashboardActivity";
     private Button btnDay, btnWeek, btnMonth;
-    private ImageView imgViewEditCalendar;
-    private TextView txtDay, txtWeek, txtMonth;
+    private ImageView imgViewEditCalendarFrom, imgViewEditCalendarTo;
+    private TextView txtDateFrom, txtDateTo;
     private Spinner spnSelectCinema;
 
     @Override
@@ -52,11 +52,11 @@ public class DashboardActivity extends AppCompatActivity {
         btnDay = findViewById(R.id.button_day);
         btnWeek = findViewById(R.id.button_week);
         btnMonth = findViewById(R.id.button_month);
-        imgViewEditCalendar = findViewById(R.id.image_view_edit_calendar);
+        imgViewEditCalendarFrom = findViewById(R.id.image_view_edit_calendar_from);
+        imgViewEditCalendarTo = findViewById(R.id.image_view_edit_calendar_to);
         spnSelectCinema = findViewById(R.id.spinner_name_cinema);
-        txtDay = findViewById(R.id.text_view_show_day);
-        txtWeek = findViewById(R.id.text_view_show_week);
-        txtMonth = findViewById(R.id.text_view_show_month);
+        txtDateFrom = findViewById(R.id.text_view_date_from);
+        txtDateTo = findViewById(R.id.text_view_date_to);
 
         // Set initial fragment
         if (savedInstanceState == null) {
@@ -82,8 +82,12 @@ public class DashboardActivity extends AppCompatActivity {
             setBgButtonNonGradient(btnWeek);
             replaceFragment(new MonthDashboardFragment());
         });
-        imgViewEditCalendar.setOnClickListener(v -> {
-            showDatePicker();
+        imgViewEditCalendarFrom.setOnClickListener(v -> {
+            showDatePicker(txtDateFrom);
+        });
+
+        imgViewEditCalendarTo.setOnClickListener(v -> {
+            showDatePicker(txtDateTo);
         });
     }
 
@@ -102,7 +106,7 @@ public class DashboardActivity extends AppCompatActivity {
         spnSelectCinema.setAdapter(adapter);
     }
 
-    private void showDatePicker() {
+    private void showDatePicker(TextView txtView) {
         final Calendar calendar = Calendar.getInstance();
 
         int year = calendar.get(Calendar.YEAR);
@@ -117,9 +121,7 @@ public class DashboardActivity extends AppCompatActivity {
                         calendar.set(year, month, dayOfMonth);
                         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
                         String selectedDate = dateFormat.format(calendar.getTime());
-                        txtDay.setText(selectedDate.split("/")[0]);
-                        txtWeek.setText(selectedDate.split("/")[1]);
-                        txtMonth.setText(selectedDate.split("/")[2]);
+                        txtView.setText(selectedDate);
                     }
 
                 },
