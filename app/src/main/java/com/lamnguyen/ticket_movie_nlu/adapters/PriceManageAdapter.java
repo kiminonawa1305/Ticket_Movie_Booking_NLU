@@ -62,9 +62,11 @@ public class PriceManageAdapter extends RecyclerView.Adapter<PriceManageAdapter.
             return;
         }
         holder.tvCinemaName.setText(priceManage.getCinemaName());
-        holder.singleChairPPrice.setText(priceManage.getSingle());
-        holder.coupleChairPrice.setText(priceManage.getCouple());
-        holder.VIPChairPrice.setText(priceManage.getVip());
+        holder.tvCinemaId.setText(priceManage.getCinema_Id() != null ? String.valueOf(priceManage.getCinema_Id()) : "");
+        holder.singleChairPPrice.setText(priceManage.getSingle() != null ? String.valueOf(priceManage.getSingle()) : "");
+        holder.coupleChairPrice.setText(priceManage.getCouple() != null ? String.valueOf(priceManage.getCouple()) : "");
+        holder.VIPChairPrice.setText(priceManage.getVip() != null ? String.valueOf(priceManage.getVip()) : "");
+
 
         holder.pencilImage.setOnClickListener(v -> mOnEditListener.onEditClicked(position));
 
@@ -84,7 +86,7 @@ public class PriceManageAdapter extends RecyclerView.Adapter<PriceManageAdapter.
     }
 
     public class PriceManageViewHolder extends RecyclerView.ViewHolder {
-        private TextView tvCinemaName;
+        private TextView tvCinemaName, tvCinemaId;
         private EditText singleChairPPrice;
         private EditText coupleChairPrice;
         private EditText VIPChairPrice;
@@ -94,6 +96,7 @@ public class PriceManageAdapter extends RecyclerView.Adapter<PriceManageAdapter.
         public PriceManageViewHolder(@NonNull View itemView) {
             super(itemView);
             tvCinemaName = itemView.findViewById(R.id.id_name_cinema);
+            tvCinemaId = itemView.findViewById(R.id.cinema_id);
             singleChairPPrice = itemView.findViewById(R.id.single_chair_price);
             coupleChairPrice = itemView.findViewById(R.id.couple_chair_price);
             VIPChairPrice = itemView.findViewById(R.id.VIP_chair_price);

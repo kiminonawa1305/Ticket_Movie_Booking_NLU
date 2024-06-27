@@ -11,9 +11,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.lamnguyen.ticket_movie_nlu.R;
 import com.lamnguyen.ticket_movie_nlu.adapters.PriceManageAdapter;
+import com.lamnguyen.ticket_movie_nlu.api.PriceManageApi;
 import com.lamnguyen.ticket_movie_nlu.dto.PriceManageDTO;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,21 +31,25 @@ public class PriceManageActivity extends AppCompatActivity implements PriceManag
 
         mpriceManage = new PriceManageAdapter(this, this);
 
-        GridLayoutManager gridlayoutmanager = new GridLayoutManager(this, 1);
-        rcvPriceManage.setLayoutManager(gridlayoutmanager);
-
-        mpriceManage.setData(getListData());
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 1);
+        rcvPriceManage.setLayoutManager(gridLayoutManager);
         rcvPriceManage.setAdapter(mpriceManage);
+
+        fetchPriceData();
     }
 
-    private List<PriceManageDTO> getListData() {
-        List<PriceManageDTO> list = new ArrayList<>();
-        list.add(new PriceManageDTO("Cinema 1", "40000", "90000", "60000"));
-        list.add(new PriceManageDTO("Cinema 2", "40000", "90000", "60000"));
-        list.add(new PriceManageDTO("Cinema 3", "40000", "90000", "60000"));
-        list.add(new PriceManageDTO("Cinema 4", "40000", "90000", "60000"));
+    private void fetchPriceData() {
+        PriceManageApi.getPriceManageList(this, new PriceManageApi.PriceManageApiListener() {
+            @Override
+            public void onSuccess(List<PriceManageDTO> priceManageDTOList) {
+                mpriceManage.setData(priceManageDTOList);
+            }
 
-        return list;
+            @Override
+            public void onError(String message) {
+                // Handle error here
+            }
+        });
     }
 
     @Override
@@ -58,59 +62,75 @@ public class PriceManageActivity extends AppCompatActivity implements PriceManag
             EditText coupleChairPrice = itemView.findViewById(R.id.couple_chair_price);
             EditText vipChairPrice = itemView.findViewById(R.id.VIP_chair_price);
 
-
             originalPrices.put(position, new PriceManageDTO(
                     mpriceManage.getPriceList().get(position).getCinemaName(),
-                    singleChairPrice.getText().toString(),
-                    coupleChairPrice.getText().toString(),
-                    vipChairPrice.getText().toString()
+                    Double.valueOf(singleChairPrice.getText().toString()),
+                    Double.valueOf(coupleChairPrice.getText().toString()),
+                    Double.valueOf(vipChairPrice.getText().toString()),
+                    mpriceManage.getPriceList().get(position).getCinema_Id()
             ));
 
             buttonContainer.setVisibility(View.VISIBLE);
-            singleChairPrice.setFocusableInTouchMode(true);
-            singleChairPrice.setFocusable(true);
-            coupleChairPrice.setFocusableInTouchMode(true);
-            coupleChairPrice.setFocusable(true);
-            vipChairPrice.setFocusableInTouchMode(true);
-            vipChairPrice.setFocusable(true);
+
+            enableEditTextEditing(singleChairPrice);
+            enableEditTextEditing(coupleChairPrice);
+            enableEditTextEditing(vipChairPrice);
+
 
             buttonContainer.findViewById(R.id.button1).setOnClickListener(v -> {
-
-                PriceManageDTO originalPrice = originalPrices.get(position);
-                if (originalPrice != null) {
-                    singleChairPrice.setText(originalPrice.getSingle());
-                    coupleChairPrice.setText(originalPrice.getCouple());
-                    vipChairPrice.setText(originalPrice.getVip());
-                }
-
+                rollbackToOriginalValues(position, singleChairPrice, coupleChairPrice, vipChairPrice);
                 buttonContainer.setVisibility(View.GONE);
-                singleChairPrice.setFocusableInTouchMode(false);
-                singleChairPrice.setFocusable(false);
-                coupleChairPrice.setFocusableInTouchMode(false);
-                coupleChairPrice.setFocusable(false);
-                vipChairPrice.setFocusableInTouchMode(false);
-                vipChairPrice.setFocusable(false);
             });
+
 
             buttonContainer.findViewById(R.id.button2).setOnClickListener(v -> {
+                saveUpdatedValues(position, singleChairPrice, coupleChairPrice, vipChairPrice);
                 buttonContainer.setVisibility(View.GONE);
-                singleChairPrice.setFocusableInTouchMode(false);
-                singleChairPrice.setFocusable(false);
-                coupleChairPrice.setFocusableInTouchMode(false);
-                coupleChairPrice.setFocusable(false);
-                vipChairPrice.setFocusableInTouchMode(false);
-                vipChairPrice.setFocusable(false);
-
-                PriceManageDTO updatedPriceManageDTO = new PriceManageDTO(
-                        mpriceManage.getPriceList().get(position).getCinemaName(),
-                        singleChairPrice.getText().toString(),
-                        coupleChairPrice.getText().toString(),
-                        vipChairPrice.getText().toString()
-                );
-
-                mpriceManage.updatePrice(position, updatedPriceManageDTO);
-                originalPrices.remove(position);
             });
         }
+    }
+
+    private void rollbackToOriginalValues(int position, EditText singleChairPrice, EditText coupleChairPrice, EditText vipChairPrice) {
+        PriceManageDTO originalPrice = originalPrices.get(position);
+        if (originalPrice != null) {
+            singleChairPrice.setText(String.valueOf(originalPrice.getSingle()));
+            coupleChairPrice.setText(String.valueOf(originalPrice.getCouple()));
+            vipChairPrice.setText(String.valueOf(originalPrice.getVip()));
+        }
+
+        disableEditTextEditing(singleChairPrice);
+        disableEditTextEditing(coupleChairPrice);
+        disableEditTextEditing(vipChairPrice);
+    }
+
+    private void saveUpdatedValues(int position, EditText singleChairPrice, EditText coupleChairPrice, EditText vipChairPrice) {
+        PriceManageDTO updatedPrice = new PriceManageDTO(
+                mpriceManage.getPriceList().get(position).getCinemaName(),
+                Double.valueOf(singleChairPrice.getText().toString()),
+                Double.valueOf(coupleChairPrice.getText().toString()),
+                Double.valueOf(vipChairPrice.getText().toString()),
+                originalPrices.get(position).getCinema_Id() // Lấy cinema_Id từ originalPrices
+        );
+
+        mpriceManage.updatePrice(position, updatedPrice);
+
+
+        originalPrices.remove(position);
+
+
+        disableEditTextEditing(singleChairPrice);
+        disableEditTextEditing(coupleChairPrice);
+        disableEditTextEditing(vipChairPrice);
+    }
+
+
+    private void enableEditTextEditing(EditText editText) {
+        editText.setFocusableInTouchMode(true);
+        editText.setFocusable(true);
+    }
+
+    private void disableEditTextEditing(EditText editText) {
+        editText.setFocusableInTouchMode(false);
+        editText.setFocusable(false);
     }
 }
