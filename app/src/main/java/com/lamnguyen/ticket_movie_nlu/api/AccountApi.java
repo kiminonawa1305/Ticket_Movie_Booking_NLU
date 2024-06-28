@@ -25,7 +25,7 @@ public class AccountApi {
     }
 
     public void loadUsers(Context context, CallAPI.CallAPIListener<List<AccountDTO>> listener) {
-        String body = "/user/api/";
+        String body = "/accounts/api/";
         CallAPI.callJsonObjectRequest(context, CallAPI.URL_WEB_SERVICE, body, Request.Method.GET, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject jsonObject) {
