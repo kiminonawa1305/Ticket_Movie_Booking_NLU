@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -34,7 +33,7 @@ public class DayDashBoardFragment extends Fragment {
     private LineChart lineChartDisplayDayRevenueReport;
     private TextView txtViewSumOfSaleTicket, txtViewSumOfRevenue;
     private DashboardResponse data;
-    private String[] labels = {"Sáng", "Trưa", "Chiều", "Tối", "Đêm"};
+    private String[] dayLabels = {"Sáng", "Trưa", "Chiều", "Tối", "Đêm"};
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -62,9 +61,6 @@ public class DayDashBoardFragment extends Fragment {
         if (getArguments() != null) {
             data = (DashboardResponse) getArguments().getSerializable("data") == null ? new DashboardResponse() : (DashboardResponse) getArguments().getSerializable("data");
         }
-//        createLineChart();
-//        createBarChart();
-//        showTotal();
     }
 
     private void showTotal() {
@@ -111,10 +107,10 @@ public class DayDashBoardFragment extends Fragment {
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setDrawGridLines(false);
         xAxis.setGranularity(1f);
-        xAxis.setLabelCount(labels.length);
+        xAxis.setLabelCount(dayLabels.length);
         xAxis.setAxisLineColor(Color.WHITE);
         xAxis.setTextColor(Color.WHITE);
-        xAxis.setValueFormatter(new IndexAxisValueFormatter(labels));
+        xAxis.setValueFormatter(new IndexAxisValueFormatter(dayLabels));
 
         // Cấu hình trục Y
         YAxis leftAxis = barChartViewDisplayDayNumOfSaleTicket.getAxisLeft();
@@ -168,10 +164,10 @@ public class DayDashBoardFragment extends Fragment {
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setDrawGridLines(false);
         xAxis.setGranularity(1f);
-        xAxis.setLabelCount(labels.length);
+        xAxis.setLabelCount(dayLabels.length);
         xAxis.setAxisLineColor(Color.WHITE);
         xAxis.setTextColor(Color.WHITE);
-        xAxis.setValueFormatter(new IndexAxisValueFormatter(labels));
+        xAxis.setValueFormatter(new IndexAxisValueFormatter(dayLabels));
 
         // Cấu hình trục Y
         YAxis leftAxis = lineChartDisplayDayRevenueReport.getAxisLeft();
