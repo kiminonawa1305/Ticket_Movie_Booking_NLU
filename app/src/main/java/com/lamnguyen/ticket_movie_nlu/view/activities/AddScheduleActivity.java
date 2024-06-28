@@ -113,9 +113,9 @@ public class AddScheduleActivity extends AppCompatActivity {
                 Spinner cinemaSpinner = addScheduleDialog.findViewById(R.id.spinner_cinema);
 
                 showDateEditText = addScheduleDialog.findViewById(R.id.edit_text_date);
-                showDateEditText.setText(schedule.toLocalDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")).toString());
+                showDateEditText.setText(formatLocalDate(schedule.toLocalDate()));
                 showtimeEditText = addScheduleDialog.findViewById(R.id.edit_text_showtime);
-                showtimeEditText.setText(schedule.toLocalTime().format(DateTimeFormatter.ofPattern("hh:mm")).toString());
+                showtimeEditText.setText(formatLocalTime(schedule.toLocalTime()));
 
                 ImageView openDatePickerImageView = addScheduleDialog.findViewById(R.id.image_view_open_date_picker);
                 ImageView openTimePickerImageView = addScheduleDialog.findViewById(R.id.image_view_open_time_picker);
@@ -167,12 +167,7 @@ public class AddScheduleActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         addScheduleDialog.dismiss();
-                        roomGroupsInCurrentRow = 0;
-                        selectedCinemaDTO = cinemaItems.get(0);
-                        selectedMovieDTO = movieItems.get(0);
-                        selectedRoomDTO = roomItems.get(0);
-                        selectedDate = null;
-                        selectedRoomDTOs = new ArrayList<>();
+                        reset();
                     }
                 });
 
@@ -204,14 +199,18 @@ public class AddScheduleActivity extends AppCompatActivity {
                         acceptChooseRoomButton.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                if(selectedRoomDTO != null){
-                                    if(selectedRoomDTOs.contains(selectedRoomDTO)){
-                                        Toast.makeText(AddScheduleActivity.this, "Phòng này đã được thêm", Toast.LENGTH_SHORT).show();
-                                    }else {
-                                        selectedRoomDTOs.add(selectedRoomDTO);
-                                        chooseRoomDialog.dismiss();
-                                        roomGroupsContainerLayout.removeView(noRoomGroup);
-                                        handleAddRoomGroup(roomGroupsContainerLayout, noRoomGroup);
+                                if(roomItems.isEmpty()){
+                                    Toast.makeText(AddScheduleActivity.this, "Phòng chiếu đã hết", Toast.LENGTH_SHORT).show();
+                                }else{
+                                    if(selectedRoomDTO != null){
+                                        if(selectedRoomDTOs.contains(selectedRoomDTO)){
+                                            Toast.makeText(AddScheduleActivity.this, "Phòng này đã được thêm", Toast.LENGTH_SHORT).show();
+                                        }else {
+                                            selectedRoomDTOs.add(selectedRoomDTO);
+                                            chooseRoomDialog.dismiss();
+                                            roomGroupsContainerLayout.removeView(noRoomGroup);
+                                            handleAddRoomGroup(roomGroupsContainerLayout, noRoomGroup);
+                                        }
                                     }
                                 }
                             }
@@ -222,8 +221,6 @@ public class AddScheduleActivity extends AppCompatActivity {
                             @Override
                             public void onClick(View v) {
                                 chooseRoomDialog.dismiss();
-                                selectedRoomDTO = roomItems.get(0);
-                                selectedRoomDTOs = new ArrayList<>();
                             }
                         });
                     }
@@ -251,8 +248,8 @@ public class AddScheduleActivity extends AppCompatActivity {
                                         movieNewScheduleTextView.setText(selectedMovieDTO.getTitle());
                                         cinemaNewScheduleTextView.setText(selectedCinemaDTO.getName());
                                         roomNewScheduleTextView.setText(selectedRoomDTOs.stream().map(selectedDTO -> selectedDTO.getName()).collect(Collectors.joining(", ")));
-                                        showDateNewScheduleTextView.setText(schedule.toLocalDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-                                        showtimeNewScheduleTextView.setText(schedule.toLocalTime().format(DateTimeFormatter.ofPattern("hh:mm")));
+                                        showDateNewScheduleTextView.setText(formatLocalDate(schedule.toLocalDate()));
+                                        showtimeNewScheduleTextView.setText(formatLocalTime(schedule.toLocalTime()));
                                     }
 
                                     @Override
@@ -274,12 +271,7 @@ public class AddScheduleActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 addScheduleSuccessDialog.dismiss();
-                roomGroupsInCurrentRow = 0;
-                selectedCinemaDTO = cinemaItems.get(0);
-                selectedMovieDTO = movieItems.get(0);
-                selectedRoomDTO = roomItems.get(0);
-                selectedDate = null;
-                selectedRoomDTOs = new ArrayList<>();
+                reset();
             }
         });
     }
@@ -468,10 +460,7 @@ public class AddScheduleActivity extends AppCompatActivity {
                 if (selectedDate.isBefore(currentDate)){
                     Toast.makeText(AddScheduleActivity.this, "Vui lòng chọn ngày lớn hơn hoặc bằng hiện tại", Toast.LENGTH_SHORT).show();
                 }else {
-                    showDateEditText.setText(selectedDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")).toString());
-                    if(selectedTime == null){
-                        selectedTime = LocalTime.parse(showtimeEditText.getText());
-                    }
+                    showDateEditText.setText(formatLocalDate(selectedDate));
                     schedule = selectedDate.atTime(selectedTime);
                 }
             }
@@ -488,15 +477,31 @@ public class AddScheduleActivity extends AppCompatActivity {
                 if(selectedTime.isBefore(currentTime)){
                     Toast.makeText(AddScheduleActivity.this, "Vui lòng chọn thời gian lớn hơn hoặc bằng hiện tại", Toast.LENGTH_SHORT).show();
                 }else{
-                    showTimeEditText.setText(selectedTime.toString());
-                    if(selectedDate == null){
-                        selectedDate = LocalDate.parse(showDateEditText.getText());
-                    }
+                    showTimeEditText.setText(formatLocalTime(selectedTime));
                     schedule = selectedDate.atTime(selectedTime);
                 }
             }
         }, currentTime.getHour(), currentTime.getMinute(), true);
         timePickerDialog.show();
+    }
+
+    private String formatLocalDate(LocalDate localDate){
+        return localDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+    }
+
+    private String formatLocalTime(LocalTime localTime){
+        return localTime.format(DateTimeFormatter.ofPattern("hh:mm"));
+    }
+
+    private void reset(){
+        roomGroupsInCurrentRow = 0;
+        if(!cinemaItems.isEmpty() && !movieItems.isEmpty() && !roomItems.isEmpty()){
+            selectedCinemaDTO = cinemaItems.get(0);
+            selectedMovieDTO = movieItems.get(0);
+            selectedRoomDTO = roomItems.get(0);
+        }
+        schedule = LocalDateTime.now();
+        selectedRoomDTOs = new ArrayList<>();
     }
 }
 
