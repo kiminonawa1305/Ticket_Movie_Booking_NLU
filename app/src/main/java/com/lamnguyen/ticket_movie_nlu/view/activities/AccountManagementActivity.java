@@ -11,6 +11,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.lamnguyen.ticket_movie_nlu.R;
 import com.lamnguyen.ticket_movie_nlu.bean.Account;
+import com.lamnguyen.ticket_movie_nlu.dto.AccountDTO;
+import com.lamnguyen.ticket_movie_nlu.service.user.AccountService;
+import com.lamnguyen.ticket_movie_nlu.utils.CallAPI;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,13 +30,11 @@ public class AccountManagementActivity extends AppCompatActivity {
 
         tableLayout = findViewById(R.id.table_account);
 
-
+        // Initialize accounts list
         accounts = new ArrayList<>();
-        accounts.add(new Account(1, "Nguyễn Văn A", "0333840481", "anhduong@gmail.com", "abc123", false));
-        accounts.add(new Account(2, "Nguyễn Văn B", "0333840481", "anhduong@gmail.com", "xyz789", true));
 
-
-        populateTable();
+        // Load accounts from API
+        loadAccountsFromAPI();
 
         Button btnCreateAccount = findViewById(R.id.btnCreateAccount);
         Button btnConfirm = findViewById(R.id.btnConfirm);
@@ -44,6 +45,32 @@ public class AccountManagementActivity extends AppCompatActivity {
 
         btnConfirm.setOnClickListener(v -> {
             confirmAccountLock();
+        });
+    }
+
+    private void loadAccountsFromAPI() {
+        AccountService.getInstance().loadAccounts(this, new CallAPI.CallAPIListener<List<AccountDTO>>() {
+            @Override
+            public void completed(List<AccountDTO> data) {
+                // Convert AccountDTO to Account
+                for (AccountDTO accountDTO : data) {
+                    accounts.add(new Account(
+                            accountDTO.getStt(),
+                            accountDTO.getName(),
+                            accountDTO.getPhone(),
+                            accountDTO.getEmail(),
+                            accountDTO.getPassword(),
+                            accountDTO.isLocked()
+                    ));
+                }
+                // Populate the table with the retrieved accounts
+                populateTable();
+            }
+
+            @Override
+            public void error(Object error) {
+
+            }
         });
     }
 
@@ -109,6 +136,5 @@ public class AccountManagementActivity extends AppCompatActivity {
                 account.setLocked(false);
             }
         }
-
     }
 }

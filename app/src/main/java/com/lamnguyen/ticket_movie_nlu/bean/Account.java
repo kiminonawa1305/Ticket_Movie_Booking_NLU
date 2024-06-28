@@ -1,6 +1,8 @@
 package com.lamnguyen.ticket_movie_nlu.bean;
 
-public class Account {
+import java.io.Serializable;
+
+public class Account implements Serializable {
     private int stt;
     private String name;
     private String phone;
