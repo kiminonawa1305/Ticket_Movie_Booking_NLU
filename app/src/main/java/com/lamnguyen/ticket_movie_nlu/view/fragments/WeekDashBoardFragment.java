@@ -39,17 +39,16 @@ public class WeekDashBoardFragment extends Fragment {
     private DashboardResponse data;
     private String[] labels = {"T2", "T3", "T4", "T5", "T6", "T7", "CN"};
 
-    public static WeekDashBoardFragment newInstance(DashboardResponse data) {
-        WeekDashBoardFragment fragment = new WeekDashBoardFragment();
-        Bundle args = new Bundle();
-        args.putSerializable("data", data);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+        getParentFragmentManager().setFragmentResultListener(getClass().getSimpleName(), this, (requestKey, result) -> {
+            data = (DashboardResponse) result.getSerializable("data");
+            createLineChart();
+            createBarChart();
+            showTotal();
+        });
         return inflater.inflate(R.layout.fragment_week_dash_board, container, false);
     }
 
@@ -62,17 +61,15 @@ public class WeekDashBoardFragment extends Fragment {
         txtViewSumOfRevenue = view.findViewById(R.id.text_view_sum_revenu_week);
 
         if (getArguments() != null) {
-             data = (DashboardResponse) getArguments().getSerializable("data");
+            data = (DashboardResponse) getArguments().getSerializable("data");
         }
-
-        createLineChart();
-        createBarChart();
-        showTotal();
     }
+
     private void showTotal() {
         txtViewSumOfSaleTicket.setText(String.valueOf(data.getTotalNumOfTickets()));
         txtViewSumOfRevenue.setText(String.valueOf(data.getTotalRevenue()));
     }
+
     private void createBarChart() {
         // Dữ liệu cho biểu đồ cột
         List<BarEntry> entries = new ArrayList<>();

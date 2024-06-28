@@ -43,16 +43,15 @@ public class MonthDashboardFragment extends Fragment {
     private DashboardResponse data;
     private String[] labels = {"Tuần 1", "Tuần 2", "Tuần 3", "Tuần 4", "Tuần 5"};
 
-    public static MonthDashboardFragment newInstance(DashboardResponse data) {
-        MonthDashboardFragment fragment = new MonthDashboardFragment();
-        Bundle args = new Bundle();
-        args.putSerializable("data", data);
-        fragment.setArguments(args);
-        return fragment;
-    }
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+        getParentFragmentManager().setFragmentResultListener(getClass().getSimpleName(), this, (requestKey, result) -> {
+            data = (DashboardResponse) result.getSerializable("data");
+            createLineChart();
+            createBarChart();
+            showTotal();
+        });
         return inflater.inflate(R.layout.fragment_month_dashboard, container, false);
     }
 
@@ -67,9 +66,6 @@ public class MonthDashboardFragment extends Fragment {
         if (getArguments() != null) {
             data = (DashboardResponse) getArguments().getSerializable("data");
         }
-        createLineChart();
-        createBarChart();
-        showTotal();
     }
     private void showTotal() {
         txtViewSumOfSaleTicket.setText(String.valueOf(data.getTotalNumOfTickets()));
@@ -78,11 +74,11 @@ public class MonthDashboardFragment extends Fragment {
     private void createBarChart() {
         // Dữ liệu cho biểu đồ cột
         List<BarEntry> entries = new ArrayList<>();
-        entries.add(new BarEntry(0f, data.getNumOfTickets().get("FIRST_WEEK")));
-        entries.add(new BarEntry(1f, data.getNumOfTickets().get("SECOND_WEEK")));
-        entries.add(new BarEntry(2f, data.getNumOfTickets().get("THIRD_WEEK")));
-        entries.add(new BarEntry(3f, data.getNumOfTickets().get("FOURTH_WEEK")));
-        entries.add(new BarEntry(4f, data.getNumOfTickets().get("FIFTH_WEEK")));
+        entries.add(new BarEntry(0f, (float) data.getNumOfTickets().get("FIRST_WEEK")));
+        entries.add(new BarEntry(1f, (float) data.getNumOfTickets().get("SECOND_WEEK")));
+        entries.add(new BarEntry(2f, (float) data.getNumOfTickets().get("THIRD_WEEK")));
+        entries.add(new BarEntry(3f, (float) data.getNumOfTickets().get("FOURTH_WEEK")));
+        entries.add(new BarEntry(4f, (float) data.getNumOfTickets().get("FIFTH_WEEK")));
 
         BarDataSet dataSet = new BarDataSet(entries, "Số vé bán được");
         dataSet.setColors(Color.WHITE);

@@ -5,6 +5,8 @@ import android.app.Dialog;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -25,6 +27,7 @@ import com.lamnguyen.ticket_movie_nlu.response.DashboardResponse;
 import com.lamnguyen.ticket_movie_nlu.utils.CallAPI;
 import com.lamnguyen.ticket_movie_nlu.utils.DialogLoading;
 import com.lamnguyen.ticket_movie_nlu.view.fragments.DayDashBoardFragment;
+import com.lamnguyen.ticket_movie_nlu.view.fragments.MonthDashboardFragment;
 import com.lamnguyen.ticket_movie_nlu.view.fragments.WeekDashBoardFragment;
 
 import org.json.JSONException;
@@ -74,18 +77,24 @@ public class DashboardActivity extends AppCompatActivity {
             setBgButtonNonGradient(btnWeek);
             setBgButtonNonGradient(btnMonth);
             navTime = 0;
+            getDashboardData();
+            replaceFragment(new DayDashBoardFragment());
         });
         btnWeek.setOnClickListener(v -> {
             setBgButtonGradient(btnWeek);
             setBgButtonNonGradient(btnDay);
             setBgButtonNonGradient(btnMonth);
             navTime = 1;
+            getDashboardData();
+            replaceFragment(new WeekDashBoardFragment());
         });
         btnMonth.setOnClickListener(v -> {
             setBgButtonGradient(btnMonth);
             setBgButtonNonGradient(btnDay);
             setBgButtonNonGradient(btnWeek);
             navTime = 2;
+            getDashboardData();
+            replaceFragment(new MonthDashboardFragment());
         });
 
 
@@ -93,6 +102,17 @@ public class DashboardActivity extends AppCompatActivity {
             showDatePicker(tvCalendar);
         });
 
+        spnSelectCinema.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                getDashboardData();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
         dialogLoading = DialogLoading.newInstance(this);
     }
 
@@ -160,7 +180,21 @@ public class DashboardActivity extends AppCompatActivity {
                         dashboardResponse = new Gson().fromJson(response.getString("data"), DashboardResponse.class);
                         Bundle bundle = new Bundle();
                         bundle.putSerializable("data", dashboardResponse);
-                        getSupportFragmentManager().setFragmentResult(DayDashBoardFragment.class.getSimpleName(), bundle);
+                        switch (navTime) {
+                            case 0:
+                                getSupportFragmentManager().setFragmentResult(DayDashBoardFragment.class.getSimpleName(), bundle);
+                               // getSupportFragmentManager().beginTransaction().replace(R.id.fragment_show_statistical, new DayDashBoardFragment()).commit();
+                                break;
+                            case 1:
+                                getSupportFragmentManager().setFragmentResult(WeekDashBoardFragment.class.getSimpleName(), bundle);
+                                //getSupportFragmentManager().beginTransaction().replace(R.id.fragment_show_statistical, new WeekDashBoardFragment()).commit();
+                                break;
+                            case 2:
+                                getSupportFragmentManager().setFragmentResult(MonthDashboardFragment.class.getSimpleName(), bundle);
+                                //getSupportFragmentManager().beginTransaction().replace(R.id.fragment_show_statistical, new MonthDashboardFragment()).commit();
+                                break;
+                        }
+//                        getSupportFragmentManager().setFragmentResult(DayDashBoardFragment.class.getSimpleName(), bundle);
                     } catch (JSONException e) {
                         Log.e(TAG, "getDashboardData: ", e);
                     }
@@ -177,7 +211,7 @@ public class DashboardActivity extends AppCompatActivity {
             return "from=" + selectedDate + START_TIME + "&to=" + selectedDate + END_TIME + "&cinemaId=" + convertNameCinemaToId(selectedCinema);
         }
         String[] date = getStartAndEndOfWeekOrMonth(selectedDate, navTime);
-        return "from=" + date[0] + START_TIME + "&to=" + date[1] + END_TIME + "&cinemaId=" + convertNameCinemaToId(selectedCinema);
+        return "from=" + date[0] + START_TIME + "&to=" + date[1] + START_TIME + "&cinemaId=" + convertNameCinemaToId(selectedCinema);
     }
 
     private int convertNameCinemaToId(String nameCinema) {
@@ -201,7 +235,7 @@ public class DashboardActivity extends AppCompatActivity {
             LocalDate startOfWeek = givenDate.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
             result[0] = startOfWeek.toString();
             // Xác định ngày cuối tuần (Chủ Nhật)
-            LocalDate endOfWeek = givenDate.with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY));
+            LocalDate endOfWeek = givenDate.with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY)).plusDays(1);
             result[1] = endOfWeek.toString();
             return result;
         }
@@ -209,9 +243,15 @@ public class DashboardActivity extends AppCompatActivity {
         LocalDate startOfMonth = givenDate.with(TemporalAdjusters.firstDayOfMonth());
         result[0] = startOfMonth.toString();
         // Xác định ngày cuối tháng
-        LocalDate endOfMonth = givenDate.with(TemporalAdjusters.lastDayOfMonth());
+        LocalDate endOfMonth = givenDate.with(TemporalAdjusters.lastDayOfMonth()).plusDays(1);
         result[1] = endOfMonth.toString();
         return result;
     }
 
+    private void replaceFragment(Fragment fragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_show_statistical, fragment);
+        fragmentTransaction.commit();
+    }
 }
