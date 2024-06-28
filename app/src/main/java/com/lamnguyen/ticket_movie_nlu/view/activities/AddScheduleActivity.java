@@ -101,6 +101,7 @@ public class AddScheduleActivity extends AppCompatActivity {
         chooseRoomDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         chooseRoomDialog.setCancelable(false);
 
+
         openAddScheduleDialogButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -121,53 +122,34 @@ public class AddScheduleActivity extends AppCompatActivity {
 
                 populateMovieSpinner(movieSpinner, movieItems);
                 populateCinemaSpinner(cinemaSpinner, cinemaItems);
-                populateRoomSpinner(roomSpinner, roomItems);
 
-                movieService.loadMovie(null, addScheduleDialog.getContext(), new CallAPI.CallAPIListener<List<MovieDTO>>() {
+                movieSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
-                    public void completed(List<MovieDTO> movieDTOS) {
-                        movieSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                            @Override
-                            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                                selectedMovieDTO = (MovieDTO) parent.getItemAtPosition(position);
-                            }
-
-                            @Override
-                            public void onNothingSelected(AdapterView<?> parent) {
-
-                            }
-                        });
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        selectedMovieDTO = (MovieDTO) parent.getItemAtPosition(position);
                     }
 
                     @Override
-                    public void error(Object error) {
+                    public void onNothingSelected(AdapterView<?> parent) {
 
                     }
                 });
 
-                cinemaService.loadCinemas(addScheduleDialog.getContext(), new CallAPI.CallAPIListener<List<CinemaDTO>>() {
+                cinemaSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
-                    public void completed(List<CinemaDTO> cinemaDTOS) {
-                        cinemaSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                            @Override
-                            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                                selectedCinemaDTO = (CinemaDTO) parent.getItemAtPosition(position);
-                                loadRoomData(selectedCinemaDTO.getId());
-                            }
-
-                            @Override
-                            public void onNothingSelected(AdapterView<?> parent) {
-
-                            }
-                        });
-
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        selectedCinemaDTO = (CinemaDTO) parent.getItemAtPosition(position);
+                        loadRoomData(selectedCinemaDTO.getId());
+                        populateRoomSpinner(roomSpinner, roomItems);
                     }
 
                     @Override
-                    public void error(Object error) {
+                    public void onNothingSelected(AdapterView<?> parent) {
 
                     }
                 });
+
+
 
                 roomSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
@@ -191,7 +173,7 @@ public class AddScheduleActivity extends AppCompatActivity {
                         selectedRoomDTO = roomItems.get(0);
                         selectedDate = null;
                         selectedRoomDTOs = new ArrayList<>();
-                  }
+                    }
                 });
 
                 openDatePickerImageView.setOnClickListener(new View.OnClickListener() {
@@ -215,6 +197,8 @@ public class AddScheduleActivity extends AppCompatActivity {
                 openChooseRoomDialogTextView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        loadRoomData(selectedCinemaDTO.getId());
+                        populateRoomSpinner(roomSpinner, roomItems);
                         chooseRoomDialog.show();
                         Button acceptChooseRoomButton = chooseRoomDialog.findViewById(R.id.button_accept_choose_room);
                         acceptChooseRoomButton.setOnClickListener(new View.OnClickListener() {

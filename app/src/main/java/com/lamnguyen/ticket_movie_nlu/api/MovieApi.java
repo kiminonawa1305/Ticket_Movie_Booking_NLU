@@ -2,6 +2,7 @@ package com.lamnguyen.ticket_movie_nlu.api;
 
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -34,7 +35,7 @@ public class MovieApi {
 
     public void loadMovie(LocalDate date, Context context, CallAPI.CallAPIListener<List<MovieDTO>> listener) {
         String body = "/movie/api/";
-        if(date != null){
+        if (date != null){
             body += "showtime?date=" + date.toString();
         }
         CallAPI.callJsonObjectRequest(context, CallAPI.URL_WEB_SERVICE, body, Request.Method.GET, new Response.Listener<JSONObject>() {
@@ -45,6 +46,7 @@ public class MovieApi {
                                 listener.error(jsonObject.getString("message"));
                                 return;
                             }
+
 
                             MovieDTO[] movieDTOs = new Gson().fromJson(jsonObject.getString("data"), MovieDTO[].class);
                             listener.completed(List.of(movieDTOs));
@@ -62,6 +64,32 @@ public class MovieApi {
     }
 
 
+//    public void loadMovies(Context context, CallAPI.CallAPIListener<List<MovieDTO>> listener) {
+//        String body = "/movie/api/";
+//        CallAPI.callJsonObjectRequest(context, CallAPI.URL_WEB_SERVICE + body, null , Request.Method.GET, new Response.Listener<JSONObject>() {
+//                    @Override
+//                    public void onResponse(JSONObject jsonObject) {
+//                        try {
+//                            if (jsonObject.getInt("status") != 202) {
+//                                listener.error(jsonObject.getString("message"));
+//                                return;
+//                            }
+//
+//
+//                            MovieDTO[] movieDTOs = new Gson().fromJson(jsonObject.getString("data"), MovieDTO[].class);
+//                            listener.completed(List.of(movieDTOs));
+//                        } catch (JSONException e) {
+//                            listener.error(e.getMessage());
+//                        }
+//                    }
+//                }, new Response.ErrorListener() {
+//                    @Override
+//                    public void onErrorResponse(VolleyError error) {
+//                        listener.error(error);
+//                    }
+//                }
+//        );
+//    }
 
     public void loadMovieDetail(Integer id, LocalDate date, Context context, CallAPI.CallAPIListener<MovieDetailDTO> listener) {
         String body = "/movie/api/detail/" + id + "/" + date.toString();

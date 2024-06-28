@@ -29,6 +29,10 @@ public class MovieService {
         movieApi.loadMovie(date, context, listener);
     }
 
+//    public void loadMovies(Context context, CallAPI.CallAPIListener<List<MovieDTO>> listener){
+//        movieApi.loadMovies(context, listener);
+//    }
+
 
     public void loadShowtime(int movieId, LocalDate date, Context context, CallAPI.CallAPIListener<List<ShowtimeByCinema>> listener) {
         movieApi.loadShowtime(movieId, date, context, listener);

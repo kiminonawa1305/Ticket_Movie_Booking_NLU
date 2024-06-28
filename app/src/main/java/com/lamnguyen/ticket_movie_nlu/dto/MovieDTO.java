@@ -1,5 +1,7 @@
 package com.lamnguyen.ticket_movie_nlu.dto;
 
+import java.io.Serializable;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
