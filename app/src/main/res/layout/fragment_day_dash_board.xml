@@ -73,9 +73,10 @@
                     android:layout_height="wrap_content">
                     <TextView
                         android:id="@+id/text_view_sum_sale_ticket_day"
+                        android:gravity="center"
                         android:layout_width="wrap_content"
                         android:textColor="@color/white"
-                        android:text="xxxxxxxxxxx"
+                        android:text="x"
                         android:textSize="20sp"
                         android:layout_height="50dp"/>
                     <ImageView
