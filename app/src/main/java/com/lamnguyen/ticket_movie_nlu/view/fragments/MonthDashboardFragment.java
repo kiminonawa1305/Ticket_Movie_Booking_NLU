@@ -26,6 +26,7 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.lamnguyen.ticket_movie_nlu.R;
+import com.lamnguyen.ticket_movie_nlu.response.DashboardResponse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,8 +40,16 @@ public class MonthDashboardFragment extends Fragment {
     private BarChart barChartViewDisplayMonthNumOfSaleTicket;
     private LineChart lineChartDisplayMonthRevenueReport;
     private TextView txtViewSumOfSaleTicket, txtViewSumOfRevenue;
+    private DashboardResponse data;
+    private String[] labels = {"Tuần 1", "Tuần 2", "Tuần 3", "Tuần 4", "Tuần 5"};
 
-    private String[] labels = {"Tuần 1", "Tuần 2", "Tuần 3", "Tuần 4"};
+    public static MonthDashboardFragment newInstance(DashboardResponse data) {
+        MonthDashboardFragment fragment = new MonthDashboardFragment();
+        Bundle args = new Bundle();
+        args.putSerializable("data", data);
+        fragment.setArguments(args);
+        return fragment;
+    }
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -55,17 +64,25 @@ public class MonthDashboardFragment extends Fragment {
         txtViewSumOfSaleTicket = view.findViewById(R.id.text_view_sum_sale_ticket_month);
         txtViewSumOfRevenue = view.findViewById(R.id.text_view_sum_revenu_month);
 
+        if (getArguments() != null) {
+            data = (DashboardResponse) getArguments().getSerializable("data");
+        }
         createLineChart();
         createBarChart();
+        showTotal();
     }
-
+    private void showTotal() {
+        txtViewSumOfSaleTicket.setText(String.valueOf(data.getTotalNumOfTickets()));
+        txtViewSumOfRevenue.setText(String.valueOf(data.getTotalRevenue()));
+    }
     private void createBarChart() {
         // Dữ liệu cho biểu đồ cột
         List<BarEntry> entries = new ArrayList<>();
-        entries.add(new BarEntry(0f, 15));
-        entries.add(new BarEntry(1f, 20));
-        entries.add(new BarEntry(2f, 25));
-        entries.add(new BarEntry(3f, 30));
+        entries.add(new BarEntry(0f, data.getNumOfTickets().get("FIRST_WEEK")));
+        entries.add(new BarEntry(1f, data.getNumOfTickets().get("SECOND_WEEK")));
+        entries.add(new BarEntry(2f, data.getNumOfTickets().get("THIRD_WEEK")));
+        entries.add(new BarEntry(3f, data.getNumOfTickets().get("FOURTH_WEEK")));
+        entries.add(new BarEntry(4f, data.getNumOfTickets().get("FIFTH_WEEK")));
 
         BarDataSet dataSet = new BarDataSet(entries, "Số vé bán được");
         dataSet.setColors(Color.WHITE);
@@ -113,11 +130,11 @@ public class MonthDashboardFragment extends Fragment {
     private void createLineChart() {
         // Dữ liệu cho biểu đồ đường
         List<Entry> entries = new ArrayList<>();
-        entries.add(new Entry(0f, 5));
-        entries.add(new Entry(1f, 10));
-        entries.add(new Entry(2f, 20));
-        entries.add(new Entry(3f, 12));
-        entries.add(new Entry(4f, 9));
+        entries.add(new Entry(0f, data.getNumOfTickets().get("FIRST_WEEK")));
+        entries.add(new Entry(1f, data.getNumOfTickets().get("SECOND_WEEK")));
+        entries.add(new Entry(2f, data.getNumOfTickets().get("THIRD_WEEK")));
+        entries.add(new Entry(3f, data.getNumOfTickets().get("FOURTH_WEEK")));
+        entries.add(new Entry(4f, data.getNumOfTickets().get("FIFTH_WEEK")));
 
         LineDataSet dataSet = new LineDataSet(entries, "Doanh thu");
         dataSet.setColor(Color.WHITE);

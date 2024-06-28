@@ -99,71 +99,39 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center|right"
+                android:layout_gravity="left"
                 android:orientation="horizontal">
 
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center|right"
+                    android:gravity="center"
                     android:orientation="horizontal">
 
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginRight="10dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/bg_nav_dashboard"
-                        android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/text_view_calendar"
+                        android:layout_width="200dp"
+                        android:layout_height="40dp"
+                        android:layout_marginHorizontal="8dp"
+                        android:background="@drawable/bg_gradient_in_dashboard"
+                        android:gravity="center"
+                        android:textStyle="bold"
+                        android:text="dd"
+                        android:textColor="@color/white" />
 
-                        <TextView
-                            android:id="@+id/text_view_date_from"
-                            android:layout_width="0dp"
-                            android:layout_height="40dp"
-                            android:layout_marginHorizontal="8dp"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:text="dd"
-                            android:textColor="@color/black" />
-
-                        <ImageView
-                            android:id="@+id/image_view_edit_calendar_from"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:background="@mipmap/ic_edit_calendar" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:background="@drawable/bg_nav_dashboard"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/text_view_date_to"
-                            android:layout_width="0dp"
-                            android:layout_height="40dp"
-                            android:layout_marginHorizontal="8dp"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:text="dd"
-                            android:textColor="@color/black" />
-
-                        <ImageView
-                            android:id="@+id/image_view_edit_calendar_to"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:background="@mipmap/ic_edit_calendar" />
-                    </LinearLayout>
-
+                    <ImageView
+                        android:id="@+id/image_view_edit_calendar"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@mipmap/ic_edit_calendar" />
                 </LinearLayout>
             </LinearLayout>
 
         </LinearLayout>
-        <LinearLayout
-            android:id="@+id/linear_layout_show_statistical"
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/fragment_show_statistical"
+            android:name="com.lamnguyen.ticket_movie_nlu.view.fragments.DayDashBoardFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical" />

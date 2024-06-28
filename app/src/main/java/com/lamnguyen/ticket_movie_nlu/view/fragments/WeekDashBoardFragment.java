@@ -26,6 +26,7 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.lamnguyen.ticket_movie_nlu.R;
+import com.lamnguyen.ticket_movie_nlu.response.DashboardResponse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,11 +36,15 @@ public class WeekDashBoardFragment extends Fragment {
     private BarChart barChartViewDisplayWeekNumOfSaleTicket;
     private LineChart lineChartDisplayWeekRevenueReport;
     private TextView txtViewSumOfSaleTicket, txtViewSumOfRevenue;
-
+    private DashboardResponse data;
     private String[] labels = {"T2", "T3", "T4", "T5", "T6", "T7", "CN"};
 
-    public static WeekDashBoardFragment newInstance() {
-        return new WeekDashBoardFragment();
+    public static WeekDashBoardFragment newInstance(DashboardResponse data) {
+        WeekDashBoardFragment fragment = new WeekDashBoardFragment();
+        Bundle args = new Bundle();
+        args.putSerializable("data", data);
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override
@@ -56,20 +61,28 @@ public class WeekDashBoardFragment extends Fragment {
         txtViewSumOfSaleTicket = view.findViewById(R.id.text_view_sum_sale_ticket_week);
         txtViewSumOfRevenue = view.findViewById(R.id.text_view_sum_revenu_week);
 
+        if (getArguments() != null) {
+             data = (DashboardResponse) getArguments().getSerializable("data");
+        }
+
         createLineChart();
         createBarChart();
+        showTotal();
     }
-
+    private void showTotal() {
+        txtViewSumOfSaleTicket.setText(String.valueOf(data.getTotalNumOfTickets()));
+        txtViewSumOfRevenue.setText(String.valueOf(data.getTotalRevenue()));
+    }
     private void createBarChart() {
         // Dữ liệu cho biểu đồ cột
         List<BarEntry> entries = new ArrayList<>();
-        entries.add(new BarEntry(0f, 15));
-        entries.add(new BarEntry(1f, 20));
-        entries.add(new BarEntry(2f, 25));
-        entries.add(new BarEntry(3f, 30));
-        entries.add(new BarEntry(4f, 20));
-        entries.add(new BarEntry(5f, 25));
-        entries.add(new BarEntry(6f, 30));
+        entries.add(new BarEntry(0f, data.getNumOfTickets().get("MONDAY")));
+        entries.add(new BarEntry(1f, data.getNumOfTickets().get("TUESDAY")));
+        entries.add(new BarEntry(2f, data.getNumOfTickets().get("WEDNESDAY")));
+        entries.add(new BarEntry(3f, data.getNumOfTickets().get("THURSDAY")));
+        entries.add(new BarEntry(4f, data.getNumOfTickets().get("FRIDAY")));
+        entries.add(new BarEntry(5f, data.getNumOfTickets().get("SATURDAY")));
+        entries.add(new BarEntry(6f, data.getNumOfTickets().get("SUNDAY")));
 
         BarDataSet dataSet = new BarDataSet(entries, "Số vé bán được");
         dataSet.setColors(Color.WHITE);
@@ -117,13 +130,13 @@ public class WeekDashBoardFragment extends Fragment {
     private void createLineChart() {
         // Dữ liệu cho biểu đồ đường
         List<Entry> entries = new ArrayList<>();
-        entries.add(new Entry(0f, 5));
-        entries.add(new Entry(1f, 10));
-        entries.add(new Entry(2f, 20));
-        entries.add(new Entry(3f, 12));
-        entries.add(new Entry(4f, 9));
-        entries.add(new Entry(5f, 20));
-        entries.add(new Entry(6f, 12));
+        entries.add(new Entry(0f, data.getNumOfTickets().get("MONDAY")));
+        entries.add(new Entry(1f, data.getNumOfTickets().get("TUESDAY")));
+        entries.add(new Entry(2f, data.getNumOfTickets().get("WEDNESDAY")));
+        entries.add(new Entry(3f, data.getNumOfTickets().get("THURSDAY")));
+        entries.add(new Entry(4f, data.getNumOfTickets().get("FRIDAY")));
+        entries.add(new Entry(5f, data.getNumOfTickets().get("SATURDAY")));
+        entries.add(new Entry(6f, data.getNumOfTickets().get("SUNDAY")));
 
         LineDataSet dataSet = new LineDataSet(entries, "Doanh thu");
         dataSet.setColor(Color.WHITE);

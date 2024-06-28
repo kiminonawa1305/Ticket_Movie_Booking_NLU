@@ -24,6 +24,7 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.lamnguyen.ticket_movie_nlu.R;
+import com.lamnguyen.ticket_movie_nlu.response.DashboardResponse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,13 +33,20 @@ public class DayDashBoardFragment extends Fragment {
     private BarChart barChartViewDisplayDayNumOfSaleTicket;
     private LineChart lineChartDisplayDayRevenueReport;
     private TextView txtViewSumOfSaleTicket, txtViewSumOfRevenue;
-
+    private DashboardResponse data;
     private String[] labels = {"Sáng", "Trưa", "Chiều", "Tối", "Đêm"};
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        getParentFragmentManager().setFragmentResultListener(getClass().getSimpleName(), this, (requestKey, result) -> {
+            data = (DashboardResponse) result.getSerializable("data");
+            createLineChart();
+            createBarChart();
+            showTotal();
+        });
+
         return inflater.inflate(R.layout.fragment_day_dash_board, container, false);
     }
 
@@ -51,17 +59,32 @@ public class DayDashBoardFragment extends Fragment {
         txtViewSumOfSaleTicket = view.findViewById(R.id.text_view_sum_sale_ticket_day);
         txtViewSumOfRevenue = view.findViewById(R.id.text_view_sum_revenu_day);
 
-        createLineChart();
-        createBarChart();
+        if (getArguments() != null) {
+            data = (DashboardResponse) getArguments().getSerializable("data") == null ? new DashboardResponse() : (DashboardResponse) getArguments().getSerializable("data");
+        }
+//        createLineChart();
+//        createBarChart();
+//        showTotal();
+    }
+
+    private void showTotal() {
+        txtViewSumOfSaleTicket.setText(String.valueOf(data.getTotalNumOfTickets()));
+        txtViewSumOfRevenue.setText(String.valueOf(data.getTotalRevenue()));
     }
 
     private void createBarChart() {
+        double morning = data.getRevenue().get("MORNING") == null ? 0 : data.getNumOfTickets().get("MORNING");
+        double noon = data.getRevenue().get("NOON") == null ? 0 : data.getNumOfTickets().get("NOON");
+        double afternoon = data.getRevenue().get("AFTERNOON") == null ? 0 : data.getNumOfTickets().get("AFTERNOON");
+        double evening = data.getRevenue().get("EVENING") == null ? 0 : data.getNumOfTickets().get("EVENING");
+        double night = data.getRevenue().get("NIGHT") == null ? 0 : data.getNumOfTickets().get("NIGHT");
         // Dữ liệu cho biểu đồ cột
         List<BarEntry> entries = new ArrayList<>();
-        entries.add(new BarEntry(0f, 15));
-        entries.add(new BarEntry(1f, 20));
-        entries.add(new BarEntry(2f, 25));
-        entries.add(new BarEntry(3f, 30));
+        entries.add(new BarEntry(0f, (float) morning));
+        entries.add(new BarEntry(1f, (float) noon));
+        entries.add(new BarEntry(2f, (float) afternoon));
+        entries.add(new BarEntry(3f, (float) evening));
+        entries.add(new BarEntry(4f, (float) night));
 
         BarDataSet dataSet = new BarDataSet(entries, "Số vé bán được");
         dataSet.setColors(Color.WHITE);
@@ -107,12 +130,18 @@ public class DayDashBoardFragment extends Fragment {
     }
 
     private void createLineChart() {
+        double morning = data.getRevenue().get("MORNING") == null ? 0 : data.getRevenue().get("MORNING");
+        double noon = data.getRevenue().get("NOON") == null ? 0 : data.getRevenue().get("NOON");
+        double afternoon = data.getRevenue().get("AFTERNOON") == null ? 0 : data.getRevenue().get("AFTERNOON");
+        double evening = data.getRevenue().get("EVENING") == null ? 0 : data.getRevenue().get("EVENING");
+        double night = data.getRevenue().get("NIGHT") == null ? 0 : data.getRevenue().get("NIGHT");
+
         List<Entry> entries = new ArrayList<>();
-        entries.add(new Entry(0f, 5));
-        entries.add(new Entry(1f, 10));
-        entries.add(new Entry(2f, 20));
-        entries.add(new Entry(3f, 12));
-        entries.add(new Entry(4f, 9));
+        entries.add(new Entry(0f, (float) morning));
+        entries.add(new Entry(1f, (float) noon));
+        entries.add(new Entry(2f, (float) afternoon));
+        entries.add(new Entry(3f, (float) evening));
+        entries.add(new Entry(4f, (float) night));
 
         LineDataSet dataSet = new LineDataSet(entries, "Doanh thu");
         dataSet.setColor(Color.WHITE);
