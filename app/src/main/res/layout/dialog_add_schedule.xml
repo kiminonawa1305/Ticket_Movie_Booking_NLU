@@ -44,7 +44,7 @@
                 android:layout_marginBottom="6dp"
                 android:textAllCaps="true"/>
 
-           <FrameLayout
+            <FrameLayout
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
                android:background="@drawable/bg_rounded_corner"
@@ -54,48 +54,42 @@
                    android:layout_width="match_parent"
                    android:backgroundTint="@color/white"
                    android:layout_height="wrap_content"  />
-           </FrameLayout>
+            </FrameLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:text="RẠP CHIẾU"
+                android:textSize="10dp"
+                android:layout_marginBottom="6dp"
+                android:textAllCaps="true"/>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_rounded_corner"
+                android:layout_gravity="center_vertical"
+                android:layout_marginBottom="16dp">
+                <Spinner
+                    android:id="@+id/spinner_cinema"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:backgroundTint="@color/white"
+                    />
+            </FrameLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_marginBottom="16dp">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginBottom="16dp"
                     android:layout_marginRight="6dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/white"
-                        android:textStyle="bold"
-                        android:text="Phòng chiếu"
-                        android:textSize="10dp"
-                        android:layout_marginBottom="6dp"
-                        android:textAllCaps="true"/>
-
-                    <FrameLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/bg_rounded_corner">
-                        <Spinner
-                            android:id="@+id/spinner_room"
-                            android:backgroundTint="@color/white"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"/>
-                    </FrameLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp"
-                    android:layout_marginLeft="6dp"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
@@ -124,7 +118,8 @@
                             android:background="@null"
                             android:textColor="@color/white"
                             android:textColorHint="@color/text_color_hint"
-                            android:textSize="14dp" />
+                            android:textSize="14dp"
+                            android:enabled="false"/>
 
                         <ImageView
                             android:id="@+id/image_view_open_date_picker"
@@ -134,6 +129,62 @@
                             android:layout_marginLeft="12dp"
                             android:src="@drawable/calendar" />
                     </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="6dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        android:text="Suất chiếu"
+                        android:textSize="10dp"
+                        android:layout_marginBottom="6dp"
+                        android:textAllCaps="true"/>
+
+<!--                    <FrameLayout-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:background="@drawable/bg_rounded_corner">-->
+<!--                        <Spinner-->
+<!--                            android:id="@+id/spinner_room"-->
+<!--                            android:backgroundTint="@color/white"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="match_parent"/>-->
+<!--                    </FrameLayout>-->
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_rounded_corner"
+                        android:padding="12dp">
+
+                        <EditText
+                            android:id="@+id/edit_text_showtime"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@null"
+                            android:textColor="@color/white"
+                            android:textColorHint="@color/text_color_hint"
+                            android:textSize="14dp"
+                            android:enabled="false"/>
+
+                        <ImageView
+                            android:id="@+id/image_view_open_time_picker"
+                            android:layout_width="14dp"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="12dp"
+                            android:src="@drawable/ic_time"/>
+                    </LinearLayout>
+
                 </LinearLayout>
             </LinearLayout>
 
@@ -153,14 +204,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:text="Suất chiếu"
+                        android:text="Phòng chiếu"
                         android:textAllCaps="true"
                         android:textColor="@color/white"
                         android:textSize="10dp"
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/text_view_add_showtime_group"
+                        android:id="@+id/text_view_open_choose_room_dialog"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="right|center_vertical"
@@ -168,7 +219,7 @@
                         android:backgroundTint="@color/blue"
                         android:paddingHorizontal="10dp"
                         android:paddingVertical="4dp"
-                        android:text="+ Thêm ô nhập suất chiếu"
+                        android:text="+ Thêm phòng chiếu"
                         android:textColor="@color/white"
                         android:textSize="10dp"
                         android:textStyle="bold" />
@@ -179,16 +230,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="140dp">
                     <LinearLayout
-                        android:id="@+id/layout_showtime_groups_container"
+                        android:id="@+id/layout_room_groups_container"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/text_view_no_showtime_group"
+                            android:id="@+id/text_view_no_room_group"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Chưa có suất chiếu nào được tạo"
+                            android:text="Chưa có phòng chiếu nào được thêm"
                             android:gravity="center"
                             android:textColor="@color/black_system"
                             android:paddingVertical="60dp"

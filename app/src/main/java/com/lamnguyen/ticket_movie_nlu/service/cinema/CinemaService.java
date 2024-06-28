@@ -4,15 +4,20 @@ import android.content.Context;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.lamnguyen.ticket_movie_nlu.R;
+import com.lamnguyen.ticket_movie_nlu.api.CinemaApi;
+import com.lamnguyen.ticket_movie_nlu.dto.CinemaDTO;
 import com.lamnguyen.ticket_movie_nlu.service.LatLngService;
+import com.lamnguyen.ticket_movie_nlu.utils.CallAPI;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class CinemaService {
+    private CinemaApi cinemaApi;
     private static final String TAG = CinemaService.class.getSimpleName();
 
     private static CinemaService instance;
+
 
     public static CinemaService getInstance() {
         if (instance == null) instance = new CinemaService();
@@ -21,7 +26,7 @@ public class CinemaService {
     }
 
     private CinemaService() {
-
+        cinemaApi = CinemaApi.getInstance();
     }
 
     public List<LatLng> getLatLngs(Context context) {
@@ -52,6 +57,10 @@ public class CinemaService {
 
     private static CinemaLatLng createCinemaLatLng(String[] data) {
         return new CinemaLatLng(data[2], LatLngService.createLatLng(data));
+    }
+
+    public void loadCinemas(Context context, CallAPI.CallAPIListener<List<CinemaDTO>> listener){
+        cinemaApi.loadCinemas(context, listener);
     }
 
     public static class CinemaLatLng {

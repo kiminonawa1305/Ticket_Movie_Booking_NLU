@@ -33,7 +33,10 @@ public class MovieApi {
     }
 
     public void loadMovie(LocalDate date, Context context, CallAPI.CallAPIListener<List<MovieDTO>> listener) {
-        String body = "/movie/api/showtime?date=" + date.toString();
+        String body = "/movie/api/";
+        if(date != null){
+            body += "showtime?date=" + date.toString();
+        }
         CallAPI.callJsonObjectRequest(context, CallAPI.URL_WEB_SERVICE, body, Request.Method.GET, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject jsonObject) {
@@ -57,6 +60,8 @@ public class MovieApi {
                 }
         );
     }
+
+
 
     public void loadMovieDetail(Integer id, LocalDate date, Context context, CallAPI.CallAPIListener<MovieDetailDTO> listener) {
         String body = "/movie/api/detail/" + id + "/" + date.toString();
@@ -131,6 +136,34 @@ public class MovieApi {
                 }
             }
         }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                listener.error(error);
+            }
+        });
+    }
+
+    public void addNewMovie(Context context, String idApi, CallAPI.CallAPIListener<MovieDTO> listener) throws JSONException {
+        String body = "/movie/api/";
+        JSONObject newMovieRequestBodyJSON = new JSONObject().put("idApi", idApi);
+        CallAPI.callJsonObjectRequest(context, CallAPI.URL_WEB_SERVICE + body, null, newMovieRequestBodyJSON, null, Request.Method.POST, new Response.Listener<JSONObject>(){
+
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    if (response.getInt("status") != 202){
+                        listener.error(response.getString("message"));
+                        return;
+                    }
+
+                    MovieDTO newMovieDTO = new Gson().fromJson(response.getString("data"), MovieDTO.class);
+                    listener.completed(newMovieDTO);
+                }catch (JSONException e){
+                    listener.error(e.getMessage());
+                }
+            }
+        }, new Response.ErrorListener(){
+
             @Override
             public void onErrorResponse(VolleyError error) {
                 listener.error(error);
