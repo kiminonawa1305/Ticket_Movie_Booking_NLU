@@ -64,9 +64,9 @@ public class PriceManageActivity extends AppCompatActivity implements PriceManag
 
             originalPrices.put(position, new PriceManageDTO(
                     mpriceManage.getPriceList().get(position).getCinemaName(),
-                    Double.valueOf(singleChairPrice.getText().toString()),
-                    Double.valueOf(coupleChairPrice.getText().toString()),
-                    Double.valueOf(vipChairPrice.getText().toString()),
+                    Integer.valueOf(singleChairPrice.getText().toString()),
+                    Integer.valueOf(coupleChairPrice.getText().toString()),
+                    Integer.valueOf(vipChairPrice.getText().toString()),
                     mpriceManage.getPriceList().get(position).getCinema_Id()
             ));
 
@@ -106,23 +106,31 @@ public class PriceManageActivity extends AppCompatActivity implements PriceManag
     private void saveUpdatedValues(int position, EditText singleChairPrice, EditText coupleChairPrice, EditText vipChairPrice) {
         PriceManageDTO updatedPrice = new PriceManageDTO(
                 mpriceManage.getPriceList().get(position).getCinemaName(),
-                Double.valueOf(singleChairPrice.getText().toString()),
-                Double.valueOf(coupleChairPrice.getText().toString()),
-                Double.valueOf(vipChairPrice.getText().toString()),
+                Integer.valueOf(singleChairPrice.getText().toString()),
+                Integer.valueOf(coupleChairPrice.getText().toString()),
+                Integer.valueOf(vipChairPrice.getText().toString()),
                 originalPrices.get(position).getCinema_Id() // Lấy cinema_Id từ originalPrices
         );
 
-        mpriceManage.updatePrice(position, updatedPrice);
+        PriceManageApi.updatePrice(this, updatedPrice, new PriceManageApi.UpdatePriceListener() {
+            @Override
+            public void onUpdateSuccess() {
+                mpriceManage.updatePrice(position, updatedPrice);
+                originalPrices.remove(position);
+                disableEditTextEditing(singleChairPrice);
+                disableEditTextEditing(coupleChairPrice);
+                disableEditTextEditing(vipChairPrice);
+            }
 
-
-        originalPrices.remove(position);
-
-
+            @Override
+            public void onUpdateError(String message) {
+                // Handle error here
+            }
+        });
         disableEditTextEditing(singleChairPrice);
         disableEditTextEditing(coupleChairPrice);
         disableEditTextEditing(vipChairPrice);
     }
-
 
     private void enableEditTextEditing(EditText editText) {
         editText.setFocusableInTouchMode(true);

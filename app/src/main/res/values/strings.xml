@@ -113,4 +113,7 @@
     <string name="next">Tiếp theo</string>
     <string name="phone_empty">Số điện thoại không được bỏ trống!</string>
     <string name="full_name_empty">Họ và tên không được bỏ trống!</string>
+    <string name="single_chair_price">Ghế đơn</string>
+    <string name="couple_chair_price">Ghế đôi</string>
+    <string name="VIP_chair_price">Ghế VIP</string>
 </resources>

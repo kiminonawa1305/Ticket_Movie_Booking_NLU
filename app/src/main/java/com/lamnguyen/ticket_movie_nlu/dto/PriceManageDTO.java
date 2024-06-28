@@ -11,8 +11,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class PriceManageDTO {
     private String cinemaName;
-    private Double single;
-    private Double couple;
-    private Double vip;
+    private Integer single;
+    private Integer couple;
+    private Integer vip;
     private Integer cinema_Id;
 }

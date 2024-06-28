@@ -25,18 +25,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/backIcon"
-            android:layout_width="43dp"
-            android:layout_height="38dp"
-            android:layout_marginStart="22dp"
-            android:layout_marginTop="40dp"
-            app:layout_constraintEnd_toStartOf="@+id/PersonalInfo"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_back_arrow"
-            app:tint="#FFFFFF" />
+
 
         <View
             android:id="@+id/line"

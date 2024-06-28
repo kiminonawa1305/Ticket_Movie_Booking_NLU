@@ -9,6 +9,8 @@ import com.google.gson.reflect.TypeToken;
 import com.lamnguyen.ticket_movie_nlu.dto.PriceManageDTO;
 import com.lamnguyen.ticket_movie_nlu.utils.CallAPI;
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.lang.reflect.Type;
 import java.util.List;
@@ -37,5 +39,33 @@ public class PriceManageApi {
                 listener.onError(error.getMessage());
             }
         });
+    }
+
+    public interface UpdatePriceListener {
+        void onUpdateSuccess();
+        void onUpdateError(String message);
+    }
+
+    public static void updatePrice(Context context, PriceManageDTO priceManageDTO, final UpdatePriceListener listener) {
+        Gson gson = new Gson();
+        String json = gson.toJson(priceManageDTO);
+
+        try {
+            JSONObject jsonObject = new JSONObject(json);
+
+            CallAPI.callJsonObjectRequest(context, URL_API + "/update", "", jsonObject, null, Request.Method.POST, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    listener.onUpdateSuccess();
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    listener.onUpdateError(error.getMessage());
+                }
+            });
+        } catch (JSONException e) {
+            listener.onUpdateError(e.getMessage());
+        }
     }
 }

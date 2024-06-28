@@ -94,7 +94,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
                 android:fontFamily="sans-serif"
-                android:text="Ghế đơn"
+                android:text="@string/single_chair_price"
                 android:textSize="30dp"
                 android:textColor="@color/black"/>
 
@@ -137,7 +137,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
                 android:fontFamily="sans-serif"
-                android:text="Ghế đôi"
+                android:text="@string/couple_chair_price"
                 android:textSize="30dp"
                 android:textColor="@color/black"/>
 
@@ -180,7 +180,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
                 android:fontFamily="sans-serif"
-                android:text="Ghế VIP"
+                android:text="@string/VIP_chair_price"
                 android:textSize="30dp"
                 android:textColor="@color/black"/>
 
