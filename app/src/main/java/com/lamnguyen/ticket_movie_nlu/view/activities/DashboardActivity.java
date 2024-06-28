@@ -150,7 +150,7 @@ public class DashboardActivity extends AppCompatActivity {
                 DashboardActivity.this,
                 (DatePicker view, int y, int m, int dayOfMonth) -> {
                     calendar.set(y, m, dayOfMonth);
-                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
                     String selectedDate = dateFormat.format(calendar.getTime());
                     txtView.setText(selectedDate);
                     getDashboardData();
@@ -163,7 +163,7 @@ public class DashboardActivity extends AppCompatActivity {
     private void setDateToTextView() {
         Calendar calendar = Calendar.getInstance();
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
         String formattedDate = dateFormat.format(calendar.getTime());
 
         tvCalendar.setText(formattedDate);
@@ -183,18 +183,14 @@ public class DashboardActivity extends AppCompatActivity {
                         switch (navTime) {
                             case 0:
                                 getSupportFragmentManager().setFragmentResult(DayDashBoardFragment.class.getSimpleName(), bundle);
-                               // getSupportFragmentManager().beginTransaction().replace(R.id.fragment_show_statistical, new DayDashBoardFragment()).commit();
                                 break;
                             case 1:
                                 getSupportFragmentManager().setFragmentResult(WeekDashBoardFragment.class.getSimpleName(), bundle);
-                                //getSupportFragmentManager().beginTransaction().replace(R.id.fragment_show_statistical, new WeekDashBoardFragment()).commit();
                                 break;
                             case 2:
                                 getSupportFragmentManager().setFragmentResult(MonthDashboardFragment.class.getSimpleName(), bundle);
-                                //getSupportFragmentManager().beginTransaction().replace(R.id.fragment_show_statistical, new MonthDashboardFragment()).commit();
                                 break;
                         }
-//                        getSupportFragmentManager().setFragmentResult(DayDashBoardFragment.class.getSimpleName(), bundle);
                     } catch (JSONException e) {
                         Log.e(TAG, "getDashboardData: ", e);
                     }
@@ -205,7 +201,8 @@ public class DashboardActivity extends AppCompatActivity {
     }
 
     private String createQuery() {
-        String selectedDate = tvCalendar.getText().toString();
+        String dateShow = tvCalendar.getText().toString();
+        String selectedDate = dateShow.split("/")[2] + "-" +dateShow.split("/")[1] + "-" + dateShow.split("/")[0];
         String selectedCinema = spnSelectCinema.getSelectedItem().toString();
         if (navTime == 0) {
             return "from=" + selectedDate + START_TIME + "&to=" + selectedDate + END_TIME + "&cinemaId=" + convertNameCinemaToId(selectedCinema);
