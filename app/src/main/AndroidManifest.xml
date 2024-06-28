@@ -98,12 +98,10 @@
         <activity
             android:name=".view.activities.GreetingActivity"
             android:exported="false"
-            android:screenOrientation="portrait">
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
-
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activities.PriceManageActivity"
+            android:exported="true">
         </activity>
     </application>
 </manifest>

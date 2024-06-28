@@ -16,4 +16,9 @@
     <color name="item_date">#AFA0A0</color>
     <color name="bg_footer">#E19E79</color>
     <color name="bg_input_info_user">#8D8D8D</color>
+    <color name="bg_cinema_1">#C5FFD2</color>
+    <color name="bg_cinema_2">#E9C5FF</color>
+    <color name="btn_cancel">#F8BE75</color>
+    <color name="btn_save">#7DE5FF</color>
+
 </resources>
