@@ -24,6 +24,7 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.lamnguyen.ticket_movie_nlu.R;
 import com.lamnguyen.ticket_movie_nlu.response.DashboardResponse;
+import com.lamnguyen.ticket_movie_nlu.utils.CurrencyFormat;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +32,7 @@ import java.util.List;
 public class DayDashBoardFragment extends Fragment {
     private BarChart barChartViewDisplayDayNumOfSaleTicket;
     private LineChart lineChartDisplayDayRevenueReport;
-    private TextView txtViewSumOfSaleTicket, txtViewSumOfRevenue;
+    private TextView tvSumOfSaleTicket, tvSumOfRevenue;
     private DashboardResponse data;
     private String[] dayLabels = {"Sáng", "Trưa", "Chiều", "Tối", "Đêm"};
 
@@ -55,8 +56,8 @@ public class DayDashBoardFragment extends Fragment {
 
         barChartViewDisplayDayNumOfSaleTicket = view.findViewById(R.id.bar_chart_view_display_day_sale_ticket);
         lineChartDisplayDayRevenueReport = view.findViewById(R.id.any_chart_view_display_day_revenu_report);
-        txtViewSumOfSaleTicket = view.findViewById(R.id.text_view_sum_sale_ticket_day);
-        txtViewSumOfRevenue = view.findViewById(R.id.text_view_sum_revenu_day);
+        tvSumOfSaleTicket = view.findViewById(R.id.text_view_sum_sale_ticket_day);
+        tvSumOfRevenue = view.findViewById(R.id.text_view_sum_revenu_day);
 
         if (getArguments() != null) {
             data = (DashboardResponse) getArguments().getSerializable("data") == null ? new DashboardResponse() : (DashboardResponse) getArguments().getSerializable("data");
@@ -64,8 +65,8 @@ public class DayDashBoardFragment extends Fragment {
     }
 
     private void showTotal() {
-        txtViewSumOfSaleTicket.setText(String.valueOf(data.getTotalNumOfTickets()));
-        txtViewSumOfRevenue.setText(String.valueOf(data.getTotalRevenue()));
+        tvSumOfSaleTicket.setText(String.valueOf(data.getTotalNumOfTickets()));
+        tvSumOfRevenue.setText(CurrencyFormat.formatCurrency(data.getTotalRevenue()));
     }
 
     private void createBarChart() {

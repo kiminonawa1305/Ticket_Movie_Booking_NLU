@@ -1,7 +1,5 @@
 package com.lamnguyen.ticket_movie_nlu.view.fragments;
 
-import androidx.lifecycle.ViewModelProvider;
-
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -27,6 +25,7 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.lamnguyen.ticket_movie_nlu.R;
 import com.lamnguyen.ticket_movie_nlu.response.DashboardResponse;
+import com.lamnguyen.ticket_movie_nlu.utils.CurrencyFormat;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +38,7 @@ public class MonthDashboardFragment extends Fragment {
     }
     private BarChart barChartViewDisplayMonthNumOfSaleTicket;
     private LineChart lineChartDisplayMonthRevenueReport;
-    private TextView txtViewSumOfSaleTicket, txtViewSumOfRevenue;
+    private TextView tvSumOfSaleTicket, tvSumOfRevenue;
     private DashboardResponse data;
     private String[] labels = {"Tuần 1", "Tuần 2", "Tuần 3", "Tuần 4", "Tuần 5"};
 
@@ -60,16 +59,16 @@ public class MonthDashboardFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         barChartViewDisplayMonthNumOfSaleTicket = view.findViewById(R.id.bar_chart_view_display_month_sale_ticket);
         lineChartDisplayMonthRevenueReport = view.findViewById(R.id.any_chart_view_display_month_revenu_report);
-        txtViewSumOfSaleTicket = view.findViewById(R.id.text_view_sum_sale_ticket_month);
-        txtViewSumOfRevenue = view.findViewById(R.id.text_view_sum_revenu_month);
+        tvSumOfSaleTicket = view.findViewById(R.id.text_view_sum_sale_ticket_month);
+        tvSumOfRevenue = view.findViewById(R.id.text_view_sum_revenu_month);
 
         if (getArguments() != null) {
             data = (DashboardResponse) getArguments().getSerializable("data");
         }
     }
     private void showTotal() {
-        txtViewSumOfSaleTicket.setText(String.valueOf(data.getTotalNumOfTickets()));
-        txtViewSumOfRevenue.setText(String.valueOf(data.getTotalRevenue()));
+        tvSumOfSaleTicket.setText(String.valueOf(data.getTotalNumOfTickets()));
+        tvSumOfRevenue.setText(CurrencyFormat.formatCurrency(data.getTotalRevenue()));
     }
     private void createBarChart() {
         // Dữ liệu cho biểu đồ cột
