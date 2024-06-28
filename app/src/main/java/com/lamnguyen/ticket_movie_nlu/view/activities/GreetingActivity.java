@@ -18,7 +18,6 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.AbsoluteSizeSpan;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.lamnguyen.ticket_movie_nlu.R;
 
@@ -69,7 +68,7 @@ public class GreetingActivity extends AppCompatActivity {
                         setTimerChangePageSign();
                     }
                 })
-                .setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                .setNegativeButton(getString(R.string.exit), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         finish();

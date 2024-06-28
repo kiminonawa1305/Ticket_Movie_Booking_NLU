@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cv_price_manage"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardCornerRadius="20dp"
     android:layout_marginBottom="20dp"
-    android:id="@+id/cv_price_manage">
+    app:cardCornerRadius="20dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,11 +16,11 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingEnd="16dp"
-            android:gravity="center">
+            android:gravity="center"
+            android:paddingEnd="10dp"
+            tools:ignore="RtlSymmetry">
 
             <TextView
-                android:visibility="invisible"
                 android:id="@+id/cinema_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -27,29 +28,29 @@
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
                 android:focusable="false"
-                android:focusableInTouchMode="false"
                 android:fontFamily="sans-serif"
                 android:gravity="right"
                 android:inputType="numberDecimal"
                 android:text=""
-                android:textSize="30dp"
+                android:textSize="25sp"
+                android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="RtlHardcoded,TextViewEdits" />
 
             <TextView
-                android:id="@+id/id_name_cinema"
+                android:id="@+id/text_view_name_cinema"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="100dp"
-                android:layout_marginEnd="100dp"
+                android:layout_marginStart="50dp"
+                android:layout_marginEnd="50dp"
                 android:ellipsize="end"
                 android:fontFamily="sans-serif"
                 android:gravity="center"
-                android:maxLines="1"
-                android:text="name cinema"
+                android:maxLines="2"
                 android:textColor="@color/black"
-                android:textSize="30dp"
+                android:textSize="30sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -63,10 +64,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/pencil"
-                android:tint="@color/black"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/black"
+                tools:ignore="ContentDescription" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <View
@@ -86,20 +88,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="16dp">
+            android:padding="10dp"
+            android:paddingEnd="0dp">
 
             <TextView
-                android:id="@+id/textView3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
                 android:fontFamily="sans-serif"
                 android:text="@string/single_chair_price"
-                android:textSize="30dp"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black"
+                android:textSize="25sp" />
 
             <EditText
-                android:id="@+id/single_chair_price"
+                android:id="@+id/edit_text_single_chair_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
@@ -108,41 +110,42 @@
                 android:focusable="false"
                 android:focusableInTouchMode="false"
                 android:fontFamily="sans-serif"
-                android:gravity="right"
+                android:gravity="end"
                 android:inputType="numberDecimal"
-                android:text=""
-                android:textSize="30dp" />
+                android:textColor="@color/black"
+                android:textSize="25sp"
+                tools:ignore="Autofill,LabelFor" />
 
             <TextView
-                android:id="@+id/textView7"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
                 android:fontFamily="sans-serif"
-                android:gravity="right"
-                android:text="VND"
-                android:textSize="30dp"
-                android:textColor="@color/black"/>
+                android:gravity="end"
+                android:paddingRight="10dp"
+                android:text="@string/currency"
+                android:textColor="@color/black"
+                android:textSize="25sp" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="16dp">
+            android:padding="10dp"
+            android:paddingEnd="0dp">
 
             <TextView
-                android:id="@+id/textView4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
                 android:fontFamily="sans-serif"
                 android:text="@string/couple_chair_price"
-                android:textSize="30dp"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black"
+                android:textSize="25sp" />
 
             <EditText
-                android:id="@+id/couple_chair_price"
+                android:id="@+id/edit_text_couple_chair_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
@@ -151,41 +154,42 @@
                 android:focusable="false"
                 android:focusableInTouchMode="false"
                 android:fontFamily="sans-serif"
-                android:gravity="right"
+                android:gravity="end"
                 android:inputType="numberDecimal"
-                android:text=""
-                android:textSize="30dp" />
+                android:textColor="@color/black"
+                android:textSize="25sp"
+                tools:ignore="Autofill,LabelFor" />
 
             <TextView
-                android:id="@+id/textView8"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
                 android:fontFamily="sans-serif"
-                android:gravity="right"
-                android:text="VND"
-                android:textSize="30dp"
-                android:textColor="@color/black"/>
+                android:gravity="end"
+                android:paddingRight="10dp"
+                android:text="@string/currency"
+                android:textColor="@color/black"
+                android:textSize="25sp" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="16dp">
+            android:padding="10dp"
+            android:paddingEnd="0dp">
 
             <TextView
-                android:id="@+id/textView5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
                 android:fontFamily="sans-serif"
                 android:text="@string/VIP_chair_price"
-                android:textSize="30dp"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black"
+                android:textSize="25sp" />
 
             <EditText
-                android:id="@+id/VIP_chair_price"
+                android:id="@+id/edit_text_VIP_chair_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
@@ -194,53 +198,57 @@
                 android:focusable="false"
                 android:focusableInTouchMode="false"
                 android:fontFamily="sans-serif"
-                android:gravity="right"
+                android:gravity="end"
                 android:inputType="numberDecimal"
-                android:text=""
-                android:textSize="30dp" />
+                android:textColor="@color/black"
+                android:textSize="25sp"
+                tools:ignore="Autofill,LabelFor" />
 
             <TextView
-                android:id="@+id/textView9"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
                 android:fontFamily="sans-serif"
-                android:gravity="right"
-                android:text="VND"
-                android:textSize="30dp"
-                android:textColor="@color/black"/>
+                android:gravity="end"
+                android:paddingRight="10dp"
+                android:text="@string/currency"
+                android:textColor="@color/black"
+                android:textSize="25sp" />
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/button_container"
+            android:id="@+id/linear_layout_button_container"
+            style="?android:attr/buttonBarStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="16dp"
             android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="10dp"
             android:visibility="gone">
 
             <Button
-                android:id="@+id/button1"
+                android:id="@+id/button_cancel_update_price"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
                 android:layout_weight="1"
-                android:text="Hủy"
-                android:textSize="20dp"
                 android:background="@drawable/rounded_button_cancel"
+                android:text="@string/cancel"
                 android:textColor="@android:color/black"
-                android:layout_marginEnd="8dp"/>
+                android:textSize="20sp" />
 
             <Button
-                android:id="@+id/button2"
+                android:id="@+id/button_save_update_price"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
                 android:layout_weight="1"
-                android:text="Lưu"
-                android:textSize="20dp"
                 android:background="@drawable/rounded_button_save"
+                android:text="@string/save"
                 android:textColor="@android:color/black"
-                android:layout_marginStart="8dp"/>
+                android:textSize="20sp" />
         </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

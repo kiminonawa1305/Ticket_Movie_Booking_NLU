@@ -11,7 +11,8 @@
     <string name="do_not_connect_to_network">Không có kết nối internet!</string>
     <string name="request_connect_to_network">Vui lòng kết nối internet!</string>
     <string name="re_try_check_password">Kết nối lại</string>
-    <string name="cancel">Thoát</string>
+    <string name="exit">Thoát</string>
+    <string name="cancel">Hủy</string>
 
     <!--Sign activity string-->
     <string name="hint_email">Email</string>
@@ -116,4 +117,6 @@
     <string name="single_chair_price">Ghế đơn</string>
     <string name="couple_chair_price">Ghế đôi</string>
     <string name="VIP_chair_price">Ghế VIP</string>
+    <string name="currency">VNĐ</string>
+    <string name="save">Lưu</string>
 </resources>

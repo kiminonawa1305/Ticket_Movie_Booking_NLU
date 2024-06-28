@@ -14,5 +14,5 @@ public class PriceManageDTO {
     private Integer single;
     private Integer couple;
     private Integer vip;
-    private Integer cinema_Id;
+    private Integer cinemaId;
 }

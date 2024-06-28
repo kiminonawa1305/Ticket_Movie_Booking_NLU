@@ -4,32 +4,32 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lamnguyen.ticket_movie_nlu.R;
+import com.lamnguyen.ticket_movie_nlu.api.PriceManageApi;
 import com.lamnguyen.ticket_movie_nlu.dto.PriceManageDTO;
 
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 
 public class PriceManageAdapter extends RecyclerView.Adapter<PriceManageAdapter.PriceManageViewHolder> {
-
-    private Context mContext;
     private List<PriceManageDTO> mListPriceManage;
-    private OnEditListener mOnEditListener;
+    private static NumberFormat numberFormat;
 
-    public interface OnEditListener {
-        void onEditClicked(int position);
-    }
-
-    public PriceManageAdapter(Context mContext, OnEditListener onEditListener) {
-        this.mContext = mContext;
-        this.mOnEditListener = onEditListener;
+    static {
+        numberFormat = NumberFormat.getNumberInstance(new Locale("vi", "VN"));
     }
 
     public void setData(List<PriceManageDTO> list) {
@@ -37,16 +37,6 @@ public class PriceManageAdapter extends RecyclerView.Adapter<PriceManageAdapter.
         notifyDataSetChanged();
     }
 
-    public List<PriceManageDTO> getPriceList() {
-        return mListPriceManage;
-    }
-
-    public void updatePrice(int position, PriceManageDTO updatedPrice) {
-        if (mListPriceManage != null && position >= 0 && position < mListPriceManage.size()) {
-            mListPriceManage.set(position, updatedPrice);
-            notifyItemChanged(position);
-        }
-    }
 
     @NonNull
     @Override
@@ -58,50 +48,122 @@ public class PriceManageAdapter extends RecyclerView.Adapter<PriceManageAdapter.
     @Override
     public void onBindViewHolder(@NonNull PriceManageViewHolder holder, int position) {
         PriceManageDTO priceManage = mListPriceManage.get(position);
-        if (priceManage == null) {
+        if (priceManage == null)
             return;
-        }
+
+        holder.setPriceManageDTO(priceManage);
         holder.tvCinemaName.setText(priceManage.getCinemaName());
-        holder.tvCinemaId.setText(priceManage.getCinema_Id() != null ? String.valueOf(priceManage.getCinema_Id()) : "");
-        holder.singleChairPPrice.setText(priceManage.getSingle() != null ? String.valueOf(priceManage.getSingle()) : "");
-        holder.coupleChairPrice.setText(priceManage.getCouple() != null ? String.valueOf(priceManage.getCouple()) : "");
-        holder.VIPChairPrice.setText(priceManage.getVip() != null ? String.valueOf(priceManage.getVip()) : "");
-
-
-        holder.pencilImage.setOnClickListener(v -> mOnEditListener.onEditClicked(position));
+        holder.tvCinemaId.setText(priceManage.getCinemaId() != null ? String.valueOf(priceManage.getCinemaId()) : "");
 
         if (position % 2 == 0) {
-            holder.cardView.setCardBackgroundColor(mContext.getResources().getColor(R.color.bg_cinema_1)); // Màu 1
+            holder.cardView.setCardBackgroundColor(holder.itemView.getResources().getColor(R.color.bg_cinema_1)); // Màu 1
         } else {
-            holder.cardView.setCardBackgroundColor(mContext.getResources().getColor(R.color.bg_cinema_2)); // Màu 2
+            holder.cardView.setCardBackgroundColor(holder.itemView.getResources().getColor(R.color.bg_cinema_2)); // Màu 2
         }
     }
 
     @Override
     public int getItemCount() {
-        if (mListPriceManage != null) {
-            return mListPriceManage.size();
-        }
-        return 0;
+        return mListPriceManage != null ? mListPriceManage.size() : 0;
     }
 
-    public class PriceManageViewHolder extends RecyclerView.ViewHolder {
+    public static class PriceManageViewHolder extends RecyclerView.ViewHolder {
         private TextView tvCinemaName, tvCinemaId;
-        private EditText singleChairPPrice;
-        private EditText coupleChairPrice;
-        private EditText VIPChairPrice;
+        private EditText etSingleChairPrice, etCoupleChairPrice, etVIPChairPrice;
         private CardView cardView;
         private ImageView pencilImage;
+        private LinearLayout llButtonContainer;
+        private Button btnSaveUpdate, btnCancelUpdate;
+        private PriceManageDTO priceManageDTO;
+        private InputMethodManager imm;
 
         public PriceManageViewHolder(@NonNull View itemView) {
             super(itemView);
-            tvCinemaName = itemView.findViewById(R.id.id_name_cinema);
+            init();
+            event();
+            imm = (InputMethodManager) itemView.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        }
+
+        private void init() {
+            tvCinemaName = itemView.findViewById(R.id.text_view_name_cinema);
             tvCinemaId = itemView.findViewById(R.id.cinema_id);
-            singleChairPPrice = itemView.findViewById(R.id.single_chair_price);
-            coupleChairPrice = itemView.findViewById(R.id.couple_chair_price);
-            VIPChairPrice = itemView.findViewById(R.id.VIP_chair_price);
+            etSingleChairPrice = itemView.findViewById(R.id.edit_text_single_chair_price);
+            etCoupleChairPrice = itemView.findViewById(R.id.edit_text_couple_chair_price);
+            etVIPChairPrice = itemView.findViewById(R.id.edit_text_VIP_chair_price);
             cardView = itemView.findViewById(R.id.cv_price_manage);
             pencilImage = itemView.findViewById(R.id.pencil_image);
+            llButtonContainer = itemView.findViewById(R.id.linear_layout_button_container);
+            btnSaveUpdate = itemView.findViewById(R.id.button_save_update_price);
+            btnCancelUpdate = itemView.findViewById(R.id.button_cancel_update_price);
+        }
+
+        private void event() {
+            pencilImage.setOnClickListener(v -> {
+                if (llButtonContainer.getVisibility() == View.VISIBLE) return;
+                llButtonContainer.setVisibility(View.VISIBLE);
+                setFocusableEditView(true);
+            });
+
+            btnCancelUpdate.setOnClickListener(v -> {
+                llButtonContainer.setVisibility(View.GONE);
+                setFocusableEditView(false);
+                bindPrice();
+            });
+
+            btnSaveUpdate.setOnClickListener(v -> {
+                PriceManageDTO newPrice = getPrice();
+                updatePrice(newPrice);
+            });
+        }
+
+        private void setFocusableEditView(boolean focus) {
+            etSingleChairPrice.setFocusableInTouchMode(focus);
+            etCoupleChairPrice.setFocusableInTouchMode(focus);
+            etVIPChairPrice.setFocusableInTouchMode(focus);
+
+            etSingleChairPrice.setFocusable(focus);
+            etCoupleChairPrice.setFocusable(focus);
+            etVIPChairPrice.setFocusable(focus);
+        }
+
+        private void setPriceManageDTO(PriceManageDTO priceManageDTO) {
+            this.priceManageDTO = priceManageDTO;
+            bindPrice();
+        }
+
+        private PriceManageDTO getPrice() {
+            return PriceManageDTO.builder()
+                    .cinemaId(priceManageDTO.getCinemaId())
+                    .cinemaName(priceManageDTO.getCinemaName())
+                    .single(Integer.valueOf(etSingleChairPrice.getText().toString().replace(".", "")))
+                    .couple(Integer.valueOf(etCoupleChairPrice.getText().toString().replace(".", "")))
+                    .vip(Integer.valueOf(etVIPChairPrice.getText().toString().replace(".", "")))
+                    .build();
+        }
+
+        private void bindPrice() {
+            etSingleChairPrice.setText(numberFormat.format(priceManageDTO.getSingle()));
+            etCoupleChairPrice.setText(numberFormat.format(priceManageDTO.getCouple()));
+            etVIPChairPrice.setText(numberFormat.format(priceManageDTO.getVip()));
+        }
+
+        private void updatePrice(PriceManageDTO updatedPrice) {
+            PriceManageApi.updatePrice(this.itemView.getContext(), updatedPrice, new PriceManageApi.UpdatePriceListener() {
+                @Override
+                public void onUpdateSuccess() {
+                    setFocusableEditView(false);
+                    llButtonContainer.setVisibility(View.GONE);
+                    priceManageDTO = updatedPrice;
+                    bindPrice();
+                    imm.hideSoftInputFromWindow(itemView.getWindowToken(), 0);
+                }
+
+                @Override
+                public void onUpdateError(String message) {
+                    Toast.makeText(itemView.getContext(), message, Toast.LENGTH_SHORT).show();
+                    bindPrice();
+                }
+            });
         }
     }
 }
