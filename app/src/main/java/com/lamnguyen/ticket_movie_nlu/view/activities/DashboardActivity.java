@@ -25,6 +25,7 @@ import com.google.gson.Gson;
 import com.lamnguyen.ticket_movie_nlu.R;
 import com.lamnguyen.ticket_movie_nlu.response.DashboardResponse;
 import com.lamnguyen.ticket_movie_nlu.utils.CallAPI;
+import com.lamnguyen.ticket_movie_nlu.utils.DateTimeFormat;
 import com.lamnguyen.ticket_movie_nlu.utils.DialogLoading;
 import com.lamnguyen.ticket_movie_nlu.view.fragments.DayDashBoardFragment;
 import com.lamnguyen.ticket_movie_nlu.view.fragments.MonthDashboardFragment;
@@ -53,7 +54,7 @@ public class DashboardActivity extends AppCompatActivity {
     private final static String END_TIME = "T23:59:59";
     private DashboardResponse dashboardResponse;
     private Dialog dialogLoading;
-
+    private String selectedDatePicker;
     private int navTime = 0;
 
     @Override
@@ -151,8 +152,8 @@ public class DashboardActivity extends AppCompatActivity {
                 (DatePicker view, int y, int m, int dayOfMonth) -> {
                     calendar.set(y, m, dayOfMonth);
                     SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-                    String selectedDate = dateFormat.format(calendar.getTime());
-                    txtView.setText(selectedDate);
+//                    txtView.setText(selectedDate);
+                    selectedDatePicker = dateFormat.format(calendar.getTime());;
                     getDashboardData();
                 },
                 year, month, day
@@ -165,7 +166,7 @@ public class DashboardActivity extends AppCompatActivity {
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
         String formattedDate = dateFormat.format(calendar.getTime());
-
+        selectedDatePicker = formattedDate;
         tvCalendar.setText(formattedDate);
     }
 
@@ -201,14 +202,14 @@ public class DashboardActivity extends AppCompatActivity {
     }
 
     private String createQuery() {
-        String dateShow = tvCalendar.getText().toString();
+        String dateShow = selectedDatePicker;
         String selectedDate = dateShow.split("/")[2] + "-" +dateShow.split("/")[1] + "-" + dateShow.split("/")[0];
         String selectedCinema = spnSelectCinema.getSelectedItem().toString();
         if (navTime == 0) {
             return "from=" + selectedDate + START_TIME + "&to=" + selectedDate + END_TIME + "&cinemaId=" + convertNameCinemaToId(selectedCinema);
         }
         String[] date = getStartAndEndOfWeekOrMonth(selectedDate, navTime);
-        return "from=" + date[0] + START_TIME + "&to=" + date[1] + START_TIME + "&cinemaId=" + convertNameCinemaToId(selectedCinema);
+        return "from=" + date[0]  + "&to=" + date[1]  + "&cinemaId=" + convertNameCinemaToId(selectedCinema);
     }
 
     private int convertNameCinemaToId(String nameCinema) {
@@ -226,22 +227,25 @@ public class DashboardActivity extends AppCompatActivity {
         int month = Integer.parseInt(selectedDate.split("-")[1]);
         int day = Integer.parseInt(selectedDate.split("-")[2]);
         String[] result = new String[2];
-        LocalDate givenDate = LocalDate.of(year, month, day);
+        LocalDateTime givenDate = LocalDateTime.of(year, month, day, 0, 0, 0);
         if (navTime == 1) {
             // Xác định ngày đầu tuần (Thứ Hai)
-            LocalDate startOfWeek = givenDate.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
+            LocalDateTime startOfWeek = givenDate.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
             result[0] = startOfWeek.toString();
             // Xác định ngày cuối tuần (Chủ Nhật)
-            LocalDate endOfWeek = givenDate.with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY)).plusDays(1);
+            LocalDateTime endOfWeek = givenDate.with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY)).plusDays(1);
             result[1] = endOfWeek.toString();
+
+            tvCalendar.setText(DateTimeFormat.getDate(startOfWeek) + " - " + DateTimeFormat.getDate(endOfWeek.plusDays(-1)));
             return result;
         }
         // Xác định ngày đầu tháng
-        LocalDate startOfMonth = givenDate.with(TemporalAdjusters.firstDayOfMonth());
+        LocalDateTime startOfMonth = givenDate.with(TemporalAdjusters.firstDayOfMonth());
         result[0] = startOfMonth.toString();
         // Xác định ngày cuối tháng
-        LocalDate endOfMonth = givenDate.with(TemporalAdjusters.lastDayOfMonth()).plusDays(1);
+        LocalDateTime endOfMonth = givenDate.with(TemporalAdjusters.lastDayOfMonth()).plusDays(1);
         result[1] = endOfMonth.toString();
+        tvCalendar.setText(DateTimeFormat.getDate(startOfMonth) + " - " + DateTimeFormat.getDate(endOfMonth.plusDays(-1)));
         return result;
     }
 
