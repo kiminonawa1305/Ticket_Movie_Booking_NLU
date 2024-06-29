@@ -119,4 +119,6 @@
     <string name="VIP_chair_price">Ghế VIP</string>
     <string name="currency">VNĐ</string>
     <string name="save">Lưu</string>
+    <string name="server_client_id">953041789072-to27lbi7dp6jghfctkl4o1bv63u13kfp.apps.googleusercontent.com</string>
+    <string name="other_login">Đăng nhập bằng phương thức khác</string>
 </resources>

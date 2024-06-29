@@ -22,8 +22,8 @@ android {
         release {
             isMinifyEnabled = false
             proguardFiles(
-                    getDefaultProguardFile("proguard-android-optimize.txt"),
-                    "proguard-rules.pro"
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
             )
         }
     }
@@ -89,5 +89,9 @@ dependencies {
     // Retrofit and OkHttp
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+
+    implementation("com.google.android.gms:play-services-auth:21.2.0")
+
+    implementation("com.squareup.retrofit2:retrofit:(insert latest version)")
 }
 

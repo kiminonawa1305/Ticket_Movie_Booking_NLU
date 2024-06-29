@@ -22,7 +22,7 @@ import lombok.SneakyThrows;
 
 public class CallAPI {
 
-    public static final String IP = "172.20.26.177";
+    public static final String IP = "192.168.140.49";
     public static final String URL_WEB_SERVICE = "http://" + IP + ":8080";
     public static final String URL_OMDB = "http://www.omdbapi.com/?apikey=c3d0a99f";
     public static final String URL_GOOGLE_MAP_COMPUTE_ROUTES = "https://routes.googleapis.com/directions/v2:computeRoutes";
@@ -36,9 +36,7 @@ public class CallAPI {
                 TIME_OUT,
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        //Set TAG
         stringRequest.setTag(context.getClass().getSimpleName());
-        // Add the request to the RequestQueue.
         queue.add(stringRequest);
     }
 
@@ -51,9 +49,7 @@ public class CallAPI {
                 TIME_OUT,
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        //Set TAG
         jsonObjectRequest.setTag(context.getClass().getSimpleName());
-        // Add the request to the RequestQueue.
         queue.add(jsonObjectRequest);
     }
 
@@ -74,9 +70,7 @@ public class CallAPI {
                 TIME_OUT,
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        //Set TAG
         stringRequest.setTag(context.getClass().getSimpleName());
-        // Add the request to the RequestQueue.
         queue.add(stringRequest);
     }
 
@@ -100,9 +94,7 @@ public class CallAPI {
                 TIME_OUT,
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        //Set TAG
         jsonObjectRequest.setTag(context.getClass().getSimpleName());
-        // Add the request to the RequestQueue.
         queue.add(jsonObjectRequest);
     }
 

@@ -4,6 +4,11 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.Scopes;
+import com.google.android.gms.common.api.Scope;
+import com.google.firebase.auth.FirebaseAuth;
 import com.lamnguyen.ticket_movie_nlu.bean.User;
 
 public class SharedPreferencesUtils {
@@ -27,21 +32,41 @@ public class SharedPreferencesUtils {
         return context.getSharedPreferences(USER, Context.MODE_PRIVATE).getInt(UserKey.ID.key, -1);
     }
 
-    public static void saveUser(Context context, User user) {
+    public static void saveUser(Context context, User user, boolean googleSignIn) {
         Editor editor = getEditor(context, USER);
         editor.putInt(UserKey.ID.key, user.getId());
-        editor.putString(UserKey.API_ID.key, user.getApiId());
         editor.putString(UserKey.EMAIL.key, user.getEmail());
         editor.putString(UserKey.FULL_NAME.key, user.getFullName());
         editor.putString(UserKey.PHONE.key, user.getPhone());
+        editor.putBoolean(UserKey.GOOGLE_SIGN_IN.key, googleSignIn);
         editor.apply();
+    }
+
+    public static boolean isGoogleSignIn(Context context) {
+        SharedPreferences sharedPreferences = getInstance(context, USER);
+        return sharedPreferences.getBoolean(UserKey.GOOGLE_SIGN_IN.key, false);
+    }
+
+    public static void logOut(Context context) {
+        Editor editor = getEditor(context, USER);
+        editor.remove(UserKey.ID.key);
+        editor.remove(UserKey.EMAIL.key);
+        editor.remove(UserKey.FULL_NAME.key);
+        editor.remove(UserKey.PHONE.key);
+        editor.apply();
+        FirebaseAuth.getInstance().signOut();
+        GoogleSignIn.getClient(context, new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestScopes(new Scope(Scopes.DRIVE_APPFOLDER))
+                .requestEmail()
+                .build()).signOut();
     }
 
     public static User getUser(Context context) {
         SharedPreferences sharedPreferences = getInstance(context, USER);
+        int id = sharedPreferences.getInt(UserKey.ID.key, -1);
+        if (id == -1) return null;
         return User.builder()
                 .id(sharedPreferences.getInt(UserKey.ID.key, -1))
-                .apiId(sharedPreferences.getString(UserKey.API_ID.key, ""))
                 .email(sharedPreferences.getString(UserKey.EMAIL.key, ""))
                 .fullName(sharedPreferences.getString(UserKey.FULL_NAME.key, ""))
                 .phone(sharedPreferences.getString(UserKey.PHONE.key, ""))
@@ -50,10 +75,10 @@ public class SharedPreferencesUtils {
 
     public static enum UserKey {
         ID("id"),
-        API_ID("apiId"),
         FULL_NAME("fullName"),
         EMAIL("email"),
         PHONE("phone"),
+        GOOGLE_SIGN_IN("googleSignIn"),
         ;
 
         private String key;

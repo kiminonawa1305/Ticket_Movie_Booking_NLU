@@ -14,6 +14,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class User implements Serializable {
-    private String email, password, apiId, phone, fullName;
+    private String email, password, phone, fullName;
     private Integer id;
 }

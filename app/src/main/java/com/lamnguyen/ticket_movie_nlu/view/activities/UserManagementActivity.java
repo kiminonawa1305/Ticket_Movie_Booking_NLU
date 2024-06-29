@@ -15,7 +15,7 @@ import com.lamnguyen.ticket_movie_nlu.bean.Account;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AccountManagementActivity extends AppCompatActivity {
+public class UserManagementActivity extends AppCompatActivity {
 
     private List<Account> accounts;
     private TableLayout tableLayout;

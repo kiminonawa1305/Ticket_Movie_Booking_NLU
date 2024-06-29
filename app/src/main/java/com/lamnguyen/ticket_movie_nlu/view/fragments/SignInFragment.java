@@ -199,15 +199,14 @@ public class SignInFragment extends Fragment {
             return;
         }
 
-        userService.checkRegister(this.getContext(), user.getUid(), () -> {
+        userService.checkRegister(this.getContext(), user.getEmail(), false, () -> {
             Intent intent = new Intent(this.getContext(), MainActivity.class);
             this.getActivity().startActivity(intent);
             this.getActivity().finish();
         }, () -> {
             Bundle bundle = getBundleData();
             bundle.putString("email", edtEmail.getText().toString());
-            bundle.putString("apiId", user.getUid());
-            bundle.putString("password", edtPassword.getText().toString());
+            bundle.putBoolean("googleSignIn", false);
             getParentFragmentManager().beginTransaction()
                     .replace(R.id.fragment_sign, InsertInfoFragment.class, bundle)
                     .commit();

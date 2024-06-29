@@ -21,14 +21,20 @@
         style="@style/edt_input_info_sign"
         android:autofillHints="password"
         android:hint="@string/hint_password"
-        android:textColor="@color/white"
-        android:inputType="textPassword" />
+        android:inputType="textPassword"
+        android:textColor="@color/white" />
 
     <android.widget.Button
         android:id="@+id/button_sign_in"
         style="@style/btn_sign"
         android:text="@string/sign_in"
         android:textColor="@color/white" />
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragment_other_sign_in"
+        android:name="com.lamnguyen.ticket_movie_nlu.view.fragments.OtherSignInFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
     <LinearLayout
         android:layout_width="match_parent"

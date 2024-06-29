@@ -69,6 +69,7 @@
 
     <style name="image_avatar_user">
         <item name="cornerSize">@dimen/corner_size_avatar_user</item>
+        <item name="borderWidth">2dp</item>
     </style>
 
     <style name="image_movie_ticket_item">

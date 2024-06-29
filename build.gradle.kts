@@ -11,5 +11,6 @@ plugins {
     id("com.google.gms.google-services") version "4.4.1" apply false
     id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin") version "2.0.1" apply false
 }
+
 val compileSdkVersion by extra(34)
 val sourceCompatibility by extra(JavaVersion.VERSION_17)
