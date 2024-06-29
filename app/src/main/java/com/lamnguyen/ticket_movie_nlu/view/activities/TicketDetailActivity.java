@@ -11,6 +11,7 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -116,8 +117,12 @@ public class TicketDetailActivity extends AppCompatActivity {
             dialog.dismiss();
         }, error -> {
             dialog.dismiss();
-            Log.e(TAG, "getTicketDetail: ", error);
             createQR("xxxxxxxx");
+            if (error.fillInStackTrace().toString().equalsIgnoreCase("com.android.volley.TimeoutError"))
+                Toast.makeText(this, "Lỗi server!", Toast.LENGTH_SHORT).show();
+            else
+                Toast.makeText(this, error.getMessage(), Toast.LENGTH_SHORT).show();
+
         });
 
 

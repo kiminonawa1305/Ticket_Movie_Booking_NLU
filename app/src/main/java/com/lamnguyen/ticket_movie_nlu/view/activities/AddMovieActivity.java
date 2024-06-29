@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -18,6 +19,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.android.volley.VolleyError;
 import com.bumptech.glide.Glide;
 import com.lamnguyen.ticket_movie_nlu.R;
 import com.lamnguyen.ticket_movie_nlu.dto.MovieDTO;
@@ -87,9 +89,9 @@ public class AddMovieActivity extends AppCompatActivity {
             public void onClick(View v) {
                 movieService = MovieService.getInstance();
                 String idApi = inputIdMovieEditText.getText().toString();
-                if(idApi.isEmpty()){
+                if (idApi.isEmpty()) {
                     Toast.makeText(AddMovieActivity.this, "Mã phim không được bỏ trống", Toast.LENGTH_SHORT).show();
-                }else {
+                } else {
                     try {
                         movieService.addNewMovie(addMovieDialog.getContext(), idApi, new CallAPI.CallAPIListener<MovieDTO>() {
                             @Override
@@ -110,7 +112,7 @@ public class AddMovieActivity extends AppCompatActivity {
 
                             @Override
                             public void error(Object error) {
-
+                                Toast.makeText(AddMovieActivity.this, "Phim không tồn tại!", Toast.LENGTH_SHORT).show();
                             }
                         });
                     } catch (JSONException e) {

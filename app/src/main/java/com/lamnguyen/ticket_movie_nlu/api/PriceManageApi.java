@@ -1,6 +1,7 @@
 package com.lamnguyen.ticket_movie_nlu.api;
 
 import android.content.Context;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -28,21 +29,20 @@ public class PriceManageApi {
     }
 
     public static void getPriceManageList(Context context, final PriceManageApiListener listener) {
-        CallAPI.callJsonArrayRequest(context, URL_API, "", Request.Method.GET, new Response.Listener<JSONArray>() {
-            @Override
-            public void onResponse(JSONArray response) {
-                Gson gson = new Gson();
-                Type listType = new TypeToken<List<PriceManageDTO>>() {
-                }.getType();
-                List<PriceManageDTO> priceManageDTOList = gson.fromJson(response.toString(), listType);
-                listener.onSuccess(priceManageDTOList);
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                listener.onError(error.getMessage());
-            }
-        });
+        CallAPI.callJsonArrayRequest(context, URL_API, null, Request.Method.GET,
+                response -> {
+                    Gson gson = new Gson();
+                    Type listType = new TypeToken<List<PriceManageDTO>>() {
+                    }.getType();
+                    List<PriceManageDTO> priceManageDTOList = gson.fromJson(response.toString(), listType);
+                    listener.onSuccess(priceManageDTOList);
+                },
+                error -> {
+                    if (error.fillInStackTrace().toString().equalsIgnoreCase("com.android.volley.TimeoutError"))
+                        Toast.makeText(context, "Lỗi server!", Toast.LENGTH_SHORT).show();
+                    else
+                        listener.onError(error.getMessage());
+                });
     }
 
     public interface UpdatePriceListener {
@@ -58,11 +58,14 @@ public class PriceManageApi {
         try {
             JSONObject jsonObject = new JSONObject(json);
 
-            CallAPI.callJsonObjectRequest(context, URL_API + "/update", "", jsonObject, null, Request.Method.POST,
+            CallAPI.callJsonObjectRequest(context, URL_API + "/update", null, jsonObject, null, Request.Method.POST,
                     response -> {
                         listener.onUpdateSuccess();
                     }, error -> {
-                        listener.onUpdateError(error.getMessage());
+                        if (error.fillInStackTrace().toString().equalsIgnoreCase("com.android.volley.TimeoutError"))
+                            Toast.makeText(context, "Lỗi server!", Toast.LENGTH_SHORT).show();
+                        else
+                            listener.onUpdateError(error.getMessage());
                     });
         } catch (JSONException e) {
             listener.onUpdateError(e.getMessage());

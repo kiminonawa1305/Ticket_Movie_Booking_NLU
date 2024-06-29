@@ -29,50 +29,49 @@ public class ShowtimeApi {
 
     private static ShowtimeApi instance;
 
-    public static ShowtimeApi getInstance(){
-        if(instance == null){
+    public static ShowtimeApi getInstance() {
+        if (instance == null) {
             instance = new ShowtimeApi();
         }
         return instance;
     }
 
     public void addShowtime(Context context, List<RoomDTO> selectedRoomDTOS, LocalDateTime schedule, Integer movieId, Integer roomId, CallAPI.CallAPIListener<ShowtimeDTO> listener) throws JSONException {
-        String body = "/showtime/api/";
+        String path = "/showtime/api/";
         JSONObject newShowtimeRequestBodyJSON = new JSONObject();
         newShowtimeRequestBodyJSON.put("movieId", movieId);
         newShowtimeRequestBodyJSON.put("start", schedule);
-        for (RoomDTO selectedRoomDTO: selectedRoomDTOS) {
+        for (RoomDTO selectedRoomDTO : selectedRoomDTOS) {
             newShowtimeRequestBodyJSON.put("roomId", selectedRoomDTO.getId());
-            CallAPI.callJsonObjectRequest(context, CallAPI.URL_WEB_SERVICE + body, null, newShowtimeRequestBodyJSON, null, Request.Method.POST, new Response.Listener<JSONObject>() {
-                @Override
-                public void onResponse(JSONObject response) {
-                    try {
-                        if (response.getInt("status") != 202){
-                            listener.error(response.getString("message"));
-                            return;
+            CallAPI.callJsonObjectRequest(context, CallAPI.URL_WEB_SERVICE + path, null, newShowtimeRequestBodyJSON, null, Request.Method.POST,
+                    response -> {
+                        try {
+                            if (response.getInt("status") != 202) {
+                                listener.error(response.getString("message"));
+                                return;
+                            }
+
+                            Gson gson = new GsonBuilder()
+                                    .registerTypeAdapter(LocalDateTime.class, new JsonDeserializer<LocalDateTime>() {
+
+                                        @Override
+                                        public LocalDateTime deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+                                            return LocalDateTime.parse(json.getAsString(), DateTimeFormatter.ISO_DATE_TIME);
+                                        }
+                                    }).create();
+
+                            ShowtimeDTO newShowtimeDTO = gson.fromJson(response.getString("data"), ShowtimeDTO.class);
+                            listener.completed(newShowtimeDTO);
+                        } catch (JSONException e) {
+                            listener.error(e.getMessage());
                         }
-
-                        Gson gson = new GsonBuilder()
-                                .registerTypeAdapter(LocalDateTime.class, new JsonDeserializer<LocalDateTime>() {
-
-                                    @Override
-                                    public LocalDateTime deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-                                        return LocalDateTime.parse(json.getAsString(), DateTimeFormatter.ISO_DATE_TIME);
-                                    }
-                                }).create();
-
-                        ShowtimeDTO newShowtimeDTO = gson.fromJson(response.getString("data"), ShowtimeDTO.class);
-                        listener.completed(newShowtimeDTO);
-                    }catch (JSONException e){
-                        listener.error(e.getMessage());
-                    }
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    listener.error(error);
-                }
-            });
+                    },
+                    error -> {
+                        if (error.fillInStackTrace().toString().equalsIgnoreCase("com.android.volley.TimeoutError"))
+                            Toast.makeText(context, "Lỗi server!", Toast.LENGTH_SHORT).show();
+                        else
+                            listener.error(error);
+                    });
         }
     }
 }

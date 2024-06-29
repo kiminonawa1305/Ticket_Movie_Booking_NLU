@@ -38,35 +38,43 @@ public class UserServiceImpl implements UserService {
     public void checkRegister(Context context, String apiId, CallBack callBackSuccess, CallBack callBackFail) {
         JSONObject jsonObject = createJsonObjectApiId(context, apiId);
         if (jsonObject == null) return;
-        CallAPI.callJsonObjectRequest(context, CallAPI.URL_WEB_SERVICE + "/user/api/check", "", jsonObject, new HashMap<>(), POST, response -> {
-            callBackSuccess.run();
-            User user = new Gson().fromJson(response.toString(), User.class);
-            SharedPreferencesUtils.saveUser(context, user);
-        }, error -> {
-            callBackFail.run();
-            signOut();
-            Log.e(TAG, "checkRegister: " + error.getMessage(), error);
-        });
+        CallAPI.callJsonObjectRequest(context, CallAPI.URL_WEB_SERVICE + "/user/api/check", "", jsonObject, new HashMap<>(), POST,
+                response -> {
+                    callBackSuccess.run();
+                    User user = new Gson().fromJson(response.toString(), User.class);
+                    SharedPreferencesUtils.saveUser(context, user);
+                }, error -> {
+                    if (error.fillInStackTrace().toString().equalsIgnoreCase("com.android.volley.TimeoutError"))
+                        Toast.makeText(context, "Lỗi server!", Toast.LENGTH_SHORT).show();
+                    else {
+                        callBackFail.run();
+                        Log.e(TAG, "checkRegister: " + error.getMessage(), error);
+                    }
+                });
     }
 
 
     public void register(Context context, User user, CallBack callBackSuccess, CallBack callBackFail) {
         JSONObject jsonObject = createJsonObjectUser(context, user);
         if (jsonObject == null) return;
-        CallAPI.callJsonObjectRequest(context, CallAPI.URL_WEB_SERVICE + "/user/api/register", "", jsonObject, new HashMap<>(), POST, response -> {
-            callBackSuccess.run();
-            User register = null;
-            try {
-                register = new Gson().fromJson(response.getJSONObject("data").toString(), User.class);
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
-            }
-            SharedPreferencesUtils.saveUser(context, register);
-        }, error -> {
-            callBackFail.run();
-            Toast.makeText(context, "Lỗi đăng nhập!", Toast.LENGTH_SHORT).show();
-            Log.e(TAG, "register: " + error.getMessage(), error);
-        });
+        CallAPI.callJsonObjectRequest(context, CallAPI.URL_WEB_SERVICE + "/user/api/register", "", jsonObject, new HashMap<>(), POST,
+                response -> {
+                    callBackSuccess.run();
+                    User register = null;
+                    try {
+                        register = new Gson().fromJson(response.getJSONObject("data").toString(), User.class);
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
+                    SharedPreferencesUtils.saveUser(context, register);
+                }, error -> {
+                    if (error.fillInStackTrace().toString().equalsIgnoreCase("com.android.volley.TimeoutError"))
+                        Toast.makeText(context, "Lỗi server!", Toast.LENGTH_SHORT).show();
+                    else {
+                        callBackFail.run();
+                        Log.e(TAG, "register: " + error.getMessage(), error);
+                    }
+                });
     }
 
     private JSONObject createJsonObjectUser(Context context, User user) {
@@ -77,9 +85,8 @@ public class UserServiceImpl implements UserService {
             jsonObject.put("fullName", user.getFullName());
             jsonObject.put("phone", user.getPhone());
         } catch (JSONException e) {
-            Toast.makeText(context, "Lỗi đăng nhập!", Toast.LENGTH_SHORT).show();
-            Log.e(TAG, "register: ", e);
-            signOut();
+            Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+            Log.e(TAG, "createJsonObjectUser: ", e);
             return null;
         }
         return jsonObject;
@@ -90,9 +97,8 @@ public class UserServiceImpl implements UserService {
         try {
             jsonObject.put("apiId", apiId);
         } catch (JSONException e) {
-            Toast.makeText(context, "Lỗi đăng nhập!", Toast.LENGTH_SHORT).show();
-            Log.e(TAG, "register: ", e);
-            signOut();
+            Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+            Log.e(TAG, "createJsonObjectApiId: ", e);
             return null;
         }
         return jsonObject;
