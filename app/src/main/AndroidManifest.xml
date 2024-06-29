@@ -44,6 +44,14 @@
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".view.activities.PriceManageActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activities.DashboardActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".view.activities.PaymentSuccessActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
@@ -91,10 +99,6 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activities.GreetingActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".view.activities.PriceManageActivity"
             android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>
