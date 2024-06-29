@@ -2,6 +2,7 @@ package com.lamnguyen.ticket_movie_nlu.api;
 
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -39,34 +40,32 @@ public class ChairApi {
     }
 
     public void loadChair(int showtimeId, Context context, CallAPI.CallAPIListener<ChairResponse>... listeners) {
-        String body = "/chair/api/" + showtimeId;
-        CallAPI.callJsonObjectRequest(context, CallAPI.URL_WEB_SERVICE + body, "", Request.Method.GET, new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject jsonObject) {
-                        try {
-                            if (jsonObject.getInt("status") != 202) {
-                                listeners[0].error(jsonObject.getString("message"));
-                                return;
-                            }
-
-                            ChairResponse chairResponses = new Gson().fromJson(jsonObject.getString("data"), ChairResponse.class);
-                            listeners[0].completed(chairResponses);
-                        } catch (JSONException e) {
-                            listeners[0].error(e.getMessage());
+        String path = "/chair/api/" + showtimeId;
+        CallAPI.callJsonObjectRequest(context, CallAPI.URL_WEB_SERVICE + path, null, Request.Method.GET,
+                jsonObject -> {
+                    try {
+                        if (jsonObject.getInt("status") != 202) {
+                            listeners[0].error(jsonObject.getString("message"));
+                            return;
                         }
+
+                        ChairResponse chairResponses = new Gson().fromJson(jsonObject.getString("data"), ChairResponse.class);
+                        listeners[0].completed(chairResponses);
+                    } catch (JSONException e) {
+                        listeners[0].error(e.getMessage());
                     }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
+                }, error -> {
+                    if (error.fillInStackTrace().toString().equalsIgnoreCase("com.android.volley.TimeoutError"))
+                        Toast.makeText(context, "Lỗi server!", Toast.LENGTH_SHORT).show();
+                    else
                         listeners[0].error(error);
-                    }
                 }
         );
     }
 
     @SneakyThrows
     public void updateChair(int userId, String uuid, int chairId, ChairStatus status, Context context, CallAPI.CallAPIListener<ChairDTO>... listeners) {
-        String query = "/chair/api/update";
+        String path = "/chair/api/update";
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("uuid", uuid);
         jsonObject.put("chairId", chairId);
@@ -74,26 +73,24 @@ public class ChairApi {
         jsonObject.put("userId", userId);
 
 
-        CallAPI.callJsonObjectRequest(context, CallAPI.URL_WEB_SERVICE, query, jsonObject, null, Request.Method.POST, new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject jsonObject) {
-                        try {
-                            if (jsonObject.getInt("status") != 202) {
-                                listeners[0].error(jsonObject.getString("message"));
-                                return;
-                            }
-
-                            ChairDTO chairDTO = new Gson().fromJson(jsonObject.toString(), ChairDTO.class);
-                            listeners[0].completed(chairDTO);
-                        } catch (JSONException e) {
-                            listeners[0].error(e.getMessage());
+        CallAPI.callJsonObjectRequest(context, CallAPI.URL_WEB_SERVICE + path, null, jsonObject, null, Request.Method.POST,
+                response -> {
+                    try {
+                        if (response.getInt("status") != 202) {
+                            listeners[0].error(response.getString("message"));
+                            return;
                         }
+
+                        ChairDTO chairDTO = new Gson().fromJson(response.getString("data"), ChairDTO.class);
+                        listeners[0].completed(chairDTO);
+                    } catch (JSONException e) {
+                        listeners[0].error(e.getMessage());
                     }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
+                }, error -> {
+                    if (error.fillInStackTrace().toString().equalsIgnoreCase("com.android.volley.TimeoutError"))
+                        Toast.makeText(context, "Lỗi server!", Toast.LENGTH_SHORT).show();
+                    else
                         listeners[0].error(error);
-                    }
                 }
         );
     }

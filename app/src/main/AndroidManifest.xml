@@ -40,6 +40,14 @@
             android:value="@integer/google_play_services_version" />
 
         <activity
+            android:name=".view.activities.AddScheduleActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activities.AddMovieActivity"
+            android:exported="true"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".view.activities.AccountManagementActivity"
             android:exported="true"
             android:screenOrientation="portrait" >
@@ -50,15 +58,21 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".view.activities.PriceManageActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activities.DashboardActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".view.activities.PaymentSuccessActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".view.activities.ShowtimeActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".view.activities.BookingChairActivity"
             android:exported="false"
@@ -99,9 +113,5 @@
             android:name=".view.activities.GreetingActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".view.activities.PriceManageActivity"
-            android:exported="true">
-        </activity>
     </application>
 </manifest>

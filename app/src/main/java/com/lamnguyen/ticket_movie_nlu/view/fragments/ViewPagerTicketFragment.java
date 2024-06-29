@@ -18,7 +18,6 @@ import com.lamnguyen.ticket_movie_nlu.R;
 import com.lamnguyen.ticket_movie_nlu.adapters.TicketAdapter;
 import com.lamnguyen.ticket_movie_nlu.api.TicketApi;
 import com.lamnguyen.ticket_movie_nlu.dto.TicketDTO;
-import com.lamnguyen.ticket_movie_nlu.service.ticket.TicketService;
 import com.lamnguyen.ticket_movie_nlu.utils.CallAPI;
 import com.lamnguyen.ticket_movie_nlu.utils.DialogLoading;
 
@@ -28,13 +27,11 @@ public class ViewPagerTicketFragment extends Fragment {
     public static final String TAG = ViewPagerTicketFragment.class.getSimpleName();
     private RecyclerView rclTicket;
     private Dialog dialog;
-    private TicketService ticketService;
     private TicketApi ticketApi;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ticketService = TicketService.getInstance();
         ticketApi = TicketApi.getInstance();
     }
 

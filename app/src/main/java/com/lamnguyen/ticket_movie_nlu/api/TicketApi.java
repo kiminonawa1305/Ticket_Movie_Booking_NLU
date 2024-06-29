@@ -2,6 +2,7 @@ package com.lamnguyen.ticket_movie_nlu.api;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -36,33 +37,24 @@ public class TicketApi {
         int userId = SharedPreferencesUtils.getUserID(context);
         header.put("user-id", String.valueOf(userId));
         CallAPI.callJsonObjectRequest(context, CallAPI.URL_WEB_SERVICE + path, null, null, header, Request.Method.GET,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject jsonObject) {
-                        try {
-                            if (jsonObject.getInt("status") != 202) {
-                                listeners[0].error(jsonObject.getString("message"));
-                                return;
-                            }
-
-                            TicketDTO[] movieDTOs = new Gson().fromJson(jsonObject.getString("data"), TicketDTO[].class);
-                            listeners[0].completed(List.of(movieDTOs));
-                        } catch (JSONException e) {
-                            listeners[0].error(e.getMessage());
+                response -> {
+                    try {
+                        if (response.getInt("status") != 202) {
+                            listeners[0].error(response.getString("message"));
+                            return;
                         }
+
+                        TicketDTO[] movieDTOs = new Gson().fromJson(response.getString("data"), TicketDTO[].class);
+                        listeners[0].completed(List.of(movieDTOs));
+                    } catch (JSONException e) {
+                        listeners[0].error(e.getMessage());
                     }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
+                }, error -> {
+                    if (error.fillInStackTrace().toString().equalsIgnoreCase("com.android.volley.TimeoutError"))
+                        Toast.makeText(context, "Lỗi server!", Toast.LENGTH_SHORT).show();
+                    else
                         listeners[0].error(error);
-                    }
                 }
         );
-    }
-
-    public interface MovieListener<T> {
-        void completed(List<T> movieDTOs);
-
-        void error(Object error);
     }
 }

@@ -7,6 +7,8 @@ import com.lamnguyen.ticket_movie_nlu.dto.MovieDTO;
 import com.lamnguyen.ticket_movie_nlu.dto.ShowtimeByCinema;
 import com.lamnguyen.ticket_movie_nlu.utils.CallAPI;
 
+import org.json.JSONException;
+
 import java.time.LocalDate;
 import java.util.List;
 
@@ -30,5 +32,9 @@ public class MovieService {
 
     public void loadShowtime(int movieId, LocalDate date, Context context, CallAPI.CallAPIListener<List<ShowtimeByCinema>> listener) {
         movieApi.loadShowtime(movieId, date, context, listener);
+    }
+
+    public void addNewMovie(Context context, String idApi, CallAPI.CallAPIListener<MovieDTO> listener) throws JSONException{
+        movieApi.addNewMovie(context, idApi, listener);
     }
 }
