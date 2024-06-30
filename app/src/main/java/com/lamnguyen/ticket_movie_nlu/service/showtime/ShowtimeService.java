@@ -28,7 +28,7 @@ public class ShowtimeService {
         showtimeApi = ShowtimeApi.getInstance();
     }
 
-    public void addShowtime(Context context, List<RoomDTO> selectedRoomDTOS, LocalDateTime schedule, Integer movieId, CallAPI.CallAPIListener<ShowtimeDTO> listener) throws JSONException {
-        showtimeApi.addShowtime(context, selectedRoomDTOS, schedule, movieId, listener);
+    public void addShowtime(Context context, Integer roomId, Integer movieId, LocalDateTime schedule, CallAPI.CallAPIListener<ShowtimeDTO> listener) throws JSONException {
+        showtimeApi.addShowtime(context, roomId, movieId, schedule, listener);
     }
 }

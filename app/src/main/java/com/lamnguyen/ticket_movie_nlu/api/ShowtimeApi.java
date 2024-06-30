@@ -29,32 +29,30 @@ public class ShowtimeApi {
         return instance;
     }
 
-    public void addShowtime(Context context, List<RoomDTO> selectedRoomDTOS, LocalDateTime schedule, Integer movieId, CallAPI.CallAPIListener<ShowtimeDTO> listener) throws JSONException {
-        String path = "/showtime/api/";
+    public void addShowtime(Context context, Integer roomId, Integer movieId, LocalDateTime schedule, CallAPI.CallAPIListener<ShowtimeDTO> listener) throws JSONException {
+        String path = "/admin/showtime/api/add";
         JSONObject newShowtimeRequestBodyJSON = new JSONObject();
         newShowtimeRequestBodyJSON.put("movieId", movieId);
         newShowtimeRequestBodyJSON.put("start", schedule);
-        for (RoomDTO selectedRoomDTO : selectedRoomDTOS) {
-            newShowtimeRequestBodyJSON.put("roomId", selectedRoomDTO.getId());
-            CallAPI.callJsonObjectRequest(context, CallAPI.URL_WEB_SERVICE + path, null, newShowtimeRequestBodyJSON, null, Request.Method.POST,
-                    response -> {
-                        try {
-                            if (response.getInt("status") != 202) {
-                                listener.error(response.getString("message"));
-                                return;
-                            }
-
-                            Gson gson = new GsonBuilder()
-                                    .registerTypeAdapter(LocalDateTime.class,
-                                            (JsonDeserializer<LocalDateTime>) (json, typeOfT, context1) -> LocalDateTime.parse(json.getAsString(), DateTimeFormatter.ISO_DATE_TIME))
-                                    .create();
-
-                            ShowtimeDTO newShowtimeDTO = gson.fromJson(response.getString("data"), ShowtimeDTO.class);
-                            listener.completed(newShowtimeDTO);
-                        } catch (JSONException e) {
-                            Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+        newShowtimeRequestBodyJSON.put("roomId", roomId);
+        CallAPI.callJsonObjectRequest(context, CallAPI.URL_WEB_SERVICE + path, null, newShowtimeRequestBodyJSON, null, Request.Method.POST,
+                response -> {
+                    try {
+                        if (response.getInt("status") != 202) {
+                            listener.error(response.getString("message"));
+                            return;
                         }
-                    }, listener::error);
-        }
+
+                        Gson gson = new GsonBuilder()
+                                .registerTypeAdapter(LocalDateTime.class,
+                                        (JsonDeserializer<LocalDateTime>) (json, typeOfT, context1) -> LocalDateTime.parse(json.getAsString(), DateTimeFormatter.ISO_DATE_TIME))
+                                .create();
+
+                        ShowtimeDTO newShowtimeDTO = gson.fromJson(response.getString("data"), ShowtimeDTO.class);
+                        listener.completed(newShowtimeDTO);
+                    } catch (JSONException e) {
+                        Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }, listener::error);
     }
 }

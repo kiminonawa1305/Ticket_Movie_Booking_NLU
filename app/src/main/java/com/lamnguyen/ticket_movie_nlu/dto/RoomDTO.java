@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RoomDTO {
-
     private String name;
     private Integer id, cinema_id;
 }
