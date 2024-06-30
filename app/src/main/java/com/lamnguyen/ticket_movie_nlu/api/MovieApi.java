@@ -56,7 +56,7 @@ public class MovieApi {
     }
 
     public void loadMovieDetail(Integer id, LocalDate date, Context context, CallAPI.CallAPIListener<MovieDetailDTO> listener) {
-        String path = "/movie/api/detail/" + id + "/" + date.toString();
+        String path = "/movie/api/detail/" + SharedPreferencesUtils.getUserID(context) + "/" + id + "/" + date.toString();
         CallAPI.callJsonObjectRequest(context, CallAPI.URL_WEB_SERVICE + path, null, Request.Method.GET,
                 response -> {
                     try {
@@ -79,15 +79,17 @@ public class MovieApi {
         String path = "/movie-favourite/api/" + userId;
 
         CallAPI.callJsonObjectRequest(context, CallAPI.URL_WEB_SERVICE + path, null, Request.Method.GET,
-                jsonObject -> {
+                response -> {
                     try {
-                        if (jsonObject.getInt("status") != 202) {
-                            listener.error(jsonObject.getString("message"));
+                        if (response.getInt("status") != 202) {
+                            listener.error(response.getString("message"));
                             return;
                         }
 
-                        MovieDTO[] movieDTOs = new Gson().fromJson(jsonObject.getString("data"), MovieDTO[].class);
-                        listener.completed(List.of(movieDTOs));
+                        List<MovieDTO> data = new ArrayList<>();
+                        if (response.has("data"))
+                            data.addAll(List.of(new Gson().fromJson(response.getString("data"), MovieDTO[].class)));
+                        listener.completed(data);
                     } catch (JSONException e) {
                         Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
@@ -126,6 +128,23 @@ public class MovieApi {
 
                         MovieDTO newMovieDTO = new Gson().fromJson(response.getString("data"), MovieDTO.class);
                         listener.completed(newMovieDTO);
+                    } catch (JSONException e) {
+                        Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }, listener::error);
+    }
+
+    public void setMovieFavourite(Context context, Integer movieId, CallAPI.CallAPIListener<Void> listener) {
+        String body = "/movie-favourite/api/" + SharedPreferencesUtils.getUserID(context) + "/" + movieId;
+        CallAPI.callJsonObjectRequest(context, CallAPI.URL_WEB_SERVICE + body, null, Request.Method.POST,
+                response -> {
+                    try {
+                        if (response.getInt("status") != 202) {
+                            listener.error(response.getString("message"));
+                            return;
+                        }
+
+                        listener.completed(null);
                     } catch (JSONException e) {
                         Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
                     }

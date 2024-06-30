@@ -8,8 +8,12 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.NoConnectionError;
+import com.android.volley.TimeoutError;
 import com.borjabravo.readmoretextview.ReadMoreTextView;
 import com.bumptech.glide.Glide;
 import com.google.android.material.imageview.ShapeableImageView;
@@ -19,10 +23,13 @@ import com.lamnguyen.ticket_movie_nlu.adapters.GenreAdapter;
 import com.lamnguyen.ticket_movie_nlu.dto.CareerInfo;
 import com.lamnguyen.ticket_movie_nlu.dto.MovieDetailDTO;
 import com.lamnguyen.ticket_movie_nlu.service.movie.MovieDetailService;
+import com.lamnguyen.ticket_movie_nlu.service.movie.MovieService;
 import com.lamnguyen.ticket_movie_nlu.utils.CallAPI;
 import com.lamnguyen.ticket_movie_nlu.utils.DialogLoading;
 import com.lamnguyen.ticket_movie_nlu.utils.ItemSpacingDecoration;
 
+
+import org.json.JSONException;
 
 import java.text.MessageFormat;
 import java.time.LocalDate;
@@ -42,61 +49,32 @@ public class MovieDetailActivity extends AppCompatActivity {
     private CareerInfoAdapter actorInfoAdapter;
     private GenreAdapter genreAdapter;
     private MovieDetailService movieDetailService;
+    private MovieService movieService;
     private ShapeableImageView shapeableImageViewPosterMovieDetail;
     private TextView textViewRatingAmount, textViewDuration, textViewPremiereDate, textViewTitle;
     private Button buttonBack, buttonBooking;
     private ReadMoreTextView readMoreTextViewMovieSynopsis;
     private Dialog dialog;
-
+    private ImageView ivFavourite;
+    private boolean favourite;
     private static String TAG = MovieDetailActivity.class.getSimpleName();
+    private int id;
+    private LocalDate date;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_detail);
-        Integer id = getIntent().getExtras().getInt("id", -1);
-        LocalDate date = getIntent().getExtras().getSerializable("date") != null ? (LocalDate) getIntent().getExtras().getSerializable("date") : LocalDate.now();
+        id = getIntent().getExtras().getInt("id", -1);
+        date = getIntent().getExtras().getSerializable("date") != null ? (LocalDate) getIntent().getExtras().getSerializable("date") : LocalDate.now();
 
         init();
-
-        actorRecyclerView.setLayoutManager(actorLinearLayoutManager);
-        actorRecyclerView.addItemDecoration(new ItemSpacingDecoration(6));
-
-        directorRecyclerView.setLayoutManager(diretorLinearLayoutManager);
-        directorRecyclerView.addItemDecoration(new ItemSpacingDecoration(6));
-
-        genreRecyclerView.setLayoutManager(genreLinearLayoutManager);
-        genreRecyclerView.addItemDecoration(new ItemSpacingDecoration(6));
-
-        DialogLoading.showDialogLoading(dialog, getString(R.string.loading));
-        movieDetailService.loadMovieDetail(id, date, this, new CallAPI.CallAPIListener<MovieDetailDTO>() {
-            @Override
-            public void completed(MovieDetailDTO movieDetailDTO) {
-                dialog.dismiss();
-                loadDetail(movieDetailDTO);
-            }
-
-            @Override
-            public void error(Object error) {
-                dialog.dismiss();
-            }
-        });
-
-        buttonBack.setOnClickListener((v) -> {
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
-        });
-
-        buttonBooking.setOnClickListener(v -> {
-            Intent intent = new Intent(this, ShowtimeActivity.class);
-            intent.putExtra("id", id);
-            intent.putExtra("date", date);
-            startActivity(intent);
-        });
+        event();
     }
 
     private void init() {
         movieDetailService = MovieDetailService.getInstance();
+        movieService = MovieService.getInstance();
 
         directorRecyclerView = findViewById(R.id.director_rv);
         actorRecyclerView = findViewById(R.id.actor_rv);
@@ -112,6 +90,7 @@ public class MovieDetailActivity extends AppCompatActivity {
         actorInfoAdapter = new CareerInfoAdapter();
         genreAdapter = new GenreAdapter();
         buttonBooking = findViewById(R.id.button_booking);
+        ivFavourite = findViewById(R.id.image_view_favourite);
 
         dialog = new Dialog(this);
         dialog.setContentView(R.layout.dialog_loading);
@@ -120,6 +99,65 @@ public class MovieDetailActivity extends AppCompatActivity {
         diretorLinearLayoutManager = new LinearLayoutManager(MovieDetailActivity.this, LinearLayoutManager.HORIZONTAL, false);
         actorLinearLayoutManager = new LinearLayoutManager(MovieDetailActivity.this, LinearLayoutManager.HORIZONTAL, false);
         genreLinearLayoutManager = new LinearLayoutManager(MovieDetailActivity.this, LinearLayoutManager.HORIZONTAL, false);
+
+        actorRecyclerView.setLayoutManager(actorLinearLayoutManager);
+        actorRecyclerView.addItemDecoration(new ItemSpacingDecoration(6));
+
+        directorRecyclerView.setLayoutManager(diretorLinearLayoutManager);
+        directorRecyclerView.addItemDecoration(new ItemSpacingDecoration(6));
+
+        genreRecyclerView.setLayoutManager(genreLinearLayoutManager);
+        genreRecyclerView.addItemDecoration(new ItemSpacingDecoration(6));
+    }
+
+    private void event() {
+        DialogLoading.showDialogLoading(dialog, getString(R.string.loading));
+        movieDetailService.loadMovieDetail(id, date, this, new CallAPI.CallAPIListener<MovieDetailDTO>() {
+            @Override
+            public void completed(MovieDetailDTO movieDetailDTO) {
+                dialog.dismiss();
+                loadDetail(movieDetailDTO);
+            }
+
+            @Override
+            public void error(Object error) {
+                dialog.dismiss();
+                if (error instanceof TimeoutError || error instanceof NoConnectionError)
+                    Toast.makeText(MovieDetailActivity.this, getString(R.string.error_server), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        buttonBack.setOnClickListener((v) -> {
+            Intent intent = new Intent(this, MainActivity.class);
+            MainActivity.saveFragmentId(intent, 3);
+            startActivity(intent);
+        });
+
+        buttonBooking.setOnClickListener(v -> {
+            Intent intent = new Intent(this, ShowtimeActivity.class);
+            intent.putExtra("id", id);
+            intent.putExtra("date", date);
+            startActivity(intent);
+        });
+
+        ivFavourite.setOnClickListener(v -> {
+            DialogLoading.showDialogLoading(dialog, getString(R.string.loading));
+            movieService.setMovieFavourite(this, id, new CallAPI.CallAPIListener<Void>() {
+                @Override
+                public void completed(Void data) {
+                    dialog.dismiss();
+                    favourite = !favourite;
+                    ivFavourite.setImageResource(favourite ? R.mipmap.ic_fill_heart : R.mipmap.ic_border_heart);
+                }
+
+                @Override
+                public void error(Object error) {
+                    dialog.dismiss();
+                    if (error instanceof TimeoutError || error instanceof NoConnectionError)
+                        Toast.makeText(MovieDetailActivity.this, getString(R.string.error_server), Toast.LENGTH_SHORT).show();
+                }
+            });
+        });
     }
 
     private void loadDetail(MovieDetailDTO movieDetailDTO) {
@@ -136,6 +174,9 @@ public class MovieDetailActivity extends AppCompatActivity {
         textViewPremiereDate.setText(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyy")));
         textViewTitle.setText(movieDetailDTO.getTitle());
         readMoreTextViewMovieSynopsis.setText(movieDetailDTO.getDescription());
+
+        favourite = movieDetailDTO.isFavourite();
+        ivFavourite.setImageResource(favourite ? R.mipmap.ic_fill_heart : R.mipmap.ic_border_heart);
 
         buttonBooking.setVisibility(movieDetailDTO.getAvail() ? Button.VISIBLE : Button.GONE);
     }
