@@ -16,4 +16,5 @@ public class MovieDetailDTO {
     private Double rate;
     private Boolean avail;
     private String[] actors, directors, genres;
+    private boolean favourite;
 }

@@ -34,7 +34,11 @@ public class MovieService {
         movieApi.loadShowtime(movieId, date, context, listener);
     }
 
-    public void addNewMovie(Context context, String idApi, CallAPI.CallAPIListener<MovieDTO> listener) throws JSONException{
+    public void addNewMovie(Context context, String idApi, CallAPI.CallAPIListener<MovieDTO> listener) throws JSONException {
         movieApi.addNewMovie(context, idApi, listener);
+    }
+
+    public void setMovieFavourite(Context context, Integer movieId, CallAPI.CallAPIListener<Void> listener) {
+        movieApi.setMovieFavourite(context, movieId, listener);
     }
 }

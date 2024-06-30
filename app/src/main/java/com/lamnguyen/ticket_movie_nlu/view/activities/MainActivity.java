@@ -23,7 +23,6 @@ import com.lamnguyen.ticket_movie_nlu.view.fragments.TicketFragment;
 public class MainActivity extends AppCompatActivity {
     private MeowBottomNavigation bottomNavigation;
     private FragmentManager fragmentManager;
-    private Fragment frmDisplayMain;
     private static final String TAG = "MainActivity";
     public static final int FRAGMENT_MOVIE = 1,
             FRAGMENT_TICKET = 2,
@@ -59,8 +58,6 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigation.add(new MeowBottomNavigation.Model(FRAGMENT_MAP, R.drawable.ic_map_pin));
         bottomNavigation.add(new MeowBottomNavigation.Model(FRAGMENT_PROFILE, R.drawable.ic_profile));
         fragmentManager = getSupportFragmentManager();
-
-        frmDisplayMain = fragmentManager.findFragmentById(R.id.fragment_display_main);
     }
 
     private void eventNavigation() {
