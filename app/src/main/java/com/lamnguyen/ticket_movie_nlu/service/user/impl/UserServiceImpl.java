@@ -6,7 +6,6 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.gson.Gson;
 import com.lamnguyen.ticket_movie_nlu.bean.User;
 import com.lamnguyen.ticket_movie_nlu.service.user.UserService;
@@ -35,76 +34,65 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void checkRegister(Context context, String apiId, CallBack callBackSuccess, CallBack callBackFail) {
-        JSONObject jsonObject = createJsonObjectApiId(context, apiId);
+    public void checkRegister(Context context, String email, boolean googleSignIn, CallBack callBackSuccess, CallBack callBackFail) {
+        JSONObject jsonObject = createJsonObjectEmail(context, email);
         if (jsonObject == null) return;
-        CallAPI.callJsonObjectRequest(context, CallAPI.URL_WEB_SERVICE + "/user/api/check", "", jsonObject, new HashMap<>(), POST,
-                response -> {
-                    callBackSuccess.run();
-                    User user = new Gson().fromJson(response.toString(), User.class);
-                    SharedPreferencesUtils.saveUser(context, user);
-                }, error -> {
-                    if (error.fillInStackTrace().toString().equalsIgnoreCase("com.android.volley.TimeoutError"))
-                        Toast.makeText(context, "Lỗi server!", Toast.LENGTH_SHORT).show();
-                    else {
-                        callBackFail.run();
-                        Log.e(TAG, "checkRegister: " + error.getMessage(), error);
-                    }
-                });
+        CallAPI.callJsonObjectRequest(context, CallAPI.URL_WEB_SERVICE + "/user/api/check", "", jsonObject, new HashMap<>(), POST, response -> {
+            User user = new Gson().fromJson(response.toString(), User.class);
+            SharedPreferencesUtils.saveUser(context, user, googleSignIn);
+            callBackSuccess.run();
+        }, error -> {
+            if (error.toString().equalsIgnoreCase("com.android.volley.TimeoutError"))
+                Toast.makeText(context, "Lỗi server!", Toast.LENGTH_SHORT).show();
+            else callBackFail.run();
+        });
     }
 
 
-    public void register(Context context, User user, CallBack callBackSuccess, CallBack callBackFail) {
+    public void register(Context context, User user, boolean googleSignIn, CallBack callBackSuccess, CallBack callBackFail) {
         JSONObject jsonObject = createJsonObjectUser(context, user);
         if (jsonObject == null) return;
-        CallAPI.callJsonObjectRequest(context, CallAPI.URL_WEB_SERVICE + "/user/api/register", "", jsonObject, new HashMap<>(), POST,
-                response -> {
-                    callBackSuccess.run();
-                    User register = null;
-                    try {
-                        register = new Gson().fromJson(response.getJSONObject("data").toString(), User.class);
-                    } catch (JSONException e) {
-                        throw new RuntimeException(e);
-                    }
-                    SharedPreferencesUtils.saveUser(context, register);
-                }, error -> {
-                    if (error.fillInStackTrace().toString().equalsIgnoreCase("com.android.volley.TimeoutError"))
-                        Toast.makeText(context, "Lỗi server!", Toast.LENGTH_SHORT).show();
-                    else {
-                        callBackFail.run();
-                        Log.e(TAG, "register: " + error.getMessage(), error);
-                    }
-                });
+        CallAPI.callJsonObjectRequest(context, CallAPI.URL_WEB_SERVICE + "/user/api/register", "", jsonObject, new HashMap<>(), POST, response -> {
+            User register;
+            try {
+                register = new Gson().fromJson(response.getJSONObject("data").toString(), User.class);
+            } catch (JSONException error) {
+                Log.e(TAG, "register: " + error.getMessage(), error);
+                Toast.makeText(context, error.getMessage(), Toast.LENGTH_SHORT).show();
+                return;
+            }
+            SharedPreferencesUtils.saveUser(context, register, googleSignIn);
+            callBackSuccess.run();
+        }, error -> {
+            callBackFail.run();
+            Toast.makeText(context, error.getMessage(), Toast.LENGTH_SHORT).show();
+            Log.e(TAG, "register: " + error.getMessage(), error);
+        });
     }
 
     private JSONObject createJsonObjectUser(Context context, User user) {
         JSONObject jsonObject = new JSONObject();
         try {
-            jsonObject.put("apiId", user.getApiId());
             jsonObject.put("email", user.getEmail());
             jsonObject.put("fullName", user.getFullName());
             jsonObject.put("phone", user.getPhone());
         } catch (JSONException e) {
-            Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
-            Log.e(TAG, "createJsonObjectUser: ", e);
+            Toast.makeText(context, "Lỗi đăng nhập!", Toast.LENGTH_SHORT).show();
+            Log.e(TAG, "register: ", e);
+
             return null;
         }
         return jsonObject;
     }
 
-    private JSONObject createJsonObjectApiId(Context context, String apiId) {
+    private JSONObject createJsonObjectEmail(Context context, String email) {
         JSONObject jsonObject = new JSONObject();
         try {
-            jsonObject.put("apiId", apiId);
+            jsonObject.put("email", email);
         } catch (JSONException e) {
-            Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
-            Log.e(TAG, "createJsonObjectApiId: ", e);
             return null;
         }
-        return jsonObject;
-    }
 
-    private void signOut() {
-        FirebaseAuth.getInstance().signOut();
+        return jsonObject;
     }
 }

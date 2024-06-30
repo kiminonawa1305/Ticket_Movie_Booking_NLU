@@ -1,17 +1,21 @@
 package com.lamnguyen.ticket_movie_nlu.view.activities;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.os.Bundle;
-
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.firebase.auth.FirebaseAuth;
 import com.lamnguyen.ticket_movie_nlu.R;
+import com.lamnguyen.ticket_movie_nlu.utils.SharedPreferencesUtils;
 
 public class SignActivity extends AppCompatActivity {
     private FragmentManager fragmentManager;
+    private GoogleSignInAccount googleSignInAccount;
 
     public static final String PASSWORD_PATTERN =
             "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–[{}]:;',?/*~$^+=<>]).{8,20}$";
@@ -23,14 +27,14 @@ public class SignActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign);
+
+        googleSignInAccount = GoogleSignIn.getLastSignedInAccount(this);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-
-        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
-            FirebaseAuth.getInstance().getCurrentUser().getProviderId();
+        if (SharedPreferencesUtils.getUser(this) != null) {
             Intent intent = new Intent(this, MainActivity.class);
             this.startActivity(intent);
             this.finish();

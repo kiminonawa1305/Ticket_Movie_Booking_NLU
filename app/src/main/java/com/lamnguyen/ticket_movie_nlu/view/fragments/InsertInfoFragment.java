@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -17,7 +16,6 @@ import androidx.fragment.app.FragmentManager;
 import com.google.firebase.auth.FirebaseAuth;
 import com.lamnguyen.ticket_movie_nlu.R;
 import com.lamnguyen.ticket_movie_nlu.bean.User;
-import com.lamnguyen.ticket_movie_nlu.service.auth.ThreadCallBackSign;
 import com.lamnguyen.ticket_movie_nlu.service.user.UserService;
 import com.lamnguyen.ticket_movie_nlu.service.user.impl.UserServiceImpl;
 import com.lamnguyen.ticket_movie_nlu.utils.DialogLoading;
@@ -33,23 +31,21 @@ public class InsertInfoFragment extends Fragment {
     private Button btnNext;
     private User user;
     private Dialog dialog;
+    private boolean googleSignIn;
 
     private UserService userService;
-
-    private final static String EMAIL_ARG = "email", API_ID_ARG = "apiId", PASSWORD_ARG = "password";
-    private String email, password, apiId;
+    private final static String EMAIL_ARG = "email", GOOGLE_SIGN_IN_ARG = "googleSignIn";
+    private String email;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         userService = UserServiceImpl.getInstance();
     }
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_insert_info, container, false);
         fragmentManager = getParentFragmentManager();
@@ -65,8 +61,7 @@ public class InsertInfoFragment extends Fragment {
         if (bundle == null) return;
 
         email = bundle.getString(EMAIL_ARG);
-        apiId = bundle.getString(API_ID_ARG);
-        password = bundle.getString(PASSWORD_ARG);
+        googleSignIn = bundle.getBoolean(GOOGLE_SIGN_IN_ARG);
     }
 
     private void init(View view) {
@@ -92,28 +87,12 @@ public class InsertInfoFragment extends Fragment {
                 return;
             }
 
-            userService.register(getContext(),
-                    User.builder()
-                            .apiId(apiId)
-                            .email(email)
-                            .fullName(edtFullName.getText().toString())
-                            .phone(edtPhone.getText().toString())
-                            .build(),
-                    () -> {
-                        dialog.dismiss();
-                        FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password).addOnCompleteListener(command -> {
-                            if (command.isSuccessful()) {
-                                Toast.makeText(this.getContext(), getString(R.string.sign_in_success), Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(this.getContext(), MainActivity.class);
-                                this.getActivity().startActivity(intent);
-                                this.getActivity().finish();
-                            } else {
-                                Toast.makeText(this.getContext(), getString(R.string.sign_in_fail), Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    }, () -> {
-                        dialog.dismiss();
-                    });
+            User user = User.builder().email(email).fullName(edtFullName.getText().toString()).phone(edtPhone.getText().toString()).build();
+            userService.register(getContext(), user, googleSignIn, () -> {
+                dialog.dismiss();
+            }, () -> {
+                dialog.dismiss();
+            });
 
         });
     }

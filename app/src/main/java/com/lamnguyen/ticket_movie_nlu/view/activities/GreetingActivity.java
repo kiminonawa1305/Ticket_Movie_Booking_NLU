@@ -52,13 +52,8 @@ public class GreetingActivity extends AppCompatActivity {
 
     private void buildAlertDialogNetwork() {
         AlertDialog.Builder builder = new AlertDialog.Builder(GreetingActivity.this);
-
-        // Tạo một SpannableString từ tiêu đề
         SpannableString title = new SpannableString(getString(R.string.do_not_connect_to_network));
-
-        // Thiết lập kích thước font cho tiêu đề
         title.setSpan(new AbsoluteSizeSpan(22, true), 0, title.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
-
         builder.setTitle(title)
                 .setMessage(getString(R.string.request_connect_to_network))
                 .setIcon(R.drawable.ic_warning)
@@ -78,7 +73,6 @@ public class GreetingActivity extends AppCompatActivity {
     }
 
     private void setTimerChangePageSign() {
-
         new CountDownTimer(5000, 1000) {
             public void onTick(long millisUntilFinished) {
                 if (isNetworkConnected()) {
@@ -97,7 +91,6 @@ public class GreetingActivity extends AppCompatActivity {
 
     private boolean isNetworkConnected() {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-
         return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
     }
 

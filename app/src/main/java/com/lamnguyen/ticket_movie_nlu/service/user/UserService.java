@@ -9,9 +9,9 @@ public interface UserService {
 
     int matchPassword(String password, String rePassword);
 
-    void checkRegister(Context context, String apiId, CallBack callBackSuccess, CallBack callBackFail);
+    void checkRegister(Context context, String apiId, boolean googleSignIn, CallBack callBackSuccess, CallBack callBackFail);
 
-    void register(Context context, User user, CallBack callBackSuccess, CallBack callBackFail);
+    void register(Context context, User user, boolean googleSignIn, CallBack callBackSuccess, CallBack callBackFail);
 
     interface CallBack {
         void run();

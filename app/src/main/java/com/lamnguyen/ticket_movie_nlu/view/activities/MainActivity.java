@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
 import com.google.firebase.auth.FirebaseAuth;
 import com.lamnguyen.ticket_movie_nlu.R;
+import com.lamnguyen.ticket_movie_nlu.utils.SharedPreferencesUtils;
 import com.lamnguyen.ticket_movie_nlu.view.fragments.FavouriteMovieFragment;
 import com.lamnguyen.ticket_movie_nlu.view.fragments.GoogleMapFragment;
 import com.lamnguyen.ticket_movie_nlu.view.fragments.MovieFragment;
@@ -149,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (FirebaseAuth.getInstance().getCurrentUser() == null) {
+        if (SharedPreferencesUtils.getUser(this) == null) {
             Intent intent = new Intent(this, GreetingActivity.class);
             this.startActivity(intent);
             this.finish();

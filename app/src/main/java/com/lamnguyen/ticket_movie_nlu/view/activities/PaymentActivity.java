@@ -120,7 +120,7 @@ public class PaymentActivity extends AppCompatActivity {
 
             jsonObject.put("chairIds", listId);
 
-            jsonObject.put("customerId", SharedPreferencesUtils.getUserID(this));
+            jsonObject.put("userId", SharedPreferencesUtils.getUserID(this));
 
             CallAPI.callJsonObjectRequest(this, CallAPI.URL_WEB_SERVICE + "/ticket/api/buy", "", jsonObject, null, POST, (response) -> {
                 Log.i("SumTicketFragment", "buyTickets: " + response);

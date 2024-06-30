@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "953041789072",
+    "firebase_url": "https://ticket-movie-booking-nlu-2196d-default-rtdb.firebaseio.com",
     "project_id": "ticket-movie-booking-nlu-2196d",
     "storage_bucket": "ticket-movie-booking-nlu-2196d.appspot.com"
   },
@@ -12,7 +13,28 @@
           "package_name": "com.lamnguyen.ticket_movie_nlu"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "953041789072-j28scf4sphdjn4v3oq2sc91oprpogaps.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.lamnguyen.ticket_movie_nlu",
+            "certificate_hash": "da1b65476afede04b7790493045b06c73d118e3f"
+          }
+        },
+        {
+          "client_id": "953041789072-to27lbi7dp6jghfctkl4o1bv63u13kfp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.lamnguyen.ticket_movie_nlu",
+            "certificate_hash": "9f7fce7d0d41234dfa0e6d789c90a428471c56ec"
+          }
+        },
+        {
+          "client_id": "953041789072-0mq94etuokuqttifn1hl4fv7b3i5c0co.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyD4Y4NgldsQdiJo7I1qHEyIqx11UOeBUz4"
@@ -20,7 +42,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "953041789072-0mq94etuokuqttifn1hl4fv7b3i5c0co.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

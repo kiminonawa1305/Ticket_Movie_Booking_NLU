@@ -22,17 +22,25 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.Scopes;
+import com.google.android.gms.common.api.Scope;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.lamnguyen.ticket_movie_nlu.R;
+import com.lamnguyen.ticket_movie_nlu.bean.User;
 import com.lamnguyen.ticket_movie_nlu.utils.DialogLoading;
 import com.lamnguyen.ticket_movie_nlu.service.auth.ThreadCallBackSign;
 import com.lamnguyen.ticket_movie_nlu.service.user.UserService;
 import com.lamnguyen.ticket_movie_nlu.service.user.impl.UserServiceImpl;
 import com.lamnguyen.ticket_movie_nlu.service.auth.change_password.ChangePasswordService;
 import com.lamnguyen.ticket_movie_nlu.service.auth.change_password.impl.ChangePasswordServiceImpl;
+import com.lamnguyen.ticket_movie_nlu.utils.SharedPreferencesUtils;
 import com.lamnguyen.ticket_movie_nlu.view.activities.IntroductionActivity;
 import com.lamnguyen.ticket_movie_nlu.view.activities.SignActivity;
 
@@ -45,9 +53,11 @@ public class ProfileFragment extends Fragment {
     private Dialog dlgChangePassword, dialogLoading;
     private ShapeableImageView sivAvatarUser;
     private ImageView imgvBackgroundUser;
-
     private ActivityResultLauncher<Intent> chooseAvatar, chooseBackground;
     private Intent intent_pick_image;
+    private User user;
+    private boolean googleSignIn;
+    private FirebaseStorage firebaseStorage;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -58,7 +68,6 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
-        // Inflate the layout for this fragment
         this.init(view);
         this.event();
         this.setUpAvatarAndBackgroundUser();
@@ -77,6 +86,15 @@ public class ProfileFragment extends Fragment {
         dialogLoading = new Dialog(getContext());
         dialogLoading.setContentView(R.layout.dialog_loading);
         dialogLoading.setCancelable(false);
+
+        googleSignIn = SharedPreferencesUtils.isGoogleSignIn(getContext());
+        user = SharedPreferencesUtils.getUser(getContext());
+
+        if (googleSignIn) {
+            btnChangePassword.setVisibility(View.GONE);
+        }
+
+        firebaseStorage = FirebaseStorage.getInstance();
     }
 
     private Dialog getInstanceDialogChangePassword() {
@@ -114,14 +132,13 @@ public class ProfileFragment extends Fragment {
         });
     }
 
-    private void eventShowIntroduction(){
+    private void eventShowIntroduction() {
         Intent intent = new Intent(getActivity(), IntroductionActivity.class);
         this.startActivity(intent);
-        getActivity().finish();
     }
 
     private void eventSignOut() {
-        FirebaseAuth.getInstance().signOut();
+        SharedPreferencesUtils.logOut(getContext());
         Intent intent = new Intent(getActivity(), SignActivity.class);
         this.startActivity(intent);
         getActivity().finish();
@@ -218,8 +235,7 @@ public class ProfileFragment extends Fragment {
     }
 
     private void handleSelectAvatarUser(Uri imageUri) throws IOException {
-        FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
-        StorageReference storageReference = firebaseStorage.getReference().child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        StorageReference storageReference = firebaseStorage.getReference().child(user.getEmail());
         storageReference.child("avatar").putFile(imageUri).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 dialogLoading.dismiss();
@@ -228,14 +244,12 @@ public class ProfileFragment extends Fragment {
             } else {
                 dialogLoading.dismiss();
                 Toast.makeText(ProfileFragment.this.getContext(), getString(R.string.failed), Toast.LENGTH_SHORT).show();
-                Log.e(ProfileFragment.class.getName(), "Errro", task.getException());
             }
         });
     }
 
     private void handleSelectBackgroundUser(Uri imageUri) throws IOException {
-        FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
-        StorageReference storageReference = firebaseStorage.getReference().child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        StorageReference storageReference = firebaseStorage.getReference().child(user.getEmail());
         storageReference.child("background").putFile(imageUri).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 dialogLoading.dismiss();
@@ -244,26 +258,21 @@ public class ProfileFragment extends Fragment {
             } else {
                 dialogLoading.dismiss();
                 Toast.makeText(ProfileFragment.this.getContext(), getString(R.string.failed), Toast.LENGTH_SHORT).show();
-                Log.e(ProfileFragment.class.getName(), "Errro", task.getException());
             }
         });
     }
 
     private void setUpAvatarAndBackgroundUser() {
         DialogLoading.showDialogLoading(dialogLoading, getString(R.string.loading));
-        FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
-//        Toast.makeText(ProfileFragment.this.getContext(), getString(R.string.url_firebase_storage) + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/avatar", Toast.LENGTH_SHORT).show();
-        StorageReference avatarStrRef = firebaseStorage.getReferenceFromUrl(getString(R.string.url_firebase_storage) + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/avatar");
-        StorageReference backgroundStrRef = firebaseStorage.getReferenceFromUrl(getString(R.string.url_firebase_storage) + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/background");
+        StorageReference avatarStrRef = firebaseStorage.getReferenceFromUrl(getString(R.string.url_firebase_storage)).child(user.getEmail()).child("avatar");
+        StorageReference backgroundStrRef = firebaseStorage.getReferenceFromUrl(getString(R.string.url_firebase_storage)).child(user.getEmail()).child("background");
         avatarStrRef.getDownloadUrl().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
-                Uri uri = task.getResult();
-                Glide.with(sivAvatarUser).load(uri).into(sivAvatarUser);
+                Uri uriAvatar = task.getResult();
+                Glide.with(sivAvatarUser).load(uriAvatar).into(sivAvatarUser);
                 dialogLoading.dismiss();
-                Toast.makeText(ProfileFragment.this.getContext(), getString(R.string.success), Toast.LENGTH_SHORT).show();
             } else {
                 dialogLoading.dismiss();
-                Toast.makeText(ProfileFragment.this.getContext(), getString(R.string.failed), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -272,10 +281,8 @@ public class ProfileFragment extends Fragment {
                 Uri uri = task.getResult();
                 Glide.with(imgvBackgroundUser).load(uri).into(imgvBackgroundUser);
                 dialogLoading.dismiss();
-                Toast.makeText(ProfileFragment.this.getContext(), getString(R.string.success), Toast.LENGTH_SHORT).show();
             } else {
                 dialogLoading.dismiss();
-                Toast.makeText(ProfileFragment.this.getContext(), getString(R.string.failed), Toast.LENGTH_SHORT).show();
             }
         });
     }
