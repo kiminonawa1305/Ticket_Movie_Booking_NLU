@@ -35,7 +35,7 @@ public class RoomApi {
                         return;
                     }
 
-                    RoomDTO[] roomDTOS = new Gson().fromJson(response.getString("data"), RoomDTO[].class);
+                    RoomDTO[] roomDTOS =  new Gson().fromJson(response.getString("data"), RoomDTO[].class);
                     listener.completed(List.of(roomDTOS));
                 }catch (JSONException e){
                     listener.error(e.getMessage());
