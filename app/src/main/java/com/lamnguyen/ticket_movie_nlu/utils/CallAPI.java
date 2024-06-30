@@ -19,10 +19,8 @@ import java.util.Map;
 import lombok.SneakyThrows;
 
 public class CallAPI {
-
-
     public static final String IP = "172.20.26.177";
-    public static final String URL_WEB_SERVICE = "https://8f8e-14-169-52-184.ngrok-free.app";
+    public static final String URL_WEB_SERVICE = "http://" + IP + ":8080";
     public static final String URL_OMDB = "http://www.omdbapi.com/?apikey=c3d0a99f";
     public static final String URL_GOOGLE_MAP_COMPUTE_ROUTES = "https://routes.googleapis.com/directions/v2:computeRoutes";
     public static final String URL_GOOGLE_MAP_DIRECTION = "https://maps.googleapis.com/maps/api/directions/json";
