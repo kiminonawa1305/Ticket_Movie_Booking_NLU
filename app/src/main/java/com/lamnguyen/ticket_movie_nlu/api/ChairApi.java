@@ -1,27 +1,17 @@
 package com.lamnguyen.ticket_movie_nlu.api;
 
 import android.content.Context;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import com.lamnguyen.ticket_movie_nlu.dto.ChairDTO;
-import com.lamnguyen.ticket_movie_nlu.dto.MovieDTO;
-import com.lamnguyen.ticket_movie_nlu.dto.MovieDetailDTO;
 import com.lamnguyen.ticket_movie_nlu.enums.ChairStatus;
 import com.lamnguyen.ticket_movie_nlu.response.ChairResponse;
 import com.lamnguyen.ticket_movie_nlu.utils.CallAPI;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.List;
 
 import lombok.SneakyThrows;
 
@@ -36,35 +26,29 @@ public class ChairApi {
     }
 
     private ChairApi() {
-
     }
 
-    public void loadChair(int showtimeId, Context context, CallAPI.CallAPIListener<ChairResponse>... listeners) {
+    public void loadChair(int showtimeId, Context context, CallAPI.CallAPIListener<ChairResponse> listener) {
         String path = "/chair/api/" + showtimeId;
         CallAPI.callJsonObjectRequest(context, CallAPI.URL_WEB_SERVICE + path, null, Request.Method.GET,
                 jsonObject -> {
                     try {
                         if (jsonObject.getInt("status") != 202) {
-                            listeners[0].error(jsonObject.getString("message"));
+                            listener.error(jsonObject.getString("message"));
                             return;
                         }
 
                         ChairResponse chairResponses = new Gson().fromJson(jsonObject.getString("data"), ChairResponse.class);
-                        listeners[0].completed(chairResponses);
+                        listener.completed(chairResponses);
                     } catch (JSONException e) {
-                        listeners[0].error(e.getMessage());
+                        Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
-                }, error -> {
-                    if (error.fillInStackTrace().toString().equalsIgnoreCase("com.android.volley.TimeoutError"))
-                        Toast.makeText(context, "Lỗi server!", Toast.LENGTH_SHORT).show();
-                    else
-                        listeners[0].error(error);
-                }
+                }, listener::error
         );
     }
 
     @SneakyThrows
-    public void updateChair(int userId, String uuid, int chairId, ChairStatus status, Context context, CallAPI.CallAPIListener<ChairDTO>... listeners) {
+    public void updateChair(int userId, String uuid, int chairId, ChairStatus status, Context context, CallAPI.CallAPIListener<ChairDTO> listener) {
         String path = "/chair/api/update";
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("uuid", uuid);
@@ -77,21 +61,16 @@ public class ChairApi {
                 response -> {
                     try {
                         if (response.getInt("status") != 202) {
-                            listeners[0].error(response.getString("message"));
+                            listener.error(response.getString("message"));
                             return;
                         }
 
                         ChairDTO chairDTO = new Gson().fromJson(response.getString("data"), ChairDTO.class);
-                        listeners[0].completed(chairDTO);
+                        listener.completed(chairDTO);
                     } catch (JSONException e) {
-                        listeners[0].error(e.getMessage());
+                        Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
-                }, error -> {
-                    if (error.fillInStackTrace().toString().equalsIgnoreCase("com.android.volley.TimeoutError"))
-                        Toast.makeText(context, "Lỗi server!", Toast.LENGTH_SHORT).show();
-                    else
-                        listeners[0].error(error);
-                }
+                }, listener::error
         );
     }
 }

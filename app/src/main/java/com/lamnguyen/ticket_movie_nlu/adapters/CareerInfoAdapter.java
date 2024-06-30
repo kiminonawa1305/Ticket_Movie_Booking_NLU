@@ -9,9 +9,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lamnguyen.ticket_movie_nlu.R;
-import com.lamnguyen.ticket_movie_nlu.bean.CareerInfo;
+import com.lamnguyen.ticket_movie_nlu.dto.CareerInfo;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CareerInfoAdapter extends RecyclerView.Adapter<CareerInfoAdapter.CareerInfoViewHolder> {

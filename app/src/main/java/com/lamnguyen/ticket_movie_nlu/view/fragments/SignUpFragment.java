@@ -19,7 +19,7 @@ import com.lamnguyen.ticket_movie_nlu.utils.DialogLoading;
 import com.lamnguyen.ticket_movie_nlu.service.auth.sign_up.impl.SignUpServiceImpl;
 import com.lamnguyen.ticket_movie_nlu.service.user.UserService;
 import com.lamnguyen.ticket_movie_nlu.service.user.impl.UserServiceImpl;
-import com.lamnguyen.ticket_movie_nlu.bean.User;
+import com.lamnguyen.ticket_movie_nlu.dto.User;
 import com.lamnguyen.ticket_movie_nlu.service.auth.ThreadCallBackSign;
 import com.lamnguyen.ticket_movie_nlu.R;
 import com.lamnguyen.ticket_movie_nlu.view.activities.SignActivity;

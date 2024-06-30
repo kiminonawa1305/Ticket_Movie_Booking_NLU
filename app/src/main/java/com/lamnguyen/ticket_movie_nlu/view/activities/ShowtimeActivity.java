@@ -14,6 +14,8 @@ import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.NoConnectionError;
+import com.android.volley.TimeoutError;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
@@ -92,8 +94,9 @@ public class ShowtimeActivity extends AppCompatActivity {
 
             @Override
             public void error(Object error) {
-                Log.e(TAG, "erorr: " + error.toString());
-                Toast.makeText(ShowtimeActivity.this, "Lỗi", Toast.LENGTH_SHORT).show();
+                if (error instanceof TimeoutError || error instanceof NoConnectionError)
+                    Toast.makeText(ShowtimeActivity.this, "Lỗi server!", Toast.LENGTH_SHORT).show();
+
             }
         });
     }
@@ -125,7 +128,7 @@ public class ShowtimeActivity extends AppCompatActivity {
 
             @Override
             public void error(Object error) {
-
+                Log.e(TAG, "erorr: " + error.toString());
             }
         });
     }

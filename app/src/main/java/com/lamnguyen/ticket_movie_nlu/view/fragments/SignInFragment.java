@@ -18,12 +18,10 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.lamnguyen.ticket_movie_nlu.bean.User;
+import com.lamnguyen.ticket_movie_nlu.dto.User;
 import com.lamnguyen.ticket_movie_nlu.service.user.UserService;
 import com.lamnguyen.ticket_movie_nlu.service.user.impl.UserServiceImpl;
 import com.lamnguyen.ticket_movie_nlu.utils.DialogLoading;
-import com.lamnguyen.ticket_movie_nlu.service.auth.check_mail.CheckEmailService;
-import com.lamnguyen.ticket_movie_nlu.service.auth.check_mail.impl.CheckEmailServiceImpl;
 import com.lamnguyen.ticket_movie_nlu.service.auth.sign_in.SignInService;
 import com.lamnguyen.ticket_movie_nlu.service.auth.sign_in.impl.SignInServiceImpl;
 import com.lamnguyen.ticket_movie_nlu.service.auth.ThreadCallBackSign;
@@ -133,7 +131,6 @@ public class SignInFragment extends Fragment {
                 new ThreadCallBackSign() {
                     @Override
                     public void isSuccess() {
-                        dialog.dismiss();
                         signInSuccess();
                     }
 
@@ -195,18 +192,22 @@ public class SignInFragment extends Fragment {
     private void signInSuccess() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (!user.isEmailVerified()) {
+            dialog.dismiss();
             reSendVerify();
             return;
         }
 
-        userService.checkRegister(this.getContext(), user.getEmail(), false, () -> {
+        userService.signIn(this.getContext(), user.getEmail(), true, () -> {
+            dialog.dismiss();
+        }, () -> {
             Intent intent = new Intent(this.getContext(), MainActivity.class);
             this.getActivity().startActivity(intent);
             this.getActivity().finish();
         }, () -> {
             Bundle bundle = getBundleData();
             bundle.putString("email", edtEmail.getText().toString());
-            bundle.putBoolean("googleSignIn", false);
+            bundle.putBoolean("defaultLogin", true);
+
             getParentFragmentManager().beginTransaction()
                     .replace(R.id.fragment_sign, InsertInfoFragment.class, bundle)
                     .commit();

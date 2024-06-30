@@ -12,7 +12,6 @@ import androidx.activity.result.ActivityResultRegistry;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,18 +21,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.common.Scopes;
-import com.google.android.gms.common.api.Scope;
 import com.google.android.material.imageview.ShapeableImageView;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.lamnguyen.ticket_movie_nlu.R;
-import com.lamnguyen.ticket_movie_nlu.bean.User;
+import com.lamnguyen.ticket_movie_nlu.dto.User;
 import com.lamnguyen.ticket_movie_nlu.utils.DialogLoading;
 import com.lamnguyen.ticket_movie_nlu.service.auth.ThreadCallBackSign;
 import com.lamnguyen.ticket_movie_nlu.service.user.UserService;
@@ -47,16 +39,15 @@ import com.lamnguyen.ticket_movie_nlu.view.activities.SignActivity;
 import java.io.IOException;
 
 public class ProfileFragment extends Fragment {
-    private static final int PICK_IMAGE_REQUEST = 1;
     private Button btnChangePassword, btnSetting, btnInformation, btnSignOut, btnSubmitChangePassword;
-    private TextView edtNewPassword, edtReNewPassword;
+    private TextView edtNewPassword, edtReNewPassword, tvDisplayNameUser;
     private Dialog dlgChangePassword, dialogLoading;
     private ShapeableImageView sivAvatarUser;
     private ImageView imgvBackgroundUser;
     private ActivityResultLauncher<Intent> chooseAvatar, chooseBackground;
     private Intent intent_pick_image;
     private User user;
-    private boolean googleSignIn;
+    private boolean defaultLogin;
     private FirebaseStorage firebaseStorage;
 
     @Override
@@ -76,23 +67,24 @@ public class ProfileFragment extends Fragment {
     }
 
     private void init(View view) {
+        user = SharedPreferencesUtils.getUser(getContext());
+
         btnInformation = view.findViewById(R.id.button_infomaton);
         btnChangePassword = view.findViewById(R.id.button_change_pasword);
         btnSetting = view.findViewById(R.id.button_setting);
         btnSignOut = view.findViewById(R.id.button_sign_out);
         sivAvatarUser = view.findViewById(R.id.shapeable_image_view_avatar_user);
         imgvBackgroundUser = view.findViewById(R.id.image_view_background_user);
+        tvDisplayNameUser = view.findViewById(R.id.text_view_display_name_user);
+        tvDisplayNameUser.setText(user.getFullName());
 
         dialogLoading = new Dialog(getContext());
         dialogLoading.setContentView(R.layout.dialog_loading);
         dialogLoading.setCancelable(false);
 
-        googleSignIn = SharedPreferencesUtils.isGoogleSignIn(getContext());
-        user = SharedPreferencesUtils.getUser(getContext());
+        defaultLogin = SharedPreferencesUtils.isDefaultLogin(getContext());
 
-        if (googleSignIn) {
-            btnChangePassword.setVisibility(View.GONE);
-        }
+        btnChangePassword.setVisibility(!defaultLogin ? View.GONE : View.VISIBLE);
 
         firebaseStorage = FirebaseStorage.getInstance();
     }

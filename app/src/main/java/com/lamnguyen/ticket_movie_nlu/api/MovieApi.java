@@ -5,20 +5,18 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.google.gson.Gson;
 import com.lamnguyen.ticket_movie_nlu.dto.MovieDTO;
 import com.lamnguyen.ticket_movie_nlu.dto.MovieDetailDTO;
 import com.lamnguyen.ticket_movie_nlu.dto.ShowtimeByCinema;
 import com.lamnguyen.ticket_movie_nlu.utils.CallAPI;
 import com.lamnguyen.ticket_movie_nlu.utils.SharedPreferencesUtils;
-import com.lamnguyen.ticket_movie_nlu.view.activities.AddMovieActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -47,19 +45,14 @@ public class MovieApi {
                             return;
                         }
 
-
-                        MovieDTO[] movieDTOs = new Gson().fromJson(response.getString("data"), MovieDTO[].class);
-                        listener.completed(List.of(movieDTOs));
+                        List<MovieDTO> movieDTOs = new ArrayList<>();
+                        if (response.has("data"))
+                            movieDTOs.addAll(List.of(new Gson().fromJson(response.getString("data"), MovieDTO[].class)));
+                        listener.completed(movieDTOs);
                     } catch (JSONException e) {
-                        listener.error(e.getMessage());
+                        Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
-                }, error -> {
-                    if (error.fillInStackTrace().toString().equalsIgnoreCase("com.android.volley.TimeoutError"))
-                        Toast.makeText(context, "Lỗi server!", Toast.LENGTH_SHORT).show();
-                    else
-                        listener.error(error);
-                }
-        );
+                }, listener::error);
     }
 
     public void loadMovieDetail(Integer id, LocalDate date, Context context, CallAPI.CallAPIListener<MovieDetailDTO> listener) {
@@ -76,16 +69,9 @@ public class MovieApi {
                         Log.i(getClass().getSimpleName(), "onResponse: " + movieDetailDTO.toString());
                         listener.completed(movieDetailDTO);
                     } catch (JSONException e) {
-                        listener.error(e.getMessage());
+                        Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
-                },
-                error -> {
-                    if (error.fillInStackTrace().toString().equalsIgnoreCase("com.android.volley.TimeoutError"))
-                        Toast.makeText(context, "Lỗi server!", Toast.LENGTH_SHORT).show();
-                    else
-                        listener.error(error);
-                }
-        );
+                }, listener::error);
     }
 
     public void loadListFavoriteMovieDetail(Context context, CallAPI.CallAPIListener<List<MovieDTO>> listener) {
@@ -103,14 +89,9 @@ public class MovieApi {
                         MovieDTO[] movieDTOs = new Gson().fromJson(jsonObject.getString("data"), MovieDTO[].class);
                         listener.completed(List.of(movieDTOs));
                     } catch (JSONException e) {
-                        listener.error(e.getMessage());
+                        Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
-                }, error -> {
-                    if (error.fillInStackTrace().toString().equalsIgnoreCase("com.android.volley.TimeoutError"))
-                        Toast.makeText(context, "Lỗi server!", Toast.LENGTH_SHORT).show();
-                    else
-                        listener.error(error);
-                });
+                }, listener::error);
     }
 
     public void loadShowtime(int movieId, LocalDate date, Context context, CallAPI.CallAPIListener<List<ShowtimeByCinema>> listener) {
@@ -127,14 +108,9 @@ public class MovieApi {
                         ShowtimeByCinema[] movieDTOs = new Gson().fromJson(response.getString("data"), ShowtimeByCinema[].class);
                         listener.completed(List.of(movieDTOs));
                     } catch (JSONException e) {
-                        listener.error(e.getMessage());
+                        Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
-                }, error -> {
-                    if (error.fillInStackTrace().toString().equalsIgnoreCase("com.android.volley.TimeoutError"))
-                        Toast.makeText(context, "Lỗi server!", Toast.LENGTH_SHORT).show();
-                    else
-                        listener.error(error);
-                });
+                }, listener::error);
     }
 
     public void addNewMovie(Context context, String idApi, CallAPI.CallAPIListener<MovieDTO> listener) throws JSONException {
@@ -151,13 +127,8 @@ public class MovieApi {
                         MovieDTO newMovieDTO = new Gson().fromJson(response.getString("data"), MovieDTO.class);
                         listener.completed(newMovieDTO);
                     } catch (JSONException e) {
-                        listener.error(e.getMessage());
+                        Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
-                }, error -> {
-                    if (error.fillInStackTrace().toString().equalsIgnoreCase("com.android.volley.TimeoutError"))
-                        Toast.makeText(context, "Lỗi server!", Toast.LENGTH_SHORT).show();
-                    else
-                        listener.error(error);
-                });
+                }, listener::error);
     }
 }

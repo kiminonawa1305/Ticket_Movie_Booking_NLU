@@ -8,14 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import com.google.firebase.auth.FirebaseAuth;
 import com.lamnguyen.ticket_movie_nlu.R;
-import com.lamnguyen.ticket_movie_nlu.bean.User;
+import com.lamnguyen.ticket_movie_nlu.dto.User;
 import com.lamnguyen.ticket_movie_nlu.service.user.UserService;
 import com.lamnguyen.ticket_movie_nlu.service.user.impl.UserServiceImpl;
 import com.lamnguyen.ticket_movie_nlu.utils.DialogLoading;
@@ -31,10 +29,10 @@ public class InsertInfoFragment extends Fragment {
     private Button btnNext;
     private User user;
     private Dialog dialog;
-    private boolean googleSignIn;
+    private boolean defaultLogin;
 
     private UserService userService;
-    private final static String EMAIL_ARG = "email", GOOGLE_SIGN_IN_ARG = "googleSignIn";
+    private final static String EMAIL_ARG = "email", DEFAULT_LOGIN = "defaultLogin";
     private String email;
 
     @Override
@@ -61,7 +59,7 @@ public class InsertInfoFragment extends Fragment {
         if (bundle == null) return;
 
         email = bundle.getString(EMAIL_ARG);
-        googleSignIn = bundle.getBoolean(GOOGLE_SIGN_IN_ARG);
+        defaultLogin = bundle.getBoolean(DEFAULT_LOGIN);
     }
 
     private void init(View view) {
@@ -88,8 +86,11 @@ public class InsertInfoFragment extends Fragment {
             }
 
             User user = User.builder().email(email).fullName(edtFullName.getText().toString()).phone(edtPhone.getText().toString()).build();
-            userService.register(getContext(), user, googleSignIn, () -> {
+            userService.register(getContext(), user, defaultLogin, () -> {
                 dialog.dismiss();
+                Intent intent = new Intent(this.getContext(), MainActivity.class);
+                this.getActivity().startActivity(intent);
+                this.getActivity().finish();
             }, () -> {
                 dialog.dismiss();
             });

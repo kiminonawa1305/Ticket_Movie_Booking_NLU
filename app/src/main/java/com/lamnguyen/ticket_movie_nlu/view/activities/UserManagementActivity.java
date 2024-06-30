@@ -7,12 +7,13 @@ import android.widget.CheckBox;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.lamnguyen.ticket_movie_nlu.R;
-import com.lamnguyen.ticket_movie_nlu.bean.Account;
-import com.lamnguyen.ticket_movie_nlu.dto.AccountDTO;
-import com.lamnguyen.ticket_movie_nlu.service.user.AccountService;
+import com.lamnguyen.ticket_movie_nlu.dto.User;
+import com.lamnguyen.ticket_movie_nlu.service.user.UserService;
+import com.lamnguyen.ticket_movie_nlu.service.user.impl.UserServiceImpl;
 import com.lamnguyen.ticket_movie_nlu.utils.CallAPI;
 
 import java.util.ArrayList;
@@ -20,18 +21,21 @@ import java.util.List;
 
 public class UserManagementActivity extends AppCompatActivity {
 
-    private List<Account> accounts;
+    private List<User> users;
     private TableLayout tableLayout;
+    private UserService userService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account_management);
 
+        userService = UserServiceImpl.getInstance();
+
         tableLayout = findViewById(R.id.table_account);
 
         // Initialize accounts list
-        accounts = new ArrayList<>();
+        users = new ArrayList<>();
 
         // Load accounts from API
         loadAccountsFromAPI();
@@ -49,21 +53,10 @@ public class UserManagementActivity extends AppCompatActivity {
     }
 
     private void loadAccountsFromAPI() {
-        AccountService.getInstance().loadAccounts(this, new CallAPI.CallAPIListener<List<AccountDTO>>() {
+        userService.loadUsers(this, new CallAPI.CallAPIListener<List<User>>() {
             @Override
-            public void completed(List<AccountDTO> data) {
-                // Convert AccountDTO to Account
-                for (AccountDTO accountDTO : data) {
-                    accounts.add(new Account(
-                            accountDTO.getStt(),
-                            accountDTO.getName(),
-                            accountDTO.getPhone(),
-                            accountDTO.getEmail(),
-                            accountDTO.getPassword(),
-                            accountDTO.isLocked()
-                    ));
-                }
-                // Populate the table with the retrieved accounts
+            public void completed(List<User> users) {
+                UserManagementActivity.this.users.addAll(users);
                 populateTable();
             }
 
@@ -77,27 +70,23 @@ public class UserManagementActivity extends AppCompatActivity {
     private void populateTable() {
         tableLayout.removeAllViews();
 
-        // Add header row
         TableRow headerRow = new TableRow(this);
         headerRow.addView(createTextView("STT", true));
         headerRow.addView(createTextView("Tên người dùng", true));
         headerRow.addView(createTextView("Số điện thoại", true));
         headerRow.addView(createTextView("Email", true));
-        headerRow.addView(createTextView("Mật khẩu", true));
         headerRow.addView(createTextView("Khóa", true));
         tableLayout.addView(headerRow);
 
-        // Add account rows
-        for (Account account : accounts) {
+        for (User user : users) {
             TableRow row = new TableRow(this);
-            row.addView(createTextView(String.valueOf(account.getStt()), false));
-            row.addView(createTextView(account.getName(), false));
-            row.addView(createTextView(account.getPhone(), false));
-            row.addView(createTextView(account.getEmail(), false));
-            row.addView(createTextView(hashPassword(account.getPassword()), false));
+            row.addView(createTextView(String.valueOf(users.indexOf(user)), false));
+            row.addView(createTextView(user.getFullName(), false));
+            row.addView(createTextView(user.getPhone(), false));
+            row.addView(createTextView(user.getEmail(), false));
             CheckBox checkBox = new CheckBox(this);
-            checkBox.setChecked(account.isLocked());
-            checkBox.setTag(account);
+            checkBox.setChecked(user.isLock());
+            checkBox.setTag(user);
             row.addView(checkBox);
 
             tableLayout.addView(row);
@@ -110,15 +99,10 @@ public class UserManagementActivity extends AppCompatActivity {
         textView.setPadding(18, 8, 8, 18);
         textView.setGravity(View.TEXT_ALIGNMENT_CENTER);
         if (isHeader) {
-            textView.setBackgroundColor(0xFFCCCCCC); // Light gray background for headers
+            textView.setBackgroundColor(0xFFCCCCCC);
             textView.setTypeface(null, android.graphics.Typeface.BOLD);
         }
         return textView;
-    }
-
-    private String hashPassword(String password) {
-        // For simplicity, just masking the password with asterisks
-        return password.substring(0, 3) + "*****";
     }
 
     private void confirmAccountLock() {
@@ -128,13 +112,8 @@ public class UserManagementActivity extends AppCompatActivity {
         for (int i = 1; i < childCount; i++) {
             TableRow row = (TableRow) tableLayout.getChildAt(i);
             CheckBox checkBox = (CheckBox) row.getChildAt(6);
-            Account account = (Account) checkBox.getTag();
-
-            if (checkBox.isChecked()) {
-                account.setLocked(true);
-            } else {
-                account.setLocked(false);
-            }
+            User account = (User) checkBox.getTag();
+            account.setLock(checkBox.isChecked());
         }
     }
 }

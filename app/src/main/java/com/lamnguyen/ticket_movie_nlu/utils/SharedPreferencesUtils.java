@@ -9,7 +9,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.Scopes;
 import com.google.android.gms.common.api.Scope;
 import com.google.firebase.auth.FirebaseAuth;
-import com.lamnguyen.ticket_movie_nlu.bean.User;
+import com.lamnguyen.ticket_movie_nlu.dto.User;
 
 public class SharedPreferencesUtils {
     public static final String SIGN_UP = "SIGN_UP";
@@ -32,19 +32,19 @@ public class SharedPreferencesUtils {
         return context.getSharedPreferences(USER, Context.MODE_PRIVATE).getInt(UserKey.ID.key, -1);
     }
 
-    public static void saveUser(Context context, User user, boolean googleSignIn) {
+    public static void saveUser(Context context, User user, boolean defaultLogin) {
         Editor editor = getEditor(context, USER);
         editor.putInt(UserKey.ID.key, user.getId());
         editor.putString(UserKey.EMAIL.key, user.getEmail());
         editor.putString(UserKey.FULL_NAME.key, user.getFullName());
         editor.putString(UserKey.PHONE.key, user.getPhone());
-        editor.putBoolean(UserKey.GOOGLE_SIGN_IN.key, googleSignIn);
+        editor.putBoolean(UserKey.DEFAULT_LOGIN.key, defaultLogin);
         editor.apply();
     }
 
-    public static boolean isGoogleSignIn(Context context) {
+    public static boolean isDefaultLogin(Context context) {
         SharedPreferences sharedPreferences = getInstance(context, USER);
-        return sharedPreferences.getBoolean(UserKey.GOOGLE_SIGN_IN.key, false);
+        return sharedPreferences.getBoolean(UserKey.DEFAULT_LOGIN.key, false);
     }
 
     public static void logOut(Context context) {
@@ -78,7 +78,7 @@ public class SharedPreferencesUtils {
         FULL_NAME("fullName"),
         EMAIL("email"),
         PHONE("phone"),
-        GOOGLE_SIGN_IN("googleSignIn"),
+        DEFAULT_LOGIN("defaultLogin"),
         ;
 
         private String key;

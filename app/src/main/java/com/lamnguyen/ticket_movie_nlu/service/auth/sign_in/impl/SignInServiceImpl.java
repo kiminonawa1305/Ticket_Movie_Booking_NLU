@@ -1,10 +1,13 @@
 package com.lamnguyen.ticket_movie_nlu.service.auth.sign_in.impl;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.lamnguyen.ticket_movie_nlu.service.auth.sign_in.SignInService;
 import com.lamnguyen.ticket_movie_nlu.service.auth.ThreadCallBackSign;
 
@@ -33,11 +36,11 @@ public class SignInServiceImpl implements SignInService {
                 callBackSignIn.isSuccess();
             }
         }).addOnFailureListener(e -> {
-            if (e.getMessage().startsWith("The password is invalid")) callBackSignIn.isFail();
-            else if (e.getMessage().startsWith("There is no user record"))
+            if (e instanceof FirebaseAuthInvalidCredentialsException) callBackSignIn.isFail();
+            else if (e instanceof FirebaseAuthInvalidUserException)
                 callBackUserNotExit.isFail();
-            else callBackBlockRequest.isFail();
-            Log.e(getClass().getSimpleName(), "error: " + e.getMessage(), e);
+            else
+                callBackBlockRequest.isFail();
         });
     }
 }

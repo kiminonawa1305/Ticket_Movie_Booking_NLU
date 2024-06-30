@@ -5,9 +5,7 @@ import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Build;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +22,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.NoConnectionError;
+import com.android.volley.TimeoutError;
 import com.lamnguyen.ticket_movie_nlu.R;
 import com.lamnguyen.ticket_movie_nlu.adapters.CinemaSpinnerAdapter;
 import com.lamnguyen.ticket_movie_nlu.adapters.MovieSpinnerAdapter;
@@ -51,10 +51,6 @@ import java.util.stream.Collectors;
 public class AddScheduleActivity extends AppCompatActivity {
 
     private Dialog addScheduleDialog;
-    private RoomSpinnerAdapter roomSpinnerAdapter;
-    private MovieSpinnerAdapter movieSpinnerAdapter;
-    private CinemaSpinnerAdapter cinemaSpinnerAdapter;
-    private Button openAddScheduleDialogButton;
     private int roomGroupsInCurrentRow = 0;
     private final int MAX_ROOM_GROUPS_PER_ROW = 3;
     private CinemaService cinemaService;
@@ -79,7 +75,7 @@ public class AddScheduleActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_schedule);
         schedule = LocalDateTime.now();
-        openAddScheduleDialogButton = findViewById(R.id.button_open_dialog_add_schedule);
+        Button openAddScheduleDialogButton = findViewById(R.id.button_open_dialog_add_schedule);
 
         cinemaService = CinemaService.getInstance();
         movieService = MovieService.getInstance();
@@ -150,7 +146,6 @@ public class AddScheduleActivity extends AppCompatActivity {
                 });
 
 
-
                 roomSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -199,13 +194,13 @@ public class AddScheduleActivity extends AppCompatActivity {
                         acceptChooseRoomButton.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                if(roomItems.isEmpty()){
+                                if (roomItems.isEmpty()) {
                                     Toast.makeText(AddScheduleActivity.this, "Phòng chiếu đã hết", Toast.LENGTH_SHORT).show();
-                                }else{
-                                    if(selectedRoomDTO != null){
-                                        if(selectedRoomDTOs.contains(selectedRoomDTO)){
+                                } else {
+                                    if (selectedRoomDTO != null) {
+                                        if (selectedRoomDTOs.contains(selectedRoomDTO)) {
                                             Toast.makeText(AddScheduleActivity.this, "Phòng này đã được thêm", Toast.LENGTH_SHORT).show();
-                                        }else {
+                                        } else {
                                             selectedRoomDTOs.add(selectedRoomDTO);
                                             chooseRoomDialog.dismiss();
                                             roomGroupsContainerLayout.removeView(noRoomGroup);
@@ -229,11 +224,11 @@ public class AddScheduleActivity extends AppCompatActivity {
                 acceptAddSchedule.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(selectedRoomDTOs.isEmpty()){
+                        if (selectedRoomDTOs.isEmpty()) {
                             Toast.makeText(AddScheduleActivity.this, "Vui lòng thêm phòng chiếu", Toast.LENGTH_SHORT).show();
-                        }else{
+                        } else {
                             try {
-                                showtimeService.addShowtime(addScheduleDialog.getContext(), selectedRoomDTOs, schedule, selectedMovieDTO.getId(), selectedRoomDTO.getId(), new CallAPI.CallAPIListener<ShowtimeDTO>() {
+                                showtimeService.addShowtime(addScheduleDialog.getContext(), selectedRoomDTOs, schedule, selectedMovieDTO.getId(), new CallAPI.CallAPIListener<ShowtimeDTO>() {
                                     @Override
                                     public void completed(ShowtimeDTO showtimeDTO) {
                                         addScheduleDialog.dismiss();
@@ -276,29 +271,30 @@ public class AddScheduleActivity extends AppCompatActivity {
         });
     }
 
-    private void loadMovieData(){
+    private void loadMovieData() {
         movieService.loadMovie(null, this, new CallAPI.CallAPIListener<List<MovieDTO>>() {
             @Override
             public void completed(List<MovieDTO> movieDTOS) {
                 movieItems = movieDTOS;
-                if(!movieItems.isEmpty()){
+                if (!movieItems.isEmpty()) {
                     selectedMovieDTO = movieItems.get(0);
                 }
             }
 
             @Override
             public void error(Object error) {
-                // Handle error
+                if (error instanceof TimeoutError || error instanceof NoConnectionError)
+                    Toast.makeText(AddScheduleActivity.this, getString(R.string.error_server), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    private void loadCinemaData(){
+    private void loadCinemaData() {
         cinemaService.loadCinemas(this, new CallAPI.CallAPIListener<List<CinemaDTO>>() {
             @Override
             public void completed(List<CinemaDTO> cinemaDTOS) {
                 cinemaItems = cinemaDTOS;
-                if(!cinemaItems.isEmpty()){
+                if (!cinemaItems.isEmpty()) {
                     selectedCinemaDTO = cinemaItems.get(0);
                     loadRoomData(selectedCinemaDTO.getId());
                 }
@@ -311,12 +307,12 @@ public class AddScheduleActivity extends AppCompatActivity {
         });
     }
 
-    private void loadRoomData(Integer cinemaId){
+    private void loadRoomData(Integer cinemaId) {
         roomService.loadRoomsOfCinema(this, cinemaId, new CallAPI.CallAPIListener<List<RoomDTO>>() {
             @Override
             public void completed(List<RoomDTO> roomDTOS) {
                 roomItems = roomDTOS;
-                if(!roomItems.isEmpty()){
+                if (!roomItems.isEmpty()) {
                     selectedRoomDTO = roomItems.get(0);
                 }
             }
@@ -328,10 +324,10 @@ public class AddScheduleActivity extends AppCompatActivity {
         });
     }
 
-    private void handleAddRoomGroup(LinearLayout roomGroupsContainerLayout, TextView noRoomGroup){
+    private void handleAddRoomGroup(LinearLayout roomGroupsContainerLayout, TextView noRoomGroup) {
         int spacing = 18;
-        if(roomGroupsInCurrentRow == 0 || roomGroupsInCurrentRow == MAX_ROOM_GROUPS_PER_ROW){
-            if(roomGroupsInCurrentRow == MAX_ROOM_GROUPS_PER_ROW){
+        if (roomGroupsInCurrentRow == 0 || roomGroupsInCurrentRow == MAX_ROOM_GROUPS_PER_ROW) {
+            if (roomGroupsInCurrentRow == MAX_ROOM_GROUPS_PER_ROW) {
                 roomGroupsInCurrentRow = 0;
             }
             LinearLayout newRoomGroupsRow = new LinearLayout(roomGroupsContainerLayout.getContext());
@@ -341,10 +337,10 @@ public class AddScheduleActivity extends AppCompatActivity {
 
             LinearLayout.LayoutParams roomGroupsRowLayoutParams = (LinearLayout.LayoutParams) newRoomGroupsRow.getLayoutParams();
 
-            if(roomGroupsContainerLayout.getChildCount() == 1){
-                roomGroupsRowLayoutParams.setMargins(0,0,0,0);
-            }else{
-                roomGroupsRowLayoutParams.setMargins(0,spacing,0,0);
+            if (roomGroupsContainerLayout.getChildCount() == 1) {
+                roomGroupsRowLayoutParams.setMargins(0, 0, 0, 0);
+            } else {
+                roomGroupsRowLayoutParams.setMargins(0, spacing, 0, 0);
             }
             newRoomGroupsRow.setLayoutParams(roomGroupsRowLayoutParams);
         }
@@ -372,7 +368,7 @@ public class AddScheduleActivity extends AppCompatActivity {
         ImageView deleteRoomGroupImageView = roomGroup.findViewById(R.id.image_view_delete_room_group);
         TextView roomTextView = roomGroup.findViewById(R.id.text_view_room);
 
-        if(selectedRoomDTO != null){
+        if (selectedRoomDTO != null) {
             roomTextView.setText(selectedRoomDTO.getName());
         }
 
@@ -392,20 +388,19 @@ public class AddScheduleActivity extends AppCompatActivity {
     }
 
 
-
-    private void adjustRoomGroupsRows(LinearLayout roomGroupsContainerLayout, LinearLayout currentRoomGroupsRow, TextView noRoomGroup){
-        for(int i = 0; i < roomGroupsContainerLayout.getChildCount(); i++){
+    private void adjustRoomGroupsRows(LinearLayout roomGroupsContainerLayout, LinearLayout currentRoomGroupsRow, TextView noRoomGroup) {
+        for (int i = 0; i < roomGroupsContainerLayout.getChildCount(); i++) {
             LinearLayout showtimeGroupsRow = (LinearLayout) roomGroupsContainerLayout.getChildAt(i);
             while (showtimeGroupsRow.getChildCount() < MAX_ROOM_GROUPS_PER_ROW
-                    && i < roomGroupsContainerLayout.getChildCount() - 1){
+                    && i < roomGroupsContainerLayout.getChildCount() - 1) {
                 LinearLayout nextShowtimeGroupsRow = (LinearLayout) roomGroupsContainerLayout.getChildAt(i + 1);
-                if(nextShowtimeGroupsRow.getChildCount() > 0){
+                if (nextShowtimeGroupsRow.getChildCount() > 0) {
                     View showtimeGroupFirst = nextShowtimeGroupsRow.getChildAt(0);
                     nextShowtimeGroupsRow.removeView(showtimeGroupFirst);
                     showtimeGroupsRow.addView(showtimeGroupFirst);
                 }
 
-                if(nextShowtimeGroupsRow.getChildCount() == 0){
+                if (nextShowtimeGroupsRow.getChildCount() == 0) {
                     roomGroupsContainerLayout.removeView(nextShowtimeGroupsRow);
                 }
             }
@@ -413,21 +408,21 @@ public class AddScheduleActivity extends AppCompatActivity {
 
         int currentShowtimeGroupsRowIndex = roomGroupsContainerLayout.indexOfChild(currentRoomGroupsRow);
         if (currentShowtimeGroupsRowIndex == roomGroupsContainerLayout.getChildCount() - 1
-                && currentRoomGroupsRow.getChildCount() == 0){
+                && currentRoomGroupsRow.getChildCount() == 0) {
             roomGroupsContainerLayout.removeView(currentRoomGroupsRow);
         }
 
-        if (roomGroupsContainerLayout.getChildCount() > 0){
+        if (roomGroupsContainerLayout.getChildCount() > 0) {
             LinearLayout lastShowtimeGroupsRow = (LinearLayout) roomGroupsContainerLayout
                     .getChildAt(roomGroupsContainerLayout.getChildCount() - 1);
             roomGroupsInCurrentRow = lastShowtimeGroupsRow.getChildCount();
-        }else{
+        } else {
             roomGroupsContainerLayout.addView(noRoomGroup);
             roomGroupsInCurrentRow = 0;
         }
     }
 
-    private void showAddScheduleDialog(){
+    private void showAddScheduleDialog() {
         addScheduleDialog = new Dialog(this);
         addScheduleDialog.setContentView(R.layout.dialog_add_schedule);
         addScheduleDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -436,30 +431,30 @@ public class AddScheduleActivity extends AppCompatActivity {
         addScheduleDialog.show();
     }
 
-    private void populateMovieSpinner(Spinner movieSpinner, List<MovieDTO> movieItems){
-        movieSpinnerAdapter = new MovieSpinnerAdapter(this, R.layout.item_spinner, movieItems);
+    private void populateMovieSpinner(Spinner movieSpinner, List<MovieDTO> movieItems) {
+        MovieSpinnerAdapter movieSpinnerAdapter = new MovieSpinnerAdapter(this, R.layout.item_spinner, movieItems);
         movieSpinner.setAdapter(movieSpinnerAdapter);
     }
 
-    private void populateRoomSpinner(Spinner roomSpinner, List<RoomDTO> roomItems){
-        roomSpinnerAdapter = new RoomSpinnerAdapter(this, R.layout.item_spinner, roomItems);
+    private void populateRoomSpinner(Spinner roomSpinner, List<RoomDTO> roomItems) {
+        RoomSpinnerAdapter roomSpinnerAdapter = new RoomSpinnerAdapter(this, R.layout.item_spinner, roomItems);
         roomSpinner.setAdapter(roomSpinnerAdapter);
     }
 
-    private void populateCinemaSpinner(Spinner cinemaSpinner, List<CinemaDTO> cinemaItems){
-        cinemaSpinnerAdapter = new CinemaSpinnerAdapter(this, R.layout.item_spinner, cinemaItems);
+    private void populateCinemaSpinner(Spinner cinemaSpinner, List<CinemaDTO> cinemaItems) {
+        CinemaSpinnerAdapter cinemaSpinnerAdapter = new CinemaSpinnerAdapter(this, R.layout.item_spinner, cinemaItems);
         cinemaSpinner.setAdapter(cinemaSpinnerAdapter);
     }
 
-    private void openDatePickerDialog(EditText showDateEditText){
+    private void openDatePickerDialog(EditText showDateEditText) {
         LocalDate currentDate = LocalDate.now();
         DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 selectedDate = LocalDate.of(year, month, dayOfMonth);
-                if (selectedDate.isBefore(currentDate)){
+                if (selectedDate.isBefore(currentDate)) {
                     Toast.makeText(AddScheduleActivity.this, "Vui lòng chọn ngày lớn hơn hoặc bằng hiện tại", Toast.LENGTH_SHORT).show();
-                }else {
+                } else {
                     showDateEditText.setText(formatLocalDate(selectedDate));
                     schedule = selectedDate.atTime(selectedTime);
                 }
@@ -468,15 +463,15 @@ public class AddScheduleActivity extends AppCompatActivity {
         datePickerDialog.show();
     }
 
-    private void openTimePickerDialog(EditText showTimeEditText){
+    private void openTimePickerDialog(EditText showTimeEditText) {
         LocalTime currentTime = LocalTime.now();
         TimePickerDialog timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                 selectedTime = LocalTime.of(hourOfDay, minute);
-                if(selectedTime.isBefore(currentTime)){
+                if (selectedTime.isBefore(currentTime)) {
                     Toast.makeText(AddScheduleActivity.this, "Vui lòng chọn thời gian lớn hơn hoặc bằng hiện tại", Toast.LENGTH_SHORT).show();
-                }else{
+                } else {
                     showTimeEditText.setText(formatLocalTime(selectedTime));
                     schedule = selectedDate.atTime(selectedTime);
                 }
@@ -485,17 +480,17 @@ public class AddScheduleActivity extends AppCompatActivity {
         timePickerDialog.show();
     }
 
-    private String formatLocalDate(LocalDate localDate){
+    private String formatLocalDate(LocalDate localDate) {
         return localDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
     }
 
-    private String formatLocalTime(LocalTime localTime){
+    private String formatLocalTime(LocalTime localTime) {
         return localTime.format(DateTimeFormatter.ofPattern("hh:mm"));
     }
 
-    private void reset(){
+    private void reset() {
         roomGroupsInCurrentRow = 0;
-        if(!cinemaItems.isEmpty() && !movieItems.isEmpty() && !roomItems.isEmpty()){
+        if (!cinemaItems.isEmpty() && !movieItems.isEmpty() && !roomItems.isEmpty()) {
             selectedCinemaDTO = cinemaItems.get(0);
             selectedMovieDTO = movieItems.get(0);
             selectedRoomDTO = roomItems.get(0);

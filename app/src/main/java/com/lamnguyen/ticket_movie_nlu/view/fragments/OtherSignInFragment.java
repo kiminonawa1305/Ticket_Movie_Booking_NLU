@@ -16,6 +16,7 @@
 
 package com.lamnguyen.ticket_movie_nlu.view.fragments;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -40,6 +41,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.lamnguyen.ticket_movie_nlu.R;
 import com.lamnguyen.ticket_movie_nlu.service.user.UserService;
 import com.lamnguyen.ticket_movie_nlu.service.user.impl.UserServiceImpl;
+import com.lamnguyen.ticket_movie_nlu.utils.DialogLoading;
 import com.lamnguyen.ticket_movie_nlu.view.activities.MainActivity;
 
 import lombok.SneakyThrows;
@@ -52,6 +54,7 @@ public class OtherSignInFragment extends Fragment {
     private GoogleSignInOptions gso;
     private Button btnGoogleSignIn, btnFacebookSignIn;
     private UserService userService;
+    private Dialog dialogLoading;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -76,6 +79,7 @@ public class OtherSignInFragment extends Fragment {
         btnGoogleSignIn = view.findViewById(R.id.button_google_sign_in);
         btnFacebookSignIn = view.findViewById(R.id.button_facebook_sign_in);
         userService = UserServiceImpl.getInstance();
+        dialogLoading = DialogLoading.newInstance(getContext());
     }
 
     private void event() {
@@ -105,17 +109,22 @@ public class OtherSignInFragment extends Fragment {
 
 
     private void signInSuccess(String email) {
-        userService.checkRegister(this.getContext(), email, true, () -> {
-            Intent intent = new Intent(this.getContext(), MainActivity.class);
-            this.getActivity().startActivity(intent);
-            this.getActivity().finish();
-        }, () -> {
-            Bundle bundle = new Bundle();
-            bundle.putString("email", email);
-            bundle.putBoolean("googleSignIn", true);
-            getParentFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_sign, InsertInfoFragment.class, bundle)
-                    .commit();
-        });
+        DialogLoading.showDialogLoading(dialogLoading, getString(R.string.sign_in));
+        userService.signIn(this.getContext(), email, false,
+                () -> {
+                    dialogLoading.dismiss();
+                },
+                () -> {
+                    Intent intent = new Intent(this.getContext(), MainActivity.class);
+                    this.getActivity().startActivity(intent);
+                    this.getActivity().finish();
+                }, () -> {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("email", email);
+                    bundle.putBoolean("defaultLogin", false);
+                    getParentFragment().getParentFragmentManager().beginTransaction()
+                            .replace(R.id.fragment_sign, InsertInfoFragment.class, bundle)
+                            .commit();
+                });
     }
 }

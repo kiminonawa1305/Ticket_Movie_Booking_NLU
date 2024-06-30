@@ -28,9 +28,9 @@ public class ChairService {
         firebaseDatabase = FirebaseDatabase.getInstance();
     }
 
-    public void updateChair(String uuid, int chairId, ChairStatus status, Context context, CallAPI.CallAPIListener<ChairDTO>... listeners) {
+    public void updateChair(String uuid, int chairId, ChairStatus status, Context context, CallAPI.CallAPIListener<ChairDTO> listener) {
         int userId = SharedPreferencesUtils.getUserID(context);
-        chairApi.updateChair(userId, uuid, chairId, status, context, listeners);
+        chairApi.updateChair(userId, uuid, chairId, status, context, listener);
     }
 
     public void rollBack(String uuid, int chairId, ChairStatus status, Context context) {
@@ -48,8 +48,8 @@ public class ChairService {
         });
     }
 
-    public void loadChair(int showtimeId, Context context, CallAPI.CallAPIListener<ChairResponse>... listeners) {
-        chairApi.loadChair(showtimeId, context, listeners);
+    public void loadChair(int showtimeId, Context context, CallAPI.CallAPIListener<ChairResponse> listener) {
+        chairApi.loadChair(showtimeId, context, listener);
     }
 
     public void openConnectDatabase(String url, ValueEventListener valueEventListener) {

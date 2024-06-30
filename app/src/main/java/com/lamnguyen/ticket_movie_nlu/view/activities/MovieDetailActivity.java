@@ -16,7 +16,7 @@ import com.google.android.material.imageview.ShapeableImageView;
 import com.lamnguyen.ticket_movie_nlu.R;
 import com.lamnguyen.ticket_movie_nlu.adapters.CareerInfoAdapter;
 import com.lamnguyen.ticket_movie_nlu.adapters.GenreAdapter;
-import com.lamnguyen.ticket_movie_nlu.bean.CareerInfo;
+import com.lamnguyen.ticket_movie_nlu.dto.CareerInfo;
 import com.lamnguyen.ticket_movie_nlu.dto.MovieDetailDTO;
 import com.lamnguyen.ticket_movie_nlu.service.movie.MovieDetailService;
 import com.lamnguyen.ticket_movie_nlu.utils.CallAPI;

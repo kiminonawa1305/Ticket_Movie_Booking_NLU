@@ -1,5 +1,6 @@
 package com.lamnguyen.ticket_movie_nlu.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +11,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -19,6 +19,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.lamnguyen.ticket_movie_nlu.R;
 import com.lamnguyen.ticket_movie_nlu.api.PriceManageApi;
 import com.lamnguyen.ticket_movie_nlu.dto.PriceManageDTO;
+import com.lamnguyen.ticket_movie_nlu.utils.CallAPI;
+
+import org.json.JSONObject;
 
 import java.text.NumberFormat;
 import java.util.List;
@@ -26,12 +29,13 @@ import java.util.Locale;
 
 public class PriceManageAdapter extends RecyclerView.Adapter<PriceManageAdapter.PriceManageViewHolder> {
     private List<PriceManageDTO> mListPriceManage;
-    private static NumberFormat numberFormat;
+    private static final NumberFormat numberFormat;
 
     static {
         numberFormat = NumberFormat.getNumberInstance(new Locale("vi", "VN"));
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     public void setData(List<PriceManageDTO> list) {
         this.mListPriceManage = list;
         notifyDataSetChanged();
@@ -75,13 +79,13 @@ public class PriceManageAdapter extends RecyclerView.Adapter<PriceManageAdapter.
         private LinearLayout llButtonContainer;
         private Button btnSaveUpdate, btnCancelUpdate;
         private PriceManageDTO priceManageDTO;
-        private InputMethodManager imm;
+        private final InputMethodManager inputMethodManager;
 
         public PriceManageViewHolder(@NonNull View itemView) {
             super(itemView);
             init();
             event();
-            imm = (InputMethodManager) itemView.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            inputMethodManager = (InputMethodManager) itemView.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         }
 
         private void init() {
@@ -148,19 +152,18 @@ public class PriceManageAdapter extends RecyclerView.Adapter<PriceManageAdapter.
         }
 
         private void updatePrice(PriceManageDTO updatedPrice) {
-            PriceManageApi.updatePrice(this.itemView.getContext(), updatedPrice, new PriceManageApi.UpdatePriceListener() {
+            PriceManageApi.updatePrice(this.itemView.getContext(), updatedPrice, new CallAPI.CallAPIListener<>() {
                 @Override
-                public void onUpdateSuccess() {
+                public void completed(JSONObject jsonObject) {
                     setFocusableEditView(false);
                     llButtonContainer.setVisibility(View.GONE);
                     priceManageDTO = updatedPrice;
                     bindPrice();
-                    imm.hideSoftInputFromWindow(itemView.getWindowToken(), 0);
+                    inputMethodManager.hideSoftInputFromWindow(itemView.getWindowToken(), 0);
                 }
 
                 @Override
-                public void onUpdateError(String message) {
-                    Toast.makeText(itemView.getContext(), message, Toast.LENGTH_SHORT).show();
+                public void error(Object message) {
                     bindPrice();
                 }
             });

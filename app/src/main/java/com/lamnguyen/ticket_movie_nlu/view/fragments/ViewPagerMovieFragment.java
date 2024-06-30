@@ -3,7 +3,6 @@ package com.lamnguyen.ticket_movie_nlu.view.fragments;
 
 import android.app.Dialog;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +14,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.NoConnectionError;
+import com.android.volley.TimeoutError;
 import com.lamnguyen.ticket_movie_nlu.R;
 import com.lamnguyen.ticket_movie_nlu.adapters.MovieAdapter;
 import com.lamnguyen.ticket_movie_nlu.dto.MovieDTO;
@@ -71,19 +72,21 @@ public class ViewPagerMovieFragment extends Fragment {
 
     private void loadMovieShowtime(LocalDate dateTime) {
         DialogLoading.showDialogLoading(dialog, getString(R.string.loading));
-        movieService.loadMovie(dateTime, this.getContext(), new CallAPI.CallAPIListener<List<MovieDTO>>() {
+        movieService.loadMovie(dateTime, this.getContext(), new CallAPI.CallAPIListener<>() {
 
             @Override
             public void completed(List<MovieDTO> movieDTOs) {
                 dialog.dismiss();
+                if (movieDTOs.isEmpty())
+                    Toast.makeText(getContext(), getString(R.string.no_movie_showtime), Toast.LENGTH_SHORT).show();
                 rclDisplayListMovieShowtime.setAdapter(new MovieAdapter(movieDTOs, dateTime, ViewPagerMovieFragment.this.getActivity()));
             }
 
             @Override
             public void error(Object error) {
                 dialog.dismiss();
-                Log.e(ViewPagerMovieFragment.class.getSimpleName(), error.toString());
-                Toast.makeText(ViewPagerMovieFragment.this.getContext(), error.toString(), Toast.LENGTH_SHORT).show();
+                if (error instanceof TimeoutError || error instanceof NoConnectionError)
+                    Toast.makeText(getContext(), getString(R.string.error_server), Toast.LENGTH_SHORT).show();
             }
         });
     }

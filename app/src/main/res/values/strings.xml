@@ -142,4 +142,6 @@
     <string name="save">Lưu</string>
     <string name="server_client_id">953041789072-to27lbi7dp6jghfctkl4o1bv63u13kfp.apps.googleusercontent.com</string>
     <string name="other_login">Đăng nhập bằng phương thức khác</string>
+    <string name="error_server">Lỗi server không phản hồi!</string>
+    <string name="no_movie_showtime">Không có lịch chiếu!</string>
 </resources>

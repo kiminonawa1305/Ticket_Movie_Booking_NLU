@@ -15,7 +15,9 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
+import com.android.volley.TimeoutError;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.google.zxing.WriterException;
@@ -118,7 +120,7 @@ public class TicketDetailActivity extends AppCompatActivity {
         }, error -> {
             dialog.dismiss();
             createQR("xxxxxxxx");
-            if (error.fillInStackTrace().toString().equalsIgnoreCase("com.android.volley.TimeoutError"))
+            if (error instanceof TimeoutError || error instanceof NoConnectionError)
                 Toast.makeText(this, "Lỗi server!", Toast.LENGTH_SHORT).show();
             else
                 Toast.makeText(this, error.getMessage(), Toast.LENGTH_SHORT).show();
