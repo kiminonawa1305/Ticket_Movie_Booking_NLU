@@ -41,7 +41,9 @@
 
         <activity
             android:name=".view.activities.AddScheduleActivity"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation="portrait" >
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -49,9 +51,12 @@
             </intent-filter>
         </activity>
 
+
+
         <activity
             android:name=".view.activities.AddMovieActivity"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation="portrait">
 
 <!--            <intent-filter>-->
 <!--                <action android:name="android.intent.action.MAIN" />-->
@@ -62,6 +67,14 @@
 
         <activity
             android:name=".view.activities.AccountManagementActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activities.PriceManageActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activities.DashboardActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
@@ -113,16 +126,12 @@
         <activity
             android:name=".view.activities.GreetingActivity"
             android:exported="false"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".view.activities.PriceManageActivity"
-            android:exported="true"
             android:screenOrientation="portrait">
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
+            <!--            <intent-filter>-->
+            <!--                <action android:name="android.intent.action.MAIN" />-->
 
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
+            <!--                <category android:name="android.intent.category.LAUNCHER" />-->
+            <!--            </intent-filter>-->
         </activity>
     </application>
 </manifest>

@@ -89,5 +89,10 @@ dependencies {
     // Retrofit and OkHttp
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+
+    //anychart
+    implementation("com.github.AnyChart:AnyChart-Android:1.1.5")
+    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
+    implementation("androidx.startup:startup-runtime:1.1.1")
 }
 

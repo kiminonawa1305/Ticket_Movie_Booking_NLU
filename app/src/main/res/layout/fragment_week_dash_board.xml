@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    tools:context=".view.fragments.WeekDashBoardFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:background="@drawable/bg_gradient_in_dashboard_round1"
+        android:layout_height="200dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:text="@string/dashboard_num_of_ticket_sale"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:paddingHorizontal="20dp"
+            android:layout_height="wrap_content"/>
+
+        <com.github.mikephil.charting.charts.BarChart
+            android:id="@+id/bar_chart_view_display_week_sale_ticket"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_marginVertical="10dp"
+        android:background="@drawable/bg_gradient_in_dashboard_round1"
+        android:layout_height="200dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:text="@string/dashboard_revenu_report"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:paddingHorizontal="20dp"
+            android:layout_height="wrap_content"/>
+
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/any_chart_view_display_week_revenu_report"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </LinearLayout>
+    <TableLayout
+        android:layout_width="match_parent"
+        android:stretchColumns="*"
+        android:layout_height="wrap_content">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:shrinkColumns="*"
+                android:background="@drawable/bg_gradient_in_dashboard_round1"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:text="@string/dashboard_sum_num_of_ticket_sale"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:paddingHorizontal="10dp"
+                    android:layout_height="wrap_content"/>
+
+                <TableRow
+                    android:paddingHorizontal="10dp"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/text_view_sum_sale_ticket_week"
+                        android:gravity="center"
+                        android:layout_width="wrap_content"
+                        android:textColor="@color/white"
+                        android:text="xxxxxxxxxxx"
+                        android:textSize="20sp"
+                        android:layout_height="50dp"/>
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="10dp"
+                        android:background="@mipmap/ic_movie_ticket"/>
+                </TableRow>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:text="@string/dashboard_sum_revenu"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:paddingHorizontal="10dp"
+                    android:layout_height="wrap_content"/>
+
+                <TableRow
+                    android:paddingHorizontal="10dp"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/text_view_sum_revenu_week"
+                        android:layout_width="wrap_content"
+                        android:textColor="@color/white"
+                        android:text="xxxxxxxx"
+                        android:textSize="20sp"
+                        android:layout_height="wrap_content"/>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@mipmap/ic_bag_money"/>
+
+                </TableRow>
+            </TableLayout>
+
+        </TableRow>
+
+    </TableLayout>
+
+</LinearLayout>

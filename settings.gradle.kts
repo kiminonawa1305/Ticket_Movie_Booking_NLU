@@ -8,7 +8,7 @@ pluginManagement {
             maven(url = uri("https://jitpack.io"))
         }
 
-        jcenter()
+//        jcenter()
     }
 }
 dependencyResolutionManagement {
@@ -22,7 +22,7 @@ dependencyResolutionManagement {
             maven(url = uri("https://jitpack.io"))
         }
 
-        jcenter()
+//        jcenter()
     }
 }
 

@@ -1,6 +1,7 @@
 package com.lamnguyen.ticket_movie_nlu.api;
 
 import android.content.Context;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -17,35 +18,33 @@ import java.util.List;
 public class RoomApi {
     private static RoomApi instance;
 
-    public static RoomApi getInstance(){
-        if(instance == null){
+    public static RoomApi getInstance() {
+        if (instance == null) {
             instance = new RoomApi();
         }
         return instance;
     }
 
-    public void loadRoomsOfCinema(Context context, Integer cinemaId, CallAPI.CallAPIListener<List<RoomDTO>> listener){
-        String body = "/room/api/cinema/" + cinemaId;
-        CallAPI.callJsonObjectRequest(context, CallAPI.URL_WEB_SERVICE + body, null, Request.Method.GET, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    if(response.getInt("status") != 202){
-                        listener.error(response.getString("message"));
-                        return;
-                    }
+    public void loadRoomsOfCinema(Context context, Integer cinemaId, CallAPI.CallAPIListener<List<RoomDTO>> listener) {
+        String path = "/room/api/cinema/" + cinemaId;
+        CallAPI.callJsonObjectRequest(context, CallAPI.URL_WEB_SERVICE + path, null, Request.Method.GET,
+                response -> {
+                    try {
+                        if (response.getInt("status") != 202) {
+                            listener.error(response.getString("message"));
+                            return;
+                        }
 
-                    RoomDTO[] roomDTOS =  new Gson().fromJson(response.getString("data"), RoomDTO[].class);
-                    listener.completed(List.of(roomDTOS));
-                }catch (JSONException e){
-                    listener.error(e.getMessage());
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                listener.error(error);
-            }
-        });
+                        RoomDTO[] roomDTOS = new Gson().fromJson(response.getString("data"), RoomDTO[].class);
+                        listener.completed(List.of(roomDTOS));
+                    } catch (JSONException e) {
+                        listener.error(e.getMessage());
+                    }
+                }, error -> {
+                    if (error.fillInStackTrace().toString().equalsIgnoreCase("com.android.volley.TimeoutError"))
+                        Toast.makeText(context, "Lỗi server!", Toast.LENGTH_SHORT).show();
+                    else
+                        listener.error(error);
+                });
     }
 }
