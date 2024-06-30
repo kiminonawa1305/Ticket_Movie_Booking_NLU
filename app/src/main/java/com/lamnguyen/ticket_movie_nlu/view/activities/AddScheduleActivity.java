@@ -141,6 +141,8 @@ public class AddScheduleActivity extends AppCompatActivity {
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                         CinemaDTO newSelectedCinemaDTO = (CinemaDTO) parent.getItemAtPosition(position);
                         if (!newSelectedCinemaDTO.equals(selectedCinemaDTO)){
+                            roomGroupsInCurrentRow = 0;
+                            selectedRoomDTOs = new ArrayList<>();
                             roomGroupsContainerLayout.removeAllViews();
                             roomGroupsContainerLayout.addView(noRoomGroup);
                         }
@@ -451,14 +453,14 @@ public class AddScheduleActivity extends AppCompatActivity {
         DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                selectedDate = LocalDate.of(year, month, dayOfMonth);
+                selectedDate = LocalDate.of(year, month + 1, dayOfMonth);
                 if (selectedDate.isBefore(currentDate)){
                     Toast.makeText(AddScheduleActivity.this, "Vui lòng chọn ngày lớn hơn hoặc bằng hiện tại", Toast.LENGTH_SHORT).show();
                 }else {
                     showDateEditText.setText(formatLocalDate(selectedDate));
                 }
             }
-        }, currentDate.getYear(), currentDate.getMonthValue(), currentDate.getDayOfMonth());
+        }, currentDate.getYear(), currentDate.getMonthValue() - 1, currentDate.getDayOfMonth());
         datePickerDialog.show();
     }
 
