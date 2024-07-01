@@ -132,7 +132,6 @@
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/fragment_show_statistical"
-            android:name="com.lamnguyen.ticket_movie_nlu.view.fragments.admin.DayDashBoardFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"

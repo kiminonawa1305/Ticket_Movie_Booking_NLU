@@ -132,6 +132,7 @@ public class UserManagerFragment extends Fragment {
                     @Override
                     public void error(Object error) {
                         dialogLoading.dismiss();
+                        cb.setChecked(u.isLock());
                         if (error instanceof TimeoutError || error instanceof NoConnectionError)
                             Toast.makeText(getContext(), getString(R.string.error_server), Toast.LENGTH_SHORT).show();
                     }

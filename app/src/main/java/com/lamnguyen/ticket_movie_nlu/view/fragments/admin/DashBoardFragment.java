@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -90,6 +89,8 @@ public class DashBoardFragment extends Fragment {
         dialogLoading = DialogLoading.newInstance(getContext());
         addItemToSpinner();
         setDateToTextView();
+
+        replaceFragment(DayDashBoardFragment.class);
     }
 
     private void event() {
@@ -98,24 +99,24 @@ public class DashBoardFragment extends Fragment {
             setBgButtonNonGradient(btnWeek);
             setBgButtonNonGradient(btnMonth);
             navTime = 0;
+            replaceFragment(DayDashBoardFragment.class);
             getDashboardData();
-            replaceFragment(new DayDashBoardFragment());
         });
         btnWeek.setOnClickListener(v -> {
             setBgButtonGradient(btnWeek);
             setBgButtonNonGradient(btnDay);
             setBgButtonNonGradient(btnMonth);
             navTime = 1;
+            replaceFragment(WeekDashBoardFragment.class);
             getDashboardData();
-            replaceFragment(new WeekDashBoardFragment());
         });
         btnMonth.setOnClickListener(v -> {
             setBgButtonGradient(btnMonth);
             setBgButtonNonGradient(btnDay);
             setBgButtonNonGradient(btnWeek);
             navTime = 2;
+            replaceFragment(MonthDashboardFragment.class);
             getDashboardData();
-            replaceFragment(new MonthDashboardFragment());
         });
 
         imgViewEditCalendar.setOnClickListener(v -> {
@@ -194,12 +195,13 @@ public class DashBoardFragment extends Fragment {
                         Bundle bundle = new Bundle();
                         bundle.putSerializable("data", dashboardResponse);
                         switch (navTime) {
-                            case 0 ->
-                                    getChildFragmentManager().setFragmentResult(DayDashBoardFragment.class.getSimpleName(), bundle);
+                            case 0 -> {
+                                getParentFragmentManager().setFragmentResult(DayDashBoardFragment.class.getSimpleName(), bundle);
+                            }
                             case 1 ->
-                                    getChildFragmentManager().setFragmentResult(WeekDashBoardFragment.class.getSimpleName(), bundle);
+                                    getParentFragmentManager().setFragmentResult(WeekDashBoardFragment.class.getSimpleName(), bundle);
                             case 2 ->
-                                    getChildFragmentManager().setFragmentResult(MonthDashboardFragment.class.getSimpleName(), bundle);
+                                    getParentFragmentManager().setFragmentResult(MonthDashboardFragment.class.getSimpleName(), bundle);
                         }
                     } catch (JSONException e) {
                         Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -216,6 +218,7 @@ public class DashBoardFragment extends Fragment {
         String selectedDate = dateShow.split("/")[2] + "-" + dateShow.split("/")[1] + "-" + dateShow.split("/")[0];
         String selectedCinema = spnSelectCinema.getSelectedItem().toString();
         if (navTime == 0) {
+            tvCalendar.setText(dateShow);
             return "from=" + selectedDate + START_TIME + "&to=" + selectedDate + END_TIME + "&cinemaId=" + convertNameCinemaToId(selectedCinema);
         }
         String[] date = getStartAndEndOfWeekOrMonth(selectedDate, navTime);
@@ -259,10 +262,10 @@ public class DashBoardFragment extends Fragment {
         return result;
     }
 
-    private void replaceFragment(Fragment fragment) {
+    private void replaceFragment(Class fragment) {
         FragmentManager fragmentManager = getParentFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_show_statistical, fragment);
+        fragmentTransaction.replace(R.id.fragment_show_statistical, fragment, null);
         fragmentTransaction.commit();
     }
 }
