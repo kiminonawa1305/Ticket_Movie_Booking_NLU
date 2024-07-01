@@ -1,4 +1,4 @@
-package com.lamnguyen.ticket_movie_nlu.view.activities;
+package com.lamnguyen.ticket_movie_nlu.view.fragments.admin;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -262,7 +262,7 @@ public class AddScheduleActivity extends AppCompatActivity {
                                     }
                                 });
                             } catch (JSONException e) {
-                                throw new RuntimeException(e);
+                                Toast.makeText(AddScheduleActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         }
                     }

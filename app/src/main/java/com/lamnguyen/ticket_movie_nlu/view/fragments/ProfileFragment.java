@@ -26,6 +26,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.lamnguyen.ticket_movie_nlu.R;
 import com.lamnguyen.ticket_movie_nlu.dto.User;
+import com.lamnguyen.ticket_movie_nlu.enums.RoleUser;
 import com.lamnguyen.ticket_movie_nlu.utils.DialogLoading;
 import com.lamnguyen.ticket_movie_nlu.service.auth.ThreadCallBackSign;
 import com.lamnguyen.ticket_movie_nlu.service.user.UserService;
@@ -34,12 +35,14 @@ import com.lamnguyen.ticket_movie_nlu.service.auth.change_password.ChangePasswor
 import com.lamnguyen.ticket_movie_nlu.service.auth.change_password.impl.ChangePasswordServiceImpl;
 import com.lamnguyen.ticket_movie_nlu.utils.SharedPreferencesUtils;
 import com.lamnguyen.ticket_movie_nlu.view.activities.IntroductionActivity;
+import com.lamnguyen.ticket_movie_nlu.view.activities.MainActivity;
 import com.lamnguyen.ticket_movie_nlu.view.activities.SignActivity;
+import com.lamnguyen.ticket_movie_nlu.view.activities.admin.AdminActivity;
 
 import java.io.IOException;
 
 public class ProfileFragment extends Fragment {
-    private Button btnChangePassword, btnSetting, btnInformation, btnSignOut, btnSubmitChangePassword;
+    private Button btnChangePassword, btnSetting, btnInformation, btnSignOut, btnSubmitChangePassword, btnChangeMode;
     private TextView edtNewPassword, edtReNewPassword, tvDisplayNameUser;
     private Dialog dlgChangePassword, dialogLoading;
     private ShapeableImageView sivAvatarUser;
@@ -49,6 +52,7 @@ public class ProfileFragment extends Fragment {
     private User user;
     private boolean defaultLogin;
     private FirebaseStorage firebaseStorage;
+    private RoleUser currentMode;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -70,13 +74,14 @@ public class ProfileFragment extends Fragment {
         user = SharedPreferencesUtils.getUser(getContext());
 
         btnInformation = view.findViewById(R.id.button_infomaton);
-        btnChangePassword = view.findViewById(R.id.button_change_pasword);
+        btnChangePassword = view.findViewById(R.id.button_change_password);
         btnSetting = view.findViewById(R.id.button_setting);
         btnSignOut = view.findViewById(R.id.button_sign_out);
         sivAvatarUser = view.findViewById(R.id.shapeable_image_view_avatar_user);
         imgvBackgroundUser = view.findViewById(R.id.image_view_background_user);
         tvDisplayNameUser = view.findViewById(R.id.text_view_display_name_user);
-        tvDisplayNameUser.setText(user.getFullName());
+        btnChangeMode = view.findViewById(R.id.button_change_mode);
+
 
         dialogLoading = new Dialog(getContext());
         dialogLoading.setContentView(R.layout.dialog_loading);
@@ -84,9 +89,20 @@ public class ProfileFragment extends Fragment {
 
         defaultLogin = SharedPreferencesUtils.isDefaultLogin(getContext());
 
+        firebaseStorage = FirebaseStorage.getInstance();
+
+        tvDisplayNameUser.setText(user.getFullName());
         btnChangePassword.setVisibility(!defaultLogin ? View.GONE : View.VISIBLE);
 
-        firebaseStorage = FirebaseStorage.getInstance();
+        currentMode = SharedPreferencesUtils.getCurrentMode(getContext());
+        btnChangeMode.setVisibility(!user.getRole().equals(RoleUser.ADMIN) ? View.GONE : View.VISIBLE);
+        if (currentMode.equals(RoleUser.ADMIN)) {
+            btnChangeMode.setText(getString(R.string.user_mode));
+            btnChangeMode.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_user, 0, 0, 0);
+        } else {
+            btnChangeMode.setText(getString(R.string.admin_mode));
+            btnChangeMode.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_admin, 0, 0, 0);
+        }
     }
 
     private Dialog getInstanceDialogChangePassword() {
@@ -121,6 +137,17 @@ public class ProfileFragment extends Fragment {
 
         btnInformation.setOnClickListener(view -> {
             eventShowIntroduction();
+        });
+
+        btnChangeMode.setOnClickListener(v -> {
+            Intent intent;
+            if (currentMode.equals(RoleUser.ADMIN)) {
+                intent = new Intent(getActivity(), MainActivity.class);
+            } else {
+                intent = new Intent(getActivity(), AdminActivity.class);
+            }
+            this.startActivity(intent);
+            getActivity().finish();
         });
     }
 

@@ -10,6 +10,7 @@ import com.google.android.gms.common.Scopes;
 import com.google.android.gms.common.api.Scope;
 import com.google.firebase.auth.FirebaseAuth;
 import com.lamnguyen.ticket_movie_nlu.dto.User;
+import com.lamnguyen.ticket_movie_nlu.enums.RoleUser;
 
 public class SharedPreferencesUtils {
     public static final String SIGN_UP = "SIGN_UP";
@@ -25,7 +26,7 @@ public class SharedPreferencesUtils {
     }
 
     public static void saveUserID(Context context, int userId) {
-        getEditor(context, USER).putInt("userId", userId).apply();
+        getEditor(context, USER).putInt(UserKey.ID.key, userId).apply();
     }
 
     public static int getUserID(Context context) {
@@ -38,6 +39,7 @@ public class SharedPreferencesUtils {
         editor.putString(UserKey.EMAIL.key, user.getEmail());
         editor.putString(UserKey.FULL_NAME.key, user.getFullName());
         editor.putString(UserKey.PHONE.key, user.getPhone());
+        editor.putString(UserKey.ROLE.key, user.getRole().toString());
         editor.putBoolean(UserKey.DEFAULT_LOGIN.key, defaultLogin);
         editor.apply();
     }
@@ -47,12 +49,23 @@ public class SharedPreferencesUtils {
         return sharedPreferences.getBoolean(UserKey.DEFAULT_LOGIN.key, false);
     }
 
+    public static RoleUser getCurrentMode(Context context) {
+        SharedPreferences sharedPreferences = getInstance(context, USER);
+        return RoleUser.valueOf(sharedPreferences.getString(UserKey.CURRENT_ROLE.key, "USER"));
+    }
+
+    public static void setCurrentMode(Context context, RoleUser roleUser) {
+        getEditor(context, USER).putString(UserKey.CURRENT_ROLE.key, roleUser.toString()).apply();
+    }
+
     public static void logOut(Context context) {
         Editor editor = getEditor(context, USER);
         editor.remove(UserKey.ID.key);
         editor.remove(UserKey.EMAIL.key);
         editor.remove(UserKey.FULL_NAME.key);
         editor.remove(UserKey.PHONE.key);
+        editor.remove(UserKey.ROLE.key);
+        editor.remove(UserKey.DEFAULT_LOGIN.key);
         editor.apply();
         FirebaseAuth.getInstance().signOut();
         GoogleSignIn.getClient(context, new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -70,6 +83,7 @@ public class SharedPreferencesUtils {
                 .email(sharedPreferences.getString(UserKey.EMAIL.key, ""))
                 .fullName(sharedPreferences.getString(UserKey.FULL_NAME.key, ""))
                 .phone(sharedPreferences.getString(UserKey.PHONE.key, ""))
+                .role(RoleUser.valueOf(sharedPreferences.getString(UserKey.ROLE.key, "USER")))
                 .build();
     }
 
@@ -78,7 +92,9 @@ public class SharedPreferencesUtils {
         FULL_NAME("fullName"),
         EMAIL("email"),
         PHONE("phone"),
+        ROLE("role"),
         DEFAULT_LOGIN("defaultLogin"),
+        CURRENT_ROLE("currentRole"),
         ;
 
         private String key;

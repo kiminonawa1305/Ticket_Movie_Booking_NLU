@@ -20,11 +20,11 @@ import lombok.SneakyThrows;
 
 public class CallAPI {
     public static final String IP = "172.20.26.177";
-    public static final String URL_WEB_SERVICE = "http://" + IP + ":8080";
+    public static final String URL_WEB_SERVICE = "https://d933-113-161-73-121.ngrok-free.app";
     public static final String URL_OMDB = "http://www.omdbapi.com/?apikey=c3d0a99f";
     public static final String URL_GOOGLE_MAP_COMPUTE_ROUTES = "https://routes.googleapis.com/directions/v2:computeRoutes";
     public static final String URL_GOOGLE_MAP_DIRECTION = "https://maps.googleapis.com/maps/api/directions/json";
-    private static final int TIME_OUT = 1000;
+    private static final int TIME_OUT = 10000;
 
     @SneakyThrows
     public static void callJsonObjectRequest(Context context, String url, String query, int method, Response.Listener<JSONObject> responseListener, Response.ErrorListener errorListener) {

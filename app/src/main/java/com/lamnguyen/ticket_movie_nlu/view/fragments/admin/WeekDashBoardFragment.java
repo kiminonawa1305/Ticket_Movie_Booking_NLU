@@ -1,4 +1,4 @@
-package com.lamnguyen.ticket_movie_nlu.view.fragments;
+package com.lamnguyen.ticket_movie_nlu.view.fragments.admin;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -30,17 +30,18 @@ import com.lamnguyen.ticket_movie_nlu.utils.CurrencyFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MonthDashboardFragment extends Fragment {
+public class WeekDashBoardFragment extends Fragment {
 
-
-    public static MonthDashboardFragment newInstance() {
-        return new MonthDashboardFragment();
-    }
-    private BarChart barChartViewDisplayMonthNumOfSaleTicket;
-    private LineChart lineChartDisplayMonthRevenueReport;
+    private BarChart barChartViewDisplayWeekNumOfSaleTicket;
+    private LineChart lineChartDisplayWeekRevenueReport;
     private TextView tvSumOfSaleTicket, tvSumOfRevenue;
     private DashboardResponse data;
-    private String[] labels = {"Tuần 1", "Tuần 2", "Tuần 3", "Tuần 4", "Tuần 5"};
+    private String[] labels = {"T2", "T3", "T4", "T5", "T6", "T7", "CN"};
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -51,33 +52,37 @@ public class MonthDashboardFragment extends Fragment {
             createBarChart();
             showTotal();
         });
-        return inflater.inflate(R.layout.fragment_month_dashboard, container, false);
+        return inflater.inflate(R.layout.fragment_week_dash_board, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        barChartViewDisplayMonthNumOfSaleTicket = view.findViewById(R.id.bar_chart_view_display_month_sale_ticket);
-        lineChartDisplayMonthRevenueReport = view.findViewById(R.id.any_chart_view_display_month_revenu_report);
-        tvSumOfSaleTicket = view.findViewById(R.id.text_view_sum_sale_ticket_month);
-        tvSumOfRevenue = view.findViewById(R.id.text_view_sum_revenu_month);
+        barChartViewDisplayWeekNumOfSaleTicket = view.findViewById(R.id.bar_chart_view_display_week_sale_ticket);
+        lineChartDisplayWeekRevenueReport = view.findViewById(R.id.any_chart_view_display_week_revenu_report);
+        tvSumOfSaleTicket = view.findViewById(R.id.text_view_sum_sale_ticket_week);
+        tvSumOfRevenue = view.findViewById(R.id.text_view_sum_revenu_week);
 
         if (getArguments() != null) {
             data = (DashboardResponse) getArguments().getSerializable("data");
         }
     }
+
     private void showTotal() {
         tvSumOfSaleTicket.setText(String.valueOf(data.getTotalNumOfTickets()));
         tvSumOfRevenue.setText(CurrencyFormat.formatCurrency(data.getTotalRevenue()));
     }
+
     private void createBarChart() {
         // Dữ liệu cho biểu đồ cột
         List<BarEntry> entries = new ArrayList<>();
-        entries.add(new BarEntry(0f, (float) data.getNumOfTickets().get("FIRST_WEEK")));
-        entries.add(new BarEntry(1f, (float) data.getNumOfTickets().get("SECOND_WEEK")));
-        entries.add(new BarEntry(2f, (float) data.getNumOfTickets().get("THIRD_WEEK")));
-        entries.add(new BarEntry(3f, (float) data.getNumOfTickets().get("FOURTH_WEEK")));
-        entries.add(new BarEntry(4f, (float) data.getNumOfTickets().get("FIFTH_WEEK")));
+        entries.add(new BarEntry(0f, data.getNumOfTickets().get("MONDAY")));
+        entries.add(new BarEntry(1f, data.getNumOfTickets().get("TUESDAY")));
+        entries.add(new BarEntry(2f, data.getNumOfTickets().get("WEDNESDAY")));
+        entries.add(new BarEntry(3f, data.getNumOfTickets().get("THURSDAY")));
+        entries.add(new BarEntry(4f, data.getNumOfTickets().get("FRIDAY")));
+        entries.add(new BarEntry(5f, data.getNumOfTickets().get("SATURDAY")));
+        entries.add(new BarEntry(6f, data.getNumOfTickets().get("SUNDAY")));
 
         BarDataSet dataSet = new BarDataSet(entries, "Số vé bán được");
         dataSet.setColors(Color.WHITE);
@@ -88,19 +93,19 @@ public class MonthDashboardFragment extends Fragment {
         data.setBarWidth(0.4f);
 
         // Thiết lập biểu đồ
-        barChartViewDisplayMonthNumOfSaleTicket.setData(data);
-        barChartViewDisplayMonthNumOfSaleTicket.setFitBars(true);
-        barChartViewDisplayMonthNumOfSaleTicket.setDescription(null);
-        barChartViewDisplayMonthNumOfSaleTicket.animateXY(1000, 1000);
+        barChartViewDisplayWeekNumOfSaleTicket.setData(data);
+        barChartViewDisplayWeekNumOfSaleTicket.setFitBars(true);
+        barChartViewDisplayWeekNumOfSaleTicket.setDescription(null);
+        barChartViewDisplayWeekNumOfSaleTicket.animateXY(1000, 1000);
         // Cho phép cuộn và thu phóng
-        barChartViewDisplayMonthNumOfSaleTicket.setDragEnabled(true);
-        barChartViewDisplayMonthNumOfSaleTicket.setScaleEnabled(true);
-        barChartViewDisplayMonthNumOfSaleTicket.setPinchZoom(true);
+        barChartViewDisplayWeekNumOfSaleTicket.setDragEnabled(true);
+        barChartViewDisplayWeekNumOfSaleTicket.setScaleEnabled(true);
+        barChartViewDisplayWeekNumOfSaleTicket.setPinchZoom(true);
 
-        barChartViewDisplayMonthNumOfSaleTicket.invalidate(); // Refresh chart
+        barChartViewDisplayWeekNumOfSaleTicket.invalidate(); // Refresh chart
 
         // Cấu hình trục X
-        XAxis xAxis = barChartViewDisplayMonthNumOfSaleTicket.getXAxis();
+        XAxis xAxis = barChartViewDisplayWeekNumOfSaleTicket.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setDrawGridLines(false);
         xAxis.setGranularity(1f);
@@ -110,12 +115,12 @@ public class MonthDashboardFragment extends Fragment {
         xAxis.setValueFormatter(new IndexAxisValueFormatter(labels));
 
         // Cấu hình trục Y
-        YAxis leftAxis = barChartViewDisplayMonthNumOfSaleTicket.getAxisLeft();
+        YAxis leftAxis = barChartViewDisplayWeekNumOfSaleTicket.getAxisLeft();
         leftAxis.setDrawGridLines(false);
         leftAxis.setAxisLineColor(Color.WHITE);
         leftAxis.setTextColor(Color.WHITE);
 
-        YAxis rightAxis = barChartViewDisplayMonthNumOfSaleTicket.getAxisRight();
+        YAxis rightAxis = barChartViewDisplayWeekNumOfSaleTicket.getAxisRight();
         rightAxis.setDrawGridLines(false);
 
         // Vô hiệu hóa biểu đồ bên phải
@@ -125,11 +130,13 @@ public class MonthDashboardFragment extends Fragment {
     private void createLineChart() {
         // Dữ liệu cho biểu đồ đường
         List<Entry> entries = new ArrayList<>();
-        entries.add(new Entry(0f, data.getNumOfTickets().get("FIRST_WEEK")));
-        entries.add(new Entry(1f, data.getNumOfTickets().get("SECOND_WEEK")));
-        entries.add(new Entry(2f, data.getNumOfTickets().get("THIRD_WEEK")));
-        entries.add(new Entry(3f, data.getNumOfTickets().get("FOURTH_WEEK")));
-        entries.add(new Entry(4f, data.getNumOfTickets().get("FIFTH_WEEK")));
+        entries.add(new Entry(0f, data.getNumOfTickets().get("MONDAY")));
+        entries.add(new Entry(1f, data.getNumOfTickets().get("TUESDAY")));
+        entries.add(new Entry(2f, data.getNumOfTickets().get("WEDNESDAY")));
+        entries.add(new Entry(3f, data.getNumOfTickets().get("THURSDAY")));
+        entries.add(new Entry(4f, data.getNumOfTickets().get("FRIDAY")));
+        entries.add(new Entry(5f, data.getNumOfTickets().get("SATURDAY")));
+        entries.add(new Entry(6f, data.getNumOfTickets().get("SUNDAY")));
 
         LineDataSet dataSet = new LineDataSet(entries, "Doanh thu");
         dataSet.setColor(Color.WHITE);
@@ -142,18 +149,18 @@ public class MonthDashboardFragment extends Fragment {
         dataSet.setDrawFilled(true);
 
         LineData data = new LineData(dataSet);
-        lineChartDisplayMonthRevenueReport.setData(data);
-        lineChartDisplayMonthRevenueReport.setDescription(null);
-        lineChartDisplayMonthRevenueReport.animateXY(1000, 1000);
+        lineChartDisplayWeekRevenueReport.setData(data);
+        lineChartDisplayWeekRevenueReport.setDescription(null);
+        lineChartDisplayWeekRevenueReport.animateXY(1000, 1000);
         // Cho phép cuộn và thu phóng
-        lineChartDisplayMonthRevenueReport.setDragEnabled(true);
-        lineChartDisplayMonthRevenueReport.setScaleEnabled(true);
-        lineChartDisplayMonthRevenueReport.setPinchZoom(true);
+        lineChartDisplayWeekRevenueReport.setDragEnabled(true);
+        lineChartDisplayWeekRevenueReport.setScaleEnabled(true);
+        lineChartDisplayWeekRevenueReport.setPinchZoom(true);
 
-        lineChartDisplayMonthRevenueReport.invalidate(); // Refresh chart
+        lineChartDisplayWeekRevenueReport.invalidate(); // Refresh chart
 
         // Cấu hình trục X
-        XAxis xAxis = lineChartDisplayMonthRevenueReport.getXAxis();
+        XAxis xAxis = lineChartDisplayWeekRevenueReport.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setDrawGridLines(false);
         xAxis.setGranularity(1f);
@@ -163,12 +170,12 @@ public class MonthDashboardFragment extends Fragment {
         xAxis.setValueFormatter(new IndexAxisValueFormatter(labels));
 
         // Cấu hình trục Y
-        YAxis leftAxis = lineChartDisplayMonthRevenueReport.getAxisLeft();
+        YAxis leftAxis = lineChartDisplayWeekRevenueReport.getAxisLeft();
         leftAxis.setDrawGridLines(false);
         leftAxis.setAxisLineColor(Color.WHITE);
         leftAxis.setTextColor(Color.WHITE);
 
-        YAxis rightAxis = lineChartDisplayMonthRevenueReport.getAxisRight();
+        YAxis rightAxis = lineChartDisplayWeekRevenueReport.getAxisRight();
         rightAxis.setDrawGridLines(false);
         rightAxis.setEnabled(false); // Vô hiệu hóa trục Y bên phải
     }

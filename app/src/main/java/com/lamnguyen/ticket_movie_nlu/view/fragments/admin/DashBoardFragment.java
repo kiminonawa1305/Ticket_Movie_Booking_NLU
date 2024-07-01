@@ -1,11 +1,20 @@
-package com.lamnguyen.ticket_movie_nlu.view.activities;
+package com.lamnguyen.ticket_movie_nlu.view.fragments.admin;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.graphics.Color;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -15,41 +24,36 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-
+import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
+import com.android.volley.TimeoutError;
 import com.google.gson.Gson;
 import com.lamnguyen.ticket_movie_nlu.R;
 import com.lamnguyen.ticket_movie_nlu.response.DashboardResponse;
 import com.lamnguyen.ticket_movie_nlu.utils.CallAPI;
 import com.lamnguyen.ticket_movie_nlu.utils.DateTimeFormat;
 import com.lamnguyen.ticket_movie_nlu.utils.DialogLoading;
-import com.lamnguyen.ticket_movie_nlu.view.fragments.DayDashBoardFragment;
-import com.lamnguyen.ticket_movie_nlu.view.fragments.MonthDashboardFragment;
-import com.lamnguyen.ticket_movie_nlu.view.fragments.WeekDashBoardFragment;
 
 import org.json.JSONException;
 
 import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAdjusters;
 import java.util.Calendar;
 import java.util.Locale;
-import java.util.Map;
 
-public class DashboardActivity extends AppCompatActivity {
+/**
+ * A simple {@link Fragment} subclass.
+ * create an instance of this fragment.
+ */
+public class DashBoardFragment extends Fragment {
     private static final String TAG = "DashboardActivity";
     private Button btnDay, btnWeek, btnMonth;
     private ImageView imgViewEditCalendar;
     private TextView tvCalendar;
     private Spinner spnSelectCinema;
-    private String url = "/dashboard/api/time?";
+    private final static String PATH = "/admin/dashboard/api/time?";
     private final static String START_TIME = "T00:00:00";
     private final static String END_TIME = "T23:59:59";
     private DashboardResponse dashboardResponse;
@@ -58,21 +62,37 @@ public class DashboardActivity extends AppCompatActivity {
     private int navTime = 0;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_dashboard);
+    }
 
-        btnDay = findViewById(R.id.button_day);
-        btnWeek = findViewById(R.id.button_week);
-        btnMonth = findViewById(R.id.button_month);
-        imgViewEditCalendar = findViewById(R.id.image_view_edit_calendar);
-        spnSelectCinema = findViewById(R.id.spinner_name_cinema);
-        tvCalendar = findViewById(R.id.text_view_calendar);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_dashboard, container, false);
+    }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        init(view);
+        event();
+        getDashboardData();
+    }
+
+    private void init(View view) {
+        btnDay = view.findViewById(R.id.button_day);
+        btnWeek = view.findViewById(R.id.button_week);
+        btnMonth = view.findViewById(R.id.button_month);
+        imgViewEditCalendar = view.findViewById(R.id.image_view_edit_calendar);
+        spnSelectCinema = view.findViewById(R.id.spinner_name_cinema);
+        tvCalendar = view.findViewById(R.id.text_view_calendar);
+        dialogLoading = DialogLoading.newInstance(getContext());
         addItemToSpinner();
-
         setDateToTextView();
+    }
 
+    private void event() {
         btnDay.setOnClickListener(v -> {
             setBgButtonGradient(btnDay);
             setBgButtonNonGradient(btnWeek);
@@ -98,7 +118,6 @@ public class DashboardActivity extends AppCompatActivity {
             replaceFragment(new MonthDashboardFragment());
         });
 
-
         imgViewEditCalendar.setOnClickListener(v -> {
             showDatePicker(tvCalendar);
         });
@@ -114,17 +133,11 @@ public class DashboardActivity extends AppCompatActivity {
 
             }
         });
-        dialogLoading = DialogLoading.newInstance(this);
     }
 
-    @Override
-    protected void onResumeFragments() {
-        super.onResumeFragments();
-        getDashboardData();
-    }
 
     private void setBgButtonGradient(Button btn) {
-        btn.setBackground(getDrawable(R.drawable.bg_gradient_in_dashboard));
+        btn.setBackground(getContext().getDrawable(R.drawable.bg_gradient_in_dashboard));
         btn.setTextColor(Color.WHITE);
     }
 
@@ -134,7 +147,7 @@ public class DashboardActivity extends AppCompatActivity {
     }
 
     private void addItemToSpinner() {
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
                 R.array.spinner_items_name_cinema, R.layout.items_spinner_name_cinema);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnSelectCinema.setAdapter(adapter);
@@ -148,12 +161,11 @@ public class DashboardActivity extends AppCompatActivity {
         int day = calendar.get(Calendar.DAY_OF_MONTH);
 
         DatePickerDialog datePickerDialog = new DatePickerDialog(
-                DashboardActivity.this,
+                getContext(),
                 (DatePicker view, int y, int m, int dayOfMonth) -> {
                     calendar.set(y, m, dayOfMonth);
                     SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-//                    txtView.setText(selectedDate);
-                    selectedDatePicker = dateFormat.format(calendar.getTime());;
+                    selectedDatePicker = dateFormat.format(calendar.getTime());
                     getDashboardData();
                 },
                 year, month, day
@@ -174,7 +186,7 @@ public class DashboardActivity extends AppCompatActivity {
         String query = createQuery();
 
         DialogLoading.showDialogLoading(dialogLoading, getString(R.string.loading));
-        CallAPI.callJsonObjectRequest(this, CallAPI.URL_WEB_SERVICE + url, query, Request.Method.GET,
+        CallAPI.callJsonObjectRequest(getContext(), CallAPI.URL_WEB_SERVICE + PATH, query, Request.Method.GET,
                 response -> {
                     dialogLoading.dismiss();
                     try {
@@ -182,34 +194,32 @@ public class DashboardActivity extends AppCompatActivity {
                         Bundle bundle = new Bundle();
                         bundle.putSerializable("data", dashboardResponse);
                         switch (navTime) {
-                            case 0:
-                                getSupportFragmentManager().setFragmentResult(DayDashBoardFragment.class.getSimpleName(), bundle);
-                                break;
-                            case 1:
-                                getSupportFragmentManager().setFragmentResult(WeekDashBoardFragment.class.getSimpleName(), bundle);
-                                break;
-                            case 2:
-                                getSupportFragmentManager().setFragmentResult(MonthDashboardFragment.class.getSimpleName(), bundle);
-                                break;
+                            case 0 ->
+                                    getChildFragmentManager().setFragmentResult(DayDashBoardFragment.class.getSimpleName(), bundle);
+                            case 1 ->
+                                    getChildFragmentManager().setFragmentResult(WeekDashBoardFragment.class.getSimpleName(), bundle);
+                            case 2 ->
+                                    getChildFragmentManager().setFragmentResult(MonthDashboardFragment.class.getSimpleName(), bundle);
                         }
                     } catch (JSONException e) {
-                        Log.e(TAG, "getDashboardData: ", e);
+                        Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }, error -> {
                     dialogLoading.dismiss();
-                    Log.e(TAG, "getDashboardData: ", error);
+                    if (error instanceof TimeoutError || error instanceof NoConnectionError)
+                        Toast.makeText(getContext(), getString(R.string.error_server), Toast.LENGTH_SHORT).show();
                 });
     }
 
     private String createQuery() {
         String dateShow = selectedDatePicker;
-        String selectedDate = dateShow.split("/")[2] + "-" +dateShow.split("/")[1] + "-" + dateShow.split("/")[0];
+        String selectedDate = dateShow.split("/")[2] + "-" + dateShow.split("/")[1] + "-" + dateShow.split("/")[0];
         String selectedCinema = spnSelectCinema.getSelectedItem().toString();
         if (navTime == 0) {
             return "from=" + selectedDate + START_TIME + "&to=" + selectedDate + END_TIME + "&cinemaId=" + convertNameCinemaToId(selectedCinema);
         }
         String[] date = getStartAndEndOfWeekOrMonth(selectedDate, navTime);
-        return "from=" + date[0]  + "&to=" + date[1]  + "&cinemaId=" + convertNameCinemaToId(selectedCinema);
+        return "from=" + date[0] + "&to=" + date[1] + "&cinemaId=" + convertNameCinemaToId(selectedCinema);
     }
 
     private int convertNameCinemaToId(String nameCinema) {
@@ -250,7 +260,7 @@ public class DashboardActivity extends AppCompatActivity {
     }
 
     private void replaceFragment(Fragment fragment) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentManager fragmentManager = getParentFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.fragment_show_statistical, fragment);
         fragmentTransaction.commit();

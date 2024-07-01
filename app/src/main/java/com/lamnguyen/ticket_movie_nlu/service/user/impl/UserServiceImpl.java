@@ -9,6 +9,7 @@ import android.widget.Toast;
 import com.android.volley.NoConnectionError;
 import com.android.volley.TimeoutError;
 import com.google.gson.Gson;
+import com.lamnguyen.ticket_movie_nlu.R;
 import com.lamnguyen.ticket_movie_nlu.api.UserApi;
 import com.lamnguyen.ticket_movie_nlu.dto.User;
 import com.lamnguyen.ticket_movie_nlu.service.user.UserService;
@@ -48,6 +49,7 @@ public class UserServiceImpl implements UserService {
         if (jsonObject == null) return;
         CallAPI.callJsonObjectRequest(context, CallAPI.URL_WEB_SERVICE + "/user/api/sign-in", null, jsonObject, new HashMap<>(), POST,
                 response -> {
+                    dismissDialog.run();
                     User user = null;
                     try {
                         user = new Gson().fromJson(response.getString("data").toString(), User.class);
@@ -55,12 +57,11 @@ public class UserServiceImpl implements UserService {
                         callBackSuccess.run();
                     } catch (JSONException e) {
                         Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
-                        dismissDialog.run();
                     }
                 }, error -> {
                     dismissDialog.run();
                     if (error instanceof TimeoutError || error instanceof NoConnectionError)
-                        Toast.makeText(context, "Lỗi server!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, context.getString(R.string.error_server), Toast.LENGTH_SHORT).show();
                     else if (error.networkResponse != null) {
                         CallAPI.ErrorResponse errorResponse = new Gson().fromJson(new String(error.networkResponse.data), CallAPI.ErrorResponse.class);
                         switch (errorResponse.status()) {
@@ -69,9 +70,8 @@ public class UserServiceImpl implements UserService {
                             }
                             case 405 ->
                                     Toast.makeText(context, errorResponse.message(), Toast.LENGTH_SHORT).show();
-
                             default ->
-                                    Toast.makeText(context, "Lỗi server!", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(context, context.getString(R.string.error_server), Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -95,7 +95,7 @@ public class UserServiceImpl implements UserService {
         }, error -> {
             callBackFail.run();
             if (error instanceof TimeoutError || error instanceof NoConnectionError)
-                Toast.makeText(context, "Lỗi server!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, context.getString(R.string.error_server), Toast.LENGTH_SHORT).show();
             else {
                 CallAPI.ErrorResponse errorResponse = new Gson().fromJson(new String(error.networkResponse.data), CallAPI.ErrorResponse.class);
                 Toast.makeText(context, errorResponse.message(), Toast.LENGTH_SHORT).show();
@@ -108,6 +108,19 @@ public class UserServiceImpl implements UserService {
         userApi.loadUsers(context, listener);
     }
 
+    @Override
+    public void lock(Context context, Integer id, CallAPI.CallAPIListener<User> listener) {
+        CallAPI.callJsonObjectRequest(context, CallAPI.URL_WEB_SERVICE + "/admin/user/api/lock/" + id, null, POST, response -> {
+            User user = null;
+            try {
+                user = new Gson().fromJson(response.getJSONObject("data").toString(), User.class);
+            } catch (JSONException error) {
+                Toast.makeText(context, error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+            listener.completed(user);
+        }, listener::error);
+    }
+
     private JSONObject createJsonObjectUser(Context context, User user) {
         JSONObject jsonObject = new JSONObject();
         try {
@@ -115,9 +128,7 @@ public class UserServiceImpl implements UserService {
             jsonObject.put("fullName", user.getFullName());
             jsonObject.put("phone", user.getPhone());
         } catch (JSONException e) {
-            Toast.makeText(context, "Lỗi đăng nhập!", Toast.LENGTH_SHORT).show();
-            Log.e(TAG, "register: ", e);
-
+            Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
             return null;
         }
         return jsonObject;

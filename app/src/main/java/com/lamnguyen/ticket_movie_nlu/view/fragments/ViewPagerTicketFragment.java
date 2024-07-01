@@ -14,6 +14,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.NoConnectionError;
+import com.android.volley.TimeoutError;
 import com.lamnguyen.ticket_movie_nlu.R;
 import com.lamnguyen.ticket_movie_nlu.adapters.TicketAdapter;
 import com.lamnguyen.ticket_movie_nlu.api.TicketApi;
@@ -70,13 +72,16 @@ public class ViewPagerTicketFragment extends Fragment {
             @Override
             public void completed(List<TicketDTO> ticketDTOS) {
                 dialog.dismiss();
+                if (ticketDTOS.isEmpty())
+                    Toast.makeText(getContext(), getString(R.string.no_ticket), Toast.LENGTH_SHORT).show();
                 rclTicket.setAdapter(new TicketAdapter(ticketDTOS, avail));
             }
 
             @Override
             public void error(Object error) {
                 dialog.dismiss();
-                Toast.makeText(ViewPagerTicketFragment.this.getContext(), error.toString(), Toast.LENGTH_SHORT).show();
+                if (error instanceof TimeoutError || error instanceof NoConnectionError)
+                    Toast.makeText(getContext(), getString(R.string.error_server), Toast.LENGTH_SHORT).show();
             }
         });
     }

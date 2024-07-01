@@ -12,7 +12,6 @@ import com.lamnguyen.ticket_movie_nlu.R;
 
 
 public class BookingChairActivity extends AppCompatActivity {
-
     private ImageView ivBackToShowtimeByCinema;
 
     @Override

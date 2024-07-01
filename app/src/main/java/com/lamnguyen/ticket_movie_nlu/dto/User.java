@@ -1,5 +1,7 @@
 package com.lamnguyen.ticket_movie_nlu.dto;
 
+import com.lamnguyen.ticket_movie_nlu.enums.RoleUser;
+
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -17,4 +19,5 @@ public class User implements Serializable {
     private String email, password, phone, fullName;
     private Integer id;
     private boolean lock;
+    private RoleUser role;
 }

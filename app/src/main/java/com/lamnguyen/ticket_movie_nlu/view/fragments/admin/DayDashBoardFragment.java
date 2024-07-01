@@ -1,4 +1,4 @@
-package com.lamnguyen.ticket_movie_nlu.view.fragments;
+package com.lamnguyen.ticket_movie_nlu.view.fragments.admin;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -35,6 +35,11 @@ public class DayDashBoardFragment extends Fragment {
     private TextView tvSumOfSaleTicket, tvSumOfRevenue;
     private DashboardResponse data;
     private String[] dayLabels = {"Sáng", "Trưa", "Chiều", "Tối", "Đêm"};
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

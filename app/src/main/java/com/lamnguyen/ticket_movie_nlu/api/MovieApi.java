@@ -116,9 +116,9 @@ public class MovieApi {
     }
 
     public void addNewMovie(Context context, String idApi, CallAPI.CallAPIListener<MovieDTO> listener) throws JSONException {
-        String body = "/movie/api/";
+        String path = "/admin/movie/api/add";
         JSONObject newMovieRequestBodyJSON = new JSONObject().put("idApi", idApi);
-        CallAPI.callJsonObjectRequest(context, CallAPI.URL_WEB_SERVICE + body, null, newMovieRequestBodyJSON, null, Request.Method.POST,
+        CallAPI.callJsonObjectRequest(context, CallAPI.URL_WEB_SERVICE + path, null, newMovieRequestBodyJSON, null, Request.Method.POST,
                 response -> {
                     try {
                         if (response.getInt("status") != 202) {
@@ -145,6 +145,27 @@ public class MovieApi {
                         }
 
                         listener.completed(null);
+                    } catch (JSONException e) {
+                        Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }, listener::error);
+    }
+
+    public void loadAllMovieDetail(Context context, CallAPI.CallAPIListener<List<MovieDetailDTO>> listener) {
+        String path = "/admin/movie/api";
+        CallAPI.callJsonObjectRequest(context, CallAPI.URL_WEB_SERVICE + path, null, Request.Method.GET,
+                response -> {
+                    try {
+                        if (response.getInt("status") != 202) {
+                            listener.error(response.getString("message"));
+                            return;
+                        }
+
+                        List<MovieDetailDTO> movieDetailDTO = new ArrayList<>();
+                        if (response.has("data"))
+                            movieDetailDTO.addAll(List.of(new Gson().fromJson(response.getString("data"), MovieDetailDTO[].class)));
+
+                        listener.completed(movieDetailDTO);
                     } catch (JSONException e) {
                         Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
                     }

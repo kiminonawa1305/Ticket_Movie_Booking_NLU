@@ -7,9 +7,11 @@ import com.android.volley.Request;
 import com.google.gson.Gson;
 import com.lamnguyen.ticket_movie_nlu.dto.User;
 import com.lamnguyen.ticket_movie_nlu.utils.CallAPI;
+import com.lamnguyen.ticket_movie_nlu.utils.SharedPreferencesUtils;
 
 import org.json.JSONException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserApi {
@@ -25,7 +27,7 @@ public class UserApi {
     }
 
     public void loadUsers(Context context, CallAPI.CallAPIListener<List<User>> listener) {
-        String body = "/admin/user/api";
+        String body = "/admin/user/api/" + SharedPreferencesUtils.getUserID(context);
         CallAPI.callJsonObjectRequest(context, CallAPI.URL_WEB_SERVICE, body, Request.Method.GET,
                 response -> {
                     try {
@@ -33,9 +35,10 @@ public class UserApi {
                             listener.error(response.getString("message"));
                             return;
                         }
-
-                        User[] users = new Gson().fromJson(response.getString("data"), User[].class);
-                        listener.completed(List.of(users));
+                        List<User> users = new ArrayList<>();
+                        if (response.has("data"))
+                            users.addAll(List.of(new Gson().fromJson(response.getString("data"), User[].class)));
+                        listener.completed(users);
                     } catch (JSONException e) {
                         Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
                     }

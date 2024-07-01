@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black"
-    tools:context=".view.activities.DashboardActivity">
+    tools:context=".view.fragments.admin.DashBoardFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,8 +21,8 @@
 
             <TextView
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:paddingBottom="10dp"
                 android:text="@string/dashboard"
                 android:textColor="@color/white"
@@ -31,12 +31,12 @@
 
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:padding="12dp"
-                android:orientation="vertical"
+                android:layout_weight="1"
                 android:background="@drawable/bg_gradient_in_dashboard_round1"
                 android:gravity="center"
+                android:orientation="vertical"
+                android:padding="12dp"
                 android:paddingHorizontal="4dp">
 
                 <Spinner
@@ -116,9 +116,9 @@
                         android:layout_marginHorizontal="8dp"
                         android:background="@drawable/bg_gradient_in_dashboard"
                         android:gravity="center"
-                        android:textStyle="bold"
                         android:text="dd"
-                        android:textColor="@color/white" />
+                        android:textColor="@color/white"
+                        android:textStyle="bold" />
 
                     <ImageView
                         android:id="@+id/image_view_edit_calendar"
@@ -129,11 +129,13 @@
             </LinearLayout>
 
         </LinearLayout>
+
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/fragment_show_statistical"
-            android:name="com.lamnguyen.ticket_movie_nlu.view.fragments.DayDashBoardFragment"
+            android:name="com.lamnguyen.ticket_movie_nlu.view.fragments.admin.DayDashBoardFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical" />
+            android:orientation="vertical"
+            android:paddingBottom="50dp" />
     </LinearLayout>
 </LinearLayout>

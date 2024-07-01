@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment;
 import com.lamnguyen.ticket_movie_nlu.R;
 import com.lamnguyen.ticket_movie_nlu.dto.ChairDTO;
 import com.lamnguyen.ticket_movie_nlu.dto.PriceBoardDTO;
+import com.lamnguyen.ticket_movie_nlu.view.activities.BookingChairActivity;
 import com.lamnguyen.ticket_movie_nlu.view.activities.PaymentActivity;
 
 import java.text.NumberFormat;
@@ -32,6 +33,7 @@ public class SumTicketFragment extends Fragment {
     private TextView tvTotalPrice, tvTotalChair, tvSelectChair;
     private PriceBoardDTO priceBoardDTO;
     private NumberFormat formatter = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
+    private int showtimeiId;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -45,6 +47,9 @@ public class SumTicketFragment extends Fragment {
 
             if (result.get("price") != null)
                 priceBoardDTO = (PriceBoardDTO) result.get("price");
+
+            if (result.get("showtimeId") != null)
+                showtimeiId = result.getInt("showtimeId");
 
             updateValue();
         });
@@ -81,6 +86,7 @@ public class SumTicketFragment extends Fragment {
             bundle.putIntegerArrayList("ids", ids);
             bundle.putStringArrayList("types", types);
             bundle.putString("totalPrice", formatter.format(totalPrice()));
+            bundle.putInt("showtimeId", showtimeiId);
             Intent intent = new Intent(getContext(), PaymentActivity.class);
             intent.putExtra("bundle", bundle);
             startActivity(intent);
@@ -102,7 +108,6 @@ public class SumTicketFragment extends Fragment {
                 case SINGLE -> priceBoardDTO.getSingle();
                 case VIP -> priceBoardDTO.getVip();
                 default -> 0;
-
             };
         }).sum();
     }

@@ -11,6 +11,7 @@ import com.lamnguyen.ticket_movie_nlu.utils.SharedPreferencesUtils;
 
 import org.json.JSONException;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,8 +41,10 @@ public class TicketApi {
                             return;
                         }
 
-                        TicketDTO[] movieDTOs = new Gson().fromJson(response.getString("data"), TicketDTO[].class);
-                        listener.completed(List.of(movieDTOs));
+                        List<TicketDTO> ticketDTOList = new ArrayList<>();
+                        if (response.has("data"))
+                            ticketDTOList.addAll(List.of(new Gson().fromJson(response.getString("data"), TicketDTO[].class)));
+                        listener.completed(ticketDTOList);
                     } catch (JSONException e) {
                         Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
                     }

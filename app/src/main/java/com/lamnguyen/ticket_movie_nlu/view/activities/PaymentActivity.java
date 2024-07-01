@@ -33,6 +33,7 @@ public class PaymentActivity extends AppCompatActivity {
     private String totalPrice;
     private ArrayList<String> names, types;
     private ArrayList<Integer> ids;
+    private Integer showtimeId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +43,7 @@ public class PaymentActivity extends AppCompatActivity {
         event();
 
         Bundle bundle = getIntent().getBundleExtra("bundle");
+        showtimeId = bundle.getInt("showtimeId");
         names = bundle.getStringArrayList("names");
         types = bundle.getStringArrayList("types");
         ids = bundle.getIntegerArrayList("ids");
@@ -66,7 +68,7 @@ public class PaymentActivity extends AppCompatActivity {
 
     private void event() {
         btnPay.setOnClickListener(v -> {
-            buyTickets(ids);
+            buyTickets(showtimeId, ids);
             Intent intent = new Intent(PaymentActivity.this, PaymentSuccessActivity.class);
             startActivity(intent);
             finish();
@@ -112,7 +114,7 @@ public class PaymentActivity extends AppCompatActivity {
             stringBuilder.delete(stringBuilder.length() - 2, stringBuilder.length());
     }
 
-    public void buyTickets(ArrayList<Integer> listId) {
+    public void buyTickets(Integer showtimeId, ArrayList<Integer> listId) {
         try {
             JSONObject jsonObject = new JSONObject();
 
@@ -120,7 +122,7 @@ public class PaymentActivity extends AppCompatActivity {
 
             jsonObject.put("userId", SharedPreferencesUtils.getUserID(this));
 
-            CallAPI.callJsonObjectRequest(this, CallAPI.URL_WEB_SERVICE + "/ticket/api/buy", "", jsonObject, null, POST, (response) -> {
+            CallAPI.callJsonObjectRequest(this, CallAPI.URL_WEB_SERVICE + "/ticket/api/buy/" + showtimeId, null, jsonObject, null, POST, (response) -> {
                 Log.i("SumTicketFragment", "buyTickets: " + response);
             }, error -> {
                 Log.i("SumTicketFragment", "buyTickets: " + error.getMessage());

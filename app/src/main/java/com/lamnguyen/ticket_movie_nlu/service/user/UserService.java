@@ -19,6 +19,8 @@ public interface UserService {
 
     public void loadUsers(Context context, CallAPI.CallAPIListener<List<User>> listener);
 
+    void lock(Context context, Integer id, CallAPI.CallAPIListener<User> listener);
+
     interface CallBack {
         void run();
     }

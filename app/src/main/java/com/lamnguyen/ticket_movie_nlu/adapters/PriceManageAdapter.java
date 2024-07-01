@@ -1,6 +1,7 @@
 package com.lamnguyen.ticket_movie_nlu.adapters;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,15 +12,19 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.NoConnectionError;
+import com.android.volley.TimeoutError;
 import com.lamnguyen.ticket_movie_nlu.R;
 import com.lamnguyen.ticket_movie_nlu.api.PriceManageApi;
 import com.lamnguyen.ticket_movie_nlu.dto.PriceManageDTO;
 import com.lamnguyen.ticket_movie_nlu.utils.CallAPI;
+import com.lamnguyen.ticket_movie_nlu.utils.DialogLoading;
 
 import org.json.JSONObject;
 
@@ -30,6 +35,14 @@ import java.util.Locale;
 public class PriceManageAdapter extends RecyclerView.Adapter<PriceManageAdapter.PriceManageViewHolder> {
     private List<PriceManageDTO> mListPriceManage;
     private static final NumberFormat numberFormat;
+    private Context context;
+    public static Dialog dialogLoading;
+
+    public PriceManageAdapter(Context context) {
+        this.context = context;
+        dialogLoading = DialogLoading.newInstance(context);
+    }
+
 
     static {
         numberFormat = NumberFormat.getNumberInstance(new Locale("vi", "VN"));
@@ -109,6 +122,7 @@ public class PriceManageAdapter extends RecyclerView.Adapter<PriceManageAdapter.
             });
 
             btnCancelUpdate.setOnClickListener(v -> {
+                inputMethodManager.hideSoftInputFromWindow(itemView.getWindowToken(), 0);
                 llButtonContainer.setVisibility(View.GONE);
                 setFocusableEditView(false);
                 bindPrice();
@@ -152,9 +166,11 @@ public class PriceManageAdapter extends RecyclerView.Adapter<PriceManageAdapter.
         }
 
         private void updatePrice(PriceManageDTO updatedPrice) {
+            DialogLoading.showDialogLoading(dialogLoading, itemView.getContext().getString(R.string.loading));
             PriceManageApi.updatePrice(this.itemView.getContext(), updatedPrice, new CallAPI.CallAPIListener<>() {
                 @Override
                 public void completed(JSONObject jsonObject) {
+                    dialogLoading.dismiss();
                     setFocusableEditView(false);
                     llButtonContainer.setVisibility(View.GONE);
                     priceManageDTO = updatedPrice;
@@ -163,8 +179,13 @@ public class PriceManageAdapter extends RecyclerView.Adapter<PriceManageAdapter.
                 }
 
                 @Override
-                public void error(Object message) {
+                public void error(Object error) {
+                    inputMethodManager.hideSoftInputFromWindow(itemView.getWindowToken(), 0);
+                    dialogLoading.dismiss();
                     bindPrice();
+                    if (error instanceof TimeoutError || error instanceof NoConnectionError)
+                        Toast.makeText(itemView.getContext(), itemView.getContext().getString(R.string.error_server), Toast.LENGTH_SHORT).show();
+
                 }
             });
         }

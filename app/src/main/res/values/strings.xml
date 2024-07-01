@@ -60,12 +60,12 @@
     <!--Google Map API-->
 
     <!--User Info-->
-    <string name="User_Info">Personal Info</string>
-    <string name="user_name">UserName</string>
+    <string name="User_Info">Thông tin người dùng</string>
+    <string name="full_name">Họ và tên</string>
     <string name="user_email">Email</string>
-    <string name="user_phone_number">Phone Number</string>
-    <string name="user_birth_day">Birthday</string>
-    <string name="user_address">Address</string>
+    <string name="user_phone_number">Số điện thoại</string>
+    <string name="user_birth_day">Ngày sinh</string>
+    <string name="user_address">Địa chỉ</string>
     <string name="change_avatar">Đổi ảnh đại diện</string>
 
     <!--favoriteList-->
@@ -144,4 +144,18 @@
     <string name="other_login">Đăng nhập bằng phương thức khác</string>
     <string name="error_server">Lỗi server không phản hồi!</string>
     <string name="no_movie_showtime">Không có lịch chiếu!</string>
+    <string name="no_ticket">Không có vé nào!</string>
+    <string name="user_mode">User mode</string>
+    <string name="admin_mode">Admin mode</string>
+    <string name="user_manage">Quản lý tài khoản</string>
+    <string name="user_role">Quyền</string>
+    <string name="user_lock">Khóa</string>
+    <string name="id">ID</string>
+    <string name="movie_name">Tên phim</string>
+    <string name="genre">Thể loại</string>
+    <string name="vote">SL đánh giá</string>
+    <string name="movie_rate">Số sao</string>
+    <string name="movie_manage">Quản lý phim</string>
+    <string name="director">Đạo diển</string>
+    <string name="actor">Diễn viên</string>
 </resources>

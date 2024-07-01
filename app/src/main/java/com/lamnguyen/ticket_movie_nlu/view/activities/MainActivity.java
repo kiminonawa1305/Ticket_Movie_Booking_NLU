@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
 import com.google.firebase.auth.FirebaseAuth;
 import com.lamnguyen.ticket_movie_nlu.R;
+import com.lamnguyen.ticket_movie_nlu.enums.RoleUser;
 import com.lamnguyen.ticket_movie_nlu.utils.SharedPreferencesUtils;
 import com.lamnguyen.ticket_movie_nlu.view.fragments.FavouriteMovieFragment;
 import com.lamnguyen.ticket_movie_nlu.view.fragments.GoogleMapFragment;
@@ -39,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        SharedPreferencesUtils.setCurrentMode(this, RoleUser.USER);
         this.init();
         this.eventNavigation();
 
